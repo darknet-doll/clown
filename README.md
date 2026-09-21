@@ -9,8 +9,13 @@ Two arms, two identical rigs. LED strips hidden under gloves and sleeves, so the
 light reads as a glow coming from inside the costume rather than a strip taped to
 your arm.
 
-**New here?** → [PARTS.md](PARTS.md) explains every component in plain English.
-→ [BUILD.md](BUILD.md) is the step-by-step assembly manual.
+**Start here:** [Clown-Build-Manual.pdf](Clown-Build-Manual.pdf) — the printable
+manual. Page 1 is every part, numbered, with a plain-English note under each one;
+every page after that is assembly steps referring back to those numbers.
+
+Markdown equivalents, if you'd rather read them here:
+[PARTS.md](PARTS.md) (parts and what they do) and
+[BUILD.md](BUILD.md) (step-by-step assembly).
 
 ---
 
@@ -203,6 +208,7 @@ lands. See [BUILD.md](BUILD.md) step 9.
 - [x] Design, power plan, wiring
 - [x] Parts list with explanations — [PARTS.md](PARTS.md)
 - [x] Build manual — [BUILD.md](BUILD.md)
+- [x] Printable PDF manual — [Clown-Build-Manual.pdf](Clown-Build-Manual.pdf)
 - [x] Firmware v1, incl. low-battery warning
 - [ ] Parts ordered
 - [ ] Glove fabric light test
@@ -210,3 +216,19 @@ lands. See [BUILD.md](BUILD.md) step 9.
 - [ ] Second arm
 - [ ] Printed enclosures (trigger plate, battery sled, controller pod)
 - [ ] Optional: ESP-NOW sync between arms
+
+---
+
+## Regenerating the PDF
+
+The manual is generated, not hand-edited. Edit
+[docs/manual/build_manual.py](docs/manual/build_manual.py) and run:
+
+```
+pip3 install reportlab
+python3 docs/manual/build_manual.py
+```
+
+Part numbers live in the `PARTS` list at the top of that script; the assembly
+steps reference them through `ref(n)`, so renumbering a part updates every
+cross-reference automatically.
