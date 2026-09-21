@@ -9,6 +9,10 @@
 // Board:  Seeed XIAO ESP32-C3
 // Core:   ESP32 Arduino core 3.x  (see ledcAttach note below for 2.x)
 // Lib:    FastLED
+//
+// Power:  split rail off one 18650. The cell feeds the blower directly at its
+//         native ~3.7V, and a small boost converter feeds the strip and this
+//         board at 5V. See PARTS.md and BUILD.md.
 
 #include <FastLED.h>
 
@@ -18,30 +22,34 @@
 
 // Physical layout. The strip is split at the wrist; GAP_PX is how many pixels
 // of *virtual* distance the jumper wire spans, so the comet doesn't appear to
-// jump across the wrist. Measure your own arm and adjust.
+// jump across the wrist. Measure your own arm (BUILD.md step 1) and adjust.
 constexpr int FOREARM_PX = 15;   // elbow -> wrist
 constexpr int HAND_PX    = 6;    // wrist -> knuckles
 constexpr int GAP_PX     = 2;    // jumper wire, ~4 cm at 60 LED/m
 
 // Timing. COMET_TRAVEL_MS must match how long the blower takes to reach speed —
-// tune it last, on the assembled arm, with slow-motion video.
+// tune it last, on the assembled arm, with slow-motion video (BUILD.md step 9).
 constexpr uint16_t COMET_TRAVEL_MS = 250;
 constexpr uint16_t COMET_REPEAT_MS = 320;   // gap between comets while held
 constexpr uint16_t RELEASE_FADE_MS = 400;   // fingertip flare after release
 
-// Brightness. MAX_BRIGHTNESS caps the whole power budget.
-// IDLE_BRIGHTNESS also serves as the power bank keepalive — don't set it to 0,
-// or the bank will decide nothing is plugged in and shut off.
-constexpr uint8_t MAX_BRIGHTNESS  = 128;
-constexpr uint8_t IDLE_BRIGHTNESS = 24;
+// Brightness. The strip lives under a glove, and fabric eats a lot of light —
+// hence the high cap. Raise it for thicker fabric, but current draw scales with
+// it. Only a handful of pixels are lit at once, so heat under the glove is a
+// non-issue at these levels.
+constexpr uint8_t MAX_BRIGHTNESS  = 180;
+// Resting glow. Purely aesthetic now that we're on a battery rather than a
+// power bank (no auto-shutoff to defeat) — set to 0 for fully dark when idle.
+constexpr uint8_t IDLE_BRIGHTNESS = 20;
 
-// Motor. The Bambu P6M blower is a 3.7 V motor on a 5 V bus, so duty is capped:
-// 184/255 ~= 72% ~= 3.7 V average. The kick pulse briefly exceeds that to break
-// static friction, which is fine for 80 ms.
-constexpr uint8_t  MOTOR_RUN_DUTY  = 184;
-constexpr uint8_t  MOTOR_KICK_DUTY = 235;
+// Motor. The blower is wired straight to the cell, so it already sees its native
+// voltage — no duty cap needed to fake 3.7V out of a 5V bus. Running just under
+// full gives headroom for the kickstart pulse and takes the edge off a
+// freshly-charged 4.2V cell. Drop it to slow the bubble rate.
+constexpr uint8_t  MOTOR_RUN_DUTY  = 230;
+constexpr uint8_t  MOTOR_KICK_DUTY = 255;   // breaks static friction
 constexpr uint16_t MOTOR_KICK_MS   = 80;
-constexpr uint32_t MOTOR_PWM_HZ    = 20000;  // above audible, no whine
+constexpr uint32_t MOTOR_PWM_HZ    = 20000; // above audible, no whine
 constexpr uint8_t  MOTOR_PWM_BITS  = 8;
 
 // Look.
@@ -49,10 +57,17 @@ constexpr uint8_t THEME_HUE   = 192;  // comet body
 constexpr uint8_t COMET_FADE  = 64;   // higher = shorter tail
 constexpr uint8_t FRAME_MS    = 16;   // ~60 fps
 
+// Battery monitor. Read through a 100k/100k divider, so the pin sees half the
+// cell voltage. Protected cells cut themselves off around 2.8-3.0V; warn well
+// before that so you can swap rather than die mid-performance.
+constexpr uint16_t VBAT_WARN_MV   = 3400;
+constexpr uint16_t VBAT_SAMPLE_MS = 2000;
+
 // Pins (XIAO ESP32-C3 silkscreen -> GPIO). Avoid D8/D9, they're boot straps.
 constexpr uint8_t PIN_LED   = 10;  // D10, via 74AHCT125 then 330-470R
 constexpr uint8_t PIN_TRIG  = 3;   // D1,  microswitch to GND
 constexpr uint8_t PIN_MOTOR = 4;   // D2,  MOSFET gate
+constexpr uint8_t PIN_VBAT  = 2;   // D0,  divider midpoint (ADC capable)
 
 constexpr uint16_t DEBOUNCE_MS = 25;
 
@@ -73,6 +88,10 @@ uint32_t releaseStart = 0;
 bool     trigStable   = false;  // debounced trigger, true = squeezed
 bool     trigLastRaw  = false;
 uint32_t trigChangeAt = 0;
+
+uint32_t vbatLastRead = 0;
+uint16_t vbatMv       = 4200;   // assume full until the first real reading
+bool     vbatLow      = false;
 
 // Map a virtual pixel index onto the physical strip, skipping the wrist gap.
 // Returns -1 for positions that fall inside the gap (nothing to light there).
@@ -112,13 +131,24 @@ static void readTrigger() {
   }
 }
 
+// Sample the cell occasionally and smooth it, so a motor-start sag doesn't
+// flash a false warning.
+static void readBattery() {
+  uint32_t now = millis();
+  if (now - vbatLastRead < VBAT_SAMPLE_MS) return;
+  vbatLastRead = now;
+
+  uint16_t raw = (uint16_t)(analogReadMilliVolts(PIN_VBAT) * 2);  // undo divider
+  vbatMv = (uint16_t)((vbatMv * 3 + raw) / 4);
+  vbatLow = (vbatMv < VBAT_WARN_MV);
+}
+
 static void setMotor(uint8_t duty) {
   // ESP32 Arduino core 3.x. On core 2.x use:
   //   ledcWrite(CHANNEL, duty);
   ledcWrite(PIN_MOTOR, duty);
 }
 
-// Dim breathing glow. Also the power bank keepalive — see IDLE_BRIGHTNESS.
 static void renderIdle() {
   uint8_t breath = scale8(cubicwave8((millis() / 12) & 0xFF), IDLE_BRIGHTNESS);
   fill_solid(leds, NUM_LEDS, CHSV(THEME_HUE, 200, breath));
@@ -156,6 +186,14 @@ static void renderReleasing() {
   leds[NUM_LEDS - 1] |= CHSV(THEME_HUE, 60, v);
 }
 
+// Slow red pulse on the elbow pixel when the cell is nearly flat. Deliberately
+// at the elbow: it's the end you can see without breaking character.
+static void overlayLowBattery() {
+  if (!vbatLow) return;
+  uint8_t pulse = cubicwave8((millis() / 8) & 0xFF);
+  leds[0] = CRGB(scale8(pulse, 180), 0, 0);
+}
+
 void setup() {
   pinMode(PIN_TRIG, INPUT_PULLUP);
 
@@ -172,6 +210,7 @@ void setup() {
 
 void loop() {
   readTrigger();
+  readBattery();
   uint32_t now = millis();
 
   switch (state) {
@@ -210,6 +249,8 @@ void loop() {
     case FIRING:    renderFiring();    break;
     case RELEASING: renderReleasing(); break;
   }
+
+  overlayLowBattery();
 
   FastLED.show();
   FastLED.delay(FRAME_MS);
