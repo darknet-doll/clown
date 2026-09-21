@@ -17,6 +17,9 @@ Markdown equivalents, if you'd rather read them here:
 [PARTS.md](PARTS.md) (parts and what they do) and
 [BUILD.md](BUILD.md) (step-by-step assembly).
 
+**Costume direction:** [DESIGN.md](DESIGN.md) — the concept board, and the three
+places where it changes the build.
+
 ---
 
 ## Sequence
@@ -210,8 +213,10 @@ lands. See [BUILD.md](BUILD.md) step 9.
 - [x] Build manual — [BUILD.md](BUILD.md)
 - [x] Printable PDF manual — [Clown-Build-Manual.pdf](Clown-Build-Manual.pdf)
 - [x] Firmware v1, incl. low-battery warning
+- [x] Concept direction — [DESIGN.md](DESIGN.md)
 - [ ] Parts ordered
-- [ ] Glove fabric light test
+- [ ] Lace diffusion test (see DESIGN.md — lace reveals, it doesn't diffuse)
+- [ ] Decide where the controller pod hides
 - [ ] One arm assembled and timed
 - [ ] Second arm
 - [ ] Printed enclosures (trigger plate, battery sled, controller pod)
