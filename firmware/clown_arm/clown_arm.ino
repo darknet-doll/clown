@@ -1,0 +1,216 @@
+// clown_arm — bubble-shooting clown sleeve, one arm.
+//
+// Squeeze the palm trigger: the blower spins up while a comet of light runs
+// from the elbow to the fingertips, landing as the first bubbles fire.
+//
+// Flash this unchanged to BOTH arms. There is no handedness here — as long as
+// pixel 0 sits at the elbow on each arm, the mirroring is physical only.
+//
+// Board:  Seeed XIAO ESP32-C3
+// Core:   ESP32 Arduino core 3.x  (see ledcAttach note below for 2.x)
+// Lib:    FastLED
+
+#include <FastLED.h>
+
+// ---------------------------------------------------------------------------
+// Tunables — everything you'd want to change lives in this block.
+// ---------------------------------------------------------------------------
+
+// Physical layout. The strip is split at the wrist; GAP_PX is how many pixels
+// of *virtual* distance the jumper wire spans, so the comet doesn't appear to
+// jump across the wrist. Measure your own arm and adjust.
+constexpr int FOREARM_PX = 15;   // elbow -> wrist
+constexpr int HAND_PX    = 6;    // wrist -> knuckles
+constexpr int GAP_PX     = 2;    // jumper wire, ~4 cm at 60 LED/m
+
+// Timing. COMET_TRAVEL_MS must match how long the blower takes to reach speed —
+// tune it last, on the assembled arm, with slow-motion video.
+constexpr uint16_t COMET_TRAVEL_MS = 250;
+constexpr uint16_t COMET_REPEAT_MS = 320;   // gap between comets while held
+constexpr uint16_t RELEASE_FADE_MS = 400;   // fingertip flare after release
+
+// Brightness. MAX_BRIGHTNESS caps the whole power budget.
+// IDLE_BRIGHTNESS also serves as the power bank keepalive — don't set it to 0,
+// or the bank will decide nothing is plugged in and shut off.
+constexpr uint8_t MAX_BRIGHTNESS  = 128;
+constexpr uint8_t IDLE_BRIGHTNESS = 24;
+
+// Motor. The Bambu P6M blower is a 3.7 V motor on a 5 V bus, so duty is capped:
+// 184/255 ~= 72% ~= 3.7 V average. The kick pulse briefly exceeds that to break
+// static friction, which is fine for 80 ms.
+constexpr uint8_t  MOTOR_RUN_DUTY  = 184;
+constexpr uint8_t  MOTOR_KICK_DUTY = 235;
+constexpr uint16_t MOTOR_KICK_MS   = 80;
+constexpr uint32_t MOTOR_PWM_HZ    = 20000;  // above audible, no whine
+constexpr uint8_t  MOTOR_PWM_BITS  = 8;
+
+// Look.
+constexpr uint8_t THEME_HUE   = 192;  // comet body
+constexpr uint8_t COMET_FADE  = 64;   // higher = shorter tail
+constexpr uint8_t FRAME_MS    = 16;   // ~60 fps
+
+// Pins (XIAO ESP32-C3 silkscreen -> GPIO). Avoid D8/D9, they're boot straps.
+constexpr uint8_t PIN_LED   = 10;  // D10, via 74AHCT125 then 330-470R
+constexpr uint8_t PIN_TRIG  = 3;   // D1,  microswitch to GND
+constexpr uint8_t PIN_MOTOR = 4;   // D2,  MOSFET gate
+
+constexpr uint16_t DEBOUNCE_MS = 25;
+
+// ---------------------------------------------------------------------------
+
+constexpr int NUM_LEDS    = FOREARM_PX + HAND_PX;
+constexpr int VIRTUAL_LEN = FOREARM_PX + GAP_PX + HAND_PX;
+
+CRGB leds[NUM_LEDS];
+
+enum State : uint8_t { IDLE, FIRING, RELEASING };
+State state = IDLE;
+
+uint32_t cometStart   = 0;   // when the current comet launched
+uint32_t fireStart    = 0;   // when the trigger went down
+uint32_t releaseStart = 0;
+
+bool     trigStable   = false;  // debounced trigger, true = squeezed
+bool     trigLastRaw  = false;
+uint32_t trigChangeAt = 0;
+
+// Map a virtual pixel index onto the physical strip, skipping the wrist gap.
+// Returns -1 for positions that fall inside the gap (nothing to light there).
+static int virtualToPhysical(int v) {
+  if (v < 0 || v >= VIRTUAL_LEN) return -1;
+  if (v < FOREARM_PX) return v;
+  if (v < FOREARM_PX + GAP_PX) return -1;   // in the jumper
+  return v - GAP_PX;
+}
+
+// Add color to one virtual pixel, scaled. No-op if it lands in the gap.
+static void addVirtual(int v, const CRGB &color, uint8_t scale) {
+  int p = virtualToPhysical(v);
+  if (p < 0) return;
+  CRGB c = color;
+  c.nscale8_video(scale);
+  leds[p] += c;
+}
+
+// Draw the comet head at a fractional virtual position, split across the two
+// neighbouring pixels so movement is smooth rather than steppy.
+static void drawComet(float pos, const CRGB &color) {
+  int   lo   = (int)pos;
+  float frac = pos - lo;
+  addVirtual(lo,     color, (uint8_t)(255 * (1.0f - frac)));
+  addVirtual(lo + 1, color, (uint8_t)(255 * frac));
+}
+
+static void readTrigger() {
+  bool raw = (digitalRead(PIN_TRIG) == LOW);   // active low
+  uint32_t now = millis();
+  if (raw != trigLastRaw) {
+    trigLastRaw  = raw;
+    trigChangeAt = now;
+  } else if (raw != trigStable && (now - trigChangeAt) >= DEBOUNCE_MS) {
+    trigStable = raw;
+  }
+}
+
+static void setMotor(uint8_t duty) {
+  // ESP32 Arduino core 3.x. On core 2.x use:
+  //   ledcWrite(CHANNEL, duty);
+  ledcWrite(PIN_MOTOR, duty);
+}
+
+// Dim breathing glow. Also the power bank keepalive — see IDLE_BRIGHTNESS.
+static void renderIdle() {
+  uint8_t breath = scale8(cubicwave8((millis() / 12) & 0xFF), IDLE_BRIGHTNESS);
+  fill_solid(leds, NUM_LEDS, CHSV(THEME_HUE, 200, breath));
+}
+
+static void renderFiring() {
+  uint32_t now = millis();
+  fadeToBlackBy(leds, NUM_LEDS, COMET_FADE);
+
+  // Relaunch on a loop for as long as the trigger is held.
+  if (now - cometStart >= COMET_REPEAT_MS) cometStart = now;
+
+  uint32_t age = now - cometStart;
+  if (age <= COMET_TRAVEL_MS) {
+    float t   = (float)age / COMET_TRAVEL_MS;
+    float pos = t * (VIRTUAL_LEN - 1);
+    // White-hot at launch, settling into the theme color as it travels.
+    CRGB head = CHSV(THEME_HUE, (uint8_t)(120 + 135 * t), 255);
+    drawComet(pos, head);
+  }
+
+  // Fingertips stay lit once the first comet has landed and bubbles are flowing.
+  if (now - fireStart >= COMET_TRAVEL_MS) {
+    leds[NUM_LEDS - 1] |= CHSV(THEME_HUE, 160, 200);
+  }
+}
+
+static void renderReleasing() {
+  uint32_t age = millis() - releaseStart;
+  if (age >= RELEASE_FADE_MS) { state = IDLE; return; }
+
+  fadeToBlackBy(leds, NUM_LEDS, 40);
+  // Parting flare at the fingertips.
+  uint8_t v = 255 - (uint8_t)(255UL * age / RELEASE_FADE_MS);
+  leds[NUM_LEDS - 1] |= CHSV(THEME_HUE, 60, v);
+}
+
+void setup() {
+  pinMode(PIN_TRIG, INPUT_PULLUP);
+
+  // ESP32 Arduino core 3.x. On core 2.x replace with:
+  //   ledcSetup(CHANNEL, MOTOR_PWM_HZ, MOTOR_PWM_BITS);
+  //   ledcAttachPin(PIN_MOTOR, CHANNEL);
+  ledcAttach(PIN_MOTOR, MOTOR_PWM_HZ, MOTOR_PWM_BITS);
+  setMotor(0);
+
+  FastLED.addLeds<WS2812B, PIN_LED, GRB>(leds, NUM_LEDS);
+  FastLED.setBrightness(MAX_BRIGHTNESS);
+  FastLED.clear(true);
+}
+
+void loop() {
+  readTrigger();
+  uint32_t now = millis();
+
+  switch (state) {
+    case IDLE:
+      if (trigStable) {
+        state      = FIRING;
+        fireStart  = now;
+        cometStart = now;
+        setMotor(MOTOR_KICK_DUTY);
+      }
+      break;
+
+    case FIRING:
+      // Drop out of the kickstart pulse once the motor is turning.
+      if (now - fireStart >= MOTOR_KICK_MS) setMotor(MOTOR_RUN_DUTY);
+      if (!trigStable) {
+        state        = RELEASING;
+        releaseStart = now;
+        setMotor(0);
+      }
+      break;
+
+    case RELEASING:
+      // Let them re-trigger mid-fade without waiting it out.
+      if (trigStable) {
+        state      = FIRING;
+        fireStart  = now;
+        cometStart = now;
+        setMotor(MOTOR_KICK_DUTY);
+      }
+      break;
+  }
+
+  switch (state) {
+    case IDLE:      renderIdle();      break;
+    case FIRING:    renderFiring();    break;
+    case RELEASING: renderReleasing(); break;
+  }
+
+  FastLED.show();
+  FastLED.delay(FRAME_MS);
+}
