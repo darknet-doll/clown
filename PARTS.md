@@ -1,10 +1,17 @@
 # Parts List
 
-Everything below is **per arm**. You're building two, so double every quantity.
+- Everything below is **per arm**
+- Building two arms → double every quantity
+- Format for each part:
+  - **Is** — what the object actually is
+  - **Does** — its job in the circuit
+  - **Skip it →** the exact way it breaks
 
-Plain-English explanation of what each thing actually does, and why it's in the
-list, is under each part. If a part has a "skip this and it breaks like *this*"
-note, that's the part people leave out and then spend a weekend debugging.
+Read order if you're new:
+
+1. This file — what the parts are
+2. [BUILD.md](BUILD.md) — how they go together
+3. [README.md](README.md) — why the design is shaped this way
 
 ---
 
@@ -12,44 +19,43 @@ note, that's the part people leave out and then spend a weekend debugging.
 
 ### Bambu Lab Electric Bubble Maker Kit 01 (P6M) — ×1
 
-The bubble machine itself: a small blower motor, a bottle cap with a one-way
-valve, and a rechargeable battery.
-
-**ELI5:** It's a tiny fan that blows air across a film of soap to make bubbles.
-You're not modifying it — you're just taking over the job of deciding *when* it
-turns on, instead of it being a simple on/off switch.
-
-The kit also includes an 18650 battery and a USB charger. **You will use those.**
-Buying two kits gets you two blowers *and* two batteries, one per arm.
+- **Is:** small blower fan + bottle cap with one-way valve + battery
+- **Does:** blows air across a soap film → bubbles
+- **You modify:** nothing
+  - You only take over *when* it switches on
+- **Also in the box, and you use both:**
+  - one 18650 cell
+  - a USB charger
+- Two kits → two blowers + two cells. One per arm
 
 ---
 
 ## The lights
 
-### WS2812B LED strip, 60 LED/m, 5V, black circuit board, IP65 — ~0.4 m
+### WS2812B LED strip, 60 LED/m, 5V, black PCB, IP65 — ~0.4 m
 
-**ELI5:** A ribbon of tiny lights where every single light has its own miniature
-chip inside it. That's the important part. It means you can tell light #7 to be
-bright white and light #8 to be dark, all through **one** data wire. That's what
-makes a comet possible — a normal LED strip can only be one color all at once,
-so the light couldn't "travel" anywhere.
+- **Is:** ribbon of lights, each with its own tiny chip inside
+- **Does:** lets you set every light separately, down one single data wire
+  - That's what "addressable" / "programmable" means
+  - Normal strips = one colour all at once → no travelling comet possible
 
-"Addressable" and "programmable" mean exactly this: each pixel takes orders
-individually.
+Why these exact specs:
 
-Why these specific numbers:
+- **60 LED/m** → 1.67 cm apart
+  - dense enough to blur into a smooth streak under fabric
+  - not visible dots
+- **5V** → same supply as everything else
+  - avoid 12V strips (WS2815) — needs a second power system
+- **Black PCB** → invisible against dark fabric when off
+- **IP65** (clear silicone sleeve) → waterproofing
+  - you are spraying soapy water down your own arm
 
-- **60 LED/m** — about 1.7 cm between lights. Dense enough that under a glove
-  they blur into one smooth streak instead of visible dots.
-- **5V** — runs off the same low voltage as everything else. (Avoid 12V strips
-  like the WS2815 here; they'd need a whole second power system.)
-- **Black circuit board** — disappears against dark fabric when it's off.
-- **IP65** (clear silicone sleeve over the top) — you are spraying soapy water
-  down your own arm. This is the waterproofing.
+**Alternative:** SK6812 RGBW
 
-**Alternative:** SK6812 RGBW strip is a drop-in swap. It adds a dedicated white
-LED to each pixel, which looks better for a "charging up" glow, and it's slightly
-more forgiving about data timing. Costs a bit more.
+- drop-in swap
+- adds a real white LED per pixel → better "charging up" glow
+- slightly more forgiving on data timing
+- costs a bit more
 
 ---
 
@@ -57,31 +63,30 @@ more forgiving about data timing. Costs a bit more.
 
 ### Seeed XIAO ESP32-C3 — ×1
 
-**ELI5:** A complete computer the size of a postage stamp. It watches your palm
-trigger, and about 60 times a second it decides what color every single LED
-should be and whether the motor should be running. Everything clever in this
-costume happens here.
-
-It's this board specifically because it's tiny (21 × 17.5 mm, so it hides on your
-upper arm), it takes 5V in directly, and it has Wi-Fi and Bluetooth built in if
-you ever want to control the costume from your phone.
-
-You reprogram it by plugging a USB-C cable into it. **Keep that port reachable**
-when you build the enclosure — see [BUILD.md](BUILD.md).
+- **Is:** a whole computer, 21 × 17.5 mm
+- **Does:** ~60×/second, decides
+  - the colour of all 21 pixels
+  - whether the motor runs
+- **Watches:** the palm trigger
+- **Why this board:**
+  - tiny → hides on your upper arm
+  - takes 5V in directly
+  - Wi-Fi + Bluetooth built in (unused in v1, free for later)
+- **Reprogram:** USB-C cable
+  - **keep that port reachable** in the printed pod → see [BUILD.md](BUILD.md)
 
 ### 74AHCT125 level shifter chip — ×1
 
-**ELI5:** A translator that also shouts. The brain speaks at 3.3 volts. The LED
-strip is listening for 5 volts. Usually the strip *sort of* hears the brain
-anyway, which is exactly the problem — it works on your bench and then flickers
-randomly at the party.
-
-This chip listens to the brain's quiet 3.3V signal and repeats it at a confident
-5V, so the strip hears it perfectly every time.
-
-**Skip this and:** your lights flicker, glitch, or show wrong colors
-intermittently — especially as wire runs get longer. This is the single most
-common cause of "my LED strip is haunted."
+- **Is:** a translator that also shouts
+- **Problem it fixes:**
+  - brain speaks at 3.3V
+  - strip listens for 5V
+  - strip *sort of* hears 3.3V — which is the trap
+- **Does:** repeats the brain's 3.3V signal at a confident 5V
+- **Skip it →** lights flicker, glitch, wrong colours, at random
+  - worse with longer wire runs
+  - fine on your bench, haunted at the party
+  - #1 cause of "my LED strip is possessed"
 
 ---
 
@@ -89,26 +94,25 @@ common cause of "my LED strip is haunted."
 
 ### N-channel logic-level MOSFET module (AO3400 or IRLZ44N) — ×1
 
-**ELI5:** An electrically-operated switch with no moving parts. The brain can
-think, but it can't push enough electricity to actually spin a motor — it'd be
-like asking someone to lift a car. So instead the brain flicks this switch, and
-the switch lets the big current through from the battery.
-
-Buying it as a little pre-made module (rather than a bare chip) saves you
-soldering and usually includes the resistors it needs.
-
-"Logic-level" matters: it means the switch fully opens from the brain's low
-voltage. A non-logic-level MOSFET would only half-open and get hot.
+- **Is:** an electrical switch, no moving parts
+- **Problem it fixes:** brain can decide, but can't push enough current to spin a motor
+  - like asking someone to lift a car
+- **Does:** brain flicks this switch → switch lets big current through from battery
+- **Buy as a module, not a bare chip:**
+  - no soldering
+  - resistors already included
+- **"Logic-level" matters:**
+  - opens *fully* from the brain's low voltage
+  - non-logic-level → only half-opens, gets hot
 
 ### 1N5819 flyback diode — ×1
 
-**ELI5:** A motor is really just a big coil of wire. When you suddenly cut power
-to a coil, it *kicks back* — it dumps a nasty high-voltage spike backwards into
-your circuit. This part is a one-way valve that gives that spike a safe little
-loop to run around in until it burns itself out.
-
-**Skip this and:** your MOSFET eventually dies, and possibly takes the brain with
-it. It costs about 20 cents. Fit it.
+- **Is:** a one-way valve for electricity
+- **Problem it fixes:** a motor is a big coil
+  - cut power to a coil → it kicks back a high-voltage spike into your circuit
+- **Does:** gives that spike a safe loop to run around until it dies out
+- **Skip it →** MOSFET eventually dies, maybe takes the brain with it
+- Costs ~20¢. Fit it
 
 ---
 
@@ -116,49 +120,48 @@ it. It costs about 20 cents. Fit it.
 
 ### Protected 18650 battery — ×1 in use, plus spares
 
-**ELI5:** A rechargeable battery, the same kind inside a laptop battery pack or a
-vape. One comes free with each bubble kit.
-
-"**Protected**" means it has a tiny guardian circuit built into the end of it
-that cuts the battery off if you drain it too far or charge it too hard. Lithium
-batteries that get over-drained can be damaged or become genuinely unsafe. The
-cells included with the bubble kit are protected ones.
-
-**Do not substitute unprotected cells** because they were cheaper. This is
-strapped to your arm.
+- **Is:** rechargeable cell, same kind as in a laptop pack or a vape
+- One comes free with each bubble kit
+- **"Protected" =** tiny guardian circuit in the end of the cell
+  - cuts off if drained too far or charged too hard
+  - over-drained lithium can be damaged or genuinely unsafe
+- Cells in the bubble kit are protected ones
+- **Do not substitute unprotected cells** to save money
+  - this is strapped to your arm
 
 ### 18650 battery sled / holder with wire leads — ×1
 
-**ELI5:** The slot the battery sits in, so you can pop a flat one out and a fresh
-one in without a soldering iron. Print an enclosure with a lid that clicks shut —
-you don't want it ejecting mid-performance.
+- **Is:** the slot the cell sits in
+- **Does:** lets you swap a flat cell for a fresh one, no soldering iron
+- Print an enclosure with a lid that clicks shut
+  - you don't want it ejecting mid-performance
 
 ### 5V boost converter module — ×1
 
-**ELI5:** A pump, but for voltage. The battery only produces about 3.7 volts, and
-the LEDs and brain need 5. This little board pumps it up to a steady 5V.
-
-In this build it only has to supply the lights and the brain (roughly 0.3 A)
-because the motor is fed straight from the battery. That's a gentle job, so a
-small inexpensive module is genuinely fine here.
+- **Is:** a pump, but for voltage
+- **Problem it fixes:** cell makes ~3.7V, brain + LEDs need 5V
+- **Does:** pumps 3.7V up to a steady 5V
+- **Only feeds lights + brain (~0.3 A)**
+  - motor runs straight off the battery instead
+  - so a small cheap module is genuinely fine here
 
 ### 2A resettable fuse (polyfuse / PPTC) — ×1
 
-**ELI5:** A safety valve that resets itself. If something shorts out and the
-current spikes, this part suddenly becomes very resistant and chokes the flow off
-before anything catches fire. Let it cool down and it goes back to normal by
-itself.
-
-Cheap insurance for a lithium battery worn against your body.
+- **Is:** a safety valve that resets itself
+- **Does:** on a current spike, suddenly becomes very resistant → chokes the flow
+  - before anything catches fire
+- Let it cool → back to normal by itself
+- Cheap insurance for a lithium cell worn against your body
 
 ### Two 100 kΩ resistors (battery monitor) — ×2
 
-**ELI5:** The brain can only safely measure voltages up to about 3.3V, and a full
-battery is 4.2V. These two resistors form a "divider" that shrinks the battery
-voltage neatly in half, so the brain can read it without being hurt.
-
-This is what lets the costume pulse red at you when the battery is nearly flat,
-instead of just dying without warning.
+- **Is:** two resistors forming a "divider"
+- **Problem it fixes:**
+  - brain can only safely measure up to ~3.3V
+  - full cell is 4.2V
+- **Does:** shrinks battery voltage neatly in half → safe to read
+- **Gets you:** costume pulses red when the battery is nearly flat
+  - instead of dying with no warning
 
 ---
 
@@ -166,20 +169,20 @@ instead of just dying without warning.
 
 ### 1000 µF electrolytic capacitor — ×1
 
-**ELI5:** A tiny water tank for electricity. When a bunch of LEDs switch on at
-the same instant, they all gulp power at once. The tank holds a reserve and
-smooths out that gulp, so the voltage doesn't dip and confuse the brain.
-
-Note it's polarized — one leg is marked negative and must go to ground. Backwards
-electrolytic capacitors pop.
+- **Is:** a tiny water tank for electricity
+- **Problem it fixes:** many LEDs switching on at once all gulp power at the same instant
+- **Does:** holds a reserve, smooths the gulp → voltage doesn't dip and confuse the brain
+- **Watch out:** polarised
+  - one leg marked negative → must go to ground
+  - backwards, electrolytics pop
 
 ### 330–470 Ω resistor — ×1
 
-**ELI5:** A speed bump on the data wire. It softens the sharp edge of the signal
-so it doesn't bounce back down the wire and garble the message to the first LED.
-
-**Skip this and:** the first pixel in the strip behaves strangely — wrong color,
-or flickering while the rest are fine.
+- **Is:** a speed bump on the data wire
+- **Does:** softens the signal's sharp edge
+  - so it doesn't bounce back down the wire and garble the message to the first LED
+- **Skip it →** the *first* pixel misbehaves — wrong colour or flickering
+  - every pixel behind it stays fine
 
 ---
 
@@ -187,12 +190,13 @@ or flickering while the rest are fine.
 
 ### Snap-action microswitch, lever type — ×1
 
-**ELI5:** A clicky button with a little metal arm sticking off it. The arm is the
-point: it gives you a wide area to press, so you can squeeze your fingers into
-your palm in the middle of a performance and hit it every time **without looking
-or aiming**. A plain round button means hunting for a 12 mm target by feel.
-
-It also gives a crisp physical click, so you can feel that it fired.
+- **Is:** clicky button with a small metal arm sticking off it
+- **The arm is the point:**
+  - wide press area
+  - squeeze fingers into your palm mid-performance and hit it every time
+  - **no looking, no aiming**
+  - a plain round button = hunting for a 12 mm target by feel
+- **Bonus:** crisp physical click → you feel that it fired
 
 ---
 
@@ -200,27 +204,28 @@ It also gives a crisp physical click, so you can feel that it fired.
 
 ### Silicone-insulated hookup wire, 22–26 AWG
 
-**ELI5:** Wire with soft rubbery insulation instead of stiff plastic. It bends
-thousands of times without the copper inside snapping. Normal hookup wire (and
-especially solid-core wire) will work loose and break at the elbow and wrist
-within a few hours of wearing it.
-
-22 AWG (thicker) for power, 26 AWG (thinner) for the data and trigger signals.
+- **Is:** wire with soft rubbery insulation, not stiff plastic
+- **Does:** bends thousands of times without the copper snapping
+- **Use:**
+  - 22 AWG (thicker) → power
+  - 26 AWG (thinner) → data + trigger
+- **Wrong wire →** works loose and breaks at elbow and wrist within hours of wear
+  - solid-core is the worst offender
 
 ### Heat-shrink tubing, assorted
 
-**ELI5:** Plastic sleeve that shrinks tight when you heat it, sealing and
-insulating your solder joints. Slide it on *before* you solder — everyone forgets
-once.
+- **Is:** plastic sleeve that shrinks tight when heated
+- **Does:** seals and insulates each solder joint
+- **Slide it on *before* you solder** — everyone forgets exactly once
 
-### A light-colored, thin, stretchy glove — ×1
+### A light-coloured, thin, stretchy glove — ×1
 
-**ELI5:** The strip hides underneath this, and the fabric spreads the light out
-into a soft even glow instead of visible dots.
-
-Material matters a lot here. Thin white or pale stretchy fabric glows beautifully.
-Thick black leather will swallow the light almost entirely. See the glove section
-in [BUILD.md](BUILD.md) before you buy — test a scrap first if you can.
+- **Does:** hides the strip, spreads light into a soft even glow instead of dots
+- **Fabric matters a lot:**
+  - thin / white / pale / stretchy → glows beautifully
+  - thick / dark / leather → swallows the light almost entirely
+- Test a scrap in a dark room before you buy
+- Full detail → glove section in [BUILD.md](BUILD.md)
 
 ---
 
@@ -228,10 +233,11 @@ in [BUILD.md](BUILD.md) before you buy — test a scrap first if you can.
 
 - Soldering iron, solder, flux
 - Wire strippers, small side cutters
-- Multimeter (for checking polarity before you connect the battery — not optional)
-- Heat gun or lighter for the heat-shrink
-- 3D printer for the trigger plate, battery sled, and controller pod
-- Needle and thread, or fabric glue, for the glove channel
+- **Multimeter** — for checking polarity before connecting the battery
+  - not optional
+- Heat gun or lighter — for heat-shrink
+- 3D printer — trigger plate, battery sled, controller pod
+- Needle and thread, or fabric glue — glove channel
 
 ---
 
@@ -255,3 +261,15 @@ in [BUILD.md](BUILD.md) before you buy — test a scrap first if you can.
 | Lever microswitch | 1 | 2 + 2 spares |
 | Silicone wire | — | one small assortment covers both |
 | Thin light glove | 1 | a pair |
+
+---
+
+## The five parts people skip
+
+Ordered by how much pain skipping them causes:
+
+1. **74AHCT125** → random flicker, only in the field, impossible to reproduce
+2. **1N5819 diode** → dead MOSFET, later, for no visible reason
+3. **Common ground** (not a part — a rule) → bizarre unrepeatable behaviour
+4. **330–470 Ω resistor** → first pixel only, wrong colour
+5. **1000 µF capacitor** → voltage dips when pixels light, brain gets confused
