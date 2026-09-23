@@ -22,9 +22,16 @@ Source board: [design/concept-look.png](design/concept-look.png)
 | Palette | White, black, deep red, lavender, pink, iridescent |
 | Variations | 1 white / 2 black / 3 mixed / 4 red accent sleeves |
 
-Several of these agree with what's already in [BUILD.md](BUILD.md): the bubble
-kit sits on the back of the hand (Step 7), the trigger is palm-mounted (Step 5),
-and the ruffle cuff conveniently hides the wrist jumper's service loop (Step 3).
+Several of these agree with what's already in [BUILD.md](BUILD.md): the trigger is
+palm-mounted (Step 5), and the **ruffle cuff is exactly where the wrist SM-5
+connector wants to live** — 3–4 cm above the crease, hidden under the ruffle, with
+the service loop tucked inside it (Step 3). That's a free win.
+
+One of them is better than it looks. **"Tubing routed under the lace" assumes the
+bottle is somewhere other than the blower head** — which is precisely what the kit
+turns out to support, and precisely what Mount C does (Step 7). The concept board
+got there before the teardown did. If the hose test passes, the bottle goes on the
+forearm under the sleeve and only the floral housing sits on the hand.
 
 Three things don't agree, and they matter.
 
@@ -48,8 +55,10 @@ My read is the second is closer to the board's mood — everything in it is soft
 edges and layered sheer — but this is a taste call, and it's cheap to test both.
 Do it with a scrap before the gloves are cut into.
 
-**This supersedes the "thin, pale, stretchy" fabric guidance for the glove itself.**
-Lace is pale but it is not a diffuser.
+**This supersedes the "thin, pale, stretchy" fabric guidance for the glove itself**
+in [PARTS.md](PARTS.md) and [BUILD.md](BUILD.md) step 10. Lace is pale but it is not
+a diffuser. Those documents describe the *electrical* requirement; this one overrides
+the *material* choice.
 
 ---
 
@@ -125,3 +134,7 @@ within at the moment the bubbles fire.
 - [ ] Where does the controller pod live?
 - [ ] Translucent floral housing with an internal pixel — yes or no?
 - [ ] Fixed hue or iridescent drift?
+- [ ] Does the floral housing hide the **blower head alone** (Mount C) or the whole
+      bottle (Mount A)? Blocked on the hose test in [BUILD.md](BUILD.md) step 7 —
+      and Mount C makes the housing much smaller and lighter
+- [ ] Can the ruffle cuff hide the SM-5 plug without pressing it into your wrist?

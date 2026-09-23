@@ -1,6 +1,21 @@
 # Build Manual
 
-How to assemble one arm, start to finish. Then you do it again for the other arm.
+## What you are building
+
+**Two arms.** Each arm is four modules that unplug from each other:
+
+| Module | Holds | Unplugs at |
+|---|---|---|
+| **Pod** — upper arm | brain, boost, level shifter, MOSFET, fuse, battery sled | battery plug + straps |
+| **Sleeve** — forearm | forearm strip, 15 px | elbow: SM 6-pin + SM 2-pin |
+| **Glove** — hand | hand strip 6 px, this hand's trigger | wrist: SM 5-pin |
+| **Bubbler** | bottle, cap, hose, blower head | wrist: SM 2-pin + its strap |
+
+Nothing is soldered end to end across a joint. That is what lets you get out of
+the costume alone, with soapy hands, without dislocating a shoulder.
+
+Steps 1–10 build **one arm**. Step 11 is the second arm. **Step 12 is the costume**
+— the two arms together, and how you get in and out of it.
 
 Read [PARTS.md](PARTS.md) first if you haven't — it explains what each component
 actually does, which makes these steps make a lot more sense.
@@ -27,13 +42,24 @@ you solder, and you bench-test *before* anything goes into the glove).
   permanently. Two minutes with a meter saves you re-ordering parts.
 - **Soap and electronics.** Everything that can get wet is sealed or lives on
   your upper arm, above the spray. This is a design constraint, not a suggestion.
-- Solder in a ventilated space. Flux fumes are unpleasant.
+- Solder in a ventilated space. The fumes are flux, not lead — they're unpleasant
+  whichever solder you bought. A cheap fan pulling air away from your face fixes it.
+
+### The connector rule you will use constantly
+
+> **Battery out before you mate or unmate anything.**
+
+Feeding data into an unpowered WS2812 strip pushes current through its input
+protection diodes. That is the classic way to kill pixel 0, and it's exactly what
+happens if you plug the glove in while the pod is live. Unplug the cell first,
+every time. It takes one second and it becomes automatic quickly.
 
 ---
 
 ## Step 1 — Measure your arm
 
-Put on the glove you'll be using and hold your arm out in the "finger gun" pose.
+Put on the glove and sleeve you'll be using and hold your arm out in the "finger
+gun" pose.
 
 Measure and write down:
 
@@ -53,6 +79,10 @@ hand pixels    = hand cm / 1.67
 For typical measurements that's about **15 pixels** on the forearm and **6** on
 the hand. Round down — a slightly short strip is fine, a strip that doesn't fit
 is not.
+
+**Then subtract about 4 cm from the forearm figure.** The wrist umbilical and its
+connector need to live somewhere, and that somewhere is the last few centimetres
+of forearm, just above the wrist crease where the skin barely flexes.
 
 Keep these numbers. You'll type them into the firmware in Step 8.
 
@@ -80,30 +110,62 @@ Mark the elbow end of the forearm piece with tape. That end is pixel 0.
 
 Your wrist bends constantly. A single continuous strip across that joint will
 crack its internal copper traces within a few hours of wearing it, and then
-everything past the crack goes dark. The flexible jumper wire in the next step
+everything past the crack goes dark. The flexible umbilical in the next step
 absorbs that movement instead.
 
 ---
 
-## Step 3 — Solder the wrist jumper
+## Step 3 — Build the wrist umbilical
 
-You're joining the two strip pieces with about 4 cm of flexible silicone wire,
-three conductors: **5V, GND, and data**.
+This is the plug that lets the glove come off on its own. It carries **five
+conductors**: the strip's 5V, GND and data, plus this hand's two trigger wires.
 
-1. Slide heat-shrink onto each wire **now**, before soldering.
-2. Peel back a little of the silicone sleeve at the ends of each strip piece to
-   expose the copper pads.
-3. Tin the pads and the wire ends (melt a little solder onto each separately).
-4. Join: forearm piece's **output** end → hand piece's **input** end. 5V to 5V,
-   GND to GND, and **DO** (data out) to **DI** (data in).
-5. Shrink the heat-shrink down over each joint.
-6. Seal the exposed strip ends with a blob of hot glue or clear silicone. This is
-   the soap-proofing.
+Use a **JST-SM 5-pin pigtail pair**. Decide a convention now and keep it on both
+arms:
 
-Make the jumper slightly longer than the gap needs, so there's a small service
-loop. It should never be pulled tight when you extend your wrist fully.
+| SM-5 pin | Carries |
+|---|---|
+| 1 | Strip 5V |
+| 2 | Strip GND |
+| 3 | Strip data |
+| 4 | Trigger |
+| 5 | Trigger return (to ground at the pod) |
 
-**Test the joint now:** gently tug each wire. Better to find a weak joint on the
+### Sleeve side
+
+1. Slide heat-shrink onto every wire **now**, before soldering.
+2. Solder short silicone leads to the forearm piece's **output** end — 5V, GND and
+   **DO** (data out).
+3. Solder those three to pins 1–3 of one half of the SM-5 pigtail.
+4. Pins 4–5 get two lengths of thin silicone wire long enough to run all the way
+   **up the forearm to the elbow**. They're the trigger's path to the pod.
+5. Shrink everything down. Seal the exposed strip end with a blob of hot glue or
+   clear silicone — this is the soap-proofing.
+
+### Glove side
+
+1. Solder pins 1–3 of the other pigtail half to the hand piece's **input** end —
+   5V to 5V, GND to GND, and pin 3 to **DI** (data in).
+2. Pins 4–5 get two lengths of thin silicone wire long enough to reach the palm,
+   ending in the **female half of a JST-ZH 2-pin** pigtail. That's where the
+   microswitch will plug in at Step 5.
+3. Shrink, and seal the strip end the same way.
+
+### Where the connector sits, and why
+
+- **Mate the pair about 3–4 cm above the wrist crease**, on the forearm. That skin
+  barely moves. The wrist crease itself is the worst possible place for a rigid
+  20 mm plastic body.
+- The **glove-side wire is the flex element** — leave it long enough to cross the
+  wrist with a **service loop**, so it's never under tension at full extension.
+- **Keep the whole umbilical as short as the connector allows.** Every centimetre
+  between the last forearm pixel and the first hand pixel is a centimetre of dark
+  arm the comet has to cross. Around 8 cm total is realistic and fine; 15 cm will
+  look like a gap.
+- **Measure the finished pixel-to-pixel distance** and write it down. You'll turn
+  it into `GAP_PX` in Step 8.
+
+**Test the joints now:** gently tug each wire. Better to find a weak joint on the
 bench than inside a glove.
 
 ---
@@ -113,26 +175,47 @@ bench than inside a glove.
 This all lives on a small piece of protoboard that will sit on your **upper arm**,
 above the soap spray.
 
-Wire it up as follows.
-
 ### Connections
 
 | From | To | Notes |
 |---|---|---|
-| Battery + | Polyfuse → everything's + | Fuse goes first, right at the battery |
-| Battery − | Common ground | Everything shares this ground |
+| Battery **PH2.0** + | Polyfuse → everything's + | Fuse goes first, right at the battery |
+| Battery **PH2.0** − | Common ground | Everything shares this ground |
 | Battery + (after fuse) | Boost module IN+ | |
 | Battery − | Boost module IN− | |
-| Boost OUT+ (5V) | XIAO 5V pad, 74AHCT125 Vcc, strip 5V | |
+| Boost OUT+ (5V) | XIAO 5V pad, 74AHCT125 Vcc, elbow SM-6 pin 1 | |
 | Boost OUT− | Common ground | |
-| Battery + (after fuse) | Motor + | Motor runs direct from battery, not 5V |
-| Motor − | MOSFET module output | |
+| Battery + (after fuse) | Motor +, via elbow SM-2 | Motor runs direct from battery, not 5V |
+| Motor − (via elbow SM-2) | MOSFET module output | |
 | MOSFET module ground | Common ground | |
 | XIAO D2 (GPIO4) | MOSFET gate input | |
 | XIAO D10 (GPIO10) | 74AHCT125 input pin | |
-| 74AHCT125 output pin | 330–470 Ω resistor → strip DIN | Resistor close to the strip |
-| XIAO D1 (GPIO3) | Microswitch, other side to ground | |
-| XIAO D0 (GPIO2) | Junction of the two 100 kΩ resistors | Battery monitor |
+| 74AHCT125 output pin | 330–470 Ω resistor → elbow SM-6 pin 3 | Resistor close to the connector |
+| XIAO D1 (GPIO3) | Elbow SM-6 pin 4 | Trigger, arriving from the hand |
+| Elbow SM-6 pin 5 | Common ground | Trigger return |
+| XIAO D0 (GPIO2) | Midpoint of the two 100 kΩ resistors | Battery monitor |
+
+### The pod's two outward plugs
+
+Everything the pod sends down the arm leaves through exactly two connectors:
+
+| Connector | Pin | Carries |
+|---|---|---|
+| **SM 6-pin** | 1 | Strip 5V |
+| | 2 | Strip GND |
+| | 3 | Strip data (after the resistor) |
+| | 4 | Trigger |
+| | 5 | Trigger return / ground |
+| | 6 | **Second ground** — tie to common ground |
+| **SM 2-pin** | 1 | Motor + (battery, after fuse) |
+| | 2 | Motor − (MOSFET output) |
+
+- **Pin 6 is not spare, it's a job.** The elbow run is the longest in the costume
+  and carries the whole strip's current. A second ground conductor cuts the voltage
+  drop and gives the data line a better return path. Tie it to common ground at
+  both ends.
+- **The motor gets its own plug on purpose.** Roughly an amp of switched PWM
+  bundled against a WS2812 data line is asking for flicker. Twist the motor pair.
 
 ### The battery monitor divider
 
@@ -150,9 +233,19 @@ what the brain can measure.
 ### Also fit
 
 - **1000 µF capacitor** across the strip's 5V and ground, physically close to the
-  strip end. **Watch polarity** — the marked stripe is the negative leg.
-- **1N5819 diode** directly across the motor's two terminals. The banded end goes
-  to the **positive** side. Backwards it's a dead short, so check this one twice.
+  elbow connector. **Watch polarity** — the marked stripe is the negative leg.
+- **1N5819 diode** directly across the motor's two terminals, at the blower end.
+  The banded end goes to the **positive** side. Backwards it's a dead short, so
+  check this one twice.
+
+### Keep the cell on its factory plug
+
+The 18650 arrives on a **PH2.0 pigtail**, and the kit's USB charger mates to the
+same connector. Fit the matching half at the pod and you get a clean swap: pull
+the flat cell out of the pod, plug it straight into the charger, plug a fresh one
+in. No adapters, no rework.
+
+**PH2.0 must be the only PH connector in the whole build.** See Step 5.
 
 ### Rules that matter
 
@@ -161,7 +254,8 @@ what the brain can measure.
   bizarre, hard-to-diagnose behavior.
 - **Don't use D8 or D9** (GPIO8/GPIO9) for anything. They're boot pins — the
   board won't start reliably if something's attached to them.
-- Keep the wire run from the level shifter to the first pixel short.
+- Keep the wire run from the level shifter to the elbow connector short, and put
+  the data resistor at the connector end.
 
 ### Leave the USB-C port accessible
 
@@ -169,19 +263,44 @@ Design the printed pod so you can plug a USB-C cable into the XIAO **without
 disassembling anything**. You will reflash this more times than you expect —
 every timing tweak, every color change. A cutout in the pod wall is enough.
 
+Use a **data-capable** USB-C cable. A charge-only cable looks identical and will
+cost you half an hour of confusion.
+
 ---
 
-## Step 5 — Wire the trigger
+## Step 5 — Wire this hand's trigger
+
+**Each hand has its own trigger, firing its own arm.** Nothing crosses the torso.
+You are wiring one of two identical, independent triggers.
 
 1. Solder two lengths of thin silicone wire to the microswitch's **COM** and
    **NO** (normally open) terminals.
-2. Run them up your forearm to the pod. One goes to D1, the other to ground.
+2. Terminate them in the **male half of a JST-ZH 2-pin** pigtail — the mate to the
+   one you left on the glove side of the umbilical in Step 3.
 3. Mount the switch on a small printed plate, positioned so the **lever** sits
    under your middle and ring finger pads at the spot you marked in Step 1.
 
 Orient the lever so a natural squeeze presses it across its length. You should be
 able to trigger it with your eyes closed, in one motion, every time. If you find
 yourself having to aim, rotate or reposition the plate until you don't.
+
+### Why the switch gets its own tiny plug
+
+The field kit carries a spare microswitch. Without this pigtail, "spare" means
+"spare, if you also brought a soldering iron and somewhere to plug it in." With
+it, swapping a dead trigger mid-event is a ten-second job.
+
+### Why ZH and not PH
+
+> **The trigger pigtail must not be PH2.0.**
+
+Every cell in this build ships on a PH2.0 lead. If the trigger used the same
+connector, one wrong plug in a dark room puts **3.7 V directly onto GPIO3** — a
+dead pin, quite possibly a dead XIAO.
+
+**JST-ZH is 1.5 mm pitch; PH is 2.0 mm.** They physically will not mate. That
+incompatibility is the entire reason for the choice, so don't "simplify" it later
+by standardising on one connector.
 
 ---
 
@@ -190,33 +309,101 @@ yourself having to aim, rotate or reposition the plate until you don't.
 **Do not skip this.** Sewing everything into a glove and *then* discovering a
 reversed data arrow is genuinely miserable.
 
-Lay the whole thing out flat on the table, fully wired but not mounted.
+Lay the whole thing out flat on the table, fully wired but not mounted, with every
+connector mated.
 
 1. **Check polarity with the multimeter.** Battery + and − where you expect.
    Boost output reading close to 5.0V. Only then connect the brain.
-2. Power it up. You should get the dim breathing idle glow.
-3. Press the microswitch by hand. The comet should launch from the **elbow end**
+2. **Check continuity through every connector**, pin by pin, with the beeper. A
+   pigtail with a crimp that didn't seat looks perfect and works intermittently.
+   Find that now, not at the venue.
+3. Power it up. You should get the dim breathing idle glow.
+4. Press the microswitch by hand. The comet should launch from the **elbow end**
    and travel to the **fingertip end**, and the motor should spin.
-4. If the comet runs backwards, your strip pieces are reversed — fix it in the
+5. If the comet runs backwards, your strip pieces are reversed — fix it in the
    wiring, **not** in the code. (Both arms run identical firmware. Keeping that
    true is worth the resolder.)
-5. Let it run for five minutes. Touch the boost module and MOSFET. Warm is fine,
-   too-hot-to-touch is not — power down and check for a short.
+6. Let it run for five minutes, then check for heat.
+
+### Checking for heat
+
+Touch the boost module and MOSFET. Warm is fine, too-hot-to-touch is not — power
+down and check for a short.
+
+**If you can borrow a thermal camera, use it here instead.** It turns this step
+from a fingertip guess into a measurement, and it shows you things a fingertip
+misses:
+
+- a boost module running hot because something downstream is shorted
+- a MOSFET that turned out not to be logic-level, only half-opening and dissipating
+  the difference
+- a strip section drawing more than its neighbours
+
+One borrowed session during bench test is plenty. You don't need to own one.
 
 ---
 
-## Step 7 — Fit the bubble maker
+## Step 7 — Fit the bubbler
 
-Mount the blower unit so its nozzle points **past your fingertips**, in the
-direction the comet travels. The bottle of solution sits on the back of your hand
-or forearm — check MakerWorld for existing mounts from the kit's collection as a
-starting point.
+### First, understand what you actually have
 
-Wire the motor back to the MOSFET in the pod. Use silicone wire; this run flexes.
+The kit is not one object. It's a **bottle**, a **cap with a one-way valve**, and a
+**blower head**, joined by silicone hose:
 
-The one-way valve in the supplied cap means the bottle won't dump solution when
-you move your arm around, which is the entire reason to use the kit's cap rather
-than improvising.
+- **~50 mm of hose inside the bottle**, ending in the blue **gravity ball**. The
+  ball sinks, so the pickup stays in solution at any arm angle — even inverted.
+- **~50–70 mm of hose outside the cap**, feeding the blower head.
+
+So the heavy thing (bottle) and the thing that must point past your fingertips
+(blower head) **do not have to be in the same place.** That opens up a much better
+mount — if the blower can pull solution far enough.
+
+### The hose test — do this before you commit to a mount
+
+Twenty minutes, one length of 3 × 5 mm silicone tube, and it decides the whole
+mount design. Do it the day the kit arrives, before any of the soldering above.
+
+1. Assemble the kit as supplied. Confirm it makes bubbles.
+2. Replace the **outside** hose with about **150 mm** of 3 × 5 tube.
+3. Run it again, held roughly the way your arm will hold it.
+
+**Does it still make bubbles at the same rate?**
+
+### If it passes → Mount C, bottle on the forearm
+
+- **Bottle strapped to the forearm**, blower head at the knuckles pointing past
+  your fingertips.
+- Bubbles still appear to come from your fingers, so the comet illusion is intact.
+- The heaviest item on the arm moves off the end of the lever, where it was costing
+  you the most. This is the better build if you can get it.
+
+### If it fails → Mount A, both on the back of the hand
+
+- **Bottle and blower head both on the back of the hand**, exactly as the kit
+  intends, nozzle past the fingertips.
+- Works as shipped, no modification, no risk.
+- Manage the weight instead:
+  - **run the bottle half-full** — the field kit carries refills anyway
+  - mount the bottle body **back toward the wrist**, cap forward, to shorten the
+    lever arm
+  - anchor to a **wrist strap**, not to glove fabric. A glove will not hold 200 g
+    swinging for an evening
+
+### Either way
+
+- Check MakerWorld for existing mounts from the kit's collection as a starting
+  point. Community CAD for the cap thread and the blower sleeve already exists.
+- **The bubbler is its own module.** Give it a quick-release strap and make sure
+  nothing about its mount bridges the wrist — if a rigid bottle spans that joint,
+  the glove can't come off without removing the bottle first.
+- **Rework the motor lead.** The kit ships the motor on a **PH2.0 female** plug
+  that mates straight to the cell. Cut it off and fit a **JST-SM 2-pin** instead.
+  This is not cosmetic: leave it PH2.0 and the cell can be plugged directly into
+  the motor, bypassing the MOSFET, and the trigger does nothing.
+- Use silicone wire for the motor run; it flexes constantly.
+- A longer hose holds more solution, so dribble on shutdown gets slightly worse.
+  The silicone sleeve over the cap's protrusion — the one-way valve — is what stops
+  it emptying into your glove in a bag.
 
 ---
 
@@ -227,13 +414,19 @@ than improvising.
 2. Install the **FastLED** library (Library Manager → search "FastLED").
 3. Select board: **XIAO_ESP32C3**.
 4. Open `firmware/clown_arm/clown_arm.ino`.
-5. **Edit the layout constants at the top** to match your Step 1 measurements:
+5. **Edit the layout constants at the top** to match your measurements:
 
 ```cpp
 constexpr int FOREARM_PX = 15;   // your forearm pixel count
 constexpr int HAND_PX    = 6;    // your hand pixel count
-constexpr int GAP_PX     = 2;    // jumper length / 1.67 cm, rounded
+constexpr int GAP_PX     = 5;    // umbilical length / 1.67 cm, rounded
 ```
+
+`GAP_PX` is the **measured pixel-to-pixel distance across the umbilical**, from the
+last forearm pixel to the first hand pixel, divided by 1.67 cm. Measure the finished
+assembly from Step 3 — including the connector body, which is most of it. Around 8 cm
+of umbilical gives `GAP_PX = 5`. Guessing here is what makes the comet look like it
+stumbles at the wrist.
 
 6. Plug in USB-C and upload.
 
@@ -265,16 +458,20 @@ it's wrong by even 100 ms, it looks like lag.
 Default is 250 ms. Your actual number depends on how fast your specific blower
 spins up, which is why it's guesswork until you measure it.
 
+**If you built Mount C**, expect a slightly longer number. A 150 mm feed hose takes
+marginally longer to prime than a 60 mm one, and that delay lands between the
+trigger and the first bubble.
+
 While you're here, `COMET_REPEAT_MS` sets how often a new comet launches while
 you hold the trigger. Lower = a denser, more frantic stream.
 
 ---
 
-## Step 10 — Mount into the glove
+## Step 10 — Mount into the glove and sleeve
 
 Now the strip goes in.
 
-### Choosing and testing the glove
+### Choosing and testing the fabric
 
 The fabric spreads the light into a smooth continuous glow instead of visible
 dots — which is a genuine upgrade over an exposed strip, **if** the fabric
@@ -285,7 +482,13 @@ cooperates.
 
 Before committing, hold a powered section of strip under a scrap or under the
 glove itself in a dark room. If you can't see it clearly, no amount of firmware
-will fix it — get a different glove.
+will fix it — get a different glove. **Test the sleeve at the same time**; there's
+no point in a glove that glows and a sleeve that doesn't.
+
+**Building the lace concept?** [DESIGN.md](DESIGN.md) overrides this section. Lace
+is open mesh — light goes straight through the holes and the strip stays visibly a
+strip. You either lean into that or add a diffuser layer underneath. Decide before
+you cut into the gloves.
 
 ### Brightness
 
@@ -306,10 +509,21 @@ thicker you can push it higher, but watch two things:
 - Sew a **fabric channel or sleeve** for the strip to sit in, rather than gluing
   it down flat. The channel lets it slide a little as your hand flexes. Glued-taut
   strip tears itself off, or tears the glove.
-- Run the forearm section under a sleeve or an arm warmer, same principle.
-- Add **strain relief** where wires cross the elbow and wrist — a small loop of
-  wire tacked down on each side of the joint, so movement pulls on the tack rather
-  than the solder joint.
+- Run the forearm section under the sleeve or arm warmer, same principle.
+
+### Connectors and strain relief
+
+- **The connector is never the anchor.** Tack the cable to the garment on *both*
+  sides of every plug, so a snag pulls the tack rather than the latch.
+- Leave a **service loop** either side of every connector.
+- Add strain relief where wires cross the elbow and wrist — a small loop of wire
+  tacked down on each side of the joint, so movement pulls on the tack rather than
+  the solder joint.
+- **A smear of dielectric grease** in each connector shell keeps soap residue from
+  corroding the contacts over a season. Intermittent faults from green contacts are
+  miserable to diagnose.
+- Position the mated plugs where they **won't be pressed against your skin** by a
+  tight sleeve. A 20 mm plastic body under a cuff for six hours is uncomfortable.
 
 ---
 
@@ -317,9 +531,75 @@ thicker you can push it higher, but watch two things:
 
 Repeat Steps 1–10.
 
-The only thing to be careful about: **pixel 0 goes at the elbow on this arm too.**
-It's tempting to mirror the wiring along with the physical build. Don't. Identical
-wiring means identical firmware means one thing to maintain.
+Two things to be careful about:
+
+- **Pixel 0 goes at the elbow on this arm too.** It's tempting to mirror the wiring
+  along with the physical build. Don't. Identical wiring means identical firmware
+  means one thing to maintain.
+- **Keep the same SM-5 and SM-6 pin conventions.** If arm A puts the trigger on
+  pins 4–5 and arm B puts it on pins 1–2, then spares aren't spares, and one
+  wrong plug at an event costs you a board. Write the pinout on a bit of tape
+  inside each pod.
+
+---
+
+## Step 12 — Assemble the costume
+
+Both arms exist. This step is about the thing you actually wear.
+
+### Both-arms checkout
+
+With both arms built, before any event:
+
+1. **Cells out of both pods.**
+2. Mate every connector on both arms. Count them: 4 per arm — elbow SM-6, elbow
+   SM-2, wrist SM-5, wrist SM-2 — plus the ZH-2 at each microswitch.
+3. Cells in. Both arms should show the idle glow.
+4. **Fire each hand separately.** Left trigger drives left arm only; right drives
+   right only. If one trigger fires the other arm, you have crossed something —
+   there is no cross-arm wiring in this design.
+5. Fire both at once. Watch for either arm dimming or glitching. They're
+   electrically independent, so they shouldn't interact at all; if they do, suspect
+   a shared ground you didn't intend.
+6. Run both for the length of a bottle of solution. That's your real duty cycle.
+
+### Getting into it
+
+**Order matters. Cells go in last, always.**
+
+1. Pods on the upper arms, strapped, cells **out**.
+2. Sleeves on. Mate the elbow SM-6 and SM-2 on each side.
+3. Gloves on. Mate the wrist SM-5 on each side.
+4. Bubblers strapped on, mate the wrist SM-2, bottles filled.
+5. **Cells in.** Check both idle glows before you walk out.
+
+### Getting out of it
+
+Reverse. The whole point of the build:
+
+1. **Cells out.** Both arms are now dead and safe to unplug.
+2. Wrist SM-2 + bubbler strap → bubblers off, bottles go somewhere upright.
+3. Wrist SM-5 → gloves peel off.
+4. Elbow SM-6 + SM-2 → sleeves come off.
+5. Pod straps.
+
+Four releases per arm, none of them needing a second person or a flat surface.
+
+### The test that matters
+
+> Can you get out of it alone, in a bathroom, with soapy hands, in under a minute?
+
+If not, something is still soldered that shouldn't be, or a strap is fighting a
+connector. Fix it before the event, not at it.
+
+### Care afterwards
+
+- **Cells out** for storage. Never store the costume with cells connected.
+- Rinse the blower head and cap in warm water; dried bubble solution glues the
+  one-way valve shut.
+- Leave the silicone sleeve on the cap protrusion so the bottle doesn't empty into
+  your bag.
+- Wipe soap residue off any connector that got sprayed, and re-grease it.
 
 ---
 
@@ -328,17 +608,25 @@ wiring means identical firmware means one thing to maintain.
 | Symptom | Likely cause |
 |---|---|
 | Nothing lights at all | Check common ground. Check boost output is ~5V. Check strip DIN is on the *input* end (follow the arrows) |
+| Nothing lights, and it worked yesterday | Check every connector is fully latched. A half-seated SM plug looks mated |
+| Works until you move your arm | Unseated connector, or a crimp that didn't take. Beep through each pin while wiggling |
 | First pixel wrong color, rest fine | Missing or wrong-value data resistor |
-| Random flickering, especially when moving | Missing 74AHCT125, or a loose ground |
+| Pixel 0 died after a reconnect | Strip was plugged in live. Cell out before mating, every time |
+| Random flickering, especially when moving | Missing 74AHCT125, or a loose ground. Check SM-6 pin 6 is actually tied to ground at both ends |
 | Comet runs fingertips → elbow | Strip is reversed. Fix the wiring, not the code |
-| Comet "jumps" at the wrist | `GAP_PX` doesn't match your actual jumper length |
+| Comet "jumps" or stalls at the wrist | `GAP_PX` doesn't match your measured umbilical length |
 | Colors wrong (red/green swapped) | Change `GRB` to `RGB` in the `addLeds` line |
 | Motor whines audibly | PWM frequency dropped below 20 kHz — check `MOTOR_PWM_HZ` |
 | Motor doesn't spin | MOSFET gate not on D2, or a non-logic-level MOSFET |
+| Motor runs constantly, trigger does nothing | Motor still on its factory PH2.0 lead, plugged straight to the cell. Rework it to SM-2 (Step 7) |
 | Everything dies when the motor starts | Battery sagging, or the polyfuse tripping. Check the cell's charge |
 | Lights work, then die after a few minutes | Battery protection circuit cutting out — recharge or swap the cell |
-| Board won't accept uploads | Hold BOOT while plugging in USB |
-| Strip goes dark past the wrist | Cracked trace or failed jumper joint — this is the failure mode the jumper exists to prevent |
+| Elbow pixel pulsing red | Low-battery warning. Swap the cell |
+| One trigger fires the other arm | Not possible by design — you've cross-plugged two arms. Check each arm is self-contained |
+| Board won't accept uploads | Hold BOOT while plugging in USB. If the port isn't recognised at all, suspect a charge-only USB-C cable |
+| Strip goes dark past the wrist | Cracked trace or failed umbilical joint — this is the failure mode the umbilical exists to prevent |
+| Bubbles weak or intermittent | Gravity ball not in solution, or the feed hose is too long. See the Step 7 hose test |
+| Bubbles stop but motor runs | Bottle empty, or dried solution in the one-way valve. Rinse the cap |
 
 ---
 
@@ -369,8 +657,9 @@ The XIAO ESP32-C3 has Wi-Fi and Bluetooth sitting unused. Natural next steps, in
 rough order of effort:
 
 - **More patterns** — a second animation, and a long-press to cycle between them.
-- **ESP-NOW sync** — let one arm's trigger fire both arms simultaneously, for a
-  two-handed blast.
+- **ESP-NOW sync** — let either arm's trigger *also* fire the other, for a
+  two-handed blast. Note this is **additive**: each hand keeps its own trigger and
+  its own arm. It's a second way to fire, not a replacement for the second trigger.
 - **Phone control** — a small web page served by the board to change color and
   speed live, without a laptop.
 
@@ -382,8 +671,12 @@ None of these need extra hardware. They're already paid for.
 
 Things to have with you when you actually wear this:
 
-- Spare charged 18650 per arm
-- A pre-soldered spare wrist jumper
-- A spare microswitch
+- Spare charged 18650 per arm, on its PH2.0 pigtail
+- **A pre-made spare wrist umbilical** — now genuinely swappable, since both ends
+  are connectors
+- A spare microswitch, already on its ZH-2 pigtail
+- One spare SM pigtail pair of each size
 - Extra bubble solution — **this runs out long before the battery does**
+- Spare 3 × 5 silicone tube, in case a feed hose splits
+- A solder pen, for repairs you can't connector your way out of
 - A small screwdriver and some electrical tape

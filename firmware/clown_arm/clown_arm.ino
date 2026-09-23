@@ -21,11 +21,16 @@
 // ---------------------------------------------------------------------------
 
 // Physical layout. The strip is split at the wrist; GAP_PX is how many pixels
-// of *virtual* distance the jumper wire spans, so the comet doesn't appear to
+// of *virtual* distance the umbilical spans, so the comet doesn't appear to
 // jump across the wrist. Measure your own arm (BUILD.md step 1) and adjust.
+//
+// GAP_PX is the measured distance from the last forearm pixel to the first hand
+// pixel, divided by 1.67 cm. That run now includes the SM 5-pin connector body,
+// which is most of it — so measure the finished umbilical (BUILD.md step 3)
+// rather than guessing from the wire length.
 constexpr int FOREARM_PX = 15;   // elbow -> wrist
 constexpr int HAND_PX    = 6;    // wrist -> knuckles
-constexpr int GAP_PX     = 2;    // jumper wire, ~4 cm at 60 LED/m
+constexpr int GAP_PX     = 5;    // umbilical + connector, ~8 cm at 60 LED/m
 
 // Timing. COMET_TRAVEL_MS must match how long the blower takes to reach speed —
 // tune it last, on the assembled arm, with slow-motion video (BUILD.md step 9).
@@ -98,7 +103,7 @@ bool     vbatLow      = false;
 static int virtualToPhysical(int v) {
   if (v < 0 || v >= VIRTUAL_LEN) return -1;
   if (v < FOREARM_PX) return v;
-  if (v < FOREARM_PX + GAP_PX) return -1;   // in the jumper
+  if (v < FOREARM_PX + GAP_PX) return -1;   // in the umbilical
   return v - GAP_PX;
 }
 
