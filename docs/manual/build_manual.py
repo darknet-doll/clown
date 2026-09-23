@@ -198,10 +198,13 @@ PARTS = [
          "first time once you are in costume."),
     ]),
     ("MOTOR CONTROL", [
-        (10, "N-channel logic-level MOSFET module", "1", "2",
+        (10, "N-channel logic-level MOSFET", "1", "2",
          "An electric switch with no moving parts. The brain can think, but it cannot "
          "push enough power to spin a motor, so it flicks this instead and this lets the "
-         "big current through."),
+         "big current through. <b>Do not buy an IRF520 module</b> &mdash; it is the top "
+         "search result and it is not logic-level, so at 3.3V it only half-opens and gets "
+         "hot. Prefer AO3400, or drive the gate at 5V through a spare gate on the "
+         "74AHCT125 [9], which is what Step 4 does."),
         (11, "1N5819 flyback diode", "1", "2 (get 10)",
          "A motor is really just a coil of wire, and cutting power to a coil makes it kick "
          "a nasty voltage spike backwards. This is a one-way valve that gives the spike a "
@@ -693,7 +696,11 @@ def story():
         ["Battery + (after fuse)", "Motor +, via elbow SM-2 %s" % ref(22),
          "Motor runs <b>direct from the cell</b>, not from 5V"],
         ["Motor &minus; (via elbow SM-2)", "MOSFET %s output" % ref(10), ""],
-        ["XIAO D2 (GPIO4)", "MOSFET %s gate input" % ref(10), ""],
+        ["XIAO D2 (GPIO4)", "74AHCT125 %s <b>second</b> gate input" % ref(9),
+         "Gate drive &mdash; see below"],
+        ["74AHCT125 %s second gate out" % ref(9),
+         "100 ohm, then MOSFET %s gate" % ref(10),
+         "Plus a 10k gate-to-source pulldown"],
         ["XIAO D10 (GPIO10)", "74AHCT125 %s input" % ref(9), ""],
         ["74AHCT125 %s output" % ref(9),
          "Resistor %s, then elbow SM-6 pin 3" % ref(18),
@@ -703,6 +710,22 @@ def story():
         ["XIAO D0 (GPIO2)", "Midpoint of the two 100k resistors %s" % ref(16),
          "Battery monitor"],
     ], [1.55 * inch, 3.05 * inch, 1.80 * inch]))
+
+    s.append(callout(
+        "Drive the MOSFET gate at 5V, not 3.3V",
+        "The XIAO %s swings its outputs to <b>3.3V</b>. Most \"logic-level\" MOSFETs are "
+        "specified fully on at <b>Vgs = 5V</b> &mdash; at 3.3V they only partly open, "
+        "dissipate the difference as heat, and the blower runs slow and inconsistent."
+        "<br/><br/>"
+        "<b>The 74AHCT125 %s has four gates and the strip only uses one.</b> Route D2 "
+        "through a second gate, exactly as you route the LED data through the first. Add a "
+        "<b>100 ohm</b> resistor in series with the gate and a <b>10k</b> pulldown from gate "
+        "to source, so the FET is held off while the board boots. It costs nothing &mdash; "
+        "the chip is already in the pod.<br/><br/>"
+        "<b>Do not use an IRF520 module.</b> It is the top search result for \"Arduino "
+        "MOSFET module\" and it is not logic-level: its gate threshold runs to 4V and it "
+        "wants ~10V to open properly. It half-works, which is harder to diagnose than not "
+        "working at all." % (ref(8), ref(9))))
 
     s.append(P("The pod's two outward plugs", "h2"))
     s.append(P("Everything the pod sends down the arm leaves through exactly two "
@@ -1062,7 +1085,10 @@ def story():
          "PWM frequency dropped below 20 kHz &mdash; check "
          "<font face=\"Courier\">MOTOR_PWM_HZ</font>."],
         ["Motor does not spin",
-         "MOSFET %s gate not on D2, or it is not a logic-level part." % ref(10)],
+         "MOSFET %s gate not driven, or it is not a logic-level part." % ref(10)],
+        ["Motor spins weakly, MOSFET gets hot",
+         "Gate driven at 3.3V instead of through the 74AHCT125 %s &mdash; or it is an "
+         "IRF520, which is not logic-level." % ref(9)],
         ["Motor runs constantly, trigger does nothing",
          "Motor still on its factory PH2.0 lead, plugged straight to the cell. Rework it to "
          "SM-2 %s &mdash; Step 7." % ref(22)],

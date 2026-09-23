@@ -303,9 +303,11 @@ lands. See [BUILD.md](BUILD.md) step 9.
 - [ ] **Find the IR / thermal camera** — wanted for bench test, [BUILD.md](BUILD.md) step 6
 - [ ] **Hose test** — does a 150 mm feed hose still lift solution? Decides Mount C
       vs Mount A ([BUILD.md](BUILD.md) step 7)
-- [ ] Pick a multimeter (spec is in [PARTS.md](PARTS.md); model not chosen)
+- [ ] Pick a multimeter — spec and three suggestions in [PARTS.md](PARTS.md)
 - [ ] Decide leaded vs lead-free solder (tradeoff in [PARTS.md](PARTS.md))
-- [ ] Parts ordered
+- [ ] Source a **logic-level** MOSFET — *not* an IRF520 module, see [PARTS.md](PARTS.md)
+- [ ] Parts ordered — buy links in [PARTS.md](PARTS.md); **stock, price and delivery
+      are unverified**, confirm in cart
 - [ ] Bottles sourced — 24T/30T neck, not included in the kit
 - [ ] Lace diffusion test (see DESIGN.md — lace reveals, it doesn't diffuse)
 - [ ] Decide where the controller pod hides

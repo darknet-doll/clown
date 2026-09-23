@@ -188,12 +188,34 @@ above the soap spray.
 | Battery + (after fuse) | Motor +, via elbow SM-2 | Motor runs direct from battery, not 5V |
 | Motor − (via elbow SM-2) | MOSFET module output | |
 | MOSFET module ground | Common ground | |
-| XIAO D2 (GPIO4) | MOSFET gate input | |
+| XIAO D2 (GPIO4) | 74AHCT125 **second** gate input | Gate drive — see below |
+| 74AHCT125 second gate output | 100 Ω → MOSFET gate | 10 kΩ gate-to-source pulldown |
 | XIAO D10 (GPIO10) | 74AHCT125 input pin | |
 | 74AHCT125 output pin | 330–470 Ω resistor → elbow SM-6 pin 3 | Resistor close to the connector |
 | XIAO D1 (GPIO3) | Elbow SM-6 pin 4 | Trigger, arriving from the hand |
 | Elbow SM-6 pin 5 | Common ground | Trigger return |
 | XIAO D0 (GPIO2) | Midpoint of the two 100 kΩ resistors | Battery monitor |
+
+### Drive the MOSFET gate at 5V, not 3.3V
+
+The XIAO's GPIO swings to **3.3 V**. Most "logic-level" MOSFETs are specified fully
+on at **Vgs = 5 V** — at 3.3 V they only partly open, dissipate the difference as
+heat, and the blower runs slow and inconsistent.
+
+**The 74AHCT125 has four gates and the strip only uses one.** Route `D2` through a
+second gate exactly the way you route the LED data through the first. The MOSFET
+then sees a clean 5 V gate signal.
+
+- Costs nothing — the chip is already in the pod
+- Add a **100 Ω** resistor in series with the gate, and a **10 kΩ** pulldown from
+  gate to source, so the FET is held off while the XIAO boots
+- **If you bought an AO3400-based part** it will work at 3.3 V directly, since AO3400
+  is specified down to 2.5 V. Doing it through the shifter anyway costs nothing and
+  removes the question
+
+> **Do not use an IRF520 module.** It is the top search result for "Arduino MOSFET
+> module" and it is not logic-level — its gate threshold runs to 4 V and it wants
+> ~10 V to open properly. It half-works, which is harder to diagnose than not working.
 
 ### The pod's two outward plugs
 
@@ -617,7 +639,8 @@ connector. Fix it before the event, not at it.
 | Comet "jumps" or stalls at the wrist | `GAP_PX` doesn't match your measured umbilical length |
 | Colors wrong (red/green swapped) | Change `GRB` to `RGB` in the `addLeds` line |
 | Motor whines audibly | PWM frequency dropped below 20 kHz — check `MOTOR_PWM_HZ` |
-| Motor doesn't spin | MOSFET gate not on D2, or a non-logic-level MOSFET |
+| Motor doesn't spin | MOSFET gate not driven, or a non-logic-level MOSFET |
+| Motor spins weakly, MOSFET gets hot | Gate driven at 3.3V instead of through the 74AHCT125, or it's an IRF520 — not a logic-level part |
 | Motor runs constantly, trigger does nothing | Motor still on its factory PH2.0 lead, plugged straight to the cell. Rework it to SM-2 (Step 7) |
 | Everything dies when the motor starts | Battery sagging, or the polyfuse tripping. Check the cell's charge |
 | Lights work, then die after a few minutes | Battery protection circuit cutting out — recharge or swap the cell |

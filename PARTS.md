@@ -25,6 +25,22 @@ Read order if you're new:
 
 ---
 
+## About the buy links
+
+Each part below has a **Suggested product** line pointing at a real Amazon listing.
+
+- **What I checked:** the listing exists and its spec matches what this build needs
+- **What I could not check:** price, current stock, and whether it ships to Bothell
+  - Amazon serves automated requests a page with no price, stock or delivery data,
+    and a delivery estimate needs a signed-in session with your address set
+  - **Confirm all three in your cart before ordering.** Treat these as "this is the
+    right part," not "this is in stock today"
+- Where the part is a pure commodity and brand genuinely doesn't matter, the link is
+  a search rather than one listing
+- The bubble kit is **not on Amazon** — it comes from Bambu's own store
+
+---
+
 ## Shopping list
 
 Everything, in one table. Details and reasoning are in the sections below.
@@ -84,6 +100,8 @@ useful — see [Tools](#tools).
   - a USB charger with a matching PH2.0 lead
 - **Not in the box:** the bottle. See below
 - Two kits → two blower heads + two cells. One per arm
+- **Suggested product:** not sold on Amazon —
+  [Bambu Lab US store](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01)
 
 ### How the kit actually works
 
@@ -108,6 +126,9 @@ Worth understanding before you design a mount, because it isn't what you'd guess
   - a small bottle refilled often beats a big bottle carried all night
 - Community CAD for the thread and blower sleeve exists on MakerWorld if you want
   to print a custom one
+- **Suggested product:** measure your cap first, then
+  [search 24/410 or 30/410 PET bottles](https://www.amazon.com/s?k=24-410+30-410+plastic+bottle+with+cap)
+  — 24T/30T is the thread callout, and bottle listings usually say 24/410 or 30/410
 
 ### Silicone tube, 3 × 5 mm — **buy 1 m**
 
@@ -115,6 +136,9 @@ Worth understanding before you design a mount, because it isn't what you'd guess
 - **Does:** lets you extend the feed hose so the bottle can sit on your forearm
 - Also a field spare. Stock aquarium/lab tubing, costs almost nothing
 - Used in the step 7 mount test
+- **Suggested product:**
+  [search 3mm ID x 5mm OD silicone tubing](https://www.amazon.com/s?k=silicone+tubing+3mm+ID+5mm+OD)
+  — any food-grade roll; you need about a metre
 
 ### Bubble solution — **buy as much as you can carry**
 
@@ -142,6 +166,11 @@ Why these exact specs:
 - **IP65** (clear silicone sleeve) → waterproofing
   - you are spraying soapy water down your own arm
 
+**Suggested product:**
+[Luopan WS2812B, configurable](https://www.amazon.com/WS2812B-pixels-WS2812-Decorative-Lighting/dp/B0CG5V735Q)
+— select **1 m / 60 LEDs / black PCB / IP65**. Read the option dropdown carefully;
+this listing also sells 30 and 144 LED/m and IP30, which are the wrong parts.
+
 **Alternative:** SK6812 RGBW
 
 - drop-in swap
@@ -166,6 +195,9 @@ Why these exact specs:
   - Wi-Fi + Bluetooth built in (unused in v1, free for later)
 - **Reprogram:** USB-C cable — a **data** cable, not a charge-only one
   - **keep that port reachable** in the printed pod → see [BUILD.md](BUILD.md)
+- **Suggested product:**
+  [Seeed XIAO ESP32C3, 3-pack](https://www.amazon.com/XIAO-ESP32C3-3PCS-Pack-Bluetooth5-0/dp/B0DGX3LSC7)
+  — two arms plus a spare, which you will want the first time you kill a pin
 
 ### 74AHCT125 level shifter chip — 1 per arm · **buy 2** (get 5, they're cheap)
 
@@ -179,23 +211,69 @@ Why these exact specs:
   - worse with longer wire runs
   - fine on your bench, haunted at the party
   - #1 cause of "my LED strip is possessed"
+- **Suggested product:**
+  [Juried Engineering SN74AHCT125N, DIP-14, 5-pack](https://www.amazon.com/Juried-Engineering-SN74AHCT125N-SN74AHCT125-Breadboard-Friendly/dp/B08FHD994N)
+  - or [Adafruit ADA1787, single](https://www.amazon.com/Adafruit-Accessories-Quad-Level-Shifter-piece/dp/B00XW2L39K)
+    if you would rather buy the known-good one twice
+- **You use one of its four gates for the strip.** Keep the chip in mind — the
+  MOSFET section below has a use for a second gate
 
 ---
 
 ## The motor control
 
-### N-channel logic-level MOSFET module (AO3400 or IRLZ44N) — 1 per arm · **buy 2**
+### N-channel logic-level MOSFET — 1 per arm · **buy 2**
 
 - **Is:** an electrical switch, no moving parts
 - **Problem it fixes:** brain can decide, but can't push enough current to spin a motor
   - like asking someone to lift a car
 - **Does:** brain flicks this switch → switch lets big current through from battery
-- **Buy as a module, not a bare chip:**
-  - no soldering
-  - resistors already included
-- **"Logic-level" matters:**
-  - opens *fully* from the brain's low voltage
-  - non-logic-level → only half-opens, gets hot
+
+#### Do not buy the obvious module
+
+Search "MOSFET module Arduino" and the top result is almost always an **IRF520
+driver module**. It is the wrong part and it will half-work, which is worse than
+not working:
+
+- IRF520 is **not logic-level** — its gate threshold runs as high as 4 V and it
+  wants ~10 V to open fully
+- Your XIAO drives the gate at **3.3 V**. The FET partly opens, dissipates the
+  difference as heat, and the blower runs slow and inconsistently
+- This is exactly the failure the old wording ("non-logic-level → only half-opens,
+  gets hot") warned about — and the default purchase walks straight into it
+
+#### Gate voltage is the real constraint
+
+Even genuine logic-level parts are usually specified at **Vgs = 5 V**, not 3.3 V:
+
+| Part | Rated on at | At 3.3 V gate |
+|---|---|---|
+| IRF520 | ~10 V | **barely on. Don't.** |
+| IRLZ44N | 5 V | marginal — works, runs warmer than it should |
+| RFP30N06LE | 5 V | marginal, same story |
+| AO3400 | **2.5 V** | fully on. Correct for direct 3.3 V drive |
+
+#### The fix that costs nothing
+
+**Drive the gate from 5 V using a spare gate on the 74AHCT125 you already have.**
+
+- The level shifter has **four** gates and the strip uses one
+- Route `D2` through a second gate, exactly as you route the LED data through the first
+- The MOSFET then sees a clean 5 V gate signal, and IRLZ44N or RFP30N06LE become
+  fully-on parts instead of marginal ones
+- No new components, no extra cost. See [BUILD.md](BUILD.md) step 4
+
+**Suggested product**, pick one path:
+
+- **Direct 3.3 V drive** — get an **AO3400**-based module and check the listing
+  actually names AO3400, not IRF520
+- **5 V gate drive** (recommended) —
+  [Cylewet RFP30N06LE logic-level TO-220, 6-pack](https://www.amazon.com/Cylewet-RFP30N06LE-N-Channel-Control-Arduino/dp/B073D399M1).
+  Bare transistors, so add a **100 Ω** gate series resistor and a **10 kΩ**
+  gate-to-source pulldown — both come from the resistor kit below
+
+> Note this supersedes the older "buy a module, not a bare chip" advice. That was
+> sound in principle, but the modules actually on sale are the wrong transistor.
 
 ### 1N5819 flyback diode — 1 per arm · **buy 2** (get 10)
 
@@ -205,6 +283,8 @@ Why these exact specs:
 - **Does:** gives that spike a safe loop to run around until it dies out
 - **Skip it →** MOSFET eventually dies, maybe takes the brain with it
 - Costs ~20¢. Fit it
+- **Suggested product:** [search 1N5819 Schottky diodes](https://www.amazon.com/s?k=1N5819+schottky+diode)
+  — any bag of 10 or more; they're pennies each
 
 ---
 
@@ -221,6 +301,9 @@ Why these exact specs:
 - Cells in the bubble kit are protected ones
 - **Do not substitute unprotected cells** to save money
   - this is strapped to your arm
+- **Suggested product:** two arrive free with the kits. For spares,
+  [search protected 18650 button-top cells](https://www.amazon.com/s?k=protected+18650+battery+button+top)
+  — the listing must say **protected**; most cheap 18650s are not
 
 ### 18650 battery sled / holder with wire leads — 1 per arm · **buy 2**
 
@@ -228,6 +311,8 @@ Why these exact specs:
 - **Does:** lets you swap a flat cell for a fresh one, no soldering iron
 - Print an enclosure with a lid that clicks shut
   - you don't want it ejecting mid-performance
+- **Suggested product:**
+  [search single-slot 18650 holder with wire leads](https://www.amazon.com/s?k=18650+battery+holder+single+slot+wire+leads)
 
 ### 5V boost converter module — 1 per arm · **buy 2**
 
@@ -237,6 +322,10 @@ Why these exact specs:
 - **Only feeds lights + brain (~0.3 A)**
   - motor runs straight off the battery instead
   - so a small cheap module is genuinely fine here
+- **Suggested product:**
+  [Dorhea MT3608 step-up, 10-pack](https://www.amazon.com/MT3608-Converter-Adjustable-Voltage-Regulator/dp/B0BGLGL9RV)
+  — **it is adjustable, so set it to 5.0 V with the trimpot and verify on the meter
+  before you connect the XIAO.** Out of the bag it can be anything
 
 ### 2A resettable fuse (polyfuse / PPTC) — 1 per arm · **buy 2** (get 5)
 
@@ -245,6 +334,7 @@ Why these exact specs:
   - before anything catches fire
 - Let it cool → back to normal by itself
 - Cheap insurance for a lithium cell worn against your body
+- **Suggested product:** [search 2A PPTC resettable fuse](https://www.amazon.com/s?k=PPTC+resettable+fuse+2A+radial)
 
 ### Two 100 kΩ resistors (battery monitor) — 2 per arm · **buy 4**
 
@@ -255,6 +345,10 @@ Why these exact specs:
 - **Does:** shrinks battery voltage neatly in half → safe to read
 - **Gets you:** costume pulses red when the battery is nearly flat
   - instead of dying with no warning
+- **Suggested product:** buy an assortment, not singles —
+  [search 1/4W metal film resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W)
+  — one kit covers the 100 kΩ pair, the 330–470 Ω data resistor, and the 100 Ω / 10 kΩ
+  the MOSFET gate wants
 
 ---
 
@@ -268,6 +362,9 @@ Why these exact specs:
 - **Watch out:** polarised
   - one leg marked negative → must go to ground
   - backwards, electrolytics pop
+- **Suggested product:**
+  [search 1000uF 16V electrolytic capacitors](https://www.amazon.com/s?k=1000uF+16V+electrolytic+capacitor)
+  — 10 V would technically do, but 16 V or 25 V costs the same
 
 ### 330–470 Ω resistor — 1 per arm · **buy 2**
 
@@ -291,6 +388,12 @@ Why these exact specs:
   - **no looking, no aiming**
   - a plain round button = hunting for a 12 mm target by feel
 - **Bonus:** crisp physical click → you feel that it fired
+- **Suggested product:**
+  [Saim long hinge lever microswitch, 10-pack](https://www.amazon.com/Saim-Momentary-Switch-Roller-Action/dp/B01NBK00FD)
+  — wire **COM** and **NO**; ignore the NC terminal
+- **Prefer the plain lever over the roller version.** A roller is a hard point that
+  presses into your palm for hours. If the only listing you can get has rollers, the
+  roller pops off most of these
 
 ---
 
@@ -324,6 +427,19 @@ the strip, the trigger, and a second ground.
 
 - Buy them as **pre-wired pigtail pairs**. No crimp tool, no housings to assemble
 - All of them latch. None of them is friction-only
+
+**Suggested products:**
+
+| Need | Listing |
+|---|---|
+| SM 6-pin | [ACTOO 6-pin JST-SM, 10 pairs](https://www.amazon.com/ACTOO-Connector-Female-Terminal-Adapter/dp/B07YWHCPW5) |
+| SM 5-pin | [BTF-LIGHTING 5-pin JST-SM, 10 pairs](https://www.amazon.com/BTF-LIGHTING-Pairs-Female-Connector-Flexible/dp/B01DC0KNY2) |
+| SM 2-pin | [VANDESAIL 2-pin JST-SM, 20 pairs](https://www.amazon.com/VANDESAIL-Connector-Adapter-Electrical-Female/dp/B0CQX8D3QR) |
+| ZH 2-pin, 1.5 mm | [XUGERIP JST-ZH 1.5 mm 2-pin, 20 pairs](https://www.amazon.com/XUGERIP-1-5mm-Male-Female-Connector/dp/B0D9SN5BTP) |
+
+- These are sold in bulk packs because that's how they come. You'll use the spares
+- **Check the ZH listing says 1.5 mm.** ZH, SH and PH all get called "JST micro" by
+  sellers, and the whole point of this part is that it cannot mate with PH
 
 ### Why these specific ones
 
@@ -376,6 +492,7 @@ the strip, the trigger, and a second ground.
 - **Does:** a smear in each connector shell keeps soap residue from corroding the
   contacts over a season
 - Cheap, and the alternative is intermittent faults you'll chase for hours
+- **Suggested product:** [search dielectric grease](https://www.amazon.com/s?k=dielectric+grease+small+tube)
 
 ---
 
@@ -390,22 +507,29 @@ the strip, the trigger, and a second ground.
   - 26 AWG (thinner) → data + trigger
 - **Wrong wire →** works loose and breaks at elbow and wrist within hours of wear
   - solid-core is the worst offender
+- **Suggested product:**
+  [search silicone stranded wire kit 22-26 AWG](https://www.amazon.com/s?k=silicone+wire+kit+22+24+26+AWG+stranded)
+  — a multi-colour spool set; colour-coding pays for itself at the connectors
 
 ### Heat-shrink tubing, assorted — **one assortment covers both arms**
 
 - **Is:** plastic sleeve that shrinks tight when heated
 - **Does:** seals and insulates each solder joint
 - **Slide it on *before* you solder** — everyone forgets exactly once
+- **Suggested product:** [search heat shrink tubing assortment](https://www.amazon.com/s?k=heat+shrink+tubing+assortment+kit)
 
 ### Hot glue or clear RTV silicone — **buy 1**
 
 - **Does:** seals the cut ends of the strip against soap
 - Used in [BUILD.md](BUILD.md) step 3. Easy to forget when ordering, annoying to lack
+- **Suggested product:** [search clear RTV silicone](https://www.amazon.com/s?k=clear+RTV+silicone+sealant+small+tube)
+  — or any hot glue gun you already own
 
 ### Protoboard, small — 1 per arm · **buy 2**
 
 - **Is:** the perforated board the pod's components sit on
 - Nothing exotic. A 4 × 6 cm piece per arm is plenty
+- **Suggested product:** [search double-sided perfboard assortment](https://www.amazon.com/s?k=double+sided+perfboard+prototype+PCB+assorted)
 
 ### A light-coloured, thin, stretchy glove — 1 per arm · **buy a pair**
 
@@ -414,6 +538,9 @@ the strip, the trigger, and a second ground.
   - thin / white / pale / stretchy → glows beautifully
   - thick / dark / leather → swallows the light almost entirely
 - Test a scrap in a dark room before you buy
+- **Suggested product:** none — this one you buy by hand, in person, holding a lit
+  strip section under it. Fabric is the single most build-critical thing you cannot
+  judge from a listing photo
 - Full detail → glove section in [BUILD.md](BUILD.md)
 - **If you're building the lace concept, read [DESIGN.md](DESIGN.md) first.** Lace is
   pale but it is *not* a diffuser — it's open mesh, and it overrides this guidance
@@ -447,7 +574,8 @@ One of each — these are not per arm.
 - Heat gun or lighter — for heat-shrink
 - **Thermal camera** — optional, genuinely useful. See below
 - 3D printer — trigger plate, battery sled, controller pod, bubbler mount
-- **USB-C data cable** — a charge-only cable will waste you half an hour
+- **USB-C data cable** — a charge-only cable will waste you half an hour.
+  [Search USB-C data sync cable](https://www.amazon.com/s?k=USB+C+data+sync+cable)
 
 ### Solder: leaded or lead-free?
 
@@ -471,6 +599,10 @@ if you want the strip work to go smoothly and you're happy washing your hands.
 - The **pen-style dispenser** is a nice thing to own, but buy a **spool for the
   build** and keep the pen in the field kit — it's for repairs, not for 40 joints
   in an afternoon
+- **Suggested products:**
+  [search 63/37 rosin-core 0.8 mm](https://www.amazon.com/s?k=63%2F37+rosin+core+solder+0.8mm) ·
+  [search lead-free rosin-core 0.8 mm](https://www.amazon.com/s?k=lead+free+rosin+core+solder+0.8mm) ·
+  [search rosin flux pen](https://www.amazon.com/s?k=rosin+flux+pen+no+clean)
 
 ### Multimeter spec
 
@@ -488,6 +620,22 @@ tracing, and for measuring actual current draw. Minimum useful spec:
 Also worth having: auto-ranging, a backlight, and a hold button. You will be under
 a table in bad light.
 
+**Suggested products:**
+
+- **Good enough, cheap:**
+  [Neoteck auto-ranging DMM](https://www.amazon.com/Neoteck-Multimeter-Multimeters-Resistance-Transistor/dp/B01NAVAT9S)
+  — hits every line of the spec above, dual-fused, CAT II 600 V
+- **Also fine:**
+  [Proster PSTTL334](https://www.amazon.com/Proster-PSTTL334-Multimeter-Temperature-Capacitance/dp/B0194VGLFS)
+  — same class, adds temperature and comes with alligator clips
+- **Buy once, cry once:**
+  [Fluke 115](https://www.amazon.com/Fluke-115-Compact-True-RMS-Multimeter/dp/B000OCFFMW)
+  — overkill for this build, correct for the next twenty years. Only worth it if you
+  expect to keep doing electronics
+
+For *this* build any of the three is sufficient — nothing here is a hard measurement.
+The continuity beeper is what you'll actually live in.
+
 ### Thermal camera
 
 - **Does:** shows you the hot component before it becomes a dead component
@@ -496,6 +644,7 @@ a table in bad light.
 - Best at finding: a shorted boost module, a MOSFET that turned out not to be
   logic-level, a strip section drawing more than it should
 - A borrowed one used once during bench test is plenty. You don't need to own it
+- **No link** — you already own one; it's on the README checklist to dig out
 
 ---
 
