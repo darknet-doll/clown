@@ -1,0 +1,6 @@
+# Tutorial render intermediates, all derived from deck.py + render.py.
+# audio/ alone is ~100 MB. The committed outputs are tutorial.srt and chapters.txt.
+docs/tutorial/slides/
+docs/tutorial/audio/
+docs/tutorial/manifest.json
+docs/tutorial/assemble

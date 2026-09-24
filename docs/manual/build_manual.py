@@ -71,7 +71,9 @@ PARTS = [
          "A translator that also shouts. The brain speaks at 3.3V; the strip is listening "
          "for 5V. Usually the strip <i>sort of</i> hears it anyway &mdash; which is exactly "
          "the problem. Leave this out and your lights flicker randomly, normally for the "
-         "first time once you are in costume."),
+         "first time once you are in costume. It has <b>four</b> gates: one drives the "
+         "strip [5], one drives the MOSFET gate [10], and the other two still have to be "
+         "wired to a defined level &mdash; see Step 4."),
     ]),
     ("MOTOR CONTROL", [
         (6, "N-channel logic-level MOSFET module", "x1",
@@ -772,6 +774,12 @@ def story():
         ["Elbow SM-6 pin 5", "Common ground", "Trigger return"],
         ["XIAO D0 (GPIO2)", "Midpoint of the two 100k resistors %s" % ref(16),
          "Battery monitor"],
+        ["74AHCT125 %s 1OE, 2OE" % ref(9), "Common ground",
+         "Enables the two gates you use"],
+        ["74AHCT125 %s 3A, 4A" % ref(9), "Common ground",
+         "Unused inputs &mdash; must not float"],
+        ["74AHCT125 %s 3OE, 4OE" % ref(9), "5V",
+         "Unused outputs off. 3Y, 4Y stay open"],
     ], [1.55 * inch, 3.05 * inch, 1.80 * inch]))
 
     s.append(callout(
@@ -789,6 +797,23 @@ def story():
         "MOSFET module\" and it is not logic-level: its gate threshold runs to 4V and it "
         "wants ~10V to open properly. It half-works, which is harder to diagnose than not "
         "working at all." % (ref(8), ref(9))))
+
+    s.append(callout(
+        "Tie off the two gates you are not using",
+        "The 74AHCT125 %s has four gates and you use two. <b>The other two are not spare "
+        "parts. They are inputs, and a CMOS input must never be left floating.</b><br/><br/>"
+        "A floating input sits wherever stray charge leaves it, usually near the switching "
+        "threshold. The gate then oscillates, and the chip dissipates real power doing it "
+        "&mdash; tens of milliamps instead of microamps, as heat, continuously, out of a "
+        "battery strapped to your arm. It also couples noise into the two gates you do care "
+        "about.<br/><br/>"
+        "<b>3A and 4A go to ground. 3OE and 4OE go to Vcc</b>, which disables those outputs "
+        "&mdash; OE is active low. <b>3Y and 4Y go nowhere at all:</b> they are outputs, so "
+        "leave them open and never tie an output to a rail.<br/><br/>"
+        "On the DIP-14 part the pins run 1OE, 1A, 1Y, 2OE, 2A, 2Y, GND up one side and 3Y, "
+        "3A, 3OE, 4Y, 4A, 4OE, Vcc back down the other. <b>Check the datasheet for the "
+        "package you actually bought</b> &mdash; a breakout board renumbers everything. "
+        "Four short wires, while the chip is going in." % ref(9)))
 
     s.append(callout(
         "Two things that hold the blower off when nothing is telling it to run",
@@ -1329,6 +1354,8 @@ def story():
         ["Random flickering, especially when moving",
          "Missing level shifter %s, or a loose ground. Check SM-6 %s pin 6 is actually tied "
          "to ground at both ends." % (ref(9), ref(20))],
+        ["Level shifter %s runs warm with nothing obviously wrong" % ref(9),
+         "Unused inputs floating. 3A and 4A to ground, 3OE and 4OE to Vcc. Step 4."],
         ["Comet runs fingertips to elbow",
          "Strip %s is reversed. Fix the wiring, not the code." % ref(5)],
         ["Comet jumps or stalls at the wrist",

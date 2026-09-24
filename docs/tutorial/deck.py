@@ -294,6 +294,25 @@ dict(kind="warn", title="The 10k gate pulldown\nis not optional.",
          "Bare transistors do not include one. Most modules do not either. Meter gate to source with the board unpowered: "
          "a few k is fine, open means fit your own."),
 
+dict(kind="bullets", kicker="STEP 4", title="Tie off the two gates you are not using", items=[
+        "The 74AHCT125 has four gates|you use two, and the other two are inputs",
+        "A floating CMOS input|drifts to its threshold and oscillates, burning real power",
+        "3A and 4A|go to ground - any defined level, ground is the convention",
+        "3OE and 4OE|go to Vcc - OE is active low, so that disables those outputs",
+        "3Y and 4Y|go nowhere at all - they are outputs, never tie one to a rail",
+     ],
+     say="One more thing about that level shifter, and it is the kind of detail that bites you months later. "
+         "The chip has four gates. You are using two. The other two are not spare parts. They are inputs, and a "
+         "C MOS input must never be left floating. "
+         "A floating input sits wherever stray charge leaves it, usually somewhere near the switching threshold. "
+         "The gate then oscillates, and the chip dissipates real power doing it. Tens of milliamps instead of "
+         "microamps, as heat, continuously, out of a battery strapped to your arm. It also couples noise into the "
+         "two gates you actually care about, which is the last thing you want on an LED data line. "
+         "So: three A and four A go to ground. Three O E and four O E go to V C C, which disables those outputs, "
+         "because O E is active low. And three Y and four Y go nowhere at all. Those are outputs. Leave them open, "
+         "and never tie an output to a rail. "
+         "Four short wires, while the chip is going in."),
+
 dict(kind="table", kicker="STEP 4", title="The pod's two outward plugs",
      cols=["Plug", "Pin", "Carries"],
      rows=[["SM 6-pin", "1", "Strip 5V"], ["", "2", "Strip GND"], ["", "3", "Strip data, after the resistor"],

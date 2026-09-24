@@ -1,6 +1,6 @@
 # Build tutorial video
 
-`Clown-Build-Tutorial.mp4` in the repo root — 23:23, 1920x1080, narrated.
+`Clown-Build-Tutorial.mp4` in the repo root — 32:34, 1920x1080, narrated.
 Generated, not hand-edited, the same way the PDF manual is.
 
 - `deck.py` — every slide and every line of narration. Edit this.

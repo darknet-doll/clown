@@ -40,6 +40,29 @@ How to read it:
 **The strip is fed from the boost directly, not through D2.** Only the MCU sits
 behind the diode, so the strip keeps a full 5 V.
 
+### The unused half of U2
+
+The build uses two of the 74AHCT125's four gates. **The other two are not "spare",
+they are inputs that must not float.** A floating CMOS input drifts around the
+switching threshold, so the gate oscillates, and the chip draws far more current
+than its datasheet promises — tens of milliamps instead of microamps, as heat,
+forever, off a battery you are wearing.
+
+| Pin | Tie to | Why |
+|---|---|---|
+| `3A`, `4A` | **GND** | Inputs. A defined level, either rail would do; ground is the convention |
+| `3OE`, `4OE` | **Vcc** | Also inputs, and OE is active-low — high disables the output |
+| `3Y`, `4Y` | **nothing** | Outputs. Leave them open. Never tie an output to a rail |
+
+- `1OE` and `2OE` go to **GND**, which is what enables the two gates we do use
+- Disabling the unused outputs rather than enabling them into open air is the
+  conventional choice, and it means a stray probe on `3Y`/`4Y` can't fight anything
+
+On the DIP-14 part the pins are `1OE` 1, `1A` 2, `1Y` 3, `2OE` 4, `2A` 5, `2Y` 6,
+`GND` 7, `3Y` 8, `3A` 9, `3OE` 10, `4Y` 11, `4A` 12, `4OE` 13, `Vcc` 14 — **check
+it against the datasheet for the package you actually bought**; a breakout board
+renumbers everything.
+
 ---
 
 ## Sheet 2 — harness
@@ -61,8 +84,8 @@ behind the diode, so the strip keeps a full 5 V.
 | Net | What it is | Everything on it |
 |---|---|---|
 | `VBATT` | Cell positive, after SW1 and F1 | BT1+ · J1-1 · SW1 · F1 · U1 IN+ · R1 · J3-1 (motor +) |
-| `GND` | The one common ground. Everything returns here | BT1− · J1-2 · U1 IN−/OUT− · U3 GND · U2 GND · Q1 source · C1− · R2 · J2-2 · J2-6 · SW2 COM |
-| `+5V` | Boost output. Strip, level shifter, and D2's anode | U1 OUT+ · U2 Vcc · C1+ · D2 anode · J2-1 (strip +5V) |
+| `GND` | The one common ground. Everything returns here | BT1− · J1-2 · U1 IN−/OUT− · U3 GND · U2 GND · U2 1OE · U2 2OE · U2 3A · U2 4A · Q1 source · C1− · R2 · J2-2 · J2-6 · SW2 COM |
+| `+5V` | Boost output. Strip, level shifter, and D2's anode | U1 OUT+ · U2 Vcc · U2 3OE · U2 4OE · C1+ · D2 anode · J2-1 (strip +5V) |
 | `+5V_MCU` | Same 5 V, one Schottky drop down, MCU only | D2 cathode · U3 5V pad |
 | `VSENSE` | Half of VBATT, for the ADC | R1 · R2 · U3 D0 (GPIO2) |
 | `LED_DATA_3V3` | MCU-level data, level shifter input | U3 D10 (GPIO10) · U2 1A |
@@ -86,7 +109,7 @@ behind the diode, so the strip keeps a full 5 V.
 | `C1` | 1000 uF electrolytic, at the elbow connector |
 | `R1, R2` | 100 k / 100 k battery-sense divider |
 | `U3` | Seeed XIAO ESP32-C3 |
-| `U2` | 74AHCT125 — gate 1 for LED data, gate 2 for the MOSFET gate |
+| `U2` | 74AHCT125 — gate 1 for LED data, gate 2 for the MOSFET gate, gates 3 and 4 tied off |
 | `R3` | 330-470 R series resistor on the LED data line |
 | `R4` | 100 R gate series resistor |
 | `R5` | 10 k gate-to-source pulldown |
@@ -140,3 +163,5 @@ If you are the engineer reading this, these are the things worth checking hardes
 - [ ] `F1` ahead of everything, including `U1` and the motor tap
 - [ ] The boost trimpot set to 5.00 V **before** the XIAO is connected
 - [ ] `U2` `1OE`/`2OE` tied to ground, not left floating
+- [ ] `U2` `3A`/`4A` to ground and `3OE`/`4OE` to Vcc — no unused input floating,
+      and `3Y`/`4Y` left open rather than tied

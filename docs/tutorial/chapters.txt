@@ -1,14 +1,15 @@
 00:00:00  Intro
-00:02:38  Step 1 - Measure your arm
-00:03:37  Step 2 - Cut the strip
-00:04:48  Step 3 - Build the wrist umbilical
-00:06:49  Step 4 - Build the controller pod
-00:10:39  Step 5 - Wire this hand's trigger
-00:11:53  Step 6 - Bench test
-00:13:08  Step 7 - Fit the bubbler
-00:15:25  Step 8 - Flash the firmware
-00:16:33  Step 9 - Tune the timing
-00:17:26  Step 10 - Mount into the glove and sleeve
-00:19:19  Step 11 - Build the second arm
-00:19:56  Step 12 - Assemble the costume
-00:22:04  Troubleshooting
+00:03:02  Step 1 - Measure your arm
+00:04:01  Step 2 - Cut the strip
+00:05:11  Step 3 - Build the wrist umbilical
+00:07:13  Step 4 - Build the controller pod
+00:14:33  Step 5 - Wire this hand's trigger
+00:15:47  Step 6 - Bench test
+00:18:16  Step 7 - Fit the bubbler
+00:20:34  Step 8 - Flash the firmware
+00:21:42  Step 9 - Tune the timing
+00:22:35  Step 10 - Mount into the glove and sleeve
+00:24:28  Step 11 - Seal it against the soap
+00:29:01  Step 12 - Build the second arm
+00:29:38  Step 13 - Assemble the costume
+00:31:46  Troubleshooting

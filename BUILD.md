@@ -210,6 +210,9 @@ circuit in words; the drawing is what to check your work against.
 | MOSFET module ground | Common ground | |
 | XIAO D2 (GPIO4) | 74AHCT125 **second** gate input | Gate drive — see below |
 | 74AHCT125 second gate output | 100 Ω → MOSFET gate | With a 10 kΩ gate-to-source pulldown — see below |
+| 74AHCT125 `1OE`, `2OE` | Common ground | Enables the two gates you use |
+| 74AHCT125 `3A`, `4A` | Common ground | Unused inputs — must not float |
+| 74AHCT125 `3OE`, `4OE` | 5V | Unused outputs disabled. `3Y`/`4Y` stay open |
 | XIAO D10 (GPIO10) | 74AHCT125 input pin | |
 | 74AHCT125 output pin | 330–470 Ω resistor → elbow SM-6 pin 3 | Resistor close to the connector |
 | XIAO D1 (GPIO3) | Elbow SM-6 pin 4 | Trigger, arriving from the hand |
@@ -269,6 +272,32 @@ then sees a clean 5 V gate signal.
 - **If you bought an AO3400-based part** it will work at 3.3 V directly, since AO3400
   is specified down to 2.5 V. Doing it through the shifter anyway costs nothing and
   removes the question
+
+### Tie off the two gates you aren't using
+
+The 74AHCT125 has four gates. You use two. **The other two are not spare parts,
+they are inputs, and a CMOS input must never be left floating.**
+
+A floating input sits wherever stray charge leaves it, usually somewhere near the
+switching threshold. The gate then oscillates, and the chip dissipates real power
+doing it — tens of milliamps instead of microamps, as heat, continuously, out of a
+battery strapped to your arm. It also couples noise into the two gates you do care
+about, which is the last thing you want on the LED data line.
+
+| Pin | Goes to |
+|---|---|
+| `1OE`, `2OE` | **GND** — this is what turns the two gates you use *on* |
+| `3A`, `4A` | **GND** — unused inputs, parked at a defined level |
+| `3OE`, `4OE` | **Vcc** — unused outputs disabled (OE is active low) |
+| `3Y`, `4Y` | **nothing at all** — outputs. Leave them open |
+
+- **Never tie an output to a rail.** `3Y` and `4Y` stay unconnected; the `OE` pins
+  are what switch them off
+- On the DIP-14 part: `1OE` 1, `1A` 2, `1Y` 3, `2OE` 4, `2A` 5, `2Y` 6, `GND` 7,
+  `3Y` 8, `3A` 9, `3OE` 10, `4Y` 11, `4A` 12, `4OE` 13, `Vcc` 14.
+  **Check the datasheet for the package you bought** — a breakout board renumbers
+  everything
+- Four short wires on the protoboard. Do it while the chip is going in, not later
 
 ### The gate pulldown is not optional
 
@@ -907,6 +936,7 @@ connector. Fix it before the event, not at it.
 | First pixel wrong color, rest fine | Missing or wrong-value data resistor |
 | Pixel 0 died after a reconnect | Strip was plugged in live. Cell out before mating, every time |
 | Random flickering, especially when moving | Missing 74AHCT125, or a loose ground. Check SM-6 pin 6 is actually tied to ground at both ends |
+| 74AHCT125 runs warm with nothing obviously wrong | Unused inputs floating. `3A`/`4A` to ground, `3OE`/`4OE` to Vcc (Step 4) |
 | Comet runs fingertips → elbow | Strip is reversed. Fix the wiring, not the code |
 | Comet "jumps" or stalls at the wrist | `GAP_PX` doesn't match your measured umbilical length |
 | Colors wrong (red/green swapped) | Change `GRB` to `RGB` in the `addLeds` line |

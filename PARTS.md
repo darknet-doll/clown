@@ -2,10 +2,12 @@
 
 ## How to read the quantities
 
-Every part below carries **two numbers**:
+Every part below carries **two numbers** and a **status**:
 
 - **Per arm** — what one arm needs
 - **Buy** — what to actually put in the basket for the whole costume
+- **Status** — whether it's already on the shelf, deferred, or dropped;
+  see [What's already on hand](#whats-already-on-hand)
 
 They are different, and confusing them is the single easiest way to end up
 halfway through a build with one glove. **The costume is two arms.** Tools are
@@ -47,55 +49,110 @@ Each part below has a **Suggested product** line pointing at a real Amazon listi
 
 ---
 
+## What's already on hand
+
+Counted 2026-09-23. The shopping list below carries the same status per row, so
+you can shop from the table without re-reading this.
+
+### On the shelf — do not re-buy
+
+- **Bambu bubble maker kit ×2** — one per arm, so everything in the boxes is covered too
+- **1000 µF 16 V electrolytic ×2**
+- **100 kΩ resistor ×4** — two per arm, the battery monitor divider
+- **330–470 Ω resistor ×2**
+- **Small protoboard ×2**
+- **Lever microswitch ×2** — *came in the kits*, one per kit
+- **Protected 18650 ×2** — one per kit, already on its PH2.0 pigtail
+
+### Deciding later — the costume layer
+
+- **Glove** — fingerless, pale, thin
+- **Sleeve or arm warmer** — or one elbow-to-hand piece covering both
+- **Diffuser layer** — also what backs the lace structurally
+- **Satin ribbon** — thumb loops, the wrist placket, *and* the cable tacking either
+  side of every plug ([BUILD.md](BUILD.md) step 10 — the connector is never the
+  anchor). This one is strain relief, not decoration
+
+None of these are electrical and none of them gate the build: the circuit can be
+finished, sealed and bench-tested before any of them is chosen. Two things to carry
+forward when you do decide:
+
+- **Buy one, test it lit, then buy the rest.** How much light a fabric passes is the
+  whole decision, and no listing photo tells you
+- **Decide them together.** Glove, sleeve and diffuser share one fabric rule, and the
+  sleeve choice decides whether the wrist plug stays reachable
+
+### Dropped — and what that costs
+
+- **Spare 18650 cells** — two arrive in the kits, no more being bought
+  - **The cost:** a flat cell ends the performance. There is no swap
+  - Charge both to full the morning of, and know your runtime from
+    [BUILD.md](BUILD.md)'s bench test
+- **18650 sled / holder with leads** — the kit's cell is already on a PH2.0 pigtail
+  that mates to both the pod and the charger, so no sled sits in the path
+  - **Keep the kit's PH2.0 lead on the cell.** That pigtail *is* the swap-and-charge
+    path — cut it off and you need a soldering iron to change a battery
+  - The sled section below stays as the fallback if a pigtail ever gets damaged
+- **18650 transport case** — nothing loose to carry, because no spares
+  - If that changes, the case comes back. A bare cell's whole can is the negative
+    terminal and the shrink wrap is its only insulation
+
+---
+
 ## Shopping list
 
 Everything, in one table. Details and reasoning are in the sections below; the
 buy links are the same ones repeated there, so you can shop straight from here.
 **Price, stock and delivery are unverified — confirm in your cart.**
 
-| Part | Per arm | **Buy** | Where to buy |
-|---|---|---|---|
-| Bambu Electric Bubble Maker Kit 01 | 1 | **2** | [Bambu store](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01) |
-| Bottle, 24T or 30T neck | 1 | **2** + a spare | [search](https://www.amazon.com/s?k=24-410+30-410+plastic+bottle+with+cap) |
-| Silicone tube, 3 × 5 mm | — | **1 m** | [search](https://www.amazon.com/s?k=silicone+tubing+3mm+ID+5mm+OD) |
-| Bubble solution | — | **as much as you can carry** | [search](https://www.amazon.com/s?k=bubble+solution+refill+gallon) |
-| WS2812B strip, 60/m, 5V, IP65, black PCB | 0.4 m | **1 m roll** | [Luopan](https://www.amazon.com/WS2812B-pixels-WS2812-Decorative-Lighting/dp/B0CG5V735Q) |
-| Glove — pale, thin, fingerless | 1 | **a pair** | [sheer lace](https://www.amazon.com/s?k=white+lace+long+fingerless+gloves+arm+warmers) · [ribbon lace-up](https://www.amazon.com/s?k=lace+up+ribbon+knit+arm+warmers+fingerless+white) |
-| Sleeve or arm warmer | 1 | **a pair** (one elbow-to-hand piece covers both) | [search](https://www.amazon.com/s?k=long+white+lace+arm+warmers+fingerless) |
-| Diffuser layer — white organza or tulle | — | **½ yd** | [organza](https://www.amazon.com/s?k=white+organza+fabric+by+the+yard) · [tulle](https://www.amazon.com/s?k=white+tulle+fabric+bolt) · [channel](https://www.amazon.com/s?k=silicone+LED+diffuser+channel+10mm+flexible) |
-| Satin ribbon, 6–10 mm | — | **1 roll** | [search](https://www.amazon.com/s?k=white+satin+ribbon+6mm) |
-| Seeed XIAO ESP32-C3 | 1 | **2** | [Seeed 3-pack](https://www.amazon.com/XIAO-ESP32C3-3PCS-Pack-Bluetooth5-0/dp/B0DGX3LSC7) |
-| 74AHCT125 level shifter | 1 | **2** (buy 5, they're cheap) | [DIP 5-pack](https://www.amazon.com/Juried-Engineering-SN74AHCT125N-SN74AHCT125-Breadboard-Friendly/dp/B08FHD994N) · [Adafruit](https://www.amazon.com/Adafruit-Accessories-Quad-Level-Shifter-piece/dp/B00XW2L39K) |
-| MOSFET module (AO3400 / IRLZ44N) | 1 | **2** | [RFP30N06LE 6-pack](https://www.amazon.com/Cylewet-RFP30N06LE-N-Channel-Control-Arduino/dp/B073D399M1) |
-| 1N5819 diode | 2 | **4** (buy 10) | [search](https://www.amazon.com/s?k=1N5819+schottky+diode) |
-| Battery disconnect switch, 3 A DC | 1 | **2** | [search](https://www.amazon.com/s?k=waterproof+toggle+switch+boot+SPST+12V) |
-| Protected 18650 cell | 1 | **2 in use + 2 spares** (2 come free in the kits) | [search](https://www.amazon.com/s?k=protected+18650+battery+button+top) |
-| 18650 sled with leads | 1 | **2** | [search](https://www.amazon.com/s?k=18650+battery+holder+single+slot+wire+leads) |
-| 5V boost module | 1 | **2** | [MT3608 10-pack](https://www.amazon.com/MT3608-Converter-Adjustable-Voltage-Regulator/dp/B0BGLGL9RV) |
-| 2A polyfuse | 1 | **2** (buy 5) | [search](https://www.amazon.com/s?k=PPTC+resettable+fuse+2A+radial) |
-| 18650 storage/transport case | — | **1 four-slot** | [search](https://www.amazon.com/s?k=18650+battery+storage+case+plastic) |
-| 100 kΩ resistor | 2 | **4** | [resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
-| 1000 µF capacitor | 1 | **2** | [search](https://www.amazon.com/s?k=1000uF+16V+electrolytic+capacitor) |
-| 330–470 Ω resistor | 1 | **2** | [same resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
-| Lever microswitch | 1 | **2 + 2 spares** | [Saim 10-pack](https://www.amazon.com/Saim-Momentary-Switch-Roller-Action/dp/B01NBK00FD) |
-| JST-SM pigtail pair, 6-pin | 1 | **2 + 1 spare** | [ACTOO, 10 pairs](https://www.amazon.com/ACTOO-Connector-Female-Terminal-Adapter/dp/B07YWHCPW5) |
-| JST-SM pigtail pair, 5-pin | 1 | **2 + 1 spare** | [BTF-LIGHTING, 10 pairs](https://www.amazon.com/BTF-LIGHTING-Pairs-Female-Connector-Flexible/dp/B01DC0KNY2) |
-| JST-SM pigtail pair, 2-pin | 2 | **4 + 2 spares** | [VANDESAIL, 20 pairs](https://www.amazon.com/VANDESAIL-Connector-Adapter-Electrical-Female/dp/B0CQX8D3QR) |
-| JST-ZH pigtail pair, 2-pin, 1.5 mm | 1 | **2 + 2 spares** | [XUGERIP, 20 pairs](https://www.amazon.com/XUGERIP-1-5mm-Male-Female-Connector/dp/B0D9SN5BTP) |
-| Protoboard, small | 1 | **2** | [search](https://www.amazon.com/s?k=double+sided+perfboard+prototype+PCB+assorted) |
-| Silicone hookup wire 22–26 AWG | — | **one assortment covers both** | [search](https://www.amazon.com/s?k=silicone+wire+kit+22+24+26+AWG+stranded) |
-| Heat-shrink, assorted | — | **one assortment covers both** | [search](https://www.amazon.com/s?k=heat+shrink+tubing+assortment+kit) |
-| Hot glue sticks or clear RTV silicone | — | **1** | [search](https://www.amazon.com/s?k=clear+RTV+silicone+sealant+small+tube) |
-| Dielectric grease | — | **1 small tube** | [search](https://www.amazon.com/s?k=dielectric+grease+small+tube) |
-| Conformal coating spray, clear acrylic | — | **1 can** | [search](https://www.amazon.com/s?k=clear+acrylic+conformal+coating+spray+electronics) |
-| Self-amalgamating silicone tape | — | **1 roll** | [search](https://www.amazon.com/s?k=self+amalgamating+silicone+tape) |
-| Silicone O-ring cord, 2 mm, or closed-cell foam tape | — | **1** | [O-ring cord](https://www.amazon.com/s?k=silicone+o+ring+cord+2mm+solid) · [foam tape](https://www.amazon.com/s?k=closed+cell+foam+weatherstrip+tape+thin) |
-| M3 heat-set inserts + M3 screws | — | **1 kit** | [search](https://www.amazon.com/s?k=M3+heat+set+threaded+inserts+brass+kit) |
-| Cable gland or rubber grommet, 4–6 mm | 1 | **2 + spares** | [search](https://www.amazon.com/s?k=small+rubber+grommet+assortment+kit) |
-| PETG filament | — | **1 spool** | [search](https://www.amazon.com/s?k=PETG+filament+1.75mm) |
-| Needle and thread, or fabric glue | — | **1** | [sewing kit](https://www.amazon.com/s?k=hand+sewing+kit+needles+thread+ballpoint) · [fabric glue](https://www.amazon.com/s?k=fabric+glue+permanent+washable) |
-| Fabric marker pen | — | **1** | [search](https://www.amazon.com/s?k=washable+fabric+marker+pen+air+erasable) |
-| USB-C cable, **data capable** | — | **1** | [search](https://www.amazon.com/s?k=USB+C+data+sync+cable) |
+Status column: **have** = on the shelf · `later` = costume layer, deferred ·
+~~skip~~ = dropped on purpose, reason in
+[What's already on hand](#whats-already-on-hand) · `buy` = still to order.
+**Every `buy` row is what's actually left.**
+
+| Part | Status | Per arm | **Buy** | Where to buy |
+|---|---|---|---|---|
+| Bambu Electric Bubble Maker Kit 01 | **have** | 1 | **0** — both on hand | [Bambu store](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01) |
+| Bottle, 24T or 30T neck | buy | 1 | **2** + a spare | [search](https://www.amazon.com/s?k=24-410+30-410+plastic+bottle+with+cap) |
+| Silicone tube, 3 × 5 mm | buy | — | **1 m** | [search](https://www.amazon.com/s?k=silicone+tubing+3mm+ID+5mm+OD) |
+| Bubble solution | buy | — | **as much as you can carry** | [search](https://www.amazon.com/s?k=bubble+solution+refill+gallon) |
+| WS2812B strip, 60/m, 5V, IP65, black PCB | buy | 0.4 m | **1 m roll** | [Luopan](https://www.amazon.com/WS2812B-pixels-WS2812-Decorative-Lighting/dp/B0CG5V735Q) |
+| Glove — pale, thin, fingerless | later | 1 | **a pair** | [sheer lace](https://www.amazon.com/s?k=white+lace+long+fingerless+gloves+arm+warmers) · [ribbon lace-up](https://www.amazon.com/s?k=lace+up+ribbon+knit+arm+warmers+fingerless+white) |
+| Sleeve or arm warmer | later | 1 | **a pair** (one elbow-to-hand piece covers both) | [search](https://www.amazon.com/s?k=long+white+lace+arm+warmers+fingerless) |
+| Diffuser layer — white organza or tulle | later | — | **½ yd** | [organza](https://www.amazon.com/s?k=white+organza+fabric+by+the+yard) · [tulle](https://www.amazon.com/s?k=white+tulle+fabric+bolt) · [channel](https://www.amazon.com/s?k=silicone+LED+diffuser+channel+10mm+flexible) |
+| Satin ribbon, 6–10 mm | later | — | **1 roll** | [search](https://www.amazon.com/s?k=white+satin+ribbon+6mm) |
+| Seeed XIAO ESP32-C3 | buy | 1 | **2** | [Seeed 3-pack](https://www.amazon.com/XIAO-ESP32C3-3PCS-Pack-Bluetooth5-0/dp/B0DGX3LSC7) |
+| 74AHCT125 level shifter | buy | 1 | **2** (buy 5, they're cheap) | [DIP 5-pack](https://www.amazon.com/Juried-Engineering-SN74AHCT125N-SN74AHCT125-Breadboard-Friendly/dp/B08FHD994N) · [Adafruit](https://www.amazon.com/Adafruit-Accessories-Quad-Level-Shifter-piece/dp/B00XW2L39K) |
+| MOSFET module (AO3400 / IRLZ44N) | buy | 1 | **2** | [RFP30N06LE 6-pack](https://www.amazon.com/Cylewet-RFP30N06LE-N-Channel-Control-Arduino/dp/B073D399M1) |
+| 1N5819 diode | buy | 2 | **4** (buy 10) | [search](https://www.amazon.com/s?k=1N5819+schottky+diode) |
+| Battery disconnect switch, 3 A DC | buy | 1 | **2** | [search](https://www.amazon.com/s?k=waterproof+toggle+switch+boot+SPST+12V) |
+| Protected 18650 cell | **have** | 1 | **0** — 2 come in the kits | [search](https://www.amazon.com/s?k=protected+18650+battery+button+top) |
+| 18650 sled with leads | ~~skip~~ | — | **0** — kit cell is on a pigtail | [search](https://www.amazon.com/s?k=18650+battery+holder+single+slot+wire+leads) |
+| 5V boost module | buy | 1 | **2** | [MT3608 10-pack](https://www.amazon.com/MT3608-Converter-Adjustable-Voltage-Regulator/dp/B0BGLGL9RV) |
+| 2A polyfuse | buy | 1 | **2** (buy 5) | [search](https://www.amazon.com/s?k=PPTC+resettable+fuse+2A+radial) |
+| 18650 storage/transport case | ~~skip~~ | — | **0** — no spares to carry | [search](https://www.amazon.com/s?k=18650+battery+storage+case+plastic) |
+| 100 kΩ resistor | **have** | 2 | **0** — 4 on hand | [resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
+| 1000 µF capacitor | **have** | 1 | **0** — 2 on hand | [search](https://www.amazon.com/s?k=1000uF+16V+electrolytic+capacitor) |
+| 330–470 Ω resistor | **have** | 1 | **0** — 2 on hand | [same resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
+| Lever microswitch | **have** | 1 | **0** — 2 come in the kits | [Saim 10-pack](https://www.amazon.com/Saim-Momentary-Switch-Roller-Action/dp/B01NBK00FD) |
+| JST-SM pigtail pair, 6-pin | buy | 1 | **2 + 1 spare** | [ACTOO, 10 pairs](https://www.amazon.com/ACTOO-Connector-Female-Terminal-Adapter/dp/B07YWHCPW5) |
+| JST-SM pigtail pair, 5-pin | buy | 1 | **2 + 1 spare** | [BTF-LIGHTING, 10 pairs](https://www.amazon.com/BTF-LIGHTING-Pairs-Female-Connector-Flexible/dp/B01DC0KNY2) |
+| JST-SM pigtail pair, 2-pin | buy | 2 | **4 + 2 spares** | [VANDESAIL, 20 pairs](https://www.amazon.com/VANDESAIL-Connector-Adapter-Electrical-Female/dp/B0CQX8D3QR) |
+| JST-ZH pigtail pair, 2-pin, 1.5 mm | buy | 1 | **2 + 2 spares** | [XUGERIP, 20 pairs](https://www.amazon.com/XUGERIP-1-5mm-Male-Female-Connector/dp/B0D9SN5BTP) |
+| Protoboard, small | **have** | 1 | **0** — 2 on hand | [search](https://www.amazon.com/s?k=double+sided+perfboard+prototype+PCB+assorted) |
+| Silicone hookup wire 22–26 AWG | buy | — | **one assortment covers both** | [search](https://www.amazon.com/s?k=silicone+wire+kit+22+24+26+AWG+stranded) |
+| Heat-shrink, assorted | buy | — | **one assortment covers both** | [search](https://www.amazon.com/s?k=heat+shrink+tubing+assortment+kit) |
+| Hot glue sticks or clear RTV silicone | buy | — | **1** | [search](https://www.amazon.com/s?k=clear+RTV+silicone+sealant+small+tube) |
+| Dielectric grease | buy | — | **1 small tube** | [search](https://www.amazon.com/s?k=dielectric+grease+small+tube) |
+| Conformal coating spray, clear acrylic | buy | — | **1 can** | [search](https://www.amazon.com/s?k=clear+acrylic+conformal+coating+spray+electronics) |
+| Self-amalgamating silicone tape | buy | — | **1 roll** | [search](https://www.amazon.com/s?k=self+amalgamating+silicone+tape) |
+| Silicone O-ring cord, 2 mm, or closed-cell foam tape | buy | — | **1** | [O-ring cord](https://www.amazon.com/s?k=silicone+o+ring+cord+2mm+solid) · [foam tape](https://www.amazon.com/s?k=closed+cell+foam+weatherstrip+tape+thin) |
+| M3 heat-set inserts + M3 screws | buy | — | **1 kit** | [search](https://www.amazon.com/s?k=M3+heat+set+threaded+inserts+brass+kit) |
+| Cable gland or rubber grommet, 4–6 mm | buy | 1 | **2 + spares** | [search](https://www.amazon.com/s?k=small+rubber+grommet+assortment+kit) |
+| PETG filament | buy | — | **1 spool** | [search](https://www.amazon.com/s?k=PETG+filament+1.75mm) |
+| Needle and thread, or fabric glue | buy | — | **1** | [sewing kit](https://www.amazon.com/s?k=hand+sewing+kit+needles+thread+ballpoint) · [fabric glue](https://www.amazon.com/s?k=fabric+glue+permanent+washable) |
+| Fabric marker pen | buy | — | **1** | [search](https://www.amazon.com/s?k=washable+fabric+marker+pen+air+erasable) |
+| USB-C cable, **data capable** | buy | — | **1** | [search](https://www.amazon.com/s?k=USB+C+data+sync+cable) |
 
 Tools, one of each: soldering iron, flux-core solder, flux pen, wire strippers,
 side cutters, heat gun, multimeter, 3D printer. Thermal camera optional but very
@@ -105,7 +162,7 @@ useful — see [Tools](#tools).
 
 ## The bubbles
 
-### Bambu Lab Electric Bubble Maker Kit 01 (P6M) — 1 per arm · **buy 2**
+### Bambu Lab Electric Bubble Maker Kit 01 (P6M) — 1 per arm · **on hand: 2**
 
 - **Is:** blower head + one-way-valve bottle cap + silicone hose + gravity ball
 - **Does:** draws solution up the hose and blows air across it → bubbles
@@ -113,9 +170,10 @@ useful — see [Tools](#tools).
   - Kit ships the motor on a **PH2.0 female** plug, which mates straight to the cell
   - You cut that off and fit a **JST-SM 2-pin** instead, so the MOSFET sits in between
   - See [Connectors](#connectors) for why that swap is not optional
-- **Also in the box, and you use both:**
+- **Also in the box, and you use all three:**
   - one protected 18650 cell, on a PH2.0 pigtail
   - a USB charger with a matching PH2.0 lead
+  - a lever microswitch — the kit's own trigger, and the one this build uses
 - **Not in the box:** the bottle. See below
 - Two kits → two blower heads + two cells. One per arm
 - **Suggested product:** not sold on Amazon —
@@ -237,6 +295,14 @@ this listing also sells 30 and 144 LED/m and IP30, which are the wrong parts.
     if you would rather buy the known-good one twice
 - **You use one of its four gates for the strip.** Keep the chip in mind — the
   MOSFET section below has a use for a second gate
+- **The two gates you don't use still need wiring.** They're CMOS inputs, and a
+  floating CMOS input oscillates around its switching threshold — the chip then
+  burns tens of milliamps as heat, off a battery you're wearing, and couples noise
+  into the gates you do care about
+  - `3A`, `4A` → **ground**
+  - `3OE`, `4OE` → **Vcc**, which disables those outputs
+  - `3Y`, `4Y` → **nothing**. Never tie an output to a rail
+  - Four short wires. [BUILD.md](BUILD.md) step 4 has the pinout
 
 ---
 
@@ -343,7 +409,7 @@ Two jobs, same part, and they are easy to confuse — one is `D1`, one is `D2`.
 
 ## Power
 
-### Protected 18650 battery — 1 per arm · **buy 2 in use + 2 spares**
+### Protected 18650 battery — 1 per arm · **on hand: 2, in the kits** · no spares
 
 - **Is:** rechargeable cell, same kind as in a laptop pack or a vape
 - One comes free with each bubble kit, already on a **PH2.0 pigtail**
@@ -354,17 +420,27 @@ Two jobs, same part, and they are easy to confuse — one is `D1`, one is `D2`.
 - Cells in the bubble kit are protected ones
 - **Do not substitute unprotected cells** to save money
   - this is strapped to your arm
-- **Suggested product:** two arrive free with the kits. For spares,
+- **On hand:** the two that arrived in the kits. **No spares are being bought**
+  - so a flat cell ends the performance — there is no swap
+  - charge both to full the morning of, and know the runtime from
+    [BUILD.md](BUILD.md)'s bench test
+- **Suggested product**, if you change your mind on spares:
   [search protected 18650 button-top cells](https://www.amazon.com/s?k=protected+18650+battery+button+top)
   — the listing must say **protected**; most cheap 18650s are not
 
-### 18650 battery sled / holder with wire leads — 1 per arm · **buy 2**
+### 18650 battery sled / holder with wire leads — **skipped** · fallback only
 
+- **Not being bought.** The kit's cell already arrives on a **PH2.0 pigtail** that
+  mates to both the pod and the charger, so nothing in the path needs a sled
+- **Keep that pigtail on the cell.** It *is* the swap-and-charge path — cut it off
+  and changing a battery needs a soldering iron
 - **Is:** the slot the cell sits in
 - **Does:** lets you swap a flat cell for a fresh one, no soldering iron
+- **Kept here as the fallback** — if a pigtail tears or a lead pulls out of its
+  crimp, this is the part that gets you running again
 - Print an enclosure with a lid that clicks shut
   - you don't want it ejecting mid-performance
-- **Suggested product:**
+- **Suggested product**, if you ever need one:
   [search single-slot 18650 holder with wire leads](https://www.amazon.com/s?k=18650+battery+holder+single+slot+wire+leads)
 
 ### 5V boost converter module — 1 per arm · **buy 2**
@@ -405,17 +481,21 @@ Two jobs, same part, and they are easy to confuse — one is `D1`, one is `D2`.
   [search booted SPST toggle switch](https://www.amazon.com/s?k=waterproof+toggle+switch+boot+SPST+12V)
   — confirm the DC rating in the listing text, not just the picture
 
-### 18650 storage case — **buy 1 four-slot**
+### 18650 storage case — **skipped** · no spare cells to carry
 
+- **Not being bought** — no spare cells, so nothing loose to carry
+- **It comes straight back the day you buy a spare.** The rest of this section is
+  why, and applies to any cell that ever travels outside the pod
 - **Is:** a hard plastic box with a slot per cell
 - **Does:** stops a spare cell shorting against keys, coins, or another cell
 - A bare 18650's entire can is the negative terminal. The shrink wrap is the only
   insulation it has, and a nick in that wrap is how a cell in a bag goes wrong
 - **Check the wrap on every cell before every event.** Re-wrap or bin any that are
   torn
-- **Suggested product:** [search 18650 storage case](https://www.amazon.com/s?k=18650+battery+storage+case+plastic)
+- **Suggested product**, if spares happen:
+  [search 18650 storage case](https://www.amazon.com/s?k=18650+battery+storage+case+plastic)
 
-### Two 100 kΩ resistors (battery monitor) — 2 per arm · **buy 4**
+### Two 100 kΩ resistors (battery monitor) — 2 per arm · **on hand: 4**
 
 - **Is:** two resistors forming a "divider"
 - **Problem it fixes:**
@@ -428,7 +508,8 @@ Two jobs, same part, and they are easy to confuse — one is `D1`, one is `D2`.
   - a **shutoff** — at a sustained 3.0 V the arm cuts the motor and stops firing,
     so the cell's own protection board never has to save it. Double blink, not a
     single pulse, so you can tell them apart across a room
-- **Suggested product:** buy an assortment, not singles —
+- **On hand: 4.** Nothing to buy
+- **Suggested product**, to re-buy — an assortment, not singles —
   [search 1/4W metal film resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W)
   — one kit covers the 100 kΩ pair, the 330–470 Ω data resistor, and the 100 Ω / 10 kΩ
   the MOSFET gate wants
@@ -437,7 +518,7 @@ Two jobs, same part, and they are easy to confuse — one is `D1`, one is `D2`.
 
 ## Signal conditioning
 
-### 1000 µF electrolytic capacitor — 1 per arm · **buy 2**
+### 1000 µF electrolytic capacitor — 1 per arm · **on hand: 2**
 
 - **Is:** a tiny water tank for electricity
 - **Problem it fixes:** many LEDs switching on at once all gulp power at the same instant
@@ -445,12 +526,14 @@ Two jobs, same part, and they are easy to confuse — one is `D1`, one is `D2`.
 - **Watch out:** polarised
   - one leg marked negative → must go to ground
   - backwards, electrolytics pop
-- **Suggested product:**
+- **On hand: 2, 16 V.** Nothing to buy
+- **Suggested product**, to re-buy:
   [search 1000uF 16V electrolytic capacitors](https://www.amazon.com/s?k=1000uF+16V+electrolytic+capacitor)
   — 10 V would technically do, but 16 V or 25 V costs the same
 
-### 330–470 Ω resistor — 1 per arm · **buy 2**
+### 330–470 Ω resistor — 1 per arm · **on hand: 2**
 
+- **On hand: 2.** Nothing to buy
 - **Is:** a speed bump on the data wire
 - **Does:** softens the signal's sharp edge
   - so it doesn't bounce back down the wire and garble the message to the first LED
@@ -463,8 +546,11 @@ Two jobs, same part, and they are easy to confuse — one is `D1`, one is `D2`.
 
 ## The trigger
 
-### Snap-action microswitch, lever type — 1 per arm · **buy 2 + 2 spares**
+### Snap-action microswitch, lever type — 1 per arm · **on hand: 2, in the kits**
 
+- **Already on hand: one per kit, two total.** Nothing to buy
+- **Check which lever yours has before you build the mount** — see the roller note
+  at the end of this section
 - **Is:** clicky button with a small metal arm sticking off it
 - **One per hand.** Each hand fires its own arm — nothing crosses the torso
 - **The arm is the point:**
@@ -473,9 +559,14 @@ Two jobs, same part, and they are easy to confuse — one is `D1`, one is `D2`.
   - **no looking, no aiming**
   - a plain round button = hunting for a 12 mm target by feel
 - **Bonus:** crisp physical click → you feel that it fired
-- **Suggested product:**
+- **Wiring is the same whatever the body looks like:** use **COM** and **NO**;
+  ignore the NC terminal
+- **Whatever plug the kit's switch arrives on, the trigger lead ends up on
+  JST-ZH 2-pin.** If it ships on PH2.0, that rework is not optional — a PH-2 trigger
+  lead mates with the PH-2 battery lead and puts 3.7 V on GPIO3. See
+  [Connectors](#connectors)
+- **Suggested product**, only if you break both or want spares:
   [Saim long hinge lever microswitch, 10-pack](https://www.amazon.com/Saim-Momentary-Switch-Roller-Action/dp/B01NBK00FD)
-  — wire **COM** and **NO**; ignore the NC terminal
 - **Prefer the plain lever over the roller version.** A roller is a hard point that
   presses into your palm for hours. If the only listing you can get has rollers, the
   roller pops off most of these
@@ -497,14 +588,14 @@ to end across a joint.
 
 ### The connectors themselves
 
-| Boundary | Carries | Connector | Per arm · **buy** |
-|---|---|---|---|
-| Cell ↔ pod, cell ↔ charger | 2 | **JST-PH 2.0, 2-pin** *(already on the cell)* | — |
-| Pod → sleeve, at the **elbow** | strip 3 + trigger 2 + spare GND | **JST-SM 6-pin** | 1 · **2 + 1** |
-| Motor run, at the **elbow** | motor 2 | **JST-SM 2-pin** | 1 · **4 + 2** |
-| Sleeve → glove, at the **wrist** | strip 3 + trigger 2 | **JST-SM 5-pin** | 1 · **2 + 1** |
-| Motor run, at the **wrist** | motor 2 | **JST-SM 2-pin** | *(same bag as above)* |
-| Microswitch pigtail | switch 2 | **JST-ZH 1.5 mm, 2-pin** | 1 · **2 + 2** |
+| Boundary | buy | Carries | Connector | Per arm · **buy** |
+|---|---|---|---|---|
+| Cell ↔ pod, cell ↔ charger | buy | 2 | **JST-PH 2.0, 2-pin** *(already on the cell)* | — |
+| Pod → sleeve, at the **elbow** | buy | strip 3 + trigger 2 + spare GND | **JST-SM 6-pin** | 1 · **2 + 1** |
+| Motor run, at the **elbow** | buy | motor 2 | **JST-SM 2-pin** | 1 · **4 + 2** |
+| Sleeve → glove, at the **wrist** | buy | strip 3 + trigger 2 | **JST-SM 5-pin** | 1 · **2 + 1** |
+| Motor run, at the **wrist** | buy | motor 2 | **JST-SM 2-pin** | *(same bag as above)* |
+| Microswitch pigtail | buy | switch 2 | **JST-ZH 1.5 mm, 2-pin** | 1 · **2 + 2** |
 
 **Both the trigger and the motor have to reach the pod from the hand**, so both
 cross *both* joints. That's why the elbow plug is 6-pin, not 3-pin — it carries
@@ -610,14 +701,16 @@ the strip, the trigger, and a second ground.
 - **Suggested product:** [search clear RTV silicone](https://www.amazon.com/s?k=clear+RTV+silicone+sealant+small+tube)
   — or any hot glue gun you already own
 
-### Protoboard, small — 1 per arm · **buy 2**
+### Protoboard, small — 1 per arm · **on hand: 2**
 
+- **On hand: 2.** Nothing to buy
 - **Is:** the perforated board the pod's components sit on
 - Nothing exotic. A 4 × 6 cm piece per arm is plenty
-- **Suggested product:** [search double-sided perfboard assortment](https://www.amazon.com/s?k=double+sided+perfboard+prototype+PCB+assorted)
+- **Suggested product**, to re-buy: [search double-sided perfboard assortment](https://www.amazon.com/s?k=double+sided+perfboard+prototype+PCB+assorted)
 
-### A light-coloured, thin, fingerless glove — 1 per arm · **buy a pair**
+### A light-coloured, thin, fingerless glove — 1 per arm · **deciding later**
 
+- **Deciding later.** Doesn't gate the build — the circuit finishes without it
 - **Does:** hides the strip, spreads light into a soft even glow instead of dots
 - **Fabric matters a lot:**
   - thin / white / pale / stretchy → glows beautifully
@@ -641,7 +734,7 @@ the strip, the trigger, and a second ground.
 - **If you're building the lace concept, read [DESIGN.md](DESIGN.md) first.** Lace is
   pale but it is *not* a diffuser — it's open mesh, and it overrides this guidance
 
-### Sleeve or arm warmer — 1 per arm · **buy a pair**
+### Sleeve or arm warmer — 1 per arm · **deciding later**
 
 - **Does:** same job as the glove, for the forearm segment
 - Same fabric rules apply. Buy it at the same time as the glove and test both together
@@ -652,7 +745,7 @@ the strip, the trigger, and a second ground.
   placket over the plug, or accept three modules per arm instead of four
 - **Suggested product:** [search long white lace arm warmers](https://www.amazon.com/s?k=long+white+lace+arm+warmers+fingerless)
 
-### Diffuser layer — white organza or tulle — **buy ½ yd**
+### Diffuser layer — white organza or tulle — **deciding later** · ½ yd when you do
 
 - **Does:** the soft glow the strip needs and lace does not provide — a scattering
   layer between the strip and the lace, with the lace pattern silhouetted on top
@@ -669,7 +762,7 @@ the strip, the trigger, and a second ground.
     for a harder, more even diffusion — heavier and less drapey, better on the forearm
     than over the knuckles
 
-### Satin ribbon, 6–10 mm — **buy 1 roll**
+### Satin ribbon, 6–10 mm — **deciding later** · 1 roll when you do
 
 - **Does:** thumb loops, the laced placket over the wrist connector, and tacking
   cable to the garment on both sides of every plug ([BUILD.md](BUILD.md) step 10 —
