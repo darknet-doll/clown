@@ -37,47 +37,55 @@ Each part below has a **Suggested product** line pointing at a real Amazon listi
     right part," not "this is in stock today"
 - Where the part is a pure commodity and brand genuinely doesn't matter, the link is
   a search rather than one listing
+- **The garment and fabric links are all searches, on purpose.** Listings for lace
+  gloves and arm warmers churn constantly, and the thing that decides whether one
+  works — how much light its fabric passes — is not visible in a listing photo. Buy
+  one pair, test it lit, *then* buy the rest
 - The bubble kit is **not on Amazon** — it comes from Bambu's own store
 
 ---
 
 ## Shopping list
 
-Everything, in one table. Details and reasoning are in the sections below.
+Everything, in one table. Details and reasoning are in the sections below; the
+buy links are the same ones repeated there, so you can shop straight from here.
+**Price, stock and delivery are unverified — confirm in your cart.**
 
-| Part | Per arm | **Buy** |
-|---|---|---|
-| Bambu Electric Bubble Maker Kit 01 | 1 | **2** |
-| Bottle, 24T or 30T neck | 1 | **2** + a spare |
-| Silicone tube, 3 × 5 mm | — | **1 m** |
-| Bubble solution | — | **as much as you can carry** |
-| WS2812B strip, 60/m, 5V, IP65, black PCB | 0.4 m | **1 m roll** |
-| Thin pale stretchy glove | 1 | **a pair** |
-| Sleeve or arm warmer | 1 | **a pair** |
-| Seeed XIAO ESP32-C3 | 1 | **2** |
-| 74AHCT125 level shifter | 1 | **2** (buy 5, they're cheap) |
-| MOSFET module (AO3400 / IRLZ44N) | 1 | **2** |
-| 1N5819 diode | 1 | **2** (buy 10) |
-| Protected 18650 cell | 1 | **2 in use + 2 spares** (2 come free in the kits) |
-| 18650 sled with leads | 1 | **2** |
-| 5V boost module | 1 | **2** |
-| 2A polyfuse | 1 | **2** (buy 5) |
-| 100 kΩ resistor | 2 | **4** |
-| 1000 µF capacitor | 1 | **2** |
-| 330–470 Ω resistor | 1 | **2** |
-| Lever microswitch | 1 | **2 + 2 spares** |
-| JST-SM pigtail pair, 6-pin | 1 | **2 + 1 spare** |
-| JST-SM pigtail pair, 5-pin | 1 | **2 + 1 spare** |
-| JST-SM pigtail pair, 2-pin | 2 | **4 + 2 spares** |
-| JST-ZH pigtail pair, 2-pin, 1.5 mm | 1 | **2 + 2 spares** |
-| Protoboard, small | 1 | **2** |
-| Silicone hookup wire 22–26 AWG | — | **one assortment covers both** |
-| Heat-shrink, assorted | — | **one assortment covers both** |
-| Hot glue sticks or clear RTV silicone | — | **1** |
-| Dielectric grease | — | **1 small tube** |
-| Needle and thread, or fabric glue | — | **1** |
-| Fabric marker pen | — | **1** |
-| USB-C cable, **data capable** | — | **1** |
+| Part | Per arm | **Buy** | Where to buy |
+|---|---|---|---|
+| Bambu Electric Bubble Maker Kit 01 | 1 | **2** | [Bambu store](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01) |
+| Bottle, 24T or 30T neck | 1 | **2** + a spare | [search](https://www.amazon.com/s?k=24-410+30-410+plastic+bottle+with+cap) |
+| Silicone tube, 3 × 5 mm | — | **1 m** | [search](https://www.amazon.com/s?k=silicone+tubing+3mm+ID+5mm+OD) |
+| Bubble solution | — | **as much as you can carry** | [search](https://www.amazon.com/s?k=bubble+solution+refill+gallon) |
+| WS2812B strip, 60/m, 5V, IP65, black PCB | 0.4 m | **1 m roll** | [Luopan](https://www.amazon.com/WS2812B-pixels-WS2812-Decorative-Lighting/dp/B0CG5V735Q) |
+| Glove — pale, thin, fingerless | 1 | **a pair** | [sheer lace](https://www.amazon.com/s?k=white+lace+long+fingerless+gloves+arm+warmers) · [ribbon lace-up](https://www.amazon.com/s?k=lace+up+ribbon+knit+arm+warmers+fingerless+white) |
+| Sleeve or arm warmer | 1 | **a pair** (one elbow-to-hand piece covers both) | [search](https://www.amazon.com/s?k=long+white+lace+arm+warmers+fingerless) |
+| Diffuser layer — white organza or tulle | — | **½ yd** | [organza](https://www.amazon.com/s?k=white+organza+fabric+by+the+yard) · [tulle](https://www.amazon.com/s?k=white+tulle+fabric+bolt) · [channel](https://www.amazon.com/s?k=silicone+LED+diffuser+channel+10mm+flexible) |
+| Satin ribbon, 6–10 mm | — | **1 roll** | [search](https://www.amazon.com/s?k=white+satin+ribbon+6mm) |
+| Seeed XIAO ESP32-C3 | 1 | **2** | [Seeed 3-pack](https://www.amazon.com/XIAO-ESP32C3-3PCS-Pack-Bluetooth5-0/dp/B0DGX3LSC7) |
+| 74AHCT125 level shifter | 1 | **2** (buy 5, they're cheap) | [DIP 5-pack](https://www.amazon.com/Juried-Engineering-SN74AHCT125N-SN74AHCT125-Breadboard-Friendly/dp/B08FHD994N) · [Adafruit](https://www.amazon.com/Adafruit-Accessories-Quad-Level-Shifter-piece/dp/B00XW2L39K) |
+| MOSFET module (AO3400 / IRLZ44N) | 1 | **2** | [RFP30N06LE 6-pack](https://www.amazon.com/Cylewet-RFP30N06LE-N-Channel-Control-Arduino/dp/B073D399M1) |
+| 1N5819 diode | 1 | **2** (buy 10) | [search](https://www.amazon.com/s?k=1N5819+schottky+diode) |
+| Protected 18650 cell | 1 | **2 in use + 2 spares** (2 come free in the kits) | [search](https://www.amazon.com/s?k=protected+18650+battery+button+top) |
+| 18650 sled with leads | 1 | **2** | [search](https://www.amazon.com/s?k=18650+battery+holder+single+slot+wire+leads) |
+| 5V boost module | 1 | **2** | [MT3608 10-pack](https://www.amazon.com/MT3608-Converter-Adjustable-Voltage-Regulator/dp/B0BGLGL9RV) |
+| 2A polyfuse | 1 | **2** (buy 5) | [search](https://www.amazon.com/s?k=PPTC+resettable+fuse+2A+radial) |
+| 100 kΩ resistor | 2 | **4** | [resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
+| 1000 µF capacitor | 1 | **2** | [search](https://www.amazon.com/s?k=1000uF+16V+electrolytic+capacitor) |
+| 330–470 Ω resistor | 1 | **2** | [same resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
+| Lever microswitch | 1 | **2 + 2 spares** | [Saim 10-pack](https://www.amazon.com/Saim-Momentary-Switch-Roller-Action/dp/B01NBK00FD) |
+| JST-SM pigtail pair, 6-pin | 1 | **2 + 1 spare** | [ACTOO, 10 pairs](https://www.amazon.com/ACTOO-Connector-Female-Terminal-Adapter/dp/B07YWHCPW5) |
+| JST-SM pigtail pair, 5-pin | 1 | **2 + 1 spare** | [BTF-LIGHTING, 10 pairs](https://www.amazon.com/BTF-LIGHTING-Pairs-Female-Connector-Flexible/dp/B01DC0KNY2) |
+| JST-SM pigtail pair, 2-pin | 2 | **4 + 2 spares** | [VANDESAIL, 20 pairs](https://www.amazon.com/VANDESAIL-Connector-Adapter-Electrical-Female/dp/B0CQX8D3QR) |
+| JST-ZH pigtail pair, 2-pin, 1.5 mm | 1 | **2 + 2 spares** | [XUGERIP, 20 pairs](https://www.amazon.com/XUGERIP-1-5mm-Male-Female-Connector/dp/B0D9SN5BTP) |
+| Protoboard, small | 1 | **2** | [search](https://www.amazon.com/s?k=double+sided+perfboard+prototype+PCB+assorted) |
+| Silicone hookup wire 22–26 AWG | — | **one assortment covers both** | [search](https://www.amazon.com/s?k=silicone+wire+kit+22+24+26+AWG+stranded) |
+| Heat-shrink, assorted | — | **one assortment covers both** | [search](https://www.amazon.com/s?k=heat+shrink+tubing+assortment+kit) |
+| Hot glue sticks or clear RTV silicone | — | **1** | [search](https://www.amazon.com/s?k=clear+RTV+silicone+sealant+small+tube) |
+| Dielectric grease | — | **1 small tube** | [search](https://www.amazon.com/s?k=dielectric+grease+small+tube) |
+| Needle and thread, or fabric glue | — | **1** | [sewing kit](https://www.amazon.com/s?k=hand+sewing+kit+needles+thread+ballpoint) · [fabric glue](https://www.amazon.com/s?k=fabric+glue+permanent+washable) |
+| Fabric marker pen | — | **1** | [search](https://www.amazon.com/s?k=washable+fabric+marker+pen+air+erasable) |
+| USB-C cable, **data capable** | — | **1** | [search](https://www.amazon.com/s?k=USB+C+data+sync+cable) |
 
 Tools, one of each: soldering iron, flux-core solder, flux pen, wire strippers,
 side cutters, heat gun, multimeter, 3D printer. Thermal camera optional but very
@@ -143,6 +151,8 @@ Worth understanding before you design a mount, because it isn't what you'd guess
 ### Bubble solution — **buy as much as you can carry**
 
 - This runs out long before the battery does. It is the actual limit on your night
+- Buy it by the gallon, decant into the bottles, and carry a refill jug
+- **Suggested product:** [search bubble solution refill gallon](https://www.amazon.com/s?k=bubble+solution+refill+gallon)
 
 ---
 
@@ -373,6 +383,8 @@ Even genuine logic-level parts are usually specified at **Vgs = 5 V**, not 3.3 V
   - so it doesn't bounce back down the wire and garble the message to the first LED
 - **Skip it →** the *first* pixel misbehaves — wrong colour or flickering
   - every pixel behind it stays fine
+- **Suggested product:** same [1/4W metal film resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W)
+  as the battery-monitor pair — one kit covers every resistor in this build
 
 ---
 
@@ -531,16 +543,27 @@ the strip, the trigger, and a second ground.
 - Nothing exotic. A 4 × 6 cm piece per arm is plenty
 - **Suggested product:** [search double-sided perfboard assortment](https://www.amazon.com/s?k=double+sided+perfboard+prototype+PCB+assorted)
 
-### A light-coloured, thin, stretchy glove — 1 per arm · **buy a pair**
+### A light-coloured, thin, fingerless glove — 1 per arm · **buy a pair**
 
 - **Does:** hides the strip, spreads light into a soft even glow instead of dots
 - **Fabric matters a lot:**
   - thin / white / pale / stretchy → glows beautifully
   - thick / dark / leather → swallows the light almost entirely
-- Test a scrap in a dark room before you buy
-- **Suggested product:** none — this one you buy by hand, in person, holding a lit
-  strip section under it. Fabric is the single most build-critical thing you cannot
-  judge from a listing photo
+- **Fingerless is required**, not a style choice — the fingers have to curl freely
+  into the palm to work the trigger, and the strip stops at the knuckles anyway
+- **Want a thumb hole.** Without one the glove rotates and rides up, which walks the
+  6-pixel hand segment off the back of your hand and the microswitch lever off your
+  middle and ring finger pads. If the pair you like has no thumb hole, sew a thumb
+  loop from the ribbon below, or anchor the glove to the printed trigger plate
+- **Buy one pair to test before you buy the rest.** Fabric is the single most
+  build-critical thing you cannot judge from a listing photo — hold a powered strip
+  section under the actual garment, in a dark room, before committing
+- **Suggested products** — two styles worth testing:
+  - [search white lace fingerless long gloves / arm warmers](https://www.amazon.com/s?k=white+lace+long+fingerless+gloves+arm+warmers)
+    — sheer floral lace, thumb hole, one fabric the whole length
+  - [search ribbon lace-up knit fingerless arm warmers](https://www.amazon.com/s?k=lace+up+ribbon+knit+arm+warmers+fingerless+white)
+    — ribbon-laced; if the lacing genuinely opens the tube it gives you access to the
+    wrist connector, which neither plain style does
 - Full detail → glove section in [BUILD.md](BUILD.md)
 - **If you're building the lace concept, read [DESIGN.md](DESIGN.md) first.** Lace is
   pale but it is *not* a diffuser — it's open mesh, and it overrides this guidance
@@ -549,15 +572,53 @@ the strip, the trigger, and a second ground.
 
 - **Does:** same job as the glove, for the forearm segment
 - Same fabric rules apply. Buy it at the same time as the glove and test both together
+- **A single elbow-to-hand arm warmer covers both** — that's the usual form for the
+  lace look. It's one less seam and one fabric instead of two, but it closes the
+  wrist: the SM-5 plug ends up inside a sealed tube where you can't reach it to
+  unmate. Either cut it at the wrist into two garments, or sew a short ribbon-laced
+  placket over the plug, or accept three modules per arm instead of four
+- **Suggested product:** [search long white lace arm warmers](https://www.amazon.com/s?k=long+white+lace+arm+warmers+fingerless)
+
+### Diffuser layer — white organza or tulle — **buy ½ yd**
+
+- **Does:** the soft glow the strip needs and lace does not provide — a scattering
+  layer between the strip and the lace, with the lace pattern silhouetted on top
+- Also **backs the lace structurally**. Fine mesh won't carry strip and wires on its
+  own; a sewn channel in bare lace will pull and tear
+- And it **hides the hardware** — wires, service loop, hose, the SM-5 plug body — all
+  of which are plainly visible through sheer lace
+- Open question in [DESIGN.md](DESIGN.md): diffuse, or leave the strip line visible.
+  Buying ½ yd costs little and lets you test both
+- **Suggested products:**
+  - [search white organza fabric by the yard](https://www.amazon.com/s?k=white+organza+fabric+by+the+yard)
+  - [search white tulle fabric bolt](https://www.amazon.com/s?k=white+tulle+fabric+bolt)
+  - or a [silicone LED diffuser channel](https://www.amazon.com/s?k=silicone+LED+diffuser+channel+10mm+flexible)
+    for a harder, more even diffusion — heavier and less drapey, better on the forearm
+    than over the knuckles
+
+### Satin ribbon, 6–10 mm — **buy 1 roll**
+
+- **Does:** thumb loops, the laced placket over the wrist connector, and tacking
+  cable to the garment on both sides of every plug ([BUILD.md](BUILD.md) step 10 —
+  the connector is never the anchor)
+- Black or white both work; the concept board uses both
+- **Suggested product:** [search white satin ribbon 6mm](https://www.amazon.com/s?k=white+satin+ribbon+6mm)
 
 ### Needle and thread, or fabric glue — **buy 1**
 
 - For sewing the strip channels into the glove and sleeve
 - A channel, not glue-down-flat — see [BUILD.md](BUILD.md) step 10
+- On stretch knit or lace, use a **ballpoint needle and a stretch stitch** — a sharp
+  needle and a straight stitch will cut the mesh and pop the seam on the first pull-on
+- **Suggested products:**
+  [search hand sewing kit with needles and thread](https://www.amazon.com/s?k=hand+sewing+kit+needles+thread+ballpoint) ·
+  [search permanent fabric glue](https://www.amazon.com/s?k=fabric+glue+permanent+washable)
 
 ### Fabric marker pen — **buy 1**
 
 - For marking the trigger position on your palm in step 1
+- Get a **washable / air-erasable** one — it's going on your skin and on white lace
+- **Suggested product:** [search washable fabric marker pen](https://www.amazon.com/s?k=washable+fabric+marker+pen+air+erasable)
 
 ---
 
