@@ -6,7 +6,7 @@
 
 | Module | Holds | Unplugs at |
 |---|---|---|
-| **Pod** — upper arm | brain, boost, level shifter, MOSFET, fuse, disconnect, battery sled | `SW1` + battery plug + straps |
+| **Pod** — upper arm | brain, boost, level shifter, MOSFET, fuse, disconnect, cell cradle | `SW1` + battery plug + straps |
 | **Sleeve** — forearm | forearm strip, 15 px | elbow: SM 6-pin + SM 2-pin |
 | **Glove** — hand | hand strip 6 px, this hand's trigger | wrist: SM 5-pin |
 | **Bubbler** | bottle, cap, hose, blower head | wrist: SM 2-pin + its strap |
@@ -40,12 +40,16 @@ you solder, and you bench-test *before* anything goes into the glove).
   don't leave it charging unattended. It's strapped to your arm — treat it with
   respect.
 - **You must be able to kill and remove the cell in seconds, one-handed.** That is
-  what `SW1` (step 4) and a tool-free sled lid (step 11) are for. If getting the
+  what `SW1` (step 4) and a tool-free cradle lid (step 11) are for. If getting the
   battery out of this costume needs two hands, a screwdriver, or taking a sleeve
   off first, it is not finished.
-- **Carry and store spare cells in a plastic case**, never loose in a bag with
-  keys or coins. A bare 18650's whole can is the negative terminal — the wrap is
-  the only insulation it has.
+- **There are no spare cells.** Two came with the two bubble kits and that is the
+  whole supply. Charge both to full the morning of, know your runtime from step 6's
+  bench test, and switch `SW1` off between sets. A flat cell ends that arm for the
+  night.
+- **If you ever do buy spares, they travel in a plastic case**, never loose in a bag
+  with keys or coins. A bare 18650's whole can is the negative terminal — the wrap
+  is the only insulation it has.
 - **Protected cells are the backstop, not the plan.** The firmware shuts the arm
   down at 3.0 V so the cell's own protection board never has to act. Don't remove
   either layer.
@@ -195,6 +199,11 @@ circuit in words; the drawing is what to check your work against.
 
 ### Connections
 
+**Names in this table follow the schematic's naming rules.** A XIAO pin is written
+by its GPIO number with the silkscreen number beside it, and the two diodes are
+`CR1` and `CR2` — never `D1`/`D2`, which are XIAO pins. Rules and reasoning:
+[SCHEMATIC.md](SCHEMATIC.md#naming-rules).
+
 | From | To | Notes |
 |---|---|---|
 | Battery **PH2.0** + | `SW1` master disconnect | Disconnect first, right at the cell |
@@ -203,21 +212,77 @@ circuit in words; the drawing is what to check your work against.
 | Battery + (after fuse) | Boost module IN+ | |
 | Battery − | Boost module IN− | |
 | Boost OUT+ (5V) | 74AHCT125 Vcc, elbow SM-6 pin 1 | Strip and shifter, direct |
-| Boost OUT+ (5V) | `D2` anode; `D2` cathode → XIAO 5V pad | **Isolation diode — see below** |
+| 74AHCT125 Vcc (pin 14) | 0.1 µF ceramic → 74AHCT125 GND (pin 7) | Decoupling cap, at the chip — see below |
+| Boost OUT+ (5V) | `CR2` anode; `CR2` cathode → XIAO 5V pad | **Isolation diode — see below** |
 | Boost OUT− | Common ground | |
 | Battery + (after fuse) | Motor +, via elbow SM-2 | Motor runs direct from battery, not 5V |
 | Motor − (via elbow SM-2) | MOSFET module output | |
 | MOSFET module ground | Common ground | |
-| XIAO D2 (GPIO4) | 74AHCT125 **second** gate input | Gate drive — see below |
+| XIAO `GPIO4` (silk `D2`) | 74AHCT125 **second** gate input | Gate drive — see below |
 | 74AHCT125 second gate output | 100 Ω → MOSFET gate | With a 10 kΩ gate-to-source pulldown — see below |
 | 74AHCT125 `1OE`, `2OE` | Common ground | Enables the two gates you use |
 | 74AHCT125 `3A`, `4A` | Common ground | Unused inputs — must not float |
 | 74AHCT125 `3OE`, `4OE` | 5V | Unused outputs disabled. `3Y`/`4Y` stay open |
-| XIAO D10 (GPIO10) | 74AHCT125 input pin | |
+| XIAO `GPIO10` (silk `D10`) | 74AHCT125 input pin | |
 | 74AHCT125 output pin | 330–470 Ω resistor → elbow SM-6 pin 3 | Resistor close to the connector |
-| XIAO D1 (GPIO3) | Elbow SM-6 pin 4 | Trigger, arriving from the hand |
+| XIAO `GPIO3` (silk `D1`) | Elbow SM-6 pin 4 | Trigger, arriving from the hand |
 | Elbow SM-6 pin 5 | Common ground | Trigger return |
-| XIAO D0 (GPIO2) | Midpoint of the two 100 kΩ resistors | Battery monitor |
+| XIAO `GPIO2` (silk `D0`) | Midpoint of the two 100 kΩ resistors | Battery monitor |
+
+### Calibrate the MT3608 before it touches anything else
+
+MT3608 modules ship set wherever the factory's screwdriver left them — often 15–20 V
+out. Wire one straight to the strip and the XIAO and you destroy both in the first
+second of power. **Trim it on its own, with the output connected to nothing.**
+
+You need the cell (or a bench supply), a multimeter on DC volts, and a small flathead
+that actually fits the trimpot screw.
+
+1. **Leave the output open.** `OUT+` and `OUT−` go nowhere yet — not the 74AHCT125,
+   not `CR2`, not the elbow SM-6. Fit the wires if you like, but leave their far ends
+   unconnected.
+2. **Power the input only.** Cell + through `SW1` and the polyfuse to `IN+`, cell −
+   to `IN−`. A bench supply at 3.7 V is better if you have one: set the current limit
+   to ~200 mA and a wiring mistake can't turn into a fire.
+3. **Meter across `OUT+` and `OUT−`**, and read it *before* you turn anything.
+4. **Wind the trimpot counter-clockwise until the reading drops below 5 V**, then
+   bring it up to 5.00 V from underneath. Approaching from above means every slip
+   overshoots high, which is the direction that breaks things.
+   - Most MT3608 boards use a **multi-turn** trimpot — 20-odd turns end to end, and
+     the first several may appear to do nothing. Keep going and watch the meter;
+     don't force it past its stop
+   - Some use a **single-turn** pot, where a few degrees is several volts. Nudge,
+     read, nudge
+   - Clockwise raises the output on the usual boards, but trust the meter, not the
+     silkscreen
+5. **Accept 4.95–5.05 V.** The WS2812s and the 74AHCT125 are happy anywhere in
+   there. Don't aim high for "margin" — above ~5.25 V you're just spending the
+   strip's headroom.
+6. **Confirm it holds with a flat cell.** Drop the input to 3.0 V — bench supply, or
+   a nearly-dead pack — and read the output again. It should still be ~5 V. This is
+   the condition you'll actually be in at the end of an event, and it's where a weak
+   module gives up. One that sags to 4.5 V here has a bad inductor or a cold joint:
+   bin it and grab another off the ten-pack.
+7. **Then connect the load and re-trim.** With the strip and the shifter on the
+   output and the strip lit at working brightness, the reading will drop a little.
+   Set it back to 5.00 V **under load** — that is the number that matters. Do this
+   before `CR2` and the XIAO go on; the XIAO is the fragile part and it can wait.
+8. **Lock the screw** with a dab of nail polish or hot glue on the pot body once
+   you're happy. It's a tiny trimmer on an arm that gets knocked all night, and it
+   drifts.
+
+> **Per module, not per build.** Each arm has its own MT3608 and its own trimpot, so
+> trim both. They will not land on the same screw position, and a module trimmed on
+> arm one tells you nothing about arm two.
+
+Two more things worth knowing about this module:
+
+- **It only boosts.** Output has to stay above input, which is fine at 5 V from a
+  1S cell — but it means a module trimmed near 4.2 V won't regulate at all on a
+  fresh pack, it'll just pass the cell voltage through.
+- **Mask the trimpot before conformal coat** (step 11). Coating over it locks the
+  screw at whatever it happens to be and turns any future retrim into a scraping
+  job.
 
 ### Fit the master disconnect
 
@@ -235,7 +300,7 @@ so it kills everything downstream, including the motor tap and the boost.
   arm safe to unplug in one motion; the cell still comes out for storage, for
   charging, and any time something is actually wrong
 
-Together with a sled lid that opens without a tool (step 11), this is the answer to
+Together with a cradle lid that opens without a tool (step 11), this is the answer to
 "get the battery out of this costume, now."
 
 ### Isolate the XIAO's 5 V pad
@@ -245,7 +310,7 @@ the board. So with the pack connected and a USB cable plugged in, the boost outp
 is sitting on the host's USB port — feeding a laptop, a phone charger, or whatever
 else you reflash from.
 
-Fit a **1N5819 Schottky, `D2`, between the boost output and the XIAO's 5V pad,
+Fit a **1N5819 Schottky, `CR2`, between the boost output and the XIAO's 5V pad,
 banded end (cathode) to the XIAO.**
 
 - Current flows boost → XIAO. Nothing flows back into a host port
@@ -254,7 +319,7 @@ banded end (cathode) to the XIAO.**
   boost output directly, at a full 5 V — they're the load that cares
 - You bought these for the motor flyback anyway. Buy a couple more
 
-> Without `D2`, the safe habit is "never plug in USB with the cell connected" — and
+> Without `CR2`, the safe habit is "never plug in USB with the cell connected" — and
 > you will break that habit at 2 a.m. with one hand full. The diode is 20¢.
 
 ### Drive the MOSFET gate at 5V, not 3.3V
@@ -263,9 +328,9 @@ The XIAO's GPIO swings to **3.3 V**. Most "logic-level" MOSFETs are specified fu
 on at **Vgs = 5 V** — at 3.3 V they only partly open, dissipate the difference as
 heat, and the blower runs slow and inconsistent.
 
-**The 74AHCT125 has four gates and the strip only uses one.** Route `D2` through a
-second gate exactly the way you route the LED data through the first. The MOSFET
-then sees a clean 5 V gate signal.
+**The 74AHCT125 has four gates and the strip only uses one.** Route `GPIO4`
+through a second gate exactly the way you route the LED data through the first.
+The MOSFET then sees a clean 5 V gate signal.
 
 - Costs nothing — the chip is already in the pod
 - Add a **100 Ω** resistor in series with the gate
@@ -299,9 +364,37 @@ about, which is the last thing you want on the LED data line.
   everything
 - Four short wires on the protoboard. Do it while the chip is going in, not later
 
+### Decouple the 74AHCT125 at its own pins
+
+**A 0.1 µF ceramic capacitor across pin 14 (`Vcc`) and pin 7 (`GND`), legs cut
+short, sitting on the chip.** Not near it — on it.
+
+Every time a gate switches, the chip pulls a burst of current out of its supply pin
+in a few nanoseconds. That current has to come from somewhere close. The `C2`
+ceramic is a small charge store right at the pins, so the chip's own 5 V rail doesn't
+dip each time it drives an edge.
+
+- **`C1` does not cover this.** The 1000 µF electrolytic is *bulk* storage for the
+  strip, sitting by the elbow connector. Between it and the chip is protoboard wire,
+  which is inductance — it cannot deliver charge fast enough to matter on a
+  nanosecond edge. Different job, different capacitor. Fit both
+- **Not polarised.** A ceramic goes in either way round, unlike `C1`
+- **Short legs is the whole point.** A 0.1 µF on 30 mm of leg is mostly a length of
+  wire. Trim the legs and solder it straddling the two pins, underneath the chip or
+  right beside it
+- **50 V X7R, or whatever the assortment box has.** The value matters, the rating
+  doesn't — anything ≥ 16 V is fine on a 5 V rail
+- **The XIAO and the MT3608 already have their own.** They are modules; they came
+  decoupled. The bare DIP is the one part in the pod that doesn't
+
+> Skipping it gives you a build that works on the bench and misbehaves on the arm
+> — an occasional wrong pixel, a blower that stutters when the strip changes
+> brightness. It is the same class of fault as a missing level shifter, and the
+> capacitor costs about three cents.
+
 ### The gate pulldown is not optional
 
-Between the moment the XIAO resets and the moment `setup()` runs, `D2`/GPIO4 is an
+Between the moment the XIAO resets and the moment `setup()` runs, `GPIO4` is an
 **input, floating**. A floating gate on a MOSFET holds whatever charge it last
 had. The failure looks like the blower twitching, or briefly running, every time
 you power up or reflash — with the firmware doing nothing at all.
@@ -351,7 +444,7 @@ Three connections:
 ```
 Battery + (after fuse) ──[100 kΩ]──┬──[100 kΩ]── Ground
                                    │
-                              XIAO D0
+                            XIAO GPIO2
 ```
 
 The midpoint sits at exactly half the battery voltage, which is safely within
@@ -361,6 +454,8 @@ what the brain can measure.
 
 - **1000 µF capacitor** across the strip's 5V and ground, physically close to the
   elbow connector. **Watch polarity** — the marked stripe is the negative leg.
+- **0.1 µF ceramic capacitor** across the 74AHCT125's `Vcc` and `GND` pins, on the
+  chip itself. Not polarised, goes in either way round — see above.
 - **1N5819 diode** directly across the motor's two terminals, at the blower end.
   The banded end goes to the **positive** side. Backwards it's a dead short, so
   check this one twice.
@@ -368,22 +463,34 @@ what the brain can measure.
 ### Keep the cell on its factory plug
 
 The 18650 arrives on a **PH2.0 pigtail**, and the kit's USB charger mates to the
-same connector. Fit the matching half at the pod and you get a clean swap: pull
-the flat cell out of the pod, plug it straight into the charger, plug a fresh one
-in. No adapters, no rework.
+same connector. Fit the matching half at the pod and the cell goes pod → charger
+with no adapter and no rework.
+
+**This is why there is no battery sled in this build.** A sled exists to make
+contact with a bare cell's ends and carry that current out on two soldered tabs.
+The kit's cell already leaves the factory on a moulded pigtail, so the sled would
+add a pair of spring contacts and two solder joints to a path that doesn't need
+them. What the pod needs instead is a **cradle**: a printed pocket that holds the
+cell still, with a lid, and no electrical job at all.
+
+- **The cradle retains, the pigtail conducts.** Keep those two jobs separate
+- **Never cut the pigtail off the cell.** It is the only connector the cell has —
+  without it, changing or charging a battery means a soldering iron
+- A sled remains the fallback if a pigtail is ever torn or a crimp pulls out. See
+  [PARTS.md](PARTS.md)
 
 **PH2.0 must be the only PH connector in the whole build.** See Step 5.
 
 The cell plug is also your last-resort disconnect. `SW1` is the one you reach for;
 `J1` is the one that makes the arm genuinely inert. Design the pod so you can get
-to both — the sled lid and the plug on the underside, the switch on the outside.
+to both — the cradle lid and the plug on the underside, the switch on the outside.
 
 ### Rules that matter
 
 - **Everything shares one common ground.** The brain, strip, level shifter,
   MOSFET, boost, and battery all connect to the same ground. Skipping this causes
   bizarre, hard-to-diagnose behavior.
-- **Don't use D8 or D9** (GPIO8/GPIO9) for anything. They're boot pins — the
+- **Don't use `GPIO8` or `GPIO9`** (silk `D8`/`D9`) for anything. They're boot pins — the
   board won't start reliably if something's attached to them.
 - Keep the wire run from the level shifter to the elbow connector short, and put
   the data resistor at the connector end.
@@ -417,9 +524,13 @@ yourself having to aim, rotate or reposition the plate until you don't.
 
 ### Why the switch gets its own tiny plug
 
-The field kit carries a spare microswitch. Without this pigtail, "spare" means
-"spare, if you also brought a soldering iron and somewhere to plug it in." With
-it, swapping a dead trigger mid-event is a ten-second job.
+A soldered-in switch can only be replaced with a soldering iron. On a pigtail, it
+is a ten-second swap.
+
+**You have exactly two switches — one per arm, both in use.** They came in the
+bubble kits and no spares were bought, so right now a dead trigger ends that arm
+for the night even with the pigtail fitted. The pigtail is what makes a spare
+*worth carrying* the day you buy one; the switches come in cheap ten-packs.
 
 ### Why ZH and not PH
 
@@ -448,9 +559,9 @@ connector mated.
 1. **Measure gate to source on the MOSFET.** You want a few kΩ, not open. Open
    means the pulldown is missing and the blower will twitch at every boot — go
    back to step 4.
-2. **Check `D1` and `D2` orientation** against [SCHEMATIC.md](SCHEMATIC.md).
-   `D1` banded end to motor **+**; `D2` banded end to the **XIAO**. `D1` backwards
-   is a dead short across the cell through the MOSFET.
+2. **Check `CR1` and `CR2` orientation** against [SCHEMATIC.md](SCHEMATIC.md).
+   `CR1` banded end to motor **+**; `CR2` banded end to the **XIAO**. `CR1`
+   backwards is a dead short across the cell through the MOSFET.
 3. **Check continuity through every connector**, pin by pin, with the beeper. A
    pigtail with a crimp that didn't seat looks perfect and works intermittently.
    Find that now, not at the venue.
@@ -458,9 +569,11 @@ connector mated.
 **Then, cell in, `SW1` on:**
 
 4. **Check polarity with the multimeter.** Battery + and − where you expect.
-   **Set the boost to 5.00 V on its trimpot before the XIAO is ever connected.**
+   **The boost must already be trimmed to 5.00 V** — step 4 covers how, and it
+   happens before the XIAO is ever connected. Confirm the reading here; if it isn't
+   ~5 V, unplug the XIAO and go back and retrim.
 5. **Check the isolation diode did its job.** Boost output ~5.0 V, XIAO 5V pad
-   ~4.7 V. A ~0.3 V step across `D2` means it is in series and the right way
+   ~4.7 V. A ~0.3 V step across `CR2` means it is in series and the right way
    round. Same reading on both sides means you shorted past it, and the pack is
    still able to backfeed a USB host.
 6. Power it up. You should get the dim breathing idle glow.
@@ -738,7 +851,13 @@ Aim for this instead:
   wants to flex under a strap.
 - **Four perimeters, 1.6 mm walls minimum.** Thin FDM walls leak through the layer
   lines themselves, gasket or no gasket.
-- **A lid with a gasket groove**, closed with four M3 screws into heat-set inserts.
+- **A lid with a gasket groove**, closed with four **M3 × 8 mm button-head
+  stainless screws** into **4.6 mm OD × 5.0 mm long brass heat-set inserts**.
+  Model the bosses with a **4.0 mm hole, 6.0 mm deep**, at least 2 mm of plastic all
+  round them; drill the lid **3.4 mm** clearance. Set the inserts with a soldering
+  iron at **240 °C**, pressing until the top sits flush to 0.2 mm below the
+  surface — going in square matters more than going in fast. If your lid isn't
+  3 mm thick, screw length is *lid thickness + 5 mm*.
   2 mm silicone O-ring cord in the groove, or closed-cell foam tape if you'd rather
   not model a groove. Both are fine; nothing sticky, because you will open this.
 - **Every opening faces down or aft.** Nothing on the top surface. Nothing on the
@@ -774,19 +893,24 @@ The cell is the part that hurts you if this goes wrong, so it gets treated
 separately from everything else:
 
 - **A wall between the cell and the electronics**, so a vented or leaking cell
-  doesn't take the board with it, and so soap that gets into the sled compartment
+  doesn't take the board with it, and so soap that gets into the cell compartment
   during a swap doesn't reach the XIAO.
-- **The sled's tabs get heat-shrink** over the solder joints. A bare tab and a
-  stray strand of wire is a dead short across a lithium cell, an inch from your
-  skin.
+- **Nothing in the compartment is soldered.** With the cell on its factory pigtail
+  there are no tabs and no joints in here to work loose — which is most of the
+  reason the cradle beat the sled. The `J1` half-plug is the only thing the
+  compartment connects to, and its wires get heat-shrink and a strain-relief anchor
+  outside the wall.
 - **Nothing metal in the compartment.** No stray screws, no washers, no snipped
   lead ends. Check it every time you close it.
 - **Check the cell's own wrap** before every event. A nicked 18650 shrink-wrap
   exposes the can, which is the negative terminal over the whole body of the cell —
   that's how a cell shorts against something it's only *resting* on. Re-wrap any
   cell whose sleeve is torn; they cost almost nothing.
-- **The sled lid closes positively** — a click, a screw, or a strap — and opens
+- **The cradle lid closes positively** — a click, a screw, or a strap — and opens
   without a tool.
+- **The cradle grips the cell, not the pigtail.** If the cell can shift, the pigtail
+  takes the load and the crimp is what eventually fails. A foam pad or a printed rib
+  that pinches the wrap is enough.
 
 ### The trigger is the leakiest part of the build
 
@@ -899,7 +1023,7 @@ Four releases per arm, none of them needing a second person or a flat surface.
 In order, fastest first:
 
 1. **`SW1` off.** One motion, through the costume, no looking. The arm is dead.
-2. **Cell out.** Sled lid, plug, done. Now it's inert and you can carry it.
+2. **Cell out.** Cradle lid, plug, done. Now it's inert and you can carry it.
 3. Only then work out what happened.
 
 Practise both. If either takes more than a few seconds with one hand, fix the pod
@@ -936,6 +1060,7 @@ connector. Fix it before the event, not at it.
 | First pixel wrong color, rest fine | Missing or wrong-value data resistor |
 | Pixel 0 died after a reconnect | Strip was plugged in live. Cell out before mating, every time |
 | Random flickering, especially when moving | Missing 74AHCT125, or a loose ground. Check SM-6 pin 6 is actually tied to ground at both ends |
+| Odd pixel glitches or a stuttering blower, only once it's all running together | Missing 0.1 µF at the 74AHCT125's supply pins, or fitted on long legs (Step 4) |
 | 74AHCT125 runs warm with nothing obviously wrong | Unused inputs floating. `3A`/`4A` to ground, `3OE`/`4OE` to Vcc (Step 4) |
 | Comet runs fingertips → elbow | Strip is reversed. Fix the wiring, not the code |
 | Comet "jumps" or stalls at the wrist | `GAP_PX` doesn't match your measured umbilical length |
@@ -949,7 +1074,7 @@ connector. Fix it before the event, not at it.
 | Elbow pixel pulsing red, slow single pulse | Low-battery warning. Swap the cell soon |
 | Elbow pixel double-blinking red, motor dead, trigger does nothing | Low-voltage shutoff latched at 3.0 V. Swap the cell; it clears itself |
 | Blower twitches or kicks every time you power up or reflash | Missing gate pulldown. Measure gate to source — it should not read open (Step 4) |
-| Laptop warns about a USB device drawing power, or the pod stays alive with the cell out and USB in | Missing or reversed `D2`. The pack is backfeeding the host port (Step 4) |
+| Laptop warns about a USB device drawing power, or the pod stays alive with the cell out and USB in | Missing or reversed `CR2`. The pack is backfeeding the host port (Step 4) |
 | Arm completely dead, cell freshly charged | `SW1` off, or its DC rating gave out. Check the switch before you suspect the board |
 | It worked, got sprayed, now behaves oddly | Soap tracking across pins. Kill `SW1`, open it, rinse with isopropyl, dry fully. Then step 11 |
 | One trigger fires the other arm | Not possible by design — you've cross-plugged two arms. Check each arm is self-contained |
@@ -1003,12 +1128,11 @@ None of these need extra hardware. They're already paid for.
 
 Things to have with you when you actually wear this:
 
-- Spare charged 18650 per arm, on its PH2.0 pigtail, **each in its own plastic
-  case** — never loose in the bag
 - **A pre-made spare wrist umbilical** — now genuinely swappable, since both ends
   are connectors
-- A spare microswitch, already on its ZH-2 pigtail
 - One spare SM pigtail pair of each size
+- The kit's USB charger and a power bank — with no spare cells, recharging between
+  sets is the only way to extend the night
 - Extra bubble solution — **this runs out long before the battery does**
 - Spare 3 × 5 silicone tube, in case a feed hose splits
 - A solder pen, for repairs you can't connector your way out of
@@ -1018,3 +1142,15 @@ Things to have with you when you actually wear this:
   its openings upward
 - **Isopropyl and a cloth.** Wiping dried solution off a connector at the venue is
   the difference between one dead arm and two
+
+### What this kit cannot fix
+
+Two failures currently end an arm for the night, because no spare was bought:
+
+- **A flat cell.** Two cells, one per arm, both in use. Mitigate by charging to full
+  that morning, knowing the runtime from step 6, and killing `SW1` between sets
+- **A dead trigger.** Two switches, one per arm, both in use. The ZH-2 pigtail means
+  a spare would swap in ten seconds — there just isn't one yet
+
+Both are cheap to close later: protected 18650s and lever microswitches both sell in
+multipacks. Until then, know which two failures you are carrying.

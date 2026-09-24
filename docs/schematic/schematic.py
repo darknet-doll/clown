@@ -9,6 +9,24 @@ Two sheets, both for ONE arm. The other arm is identical.
 Also rewrites the generated net table inside SCHEMATIC.md, between the
 <!-- generated:nets --> markers, so the drawing and the table cannot drift.
 
+NAMING RULES - these are requirements, not style preferences. Anything added to
+this drawing has to keep them true:
+
+  1. One name, one thing. No designator, pin name or net name may refer to two
+     different things anywhere in the design.
+  2. Diodes are CR1, CR2 - never D1, D2. The XIAO's silkscreen already owns the
+     names D0 through D10, so a "D" designator would collide with a pin. CR is
+     the other standard diode prefix (IEEE 315 / ASME Y14.44); Q1's drain is
+     then the only "D" on the sheet.
+  3. A pin is never named on its own. Write the owner first: U3 GPIO4, U2 2A,
+     J2-3, Q1 G. Bare "GPIO4" or "pin 3" is not a name.
+  4. XIAO pins are named by GPIO number. The silkscreen D-number appears in one
+     place only - the silk map printed under U3 on sheet 1, and the pin map in
+     SCHEMATIC.md - and always with the word "silk" next to it.
+  5. Net names are UPPER_SNAKE, and no net shares a name with a designator or a
+     pin. A flag carries the net name and nothing else; where the net goes is a
+     separate note beside it.
+
 Usage:  python3 docs/schematic/schematic.py
 """
 
@@ -82,13 +100,18 @@ class Sheet:
         return os.path.relpath(path, ROOT)
 
     # -- symbols -----------------------------------------------------------
-    def block(self, x, y, w, h, ref, name, note=None, pad=PANEL):
-        """A boxed component: IC, module, sub-assembly."""
+    def block(self, x, y, w, h, ref, name, note=None, pad=PANEL, hdr=0):
+        """A boxed component: IC, module, sub-assembly.
+
+        hdr pushes the caption down, to clear pins entering the top edge.
+        """
         self.rect(x, y, w, h, fill=pad)
-        self.text(x + w / 2, y + 26, ref, size=13, anchor="middle", weight="bold")
-        self.text(x + w / 2, y + 44, name, size=10.5, anchor="middle")
+        self.text(x + w / 2, y + 26 + hdr, ref, size=13, anchor="middle",
+                  weight="bold")
+        self.text(x + w / 2, y + 44 + hdr, name, size=10.5, anchor="middle")
         if note:
-            self.text(x + w / 2, y + 62, note, size=9.5, anchor="middle", fill=MUTED)
+            self.text(x + w / 2, y + 62 + hdr, note, size=9.5, anchor="middle",
+                      fill=MUTED)
 
     def pin(self, x, y, side, label, size=9.5):
         """A pin stub on a block edge, with its label inside the block."""
@@ -126,6 +149,14 @@ class Sheet:
         self.text(x + 34, y - 6, ref, size=10, weight="bold")
         self.text(x + 34, y + 10, value, size=10)
         return (x, y - 9), (x, y + 13)
+
+    def cap(self, x, y, ref, value):
+        """Non-polarised cap, vertical. Returns both terminals."""
+        self.line(x - 26, y - 9, x + 26, y - 9, width=3.0)
+        self.line(x - 26, y + 9, x + 26, y + 9, width=3.0)
+        self.text(x + 34, y - 6, ref, size=10, weight="bold")
+        self.text(x + 34, y + 10, value, size=10)
+        return (x, y - 9), (x, y + 9)
 
     def diode(self, x, y, orient, ref, value, flip=False):
         """Schottky. orient 'v': current flows down unless flip. Returns (a, k)."""
@@ -193,8 +224,8 @@ class Sheet:
         self.add('<circle cx="%g" cy="%g" r="34" fill="%s" stroke="%s" '
                  'stroke-width="2"/>' % (x, y, PAPER, INK))
         self.text(x, y + 7, "M", size=19, anchor="middle", weight="bold")
-        self.text(x, y - 48, ref, size=10.5, anchor="middle", weight="bold")
-        self.text(x, y + 60, value, size=10, anchor="middle")
+        self.text(x + 44, y - 6, ref, size=10.5, weight="bold")
+        self.text(x + 44, y + 10, value, size=10)
         return (x, y - 34), (x, y + 34)
 
     def gnd(self, x, y, label="GND"):
@@ -258,40 +289,47 @@ def esc(s):
 
 NETS = [
     ("VBATT", "Cell positive, after SW1 and F1",
-     "BT1+ · J1-1 · SW1 · F1 · U1 IN+ · R1 · J3-1 (motor +)"),
+     "BT1 + · J1-1 · SW1 · F1 · U1 IN+ · R1 · J3-1"),
     ("GND", "The one common ground. Everything returns here",
-     "BT1− · J1-2 · U1 IN−/OUT− · U3 GND · U2 GND · U2 1OE · U2 2OE · "
-     "U2 3A · U2 4A · Q1 source · C1− · R2 · J2-2 · J2-6 · SW2 COM"),
-    ("+5V", "Boost output. Strip, level shifter, and D2's anode",
-     "U1 OUT+ · U2 Vcc · U2 3OE · U2 4OE · C1+ · D2 anode · J2-1 (strip +5V)"),
+     "BT1 − · J1-2 · U1 IN− · U1 OUT− · U3 GND · U2 GND · U2 1OE · U2 2OE · "
+     "U2 3A · U2 4A · Q1 S · C1 − · C2 · R2 · J2-2 · J2-5 · J2-6 · LD1 GND · "
+     "J4-2 · J4-5 · LD2 GND · J6-2 · SW2 COM"),
+    ("+5V", "Boost output. Strip, level shifter, and CR2's anode",
+     "U1 OUT+ · U2 Vcc · U2 3OE · U2 4OE · C1 + · C2 · CR2 anode · J2-1 · "
+     "LD1 5V · J4-1 · LD2 5V"),
     ("+5V_MCU", "Same 5 V, one Schottky drop down, MCU only",
-     "D2 cathode · U3 5V pad"),
+     "CR2 cathode · U3 5V"),
     ("VSENSE", "Half of VBATT, for the ADC",
-     "R1 · R2 · U3 D0 (GPIO2)"),
+     "R1 · R2 · U3 GPIO2"),
     ("LED_DATA_3V3", "MCU-level data, level shifter input",
-     "U3 D10 (GPIO10) · U2 1A"),
-    ("LED_DATA", "5 V data, through the series resistor",
+     "U3 GPIO10 · U2 1A"),
+    ("LED_DATA", "5 V data, through the series resistor, to the forearm strip",
      "U2 1Y · R3 · J2-3 · LD1 DIN"),
+    ("LED_DATA_HAND", "The same chain continued past the wrist",
+     "LD1 DOUT · J4-3 · LD2 DIN"),
     ("GATE_3V3", "MCU-level motor PWM, level shifter input",
-     "U3 D2 (GPIO4) · U2 2A"),
+     "U3 GPIO4 · U2 2A"),
     ("GATE", "5 V gate drive. R5 holds it down while the MCU boots",
-     "U2 2Y · R4 · R5 · Q1 gate"),
+     "U2 2Y · R4 · R5 · Q1 G"),
     ("TRIG", "Trigger, idle high on the MCU's internal pull-up",
-     "U3 D1 (GPIO3) · J2-4 · J4-4 · J6-1 · SW2 NO"),
+     "U3 GPIO3 · J2-4 · J4-4 · J6-1 · SW2 NO"),
     ("MOTOR+", "Blower positive, straight off the cell",
-     "VBATT · J3-1 · J5-1 · D1 cathode · M1+"),
+     "VBATT · J3-1 · J5-1 · CR1 cathode · M1 +"),
     ("MOTOR-", "Blower negative, switched by the MOSFET",
-     "Q1 drain · J3-2 · J5-2 · D1 anode · M1−"),
+     "Q1 D · J3-2 · J5-2 · CR1 anode · M1 −"),
 ]
 
+# Every designator on both sheets. Nothing here may repeat a pin name printed
+# on any module we use - see rule 2 in the module docstring.
 DESIGNATORS = [
     ("BT1", "Protected 18650, on its factory PH2.0 lead"),
     ("J1", "JST-PH 2.0 2-pin — cell to pod, and cell to charger"),
     ("SW1", "Master disconnect, in the cell positive"),
     ("F1", "2 A PPTC resettable fuse"),
     ("U1", "MT3608 boost module, trimmed to 5.00 V"),
-    ("D2", "1N5819 — USB isolation, cathode to the XIAO 5V pad"),
+    ("CR2", "1N5819 — USB isolation, cathode to the XIAO 5V pad"),
     ("C1", "1000 uF electrolytic, at the elbow connector"),
+    ("C2", "0.1 uF ceramic, across U2 pin 14 and pin 7, at the chip"),
     ("R1, R2", "100 k / 100 k battery-sense divider"),
     ("U3", "Seeed XIAO ESP32-C3"),
     ("U2", "74AHCT125 — gate 1 for LED data, gate 2 for the MOSFET gate, "
@@ -300,7 +338,7 @@ DESIGNATORS = [
     ("R4", "100 R gate series resistor"),
     ("R5", "10 k gate-to-source pulldown"),
     ("Q1", "N-channel logic-level MOSFET (AO3400 / IRLZ44N / RFP30N06LE)"),
-    ("D1", "1N5819 flyback, across the motor, at the blower end"),
+    ("CR1", "1N5819 flyback, across the motor, at the blower end"),
     ("M1", "Bubble kit blower motor"),
     ("SW2", "Lever microswitch, in the palm"),
     ("J2", "JST-SM 6-pin — elbow"),
@@ -308,7 +346,19 @@ DESIGNATORS = [
     ("J4", "JST-SM 5-pin — wrist"),
     ("J5", "JST-SM 2-pin — wrist, motor"),
     ("J6", "JST-ZH 1.5 mm 2-pin — at the microswitch"),
-    ("LD1", "WS2812B, 21 px: forearm 15 + hand 6"),
+    ("LD1", "WS2812B forearm strip, 15 px, pixel 0 at the elbow"),
+    ("LD2", "WS2812B hand strip, 6 px, to the knuckles"),
+]
+
+# The only place the XIAO's silkscreen D-numbers are allowed to appear, besides
+# the silk map printed under U3 on sheet 1. Everything else says GPIOn.
+PINMAP = [
+    ("U3 GPIO2", "D0", "VSENSE", "ADC, battery divider midpoint"),
+    ("U3 GPIO3", "D1", "TRIG", "Input, internal pull-up, switch pulls it low"),
+    ("U3 GPIO4", "D2", "GATE_3V3", "Output, motor PWM into U2 2A"),
+    ("U3 GPIO10", "D10", "LED_DATA_3V3", "Output, pixel data into U2 1A"),
+    ("U3 5V", "5V", "+5V_MCU", "Power in, behind CR2"),
+    ("U3 GND", "GND", "GND", "The one ground"),
 ]
 
 
@@ -317,7 +367,7 @@ DESIGNATORS = [
 # --------------------------------------------------------------------------
 
 def sheet_one():
-    s = Sheet(1560, 1580, "clown — one arm — schematic",
+    s = Sheet(1560, 1660, "clown — one arm — schematic",
               "Sheet 1 of 2 · pod electronics, motor drive, trigger · "
               "both arms are identical")
 
@@ -359,20 +409,22 @@ def sheet_one():
     s.wire([out_p, (1060, 370), (1060, 560)])
     s.wire([(340, 560), (1290, 560), (1290, 620)])
     s.dot(1060, 560)
-    s.text(350, 545, "+5 V  strip, shifter, and D2", size=11, weight="bold")
-    s.flag(1295, 620, "STRIP +5V -> J2-1", "r")
+    s.text(350, 545, "+5 V  strip, shifter, and CR2", size=11, weight="bold")
+    s.flag(1295, 620, "+5V", "r")
+    s.text(1295, 650, "to J2-1, the strip feed", size=9.5, fill=MUTED)
 
     # --- motor + tap --------------------------------------------------------
     s.wire([(1100, 185), (1100, 245)])
     s.dot(1100, 185)
-    s.flag(1100, 245, "MOTOR+ -> J3-1", "r")
+    s.flag(1100, 245, "MOTOR+", "r")
+    s.text(1100, 275, "to J3-1", size=9.5, fill=MUTED)
 
     # --- sense divider ------------------------------------------------------
     s.wire([(1330, 185), (1330, 231)])
     s.resistor(1330, 265, "v", "R1", "100 k")
     s.wire([(1330, 299), (1330, 396)])
     s.dot(1330, 360)
-    s.flag(1345, 360, "VSENSE -> D0", "r")
+    s.flag(1345, 360, "VSENSE", "r")
     s.resistor(1330, 430, "v", "R2", "100 k")
     s.wire([(1330, 464), (1330, 500)])
     s.gnd(1330, 500)
@@ -380,7 +432,7 @@ def sheet_one():
     # --- isolation diode ----------------------------------------------------
     s.wire([(420, 560), (420, 590)])
     s.dot(420, 560)
-    d2a, d2k = s.diode(420, 610, "v", "D2", "1N5819")
+    d2a, d2k = s.diode(420, 610, "v", "CR2", "1N5819")
     s.wire([d2k, (420, 750), (542, 750)])
     s.text(300, 700, "isolation:", size=10, weight="bold", fill=ACCENT)
     s.text(300, 716, "pack cannot", size=10, fill=ACCENT)
@@ -392,59 +444,96 @@ def sheet_one():
     c_p, c_n = s.cap_polar(1180, 620, "C1", "1000 uF")
     s.wire([c_n, (1180, 690)])
     s.dot(1180, 660)
-    s.flag(1190, 660, "STRIP GND -> J2-2, GND2 -> J2-6", "r")
-    s.gnd(1180, 690, label="")
-    s.text(1140, 748, "GND", size=9, anchor="end", fill=MUTED)
+    s.text(1220, 742, "J2-2  strip ground", size=9.5, fill=MUTED)
+    s.text(1220, 758, "J2-6  second ground", size=9.5, fill=MUTED)
+    s.gnd(1180, 690)
 
     # --- MCU ----------------------------------------------------------------
     s.block(560, 700, 220, 260, "U3", "XIAO ESP32-C3", "keep USB-C reachable")
     s.pin(560, 750, "l", "5V")
     g3 = s.pin(560, 800, "l", "GND")
-    d0 = s.pin(560, 850, "l", "D0")
-    d1 = s.pin(560, 900, "l", "D1")
-    p_d2 = s.pin(780, 760, "r", "D2")
-    p_d10 = s.pin(780, 810, "r", "D10")
+    vsense_pin = s.pin(560, 850, "l", "GPIO2")
+    trig_pin = s.pin(560, 900, "l", "GPIO3")
+    gate_pin = s.pin(780, 790, "r", "GPIO4")
+    data_pin = s.pin(780, 840, "r", "GPIO10")
     s.wire([g3, (500, 800)])
     s.gnd(500, 800)
-    s.flag(d0[0] - 18, 850, "VSENSE", "l")
-    s.wire([(d0[0] - 18, 850), d0])
-    s.flag(d1[0] - 18, 900, "TRIG", "l")
-    s.wire([(d1[0] - 18, 900), d1])
-    s.text(670, 930, "GPIO4 / GPIO10 out", size=9, anchor="middle", fill=MUTED)
-    s.text(670, 946, "GPIO2 / GPIO3 in", size=9, anchor="middle", fill=MUTED)
+    s.flag(vsense_pin[0] - 18, 850, "VSENSE", "l")
+    s.wire([(vsense_pin[0] - 18, 850), vsense_pin])
+    s.flag(trig_pin[0] - 18, 900, "TRIG", "l")
+    s.wire([(trig_pin[0] - 18, 900), trig_pin])
+    s.text(670, 926, "silk map: GPIO2 = D0 · GPIO3 = D1", size=9,
+           anchor="middle", fill=MUTED)
+    s.text(670, 942, "GPIO4 = D2 · GPIO10 = D10", size=9,
+           anchor="middle", fill=MUTED)
 
     # --- level shifter ------------------------------------------------------
-    s.block(900, 700, 220, 280, "U2", "74AHCT125", "2 of 4 gates used")
-    a2 = s.pin(900, 760, "l", "2A")
-    a1 = s.pin(900, 810, "l", "1A")
-    y2 = s.pin(1120, 760, "r", "2Y")
-    y1 = s.pin(1120, 810, "r", "1Y")
+    # Every pin of U2 is drawn. Pins that tie to Vcc leave the top, pins that
+    # tie to ground leave the bottom, and the two unused outputs end in air.
+    s.block(900, 700, 220, 290, "U2", "74AHCT125", "2 of 4 gates used", hdr=22)
+    a2 = s.pin(900, 790, "l", "2A")
+    a1 = s.pin(900, 840, "l", "1A")
+    a3 = s.pin(900, 900, "l", "3A")
+    a4 = s.pin(900, 950, "l", "4A")
+    y2 = s.pin(1120, 790, "r", "2Y")
+    y1 = s.pin(1120, 840, "r", "1Y")
+    y3 = s.pin(1120, 900, "r", "3Y")
+    y4 = s.pin(1120, 950, "r", "4Y")
     vcc = s.pin(950, 700, "t", "Vcc")
-    oe34 = s.pin(1070, 700, "t", "3OE 4OE")
-    a34 = s.pin(900, 870, "l", "3A 4A")
-    ug = s.pin(1010, 980, "b", "GND")
-    s.wire([p_d2, a2])
-    s.wire([p_d10, a1])
-    s.wire([vcc, (950, 560)])
-    s.dot(950, 560)
-    s.wire([oe34, (1070, 560)])
-    s.dot(1070, 560)
-    s.wire([a34, (840, 870)])
-    s.gnd(840, 870)
-    s.gnd(ug[0], ug[1])
-    s.text(1010, 908, "1OE, 2OE -> GND (on)", size=9.5, anchor="middle", fill=MUTED)
-    s.text(1010, 924, "3OE, 4OE -> Vcc (off)", size=9.5, anchor="middle", fill=MUTED)
-    s.text(1010, 940, "3Y, 4Y left open", size=9.5, anchor="middle", fill=MUTED)
-    s.text(1180, 900, "no CMOS input floats:", size=10, fill=ACCENT, weight="bold")
-    s.text(1180, 916, "every unused pin on U2", size=10, fill=ACCENT)
-    s.text(1180, 932, "is tied to a rail", size=10, fill=ACCENT)
+    oe3 = s.pin(1020, 700, "t", "3OE")
+    oe4 = s.pin(1085, 700, "t", "4OE")
+    ug = s.pin(940, 990, "b", "GND")
+    oe1 = s.pin(1010, 990, "b", "1OE")
+    oe2 = s.pin(1080, 990, "b", "2OE")
+    s.wire([gate_pin, a2])
+    s.wire([data_pin, a1])
 
-    s.wire([y2, (1180, 760)])
-    s.flag(1180, 760, "GATE", "r")
-    s.wire([y1, (1186, 810)])
-    s.resistor(1220, 810, "h", "R3", "330 - 470 R")
-    s.wire([(1254, 810), (1290, 810)])
-    s.flag(1290, 810, "LED_DATA -> J2-3", "r")
+    # to Vcc: the rail, and the two disabled output-enables
+    for px in (vcc, oe3, oe4):
+        s.wire([px, (px[0], 560)])
+        s.dot(px[0], 560)
+
+    c2_p, c2_n = s.cap(860, 620, "C2", "0.1 uF")
+    s.wire([(860, 560), c2_p])
+    s.dot(860, 560)
+    s.wire([c2_n, (860, 690)])
+    s.gnd(860, 690, label="")
+    s.text(820, 612, "decoupling:", size=10, anchor="end",
+           weight="bold", fill=ACCENT)
+    s.text(820, 628, "at U2 pin 14 / pin 7", size=10, anchor="end", fill=ACCENT)
+
+    # to ground: U2's own GND, the two enabled gates, the two unused inputs
+    s.wire([a3, (860, 900), (860, 1008)])
+    s.wire([a4, (860, 950)])
+    s.dot(860, 950)
+    s.wire([(820, 1008), (1080, 1008)])
+    for px in (ug, oe1, oe2):
+        s.wire([px, (px[0], 1008)])
+        s.dot(px[0], 1008)
+    s.dot(860, 1008)
+    s.gnd(820, 1008, label="")
+
+    # the two unused outputs: stub, and nothing else
+    s.text(y3[0] + 8, y3[1] + 3.5, "open", size=9, fill=MUTED)
+    s.text(y4[0] + 8, y4[1] + 3.5, "open", size=9, fill=MUTED)
+
+    s.text(1200, 890, "the unused half of U2:", size=10, weight="bold",
+           fill=ACCENT)
+    s.text(1200, 906, "3A, 4A to GND - inputs, never floating", size=10,
+           fill=ACCENT)
+    s.text(1200, 922, "3OE, 4OE to Vcc - outputs off", size=10, fill=ACCENT)
+    s.text(1200, 938, "3Y, 4Y open - never tie an output to a rail", size=10,
+           fill=ACCENT)
+    s.text(1200, 954, "1OE, 2OE to GND - this is what enables gates 1 and 2",
+           size=10, fill=ACCENT)
+
+    s.wire([y2, (1180, 790)])
+    s.flag(1180, 790, "GATE", "r")
+    s.wire([y1, (1186, 840)])
+    s.resistor(1220, 840, "h", "R3", "330 - 470 R")
+    s.wire([(1254, 840), (1290, 840)])
+    s.flag(1290, 840, "LED_DATA", "r")
+    s.text(1290, 870, "to J2-3", size=9.5, fill=MUTED)
 
     # --- motor drive --------------------------------------------------------
     s.text(60, 1040, "MOTOR DRIVE", size=12, weight="bold", fill=ACCENT)
@@ -462,7 +551,8 @@ def sheet_one():
 
     drain, source = s.mosfet(400, 1120, "Q1", "logic-level N-ch")
     s.wire([drain, (500, 1010)])
-    s.flag(510, 1010, "MOTOR- -> J3-2", "r")
+    s.flag(510, 1010, "MOTOR-", "r")
+    s.text(620, 1014, "to J3-2", size=9.5, fill=MUTED)
     s.wire([(500, 1010), (510, 1010)])
     s.wire([source, (500, 1190)])
     s.gnd(500, 1190)
@@ -472,7 +562,7 @@ def sheet_one():
     s.flag(760, 1260, "MOTOR-", "r")
     s.wire([(856, 1100), (1240, 1100), (1240, 1146)])
     s.wire([(856, 1260), (1240, 1260), (1240, 1214)])
-    d1a, d1k = s.diode(1060, 1180, "v", "D1", "1N5819", flip=True)
+    d1a, d1k = s.diode(1060, 1180, "v", "CR1", "1N5819", flip=True)
     s.wire([d1k, (1060, 1100)])
     s.wire([d1a, (1060, 1260)])
     s.dot(1060, 1100)
@@ -480,7 +570,7 @@ def sheet_one():
     s.motor(1240, 1180, "M1", "bubble kit blower")
     s.line(940, 1060, 940, 1310, width=1.4, color=MUTED, dash="6 7")
     s.text(940, 1046, "J3 + J5 (SM-2)", size=9.5, anchor="middle", fill=MUTED)
-    s.text(1180, 1318, "D1 and M1 both live at the blower end", size=9.5,
+    s.text(1180, 1318, "CR1 and M1 both live at the blower end", size=9.5,
            anchor="middle", fill=MUTED)
 
     # --- trigger ------------------------------------------------------------
@@ -496,15 +586,19 @@ def sheet_one():
 
     # --- notes --------------------------------------------------------------
     s.note(760, 1330, 760, [
-        "One common ground: U1 IN-/OUT-, U3 GND, U2 GND, Q1 source, C1-, R2,",
+        "One name, one thing: no designator, pin or net on these two sheets",
+        "names anything else. The diodes are CR1 and CR2, because the XIAO's",
+        "silkscreen already owns D0 to D10. XIAO pins are named by GPIO number.",
+        "One common ground: U1 IN-/OUT-, U3 GND, U2 GND, Q1 S, C1-, C2, R2,",
         "and both elbow ground pins (J2-2 and J2-6) all land on the same net.",
         "Set U1 to 5.00 V on the meter before the XIAO is ever connected.",
-        "D2 costs ~0.3 V: the XIAO sees ~4.7 V, well inside its regulator.",
+        "CR2 costs ~0.3 V: the XIAO sees ~4.7 V, well inside its regulator.",
         "SW1 kills the pack without unplugging anything. J1 still comes out.",
         "No CMOS input floats: U2's unused 3A/4A go to GND and 3OE/4OE to Vcc.",
+        "C2 decouples U2 at the chip. C1 is bulk at the strip - not the same job.",
     ], title="RULES THIS SHEET ENFORCES")
 
-    s.text(40, 1552, "generated by docs/schematic/schematic.py - do not hand-edit",
+    s.text(40, 1632, "generated by docs/schematic/schematic.py - do not hand-edit",
            size=9.5, fill=MUTED)
     return s.save("clown-arm-schematic.svg")
 
@@ -540,18 +634,18 @@ def sheet_two():
         (L5V, "+5 V  from U1"),
         (LGND, "GND  common"),
         (LDATA, "LED_DATA  from R3"),
-        (LTRIG, "TRIG  to U3 D1"),
+        (LTRIG, "TRIG  to U3 GPIO3"),
         (LRTN, "trigger return  GND"),
         (LGND2, "second ground  GND"),
         (MP, "MOTOR+  VBATT after F1"),
-        (MN, "MOTOR-  Q1 drain"),
+        (MN, "MOTOR-  Q1 D"),
     ]
     for y, label in pod:
         s.text(80, y - 10, label, size=10)
         s.wire([(100, y), (414, y)])
 
     # --- sleeve -------------------------------------------------------------
-    s.block(620, 196, 240, 150, "LD1a", "forearm strip", "15 px, px 0 at elbow")
+    s.block(620, 196, 240, 150, "LD1", "forearm strip", "15 px, px 0 at elbow")
     a5, ag, ad = (s.pin(620, L5V, "l", "5V"), s.pin(620, LGND, "l", "GND"),
                   s.pin(620, LDATA, "l", "DIN"))
     b5, bg, bd = (s.pin(860, L5V, "r", "5V"), s.pin(860, LGND, "r", "GND"),
@@ -560,6 +654,8 @@ def sheet_two():
         s.wire([j2[{L5V: 0, LGND: 1, LDATA: 2}[y]][1], left])
         s.wire([right, j4[{L5V: 0, LGND: 1, LDATA: 2}[y]][0]])
 
+    s.text(620, 386, "LD1 DOUT crosses the wrist to LD2 DIN as LED_DATA_HAND",
+           size=9.5, fill=MUTED)
     s.wire([j2[3][1], j4[3][0]])     # trigger, straight through
     s.wire([j2[4][1], j4[4][0]])     # trigger return, straight through
     s.wire([j2[5][1], (590, LGND2), (590, LGND)])   # second ground joins GND
@@ -575,7 +671,7 @@ def sheet_two():
            size=9.5, fill=MUTED, anchor="middle")
 
     # --- glove --------------------------------------------------------------
-    s.block(1060, 196, 240, 150, "LD1b", "hand strip", "6 px to the knuckles")
+    s.block(1060, 196, 240, 150, "LD2", "hand strip", "6 px to the knuckles")
     c5, cg, cd = (s.pin(1060, L5V, "l", "5V"), s.pin(1060, LGND, "l", "GND"),
                   s.pin(1060, LDATA, "l", "DIN"))
     for i, term in ((0, c5), (1, cg), (2, cd)):
@@ -585,13 +681,15 @@ def sheet_two():
     s.wire([j4[3][1], (1030, LTRIG), (1030, LRTN), j6[0][0]])
     s.wire([j4[4][1], (1010, LRTN), (1010, LGND2), j6[1][0]])
     sa, sb = s.spst(1240, LRTN, "SW2", "microswitch")
+    s.text(1140, 406, "TRIG", size=9.5, fill=MUTED)
+    s.text(1140, 492, "GND", size=9.5, fill=MUTED)
     s.wire([j6[0][1], sa])
     s.wire([sb, (1330, LRTN), (1330, LGND2), j6[1][1]])
     s.text(1040, 530, "the whole glove comes off on one plug", size=9.5,
            fill=MUTED)
 
     # --- bubbler ------------------------------------------------------------
-    s.block(1080, 610, 240, 150, "M1", "blower + D1", "flyback across the motor")
+    s.block(1080, 610, 240, 150, "M1", "blower + CR1", "flyback across the motor")
     m_p = s.pin(1080, MP, "l", "+")
     m_n = s.pin(1080, MN, "l", "-")
     s.wire([j5[0][1], m_p])
@@ -620,6 +718,52 @@ def sheet_two():
 # The net table, written back into SCHEMATIC.md
 # --------------------------------------------------------------------------
 
+def check_names():
+    """Enforce the naming rules at the top of this file.
+
+    Cheap to run, and it is the only thing standing between a future edit and
+    another D2-the-pin / D2-the-diode collision, so it runs on every generate.
+    """
+    refs = []
+    for ref, _ in DESIGNATORS:
+        refs += [r.strip() for r in ref.split(",")]
+    nets = [n for n, _, _ in NETS]
+
+    # Names the XIAO's silkscreen already owns. Nothing of ours may take one.
+    silk = set("D%d" % i for i in range(11)) | set("A%d" % i for i in range(4))
+
+    bad = []
+    for kind, names in (("designator", refs), ("net", nets)):
+        for n in sorted(set(names)):
+            if names.count(n) > 1:
+                bad.append("%s %s is listed twice" % (kind, n))
+    for n in sorted(set(refs) & set(nets)):
+        bad.append("%s is both a designator and a net name" % n)
+    for n in sorted(set(refs) & silk):
+        bad.append("designator %s collides with a XIAO silkscreen pin name; "
+                   "diodes use the CR prefix for exactly this reason" % n)
+    for n in sorted(set(nets) & silk):
+        bad.append("net %s collides with a XIAO silkscreen pin name" % n)
+
+    # Every net member has to name an owner we know about.
+    known = set(refs) | set(nets)
+    for name, _, members in NETS:
+        for member in members.split("·"):
+            owner = member.strip().split(" ")[0].split("-")[0]
+            if owner and owner not in known:
+                bad.append("net %s refers to %s, which is not a designator "
+                           "or a net" % (name, owner))
+    # And the pin map may only name pins of U3.
+    for pin, _, net, _ in PINMAP:
+        if not pin.startswith("U3 "):
+            bad.append("pin map entry %r does not name its owner" % pin)
+        if net not in nets:
+            bad.append("pin map entry %r lands on unknown net %s" % (pin, net))
+
+    if bad:
+        raise SystemExit("naming rules violated:\n  " + "\n  ".join(bad))
+
+
 BEGIN = "<!-- generated:nets -->"
 END = "<!-- /generated:nets -->"
 
@@ -632,6 +776,14 @@ def net_tables():
     out += ["", "### Designators", "", "| Ref | Part |", "|---|---|"]
     for ref, part in DESIGNATORS:
         out.append("| `%s` | %s |" % (ref, part))
+    out += ["", "### U3 pin map", "",
+            "The only place the XIAO's silkscreen numbers are written down. "
+            "Everywhere else, a XIAO pin is named by its GPIO number, so that "
+            "`CR1` and `CR2` are the only `D`-ish names left and they are the "
+            "two diodes.", "",
+            "| Pin | Silkscreen | Net | What it does |", "|---|---|---|---|"]
+    for pin, silk, net, what in PINMAP:
+        out.append("| `%s` | `%s` | `%s` | %s |" % (pin, silk, net, what))
     out.append("")
     return "\n".join(out)
 
@@ -651,5 +803,6 @@ def write_nets():
 
 
 if __name__ == "__main__":
+    check_names()
     for p in (sheet_one(), sheet_two(), write_nets()):
         print("wrote", p)

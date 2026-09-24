@@ -1,6 +1,6 @@
 # Build tutorial video
 
-`Clown-Build-Tutorial.mp4` in the repo root — 32:34, 1920x1080, narrated.
+`Clown-Build-Tutorial.mp4` in the repo root — 35:18, 1920x1080, narrated.
 Generated, not hand-edited, the same way the PDF manual is.
 
 - `deck.py` — every slide and every line of narration. Edit this.
@@ -27,3 +27,9 @@ Delete `audio/` first if you changed narration text — cached clips are reused.
 - `tutorial.srt` is burned from the same text — load it as a sidebar subtitle track.
 - Numbers, pin tables and warnings are transcribed from BUILD.md. If a step
   changes there, change it in `deck.py` too.
+- **Part and pin names must follow the [naming rules](../../SCHEMATIC.md#naming-rules).**
+  Diodes are `CR1`/`CR2`, XIAO pins are GPIO numbers, and the silkscreen
+  D-numbers appear only in the pin-table column that is labelled as such. This
+  applies to the spoken narration as well as the slide text — the narration is
+  the only place a viewer hears a name, so "C R two" and "G P I O four" are what
+  it has to say.

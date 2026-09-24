@@ -60,7 +60,7 @@ dict(kind="bullets", kicker="BEFORE YOU START", title="Safety, briefly but serio
         "Check polarity|with a multimeter before the first connection, reversed power kills instantly",
         "Soap and electronics|assume every surface gets wet, from every angle, all night",
         "Kill and remove the cell|one-handed, in seconds - that is a safety feature",
-        "Spare cells in a case|never loose in a bag, the whole can is the negative terminal",
+        "There are no spare cells|two came with the kits, so a flat cell ends that arm",
         "Ventilate|a cheap fan pulling air away from your face is enough",
      ],
      say="Before you pick up the iron. Use the protected cells that came with the kits, and never charge a damaged or puffy one. "
@@ -68,9 +68,11 @@ dict(kind="bullets", kicker="BEFORE YOU START", title="Safety, briefly but serio
          "Check polarity with a multimeter before you connect the battery the first time, because reversed power destroys the brain "
          "and the strip instantly and permanently. "
          "You must also be able to kill the arm and get the cell out one handed, in seconds. That is what the disconnect switch "
-         "and a tool free sled lid are for. If getting the battery out needs two hands or a screwdriver, the pod is not finished. "
-         "Carry spare cells in a plastic case, never loose in a bag. The whole can of an eighteen six fifty is its negative terminal, "
-         "and the thin wrap is all that covers it. "
+         "and a tool free cradle lid are for. If getting the battery out needs two hands or a screwdriver, the pod is not finished. "
+         "Know this before the night starts. There are no spare cells. Two came with the two kits and none were bought, "
+         "so a flat cell ends that arm. Charge both full that morning and kill the disconnect between sets. "
+         "If you ever do carry a loose cell, it goes in a plastic case, never a bag with keys. The whole can of an "
+         "eighteen six fifty is its negative terminal, and the thin wrap is all that covers it. "
          "And solder somewhere ventilated."),
 
 dict(kind="bullets", kicker="BEFORE YOU START", title="How this tutorial runs", items=[
@@ -220,29 +222,34 @@ dict(kind="table", kicker="STEP 4", title="The core connections",
      rows=[["Battery + (PH2.0)", "SW1 disconnect, then the polyfuse"],
            ["Battery + after fuse", "Boost IN+ , and motor + via elbow SM-2"],
            ["Boost OUT+ (5V)", "74AHCT125 Vcc and SM-6 pin 1, direct"],
-           ["Boost OUT+ via D2", "XIAO 5V pad - banded end to the XIAO"],
+           ["74AHCT125 Vcc (pin 14)", "0.1 uF ceramic, then pin 7 (GND)"],
+           ["Boost OUT+ via CR2", "XIAO 5V pad - banded end to the XIAO"],
            ["Motor - via SM-2", "MOSFET module output"],
-           ["XIAO D10 (GPIO10)", "74AHCT125 in, then 330-470 ohm, SM-6 pin 3"],
-           ["XIAO D1 (GPIO3)", "SM-6 pin 4, the trigger"],
-           ["XIAO D2 (GPIO4)", "74AHCT125 second gate, then the MOSFET"],
-           ["XIAO D0 (GPIO2)", "Battery divider midpoint"]],
+           ["XIAO GPIO10 (silk D10)", "74AHCT125 in, then 330-470 ohm, SM-6 pin 3"],
+           ["XIAO GPIO3 (silk D1)", "SM-6 pin 4, the trigger"],
+           ["XIAO GPIO4 (silk D2)", "74AHCT125 second gate, then the MOSFET"],
+           ["XIAO GPIO2 (silk D0)", "Battery divider midpoint"]],
      say="These are the core connections. The disconnect switch goes first, then the fuse, right at the battery. "
          "Everything downstream of it shares one common ground. "
-         "Data leaves pin D ten, through the level shifter, through a three hundred and thirty to four hundred and seventy ohm "
+         "Data leaves G P I O ten, through the level shifter, through a three hundred and thirty to four hundred and seventy ohm "
          "resistor, and out of the elbow connector. "
-         "The trigger arrives on D one. Motor P W M leaves on D two. And D zero reads the battery."),
+         "The trigger arrives on G P I O three. Motor P W M leaves on G P I O four. And G P I O two reads the battery. "
+         "A note on names, because it will save you a mistake. We always call a X I A O pin by its G P I O number, and the board's "
+         "own printed labels, D ten, D one, D two, D zero, appear only in that silkscreen column. "
+         "And the two diodes are called C R one and C R two, never D one and D two, because those are pin names already. "
+         "And one small capacitor sits directly across the level shifter's own two power pins. More on that shortly."),
 
 dict(kind="bullets", kicker="STEP 4", title="Drive the MOSFET gate at 5 volts, not 3.3", items=[
         "The XIAO's pins swing to 3.3 V|most logic-level MOSFETs want 5 V to open fully",
         "At 3.3 V|the FET half-opens, gets hot, and the blower runs slow and inconsistent",
-        "The 74AHCT125 has four gates|and the strip only uses one, so route D2 through a second",
+        "The 74AHCT125 has four gates|and the strip only uses one, so route GPIO4 through a second",
         "Costs nothing|the chip is already in the pod",
         "Add 100 ohm|in series with the gate, and 10k from gate to source",
      ],
      say="One detail that is easy to get wrong. The X I A O's pins only swing to three point three volts, but most so called "
          "logic level MOSFETs are specified fully on at five. At three point three they only partly open, they dissipate the "
          "difference as heat, and the blower runs slow and inconsistent. "
-         "The level shifter in your pod has four gates and the strip only uses one. So route D two through a second gate, "
+         "The level shifter in your pod has four gates and the strip only uses one. So route G P I O four through a second gate, "
          "exactly the way you route the LED data through the first. The MOSFET then sees a clean five volt signal, and it costs you nothing. "
          "Add a hundred ohm resistor in series with the gate, and a ten k pulldown from gate to source, so the FET is held off while the board boots."),
 
@@ -269,7 +276,7 @@ dict(kind="bullets", kicker="STEP 4", title="Fit the master disconnect", items=[
          "label which way is off. "
          "It does not replace pulling the cell. It makes the pod safe to open and the arm safe to unplug in one motion."),
 
-dict(kind="bullets", kicker="STEP 4", title="Isolate the XIAO's 5 V pad - fit D2", items=[
+dict(kind="bullets", kicker="STEP 4", title="Isolate the XIAO's 5 V pad - fit CR2", items=[
         "The XIAO's 5V pad|is wired straight to its USB-C VBUS, with no diode on the board",
         "So with the cell in|and a USB cable plugged in, your boost feeds the laptop",
         "Fit a 1N5819|between boost output and the 5V pad, banded end to the XIAO",
@@ -313,6 +320,26 @@ dict(kind="bullets", kicker="STEP 4", title="Tie off the two gates you are not u
          "and never tie an output to a rail. "
          "Four short wires, while the chip is going in."),
 
+dict(kind="bullets", kicker="STEP 4", title="Decouple the level shifter at its own pins", items=[
+        "0.1 uF ceramic|across pin 14 and pin 7 - Vcc and ground, on the chip itself",
+        "Every switching edge|pulls a burst of current in billionths of a second",
+        "The 1000 uF is too far away|that one is bulk storage for the strip, by the elbow",
+        "Not polarised|it goes in either way round, unlike the big one",
+        "Cut the legs short|on 30 mm of leg it is mostly wire, and does much less",
+     ],
+     say="And one more part, the cheapest in the build, that people leave out because it looks redundant. "
+         "A nought point one microfarad ceramic capacitor goes across the level shifter's power pins. "
+         "Pin fourteen and pin seven on the D I P package. V C C and ground, on the chip itself, not near it. "
+         "Here is why it is not the same as the big capacitor you already have. "
+         "Every time a gate switches, the chip pulls a burst of current out of its supply pin in a few billionths of a second. "
+         "The one thousand microfarad sits by the elbow connector, and between it and the chip is a run of protoboard wire. "
+         "Electrically that is a long way. It cannot deliver charge that fast. "
+         "So the little ceramic sits right at the pins and holds just enough charge for one edge. "
+         "Bulk storage at the strip, decoupling at the chip. Different jobs. Fit both. "
+         "It is not polarised, so it goes in either way round. And cut the legs short before you solder it, "
+         "because on thirty millimetres of leg it is mostly wire, and it does much less than you think. "
+         "Skip it and you get a build that works on your bench and misbehaves on your arm."),
+
 dict(kind="table", kicker="STEP 4", title="The pod's two outward plugs",
      cols=["Plug", "Pin", "Carries"],
      rows=[["SM 6-pin", "1", "Strip 5V"], ["", "2", "Strip GND"], ["", "3", "Strip data, after the resistor"],
@@ -338,9 +365,9 @@ dict(kind="divider", kicker="STEP 4", title="The battery monitor",
 dict(kind="bullets", kicker="STEP 4", title="Two parts that are easy to fit backwards", items=[
         "1000 uF capacitor|across the strip's 5V and ground, close to the elbow connector",
         "Its marked stripe|is the NEGATIVE leg",
-        "D1, a 1N5819|straight across the motor terminals, at the blower end",
+        "CR1, a 1N5819|straight across the motor terminals, at the blower end",
         "Its banded end|goes to the POSITIVE side - backwards it is a dead short",
-        "D2, the other 1N5819|banded end toward the XIAO - backwards, the board never powers",
+        "CR2, the other 1N5819|banded end toward the XIAO - backwards, the board never powers",
         "Check this one twice|it is the cheapest mistake to avoid and the most annoying to find",
      ],
      say="Two parts here are easy to fit backwards. "
@@ -383,15 +410,17 @@ dict(kind="numbered", kicker="STEP 5", title="Microswitch to palm plate", items=
          "in one motion, every time. If you find yourself aiming, move the plate."),
 
 dict(kind="bullets", kicker="STEP 5", title="Why the switch gets its own tiny plug", items=[
-        "The field kit carries a spare switch|already on its pigtail",
-        "Without the plug|a spare means a spare plus a soldering iron plus somewhere to plug it in",
-        "With it|swapping a dead trigger mid-event is a ten second job",
+        "A soldered switch|can only be replaced with a soldering iron",
+        "On a pigtail|swapping a dead trigger mid-event is a ten second job",
+        "You own two switches|one per arm, both in use - the spare is the day you buy one",
         "It must not be PH2.0|every cell in this build ships on a PH2.0 lead",
         "ZH is 1.5 mm, PH is 2.0|they physically will not mate, and that is the entire point",
      ],
      say="Two reasons this tiny plug exists. "
-         "First, your field kit carries a spare microswitch already on a pigtail, so swapping a dead trigger at an event "
-         "is a ten second job instead of a soldering job. "
+         "First, a soldered in switch can only be replaced with a soldering iron, but one on a pigtail is a ten second swap. "
+         "Worth knowing: you own exactly two switches, one per arm, both in use. They came in the bubble kits and no spares "
+         "were bought, so right now a dead trigger ends that arm even with the pigtail fitted. The pigtail is what makes a "
+         "spare worth carrying the day you buy one. They come in cheap ten packs. "
          "Second, and more important, it must not be P H two point zero. Every cell in this build ships on a P H two lead. "
          "If the trigger used the same connector, one wrong plug in a dark room puts three point seven volts directly onto a logic pin. "
          "Z H is one point five millimetre pitch, P H is two. They will not mate. "
@@ -403,10 +432,10 @@ dict(kind="section", step=6, title="Bench test", sub="Before anything goes into 
 
 dict(kind="numbered", kicker="STEP 6", title="Flat on the table, fully wired, nothing mounted", items=[
         "Before any power: meter gate to source, a few k and NOT open",
-        "Before any power: check D1 to motor +, D2 banded end to the XIAO",
+        "Before any power: check CR1 to motor +, CR2 banded end to the XIAO",
         "Beep through every connector pin by pin, both ends",
         "Meter battery polarity, then set the boost to 5.00 V",
-        "Boost 5.0 V but XIAO pad 4.7 V - that 0.3 V step is D2 doing its job",
+        "Boost 5.0 V but XIAO pad 4.7 V - that 0.3 V step is CR2 doing its job",
         "Power up, dim breathing idle glow, and the blower must NOT twitch",
         "Press the switch: comet from the ELBOW end, motor spins",
         "Run it five minutes, then check for heat",
@@ -642,14 +671,20 @@ dict(kind="warn", title="Drain it.\nDo not hermetically seal it.",
 dict(kind="bullets", kicker="STEP 11", title="The pod enclosure", items=[
         "PETG, not PLA|PLA goes soft in a hot car and is brittle where a strap flexes it",
         "Four perimeters, 1.6 mm walls|thin FDM walls leak through the layer lines themselves",
-        "Gasketed lid|silicone cord in a groove, four M3 screws into heat-set inserts",
+        "Gasketed lid|silicone cord in a groove, four M3 x 8 mm screws",
+        "Heat-set inserts 4.6 x 5.0 mm|into a 4.0 mm hole, 6.0 mm deep, set at 240 degrees",
         "Every opening faces down or aft|nothing on the top surface",
         "A 2 mm drain hole|at the lowest corner, plus a vent at the high corner",
         "Grommet and a drip loop|on every wire leaving the pod",
      ],
      say="Print the pod in P E T G, not P L A. P L A goes soft in a hot car and it is brittle exactly where a strapped on part "
          "flexes. Four perimeters, one point six millimetre walls minimum, because thin F D M walls leak through the layer lines themselves. "
-         "Give it a lid with a gasket groove, two millimetre silicone cord in the groove, and four M three screws into heat set inserts. "
+         "Give it a lid with a gasket groove, two millimetre silicone cord in the groove, and four screws into heat set inserts. "
+         "Exact sizes, because they matter here: the inserts are brass, four point six millimetre outside diameter by five millimetre long. "
+         "The screws are M three by eight millimetre button heads, in stainless, not the black carbon steel ones the kit comes with. "
+         "Model the bosses at four millimetres across and six deep, with at least two millimetres of plastic all round them, "
+         "and drill the lid three point four for clearance. "
+         "Set the inserts with a soldering iron at two hundred and forty degrees, going in square, until the top sits flush. "
          "Nothing sticky, because you will be opening this. "
          "Every opening faces down or aft. Nothing on the top surface. "
          "Then put a two millimetre drain hole at the lowest corner, and a small vent at the opposite high corner so it can breathe. "
@@ -672,20 +707,24 @@ dict(kind="bullets", kicker="STEP 11", title="Conformal coat the board", items=[
 
 dict(kind="bullets", kicker="STEP 11", title="The battery gets its own compartment", items=[
         "A wall between cell and electronics|a leaking cell must not take the board with it",
-        "Heat-shrink over the sled's tabs|a bare tab and a stray strand is a dead short",
+        "Nothing in here is soldered|the cell arrives on its own pigtail, so there are no tabs",
         "Nothing metal loose in there|no screws, no washers, no snipped lead ends",
         "Check the cell's wrap every event|a nick exposes the can, which is the negative terminal",
+        "The cradle grips the cell|not the pigtail, or the crimp is what eventually fails",
         "The lid closes positively|and opens without a tool",
      ],
      say="The cell is the part that hurts you if this goes wrong, so it gets its own compartment, with a wall between it and the "
          "electronics. A leaking or vented cell must not take the board with it, and soap that gets in during a swap must not "
          "reach the brain. "
-         "Heat shrink over the sled's solder tabs. A bare tab and a stray strand of wire is a dead short across a lithium cell, "
-         "an inch from your skin. Nothing metal loose in that compartment, ever. "
+         "Nothing in this compartment is soldered. The cell arrives on its own factory pigtail, so there are no tabs and no "
+         "joints in here to work loose. That is most of the reason this build uses a printed cradle instead of a bought sled. "
+         "Nothing metal loose in that compartment either, ever. "
          "And check the cell's own wrap before every event. A nicked eighteen six fifty sleeve exposes the can, and the can is the "
          "negative terminal over the whole body of the cell. That is how a cell shorts against something it is only resting on. "
          "Re wrap or bin any that are torn. They cost almost nothing. "
-         "The lid closes positively, and opens without a tool."),
+         "The cradle grips the cell itself, never the pigtail. If the cell can shift, the pigtail takes the load and the crimp "
+         "is what eventually fails. A foam pad or a printed rib that pinches the wrap is enough. "
+         "And the lid closes positively, and opens without a tool."),
 
 dict(kind="bullets", kicker="STEP 11", title="The trigger and the connectors", items=[
         "The microswitch is not sealed|a printed pocket with a nitrile membrane over the lever",
@@ -810,7 +849,7 @@ dict(kind="table", kicker="REFERENCE", title="If something is wrong, start here"
            ["Motor runs constantly", "Motor still on its factory PH2.0 lead, straight to the cell"],
            ["Blower twitches at power-up", "Missing 10k gate pulldown - the gate floats while the board boots"],
            ["Elbow pixel double-blinking", "Low-voltage shutoff at 3.0 V. Swap the cell, it clears itself"],
-           ["Laptop complains about USB power", "Missing or reversed D2 - the pack is backfeeding the host port"],
+           ["Laptop complains about USB power", "Missing or reversed CR2 - the pack is backfeeding the host port"],
            ["Dead arm, freshly charged cell", "SW1 off, or its DC rating gave out. Check the switch first"]],
      say="Most faults in this build come from a short list. If nothing lights at all, check your common ground, your boost output, "
          "and that data is going into the input end of the strip. "
@@ -825,18 +864,20 @@ dict(kind="table", kicker="REFERENCE", title="If something is wrong, start here"
          "freshly charged cell, check the disconnect switch before you suspect the board. The full table is in the build manual."),
 
 dict(kind="bullets", kicker="REFERENCE", title="Field kit - what actually fails at an event", items=[
-        "A charged spare cell|per arm, each in its own case, never loose in the bag",
         "A pre-made spare wrist umbilical|both ends are connectors now, so it swaps in seconds",
-        "A spare microswitch|already on its ZH-2 pigtail",
         "One spare SM pigtail pair|of each size",
+        "The kit charger and a power bank|no spare cells, so recharging is the only extension",
         "Extra solution|this runs out long before the battery does",
         "Self-amalgamating tape|for re-wrapping a plug you had to open",
         "Isopropyl and a cloth|dried solution on a connector is how one dead arm becomes two",
+        "Cannot be fixed in the field|a flat cell, or a dead trigger - one of each per arm",
      ],
-     say="Last thing. Your field kit. Carry a charged spare cell per arm, a pre made spare wrist umbilical, "
-         "a spare microswitch already on its pigtail, and one spare S M pigtail pair of each size. "
-         "Those are the things that fail during an event, and because of the connector design, all of them now swap without a soldering iron. "
-         "Also carry extra bubble solution. It runs out long before the battery does."),
+     say="Last thing. Your field kit. Carry a pre made spare wrist umbilical and one spare S M pigtail pair of each size. "
+         "Because of the connector design, both swap without a soldering iron. Carry the kit charger and a power bank too. "
+         "Also carry extra bubble solution. It runs out long before the battery does. "
+         "And know the two failures you cannot fix. A flat cell, and a dead trigger. There is one of each per arm and both "
+         "are in use, because no spares were bought. Protected cells and lever microswitches both sell in multi packs, "
+         "so that is a cheap gap to close before the next event."),
 
 dict(kind="title", title="THAT'S THE BUILD", sub="One arm at a time. Bench test before you sew.",
      foot="Full detail: BUILD.md - the circuit: SCHEMATIC.md - parts and why: PARTS.md - the look: DESIGN.md",

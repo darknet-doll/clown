@@ -24,7 +24,8 @@ Read order if you're new:
 1. This file — what the parts are
 2. [BUILD.md](BUILD.md) — how they go together
 3. [SCHEMATIC.md](SCHEMATIC.md) — the same circuit as a drawing, with every
-   designator (`D2`, `R5`, `SW1`…) this file refers to
+   designator (`CR2`, `R5`, `SW1`…) this file refers to, and the
+   [naming rules](SCHEMATIC.md#naming-rules) that keep those names unique
 4. [README.md](README.md) — why the design is shaped this way
 
 ---
@@ -133,6 +134,7 @@ Status column: **have** = on the shelf · `later` = costume layer, deferred ·
 | 18650 storage/transport case | ~~skip~~ | — | **0** — no spares to carry | [search](https://www.amazon.com/s?k=18650+battery+storage+case+plastic) |
 | 100 kΩ resistor | **have** | 2 | **0** — 4 on hand | [resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
 | 1000 µF capacitor | **have** | 1 | **0** — 2 on hand | [search](https://www.amazon.com/s?k=1000uF+16V+electrolytic+capacitor) |
+| 0.1 µF ceramic capacitor | buy | 1 | **2** (buy an assortment) | [ceramic cap kit](https://www.amazon.com/s?k=ceramic+capacitor+assortment+kit+0.1uF+50V) · [0.1 µF 50-pack](https://www.amazon.com/s?k=0.1uF+100nF+50V+ceramic+capacitor+through+hole) |
 | 330–470 Ω resistor | **have** | 1 | **0** — 2 on hand | [same resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
 | Lever microswitch | **have** | 1 | **0** — 2 come in the kits | [Saim 10-pack](https://www.amazon.com/Saim-Momentary-Switch-Roller-Action/dp/B01NBK00FD) |
 | JST-SM pigtail pair, 6-pin | buy | 1 | **2 + 1 spare** | [ACTOO, 10 pairs](https://www.amazon.com/ACTOO-Connector-Female-Terminal-Adapter/dp/B07YWHCPW5) |
@@ -147,7 +149,7 @@ Status column: **have** = on the shelf · `later` = costume layer, deferred ·
 | Conformal coating spray, clear acrylic | buy | — | **1 can** | [search](https://www.amazon.com/s?k=clear+acrylic+conformal+coating+spray+electronics) |
 | Self-amalgamating silicone tape | buy | — | **1 roll** | [search](https://www.amazon.com/s?k=self+amalgamating+silicone+tape) |
 | Silicone O-ring cord, 2 mm, or closed-cell foam tape | buy | — | **1** | [O-ring cord](https://www.amazon.com/s?k=silicone+o+ring+cord+2mm+solid) · [foam tape](https://www.amazon.com/s?k=closed+cell+foam+weatherstrip+tape+thin) |
-| M3 heat-set inserts + M3 screws | buy | — | **1 kit** | [search](https://www.amazon.com/s?k=M3+heat+set+threaded+inserts+brass+kit) |
+| M3 heat-set inserts, 4.6 mm OD × 5.0 mm long + M3×8 mm button-head screws | buy | 4 + 4 | **1 kit** | [inserts](https://www.amazon.com/s?k=M3+heat+set+threaded+inserts+brass+4.6mm+OD+5mm) · [screws](https://www.amazon.com/s?k=M3+x+8mm+button+head+screw+stainless+A2+ISO+7380) |
 | Cable gland or rubber grommet, 4–6 mm | buy | 1 | **2 + spares** | [search](https://www.amazon.com/s?k=small+rubber+grommet+assortment+kit) |
 | PETG filament | buy | — | **1 spool** | [search](https://www.amazon.com/s?k=PETG+filament+1.75mm) |
 | Needle and thread, or fabric glue | buy | — | **1** | [sewing kit](https://www.amazon.com/s?k=hand+sewing+kit+needles+thread+ballpoint) · [fabric glue](https://www.amazon.com/s?k=fabric+glue+permanent+washable) |
@@ -344,7 +346,7 @@ Even genuine logic-level parts are usually specified at **Vgs = 5 V**, not 3.3 V
 **Drive the gate from 5 V using a spare gate on the 74AHCT125 you already have.**
 
 - The level shifter has **four** gates and the strip uses one
-- Route `D2` through a second gate, exactly as you route the LED data through the first
+- Route `GPIO4` through a second gate, exactly as you route the LED data through the first
 - The MOSFET then sees a clean 5 V gate signal, and IRLZ44N or RFP30N06LE become
   fully-on parts instead of marginal ones
 - No new components, no extra cost. See [BUILD.md](BUILD.md) step 4
@@ -376,9 +378,13 @@ Even genuine logic-level parts are usually specified at **Vgs = 5 V**, not 3.3 V
 
 ### 1N5819 diode — **2 per arm** · **buy 4** (get 10)
 
-Two jobs, same part, and they are easy to confuse — one is `D1`, one is `D2`.
+Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`.
 
-#### `D1` — flyback, across the motor
+> They are `CR`, not `D`, on purpose: the XIAO's silkscreen already has pins
+> called `D1` and `D2`, and one of those pins drives the very MOSFET `CR1`
+> protects. See the [naming rules](SCHEMATIC.md#naming-rules).
+
+#### `CR1` — flyback, across the motor
 
 - **Is:** a one-way valve for electricity
 - **Problem it fixes:** a motor is a big coil
@@ -388,7 +394,7 @@ Two jobs, same part, and they are easy to confuse — one is `D1`, one is `D2`.
 - Goes at the **blower end**, banded end (cathode) to motor **+**
 - Costs ~20¢. Fit it
 
-#### `D2` — USB isolation, between the boost and the XIAO
+#### `CR2` — USB isolation, between the boost and the XIAO
 
 - **Is:** the same one-way valve, doing a different job
 - **Problem it fixes:** the XIAO's `5V` pad is wired straight to its USB-C VBUS,
@@ -531,6 +537,29 @@ Two jobs, same part, and they are easy to confuse — one is `D1`, one is `D2`.
   [search 1000uF 16V electrolytic capacitors](https://www.amazon.com/s?k=1000uF+16V+electrolytic+capacitor)
   — 10 V would technically do, but 16 V or 25 V costs the same
 
+### 0.1 µF ceramic capacitor — 1 per arm · **buy 2** (get an assortment)
+
+- **Is:** a very small, very fast water tank, bolted to the thirsty part itself
+- **Problem it fixes:** the 74AHCT125 gulps current in nanoseconds every time it
+  switches a gate
+  - the 1000 µF is metres of wire away, electrically speaking, and can't answer that fast
+  - so the chip's own 5 V pin dips on every edge it drives
+- **Does:** sits across `Vcc` and `GND` **at the chip**, holding just enough charge
+  for one switching edge
+- **Watch out:** it only works if it's *at the pins*
+  - legs cut short, straddling pin 14 and pin 7
+  - on long legs it's mostly wire, and does much less than you think
+- **Not polarised** — either way round, unlike the 1000 µF
+- **Skip it →** works on the bench, misbehaves on the arm: stray wrong pixels, a
+  blower that stutters when the strip changes brightness. Intermittent, and it will
+  not reproduce on your desk
+- **Not the same part as `C1`.** Fit both — bulk at the strip, decoupling at the chip
+- **Suggested product:**
+  [ceramic capacitor assortment kit](https://www.amazon.com/s?k=ceramic+capacitor+assortment+kit+0.1uF+50V)
+  — pennies, and you will want the other values eventually. A
+  [plain 0.1 µF 50 V pack](https://www.amazon.com/s?k=0.1uF+100nF+50V+ceramic+capacitor+through+hole)
+  does the job if you'd rather not have the box. Marked **104** on the body
+
 ### 330–470 Ω resistor — 1 per arm · **on hand: 2**
 
 - **On hand: 2.** Nothing to buy
@@ -581,7 +610,7 @@ to end across a joint.
 
 | Module | Holds | Unplugs at |
 |---|---|---|
-| **Pod** (upper arm) | brain, boost, shifter, MOSFET, fuse, sled | battery plug + straps |
+| **Pod** (upper arm) | brain, boost, shifter, MOSFET, fuse, cell cradle | battery plug + straps |
 | **Sleeve** (forearm) | forearm strip, 15 px | elbow, SM 6-pin + SM 2-pin |
 | **Glove** (hand) | hand strip 6 px, trigger | wrist, SM 5-pin |
 | **Bubbler** | bottle, cap, hose, blower head | wrist, SM 2-pin + its strap |
@@ -827,8 +856,37 @@ halfway through the build.
 ### M3 heat-set inserts and screws — **buy 1 kit**
 
 - **Does:** lets the pod lid be screwed shut and reopened without stripping plastic
-- Four per pod. A gasket only seals if something squeezes it evenly
-- **Suggested product:** [search M3 heat-set inserts](https://www.amazon.com/s?k=M3+heat+set+threaded+inserts+brass+kit)
+- Four of each per pod, so eight of each for two arms. A gasket only seals if
+  something squeezes it evenly
+
+**Exact sizes — these four numbers are the whole spec:**
+
+| | Size |
+|---|---|
+| Insert | M3 × 0.5, brass, **4.6 mm OD × 5.0 mm long** (sold as *M3 × D4.6 × L5.0*) |
+| Screw | **M3 × 0.5 × 8 mm**, button head (ISO 7380), **A2 stainless** |
+| Printed boss hole | **4.0 mm diameter × 6.0 mm deep** |
+| Lid clearance hole | **3.4 mm**, on a flat ≥ 6.5 mm across |
+
+- **Why 4.0 mm for a 4.6 mm insert:** the 0.6 mm difference is the plastic the
+  brass melts into. Print the hole at the nominal size and let the insert do the
+  work — do not "help" by reaming it out
+- **Why 6.0 mm deep for a 5.0 mm insert:** the extra millimetre is somewhere for
+  displaced plastic and the screw tip to go, so neither bottoms out
+- **Leave ≥ 2 mm of plastic all round the boss** — a boss ≥ 8.5 mm outside
+  diameter. Less than that and the melt-in splits the wall
+- **Screw length rule if your lid isn't 3 mm:** *lid thickness + 5 mm*. An 8 mm
+  screw through a 3 mm lid lands 5 mm of thread in a 5 mm insert, which is all of it
+- **Stainless, not the black ones in the kit.** Kit screws are usually plain
+  carbon steel and will bloom rust on a wet costume in one season
+- **Setting them:** soldering iron at **240 °C** for PETG, insert square, press
+  until the top sits **flush to 0.2 mm below** the surface. Press slowly and keep
+  the iron square — rushing it drives the insert in crooked, and crooked is what
+  makes a gasket leak at one corner
+- Assorted kits are fine as long as they contain the **M3 × 4.6 × 5.0** size —
+  many sell M3 in 3.0, 4.0 and 5.0 mm lengths in one box
+- **Suggested products:** [M3 heat-set inserts](https://www.amazon.com/s?k=M3+heat+set+threaded+inserts+brass+4.6mm+OD+5mm) ·
+  [M3×8 button-head stainless screws](https://www.amazon.com/s?k=M3+x+8mm+button+head+screw+stainless+A2+ISO+7380)
 
 ### Rubber grommets or a small cable gland — 1 per arm · **buy 2 + spares**
 
@@ -840,7 +898,7 @@ halfway through the build.
 
 ### PETG filament — **buy 1 spool**
 
-- **Does:** pod, lid, sled, trigger plate, bubbler mount
+- **Does:** pod, lid, cell cradle, trigger plate, bubbler mount
 - **Not PLA:** PLA softens in a hot car and is brittle exactly where a strapped-on
   part flexes. PETG is tougher and its layer lines seal better
 - Four perimeters, 1.6 mm walls minimum. Thin FDM walls leak through the layer
@@ -870,7 +928,7 @@ One of each — these are not per arm.
 - **Multimeter** — not optional. Spec below
 - Heat gun or lighter — for heat-shrink
 - **Thermal camera** — optional, genuinely useful. See below
-- 3D printer — trigger plate, battery sled, controller pod, bubbler mount
+- 3D printer — trigger plate, cell cradle, controller pod, bubbler mount
 - **USB-C data cable** — a charge-only cable will waste you half an hour.
   [Search USB-C data sync cable](https://www.amazon.com/s?k=USB+C+data+sync+cable)
 
@@ -945,18 +1003,19 @@ The continuity beeper is what you'll actually live in.
 
 ---
 
-## The five parts people skip
+## The parts people skip
 
 Ordered by how much pain skipping them causes:
 
 1. **74AHCT125** → random flicker, only in the field, impossible to reproduce
-2. **`D1` 1N5819** → dead MOSFET, later, for no visible reason
+2. **`CR1` 1N5819** → dead MOSFET, later, for no visible reason
 3. **Common ground** (not a part — a rule) → bizarre unrepeatable behaviour
 4. **10 kΩ gate pulldown** → the blower twitches at every boot and the code is
    innocent
-5. **`D2` 1N5819** → the pack backfeeds whatever you plug the USB cable into
+5. **`CR2` 1N5819** → the pack backfeeds whatever you plug the USB cable into
 6. **330–470 Ω resistor** → first pixel only, wrong colour
 7. **1000 µF capacitor** → voltage dips when pixels light, brain gets confused
+8. **0.1 µF ceramic at the 74AHCT125** → the same flicker as a missing shifter, at a tenth the cost to prevent
 
 ## The one connector mistake that costs a board
 

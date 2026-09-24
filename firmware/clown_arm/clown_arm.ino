@@ -96,11 +96,12 @@ constexpr uint8_t  VBAT_CUTOFF_CONFIRM = 3;     // consecutive samples, 3 x 2s
 // shutdown before you could test anything.
 constexpr uint16_t VBAT_ABSENT_MV = 2500;
 
-// Pins (XIAO ESP32-C3 silkscreen -> GPIO). Avoid D8/D9, they're boot straps.
-constexpr uint8_t PIN_LED   = 10;  // D10, via 74AHCT125 then 330-470R
-constexpr uint8_t PIN_TRIG  = 3;   // D1,  microswitch to GND
-constexpr uint8_t PIN_MOTOR = 4;   // D2,  MOSFET gate
-constexpr uint8_t PIN_VBAT  = 2;   // D0,  divider midpoint (ADC capable)
+// Pins, by GPIO number, with the XIAO's silkscreen label beside each one - see
+// the naming rules in SCHEMATIC.md. Avoid GPIO8/GPIO9, they're boot straps.
+constexpr uint8_t PIN_LED   = 10;  // silk D10, via 74AHCT125 then 330-470R
+constexpr uint8_t PIN_TRIG  = 3;   // silk D1,  microswitch to GND
+constexpr uint8_t PIN_MOTOR = 4;   // silk D2,  MOSFET gate
+constexpr uint8_t PIN_VBAT  = 2;   // silk D0,  divider midpoint (ADC capable)
 
 constexpr uint16_t DEBOUNCE_MS = 25;
 

@@ -72,7 +72,7 @@ Nothing is soldered end to end across a joint. Each arm is four modules:
 
 | Module | Holds | Unplugs at |
 |---|---|---|
-| **Pod** — upper arm | brain, boost, level shifter, MOSFET, fuse, disconnect, battery sled | `SW1` + battery plug + straps |
+| **Pod** — upper arm | brain, boost, level shifter, MOSFET, fuse, disconnect, cell cradle | `SW1` + battery plug + straps |
 | **Sleeve** — forearm | forearm strip, 15 px | elbow: SM 6-pin + SM 2-pin |
 | **Glove** — hand | hand strip 6 px, this hand's trigger | wrist: SM 5-pin |
 | **Bubbler** | bottle, cap, hose, blower head | wrist: SM 2-pin + its strap |
@@ -119,7 +119,7 @@ Each arm runs off **one swappable protected 18650**, on a split rail:
 ```
 18650 ─> SW1 ─> 2A fuse ─┬─> MOSFET ──> blower motor          (3.7V native)
                          └─> 5V boost ─┬─> LED strip + shifter (~0.3A)
-                                       └─> D2 ──> XIAO 5V pad
+                                       └─> CR2 ─> XIAO 5V pad
 ```
 
 **`SW1` is a master disconnect** in the cell positive — one motion, through the
@@ -127,7 +127,7 @@ costume, kills the arm without opening the pod. The cell still comes out for
 storage and charging; the switch is what makes the pod safe to open and the arm
 safe to unplug in a hurry.
 
-**`D2` is an isolation Schottky.** The XIAO's 5V pad is tied straight to its USB-C
+**`CR2` is an isolation Schottky.** The XIAO's 5V pad is tied straight to its USB-C
 VBUS, so without it, plugging in to reflash with the cell connected puts the boost
 output on the host port. The strip and the level shifter stay on the boost
 directly at a full 5 V; only the MCU sits behind the diode.
@@ -143,7 +143,14 @@ direct, it just runs, and PWM becomes purely a bubble-rate control.
 
 Each bubble kit ships with a protected 18650 **already on a PH2.0 pigtail** and a
 USB charger that mates to the same plug. Fit the matching half at the pod and a
-flat cell goes pod → charger with no adapter. Buy spare cells to hot-swap.
+flat cell goes pod → charger with no adapter.
+
+That pigtail is also why the pod has **no battery sled** — the cell already carries
+its own connector, so the pod only needs a printed **cradle** that holds it still
+and a lid that opens without a tool. Retention and conduction stay separate jobs.
+
+**Two cells exist, one per arm, and no spares were bought.** A flat cell ends that
+arm for the night; recharging between sets is the extension plan.
 
 The kit does **not** include a bottle — the cap fits a 24T/30T neck and you supply
 the rest. That's useful: bottle size is your main lever on arm weight.
@@ -235,14 +242,19 @@ Per arm, XIAO ESP32-C3:
 
 Full drawing: [SCHEMATIC.md](SCHEMATIC.md).
 
-| Signal | XIAO pin | GPIO | To |
+| Signal | XIAO pin | Silkscreen | To |
 |---|---|---|---|
-| LED data | D10 | 10 | 74AHCT125 input, then 330–470 Ω, then elbow SM-6 pin 3 |
-| Trigger | D1 | 3 | Elbow SM-6 pin 4 (internal pull-up, active low) |
-| Motor PWM | D2 | 4 | MOSFET module gate input |
-| Battery sense | D0 | 2 | Midpoint of a 100 kΩ / 100 kΩ divider across the cell |
-| 5V | 5V pad | — | Boost output **through `D2`** (cathode to the XIAO) |
-| GND | GND | — | Common ground for everything |
+| LED data | `U3 GPIO10` | silk `D10` | 74AHCT125 input, then 330–470 Ω, then elbow SM-6 pin 3 |
+| Trigger | `U3 GPIO3` | silk `D1` | Elbow SM-6 pin 4 (internal pull-up, active low) |
+| Motor PWM | `U3 GPIO4` | silk `D2` | MOSFET module gate input |
+| Battery sense | `U3 GPIO2` | silk `D0` | Midpoint of a 100 kΩ / 100 kΩ divider across the cell |
+| 5V | `U3 5V` | silk `5V` | Boost output **through `CR2`** (cathode to the XIAO) |
+| GND | `U3 GND` | silk `GND` | Common ground for everything |
+
+**Pins are named by GPIO number, parts by designator, and the two never collide.**
+The diodes are `CR1` and `CR2` precisely because the XIAO's silkscreen already owns
+`D0`–`D10`; the silkscreen column above is the only place those D-numbers appear.
+The rule, and why it matters, is in [SCHEMATIC.md](SCHEMATIC.md#naming-rules).
 
 Everything the pod sends down the arm leaves through two plugs:
 
@@ -255,17 +267,19 @@ Pin 6 is not spare. The elbow run is the longest in the costume and carries the
 whole strip's current; a second ground conductor cuts the drop and gives the data
 line a better return path.
 
-Avoid D8 / D9 (GPIO8 / GPIO9) — they're boot strapping pins.
+Avoid `GPIO8` / `GPIO9` (silk `D8` / `D9`) — they're boot strapping pins.
 
 Notes:
 
 - `SW1`, a 3 A-rated DC disconnect, goes in the battery positive first, then the
   2 A polyfuse, then everything else.
-- `D2`, a 1N5819, goes between the boost output and the XIAO's 5V pad only — the
+- `CR2`, a 1N5819, goes between the boost output and the XIAO's 5V pad only — the
   strip and the shifter stay on the boost directly.
 - A 10 kΩ gate-to-source pulldown holds the blower off while the XIAO boots. If
   your MOSFET module already has one, meter it and skip; most don't.
 - The 1000 µF cap goes across the strip's 5V/GND, close to the elbow connector.
+- A 0.1 µF ceramic goes across the 74AHCT125's `Vcc` and `GND` pins, legs short,
+  right at the chip. Different job from the 1000 µF — fit both.
 - The 330–470 Ω resistor goes in series on the data line, at the connector end.
 - The 1N5819 goes across the motor terminals, cathode to +, at the blower end.
 - The motor gets its own plug, deliberately not bundled with the data line. Twist
@@ -313,11 +327,13 @@ lands. See [BUILD.md](BUILD.md) step 9.
   aiming.
 - **Cell out before you mate or unmate any connector.** Every time. It is the one
   habit that protects pixel 0.
-- **Spare cells live in a plastic case**, never loose in a bag. The whole can of an
-  18650 is its negative terminal and the wrap is all that covers it.
-- **Carry spares:** a charged cell per arm, a pre-made wrist umbilical, a spare
-  microswitch on its ZH-2 pigtail, and one SM pigtail pair of each size. Those are
-  what fail during an event — and now all of them swap without a soldering iron.
+- **Carry spares:** a pre-made wrist umbilical and one SM pigtail pair of each
+  size. Those swap without a soldering iron.
+- **Know the two you can't fix:** a flat cell and a dead trigger. One of each per
+  arm, both in use, no spares bought — see [BUILD.md](BUILD.md)'s field kit.
+- **Any cell that ever travels loose gets a plastic case**, never a bag with keys
+  or coins. The whole can of an 18650 is its negative terminal and the wrap is all
+  that covers it.
 - **Check every latch before you walk out.** A half-seated SM plug looks mated and
   works until you move.
 - **Keep the USB-C port accessible** in the printed pod. You will reflash this
@@ -343,8 +359,12 @@ lands. See [BUILD.md](BUILD.md) step 9.
 - [ ] Pick a multimeter — spec and three suggestions in [PARTS.md](PARTS.md)
 - [ ] Decide leaded vs lead-free solder (tradeoff in [PARTS.md](PARTS.md))
 - [ ] Source a **logic-level** MOSFET — *not* an IRF520 module, see [PARTS.md](PARTS.md)
-- [ ] Parts ordered — buy links in [PARTS.md](PARTS.md); **stock, price and delivery
-      are unverified**, confirm in cart
+- [x] Kits, passives, protoboards and triggers on hand — see
+      [PARTS.md](PARTS.md), *What's already on hand*
+- [ ] Remaining parts ordered — the `buy` rows in [PARTS.md](PARTS.md); **stock,
+      price and delivery are unverified**, confirm in cart
+- [ ] Costume layer decided — glove, sleeve, diffuser, ribbon. Buy one, test it
+      lit, then buy the rest
 - [ ] Bottles sourced — 24T/30T neck, not included in the kit
 - [ ] Lace diffusion test (see DESIGN.md — lace reveals, it doesn't diffuse)
 - [ ] Decide where the controller pod hides
@@ -353,7 +373,7 @@ lands. See [BUILD.md](BUILD.md) step 9.
 - [ ] Both-arms checkout and doffing drill ([BUILD.md](BUILD.md) step 13)
 - [ ] **Engineering review of [SCHEMATIC.md](SCHEMATIC.md)** — checklist at the
       bottom of that file
-- [ ] Printed enclosures (trigger plate, battery sled, controller pod, bubbler
+- [ ] Printed enclosures (trigger plate, cell cradle, controller pod, bubbler
       mount) — sealed to [BUILD.md](BUILD.md) step 11, not just printed
 - [ ] **Soak test** — powered arm, overhead, sprayed for a minute, then opened and
       inspected ([BUILD.md](BUILD.md) step 11)
