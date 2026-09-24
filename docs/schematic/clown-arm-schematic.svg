@@ -1,0 +1,290 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="1580" viewBox="0 0 1560 1580" role="img">
+<rect x="0" y="0" width="1560" height="1580" fill="#FFFFFF"/>
+<text x="40" y="52" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="21" fill="#1A1A1A" text-anchor="start" font-weight="bold">clown — one arm — schematic</text>
+<text x="40" y="76" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#5A5A5A" text-anchor="start" font-weight="normal">Sheet 1 of 2 · pod electronics, motor drive, trigger · both arms are identical</text>
+<line x1="40" y1="92" x2="1520" y2="92" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="60" y="150" width="190" height="110" rx="4" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="155" y="176" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#1A1A1A" text-anchor="middle" font-weight="bold">BT1</text>
+<text x="155" y="194" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">18650, protected</text>
+<text x="155" y="212" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">factory PH2.0 lead</text>
+<line x1="250" y1="185" x2="268" y2="185" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="242" y="188.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">+</text>
+<line x1="250" y1="235" x2="268" y2="235" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="242" y="238.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">-</text>
+<rect x="330" y="159" width="56" height="126" rx="6" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="358" y="133" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="middle" font-weight="bold">J1</text>
+<text x="358" y="149" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">JST-PH 2.0</text>
+<line x1="314" y1="185" x2="330" y2="185" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="386" y1="185" x2="402" y2="185" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="358" y="189" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">1</text>
+<line x1="314" y1="235" x2="330" y2="235" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="386" y1="235" x2="402" y2="235" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="358" y="239" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">2</text>
+<polyline points="268,185 314,185" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="268,235 314,235" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="450" y1="185" x2="468" y2="185" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="512" y1="185" x2="530" y2="185" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="468" y1="185" x2="508" y2="159" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<circle cx="468" cy="185" r="4" fill="#1A1A1A"/>
+<circle cx="512" cy="185" r="4" fill="#1A1A1A"/>
+<text x="490" y="145" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="bold">SW1</text>
+<text x="490" y="211" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="normal">master disconnect</text>
+<polyline points="402,185 450,185" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="598" y="170" width="84" height="30" rx="2" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2"/>
+<line x1="598" y1="185" x2="682" y2="185" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="640" y="161" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="bold">F1</text>
+<text x="640" y="221" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="normal">2 A PPTC</text>
+<polyline points="530,185 598,185" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="682,185 1330,185" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="700" y="170" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="start" font-weight="bold">VBATT  3.0 - 4.2 V</text>
+<polyline points="402,235 430,235" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="430" y1="235" x2="430" y2="251" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="408" y1="251" x2="452" y2="251" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="416" y1="258" x2="444" y2="258" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="423" y1="265" x2="437" y2="265" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<text x="430" y="291" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GND</text>
+<rect x="760" y="330" width="220" height="120" rx="4" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="870" y="356" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#1A1A1A" text-anchor="middle" font-weight="bold">U1</text>
+<text x="870" y="374" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">MT3608 boost</text>
+<text x="870" y="392" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">trim to 5.00 V first</text>
+<line x1="760" y1="370" x2="742" y2="370" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="768" y="373.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">IN+</text>
+<line x1="760" y1="420" x2="742" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="768" y="423.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">IN-</text>
+<line x1="980" y1="370" x2="998" y2="370" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="972" y="373.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">OUT+</text>
+<line x1="980" y1="420" x2="998" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="972" y="423.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">OUT-</text>
+<polyline points="800,185 800,250 700,250 700,370 742,370" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="800" cy="185" r="4.5" fill="#1A1A1A"/>
+<polyline points="742,420 716,420 716,470" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="716" y1="470" x2="716" y2="486" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="694" y1="486" x2="738" y2="486" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="702" y1="493" x2="730" y2="493" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="709" y1="500" x2="723" y2="500" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<text x="716" y="526" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GND</text>
+<polyline points="998,420 1016,420 1016,470" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="1016" y1="470" x2="1016" y2="486" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="994" y1="486" x2="1038" y2="486" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="1002" y1="493" x2="1030" y2="493" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="1009" y1="500" x2="1023" y2="500" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<text x="1016" y="526" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GND</text>
+<polyline points="998,370 1060,370 1060,560" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="340,560 1290,560 1290,620" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1060" cy="560" r="4.5" fill="#1A1A1A"/>
+<text x="350" y="545" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="start" font-weight="bold">+5 V  strip, shifter, and D2</text>
+<polygon points="1295,605 1496,605 1512,620 1496,635 1295,635" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="1307" y="624" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="start" font-weight="bold">STRIP +5V -&gt; J2-1</text>
+<polyline points="1100,185 1100,245" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1100" cy="185" r="4.5" fill="#1A1A1A"/>
+<polygon points="1100,230 1268,230 1284,245 1268,260 1100,260" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="1112" y="249" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="start" font-weight="bold">MOTOR+ -&gt; J3-1</text>
+<polyline points="1330,185 1330,231" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1317" y="231" width="26" height="68" rx="2" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2"/>
+<text x="1352" y="259" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="bold">R1</text>
+<text x="1352" y="275" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">100 k</text>
+<polyline points="1330,299 1330,396" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1330" cy="360" r="4.5" fill="#1A1A1A"/>
+<polygon points="1345,345 1491,345 1507,360 1491,375 1345,375" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="1357" y="364" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="start" font-weight="bold">VSENSE -&gt; D0</text>
+<rect x="1317" y="396" width="26" height="68" rx="2" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2"/>
+<text x="1352" y="424" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="bold">R2</text>
+<text x="1352" y="440" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">100 k</text>
+<polyline points="1330,464 1330,500" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="1330" y1="500" x2="1330" y2="516" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="1308" y1="516" x2="1352" y2="516" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="1316" y1="523" x2="1344" y2="523" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="1323" y1="530" x2="1337" y2="530" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<text x="1330" y="556" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GND</text>
+<polyline points="420,560 420,590" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="420" cy="560" r="4.5" fill="#1A1A1A"/>
+<path d="M 400 594 L 440 594 L 420 624 Z" fill="#1A1A1A" stroke="#1A1A1A" stroke-width="2" stroke-linejoin="round"/>
+<line x1="398" y1="624" x2="442" y2="624" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+<path d="M 398 624 l 8 9 M 442 624 l -8 9" fill="none" stroke="#1A1A1A" stroke-width="2.4"/>
+<text x="452" y="604" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="bold">D2</text>
+<text x="452" y="620" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">1N5819</text>
+<polyline points="420,630 420,750 542,750" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="300" y="700" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#C2185B" text-anchor="start" font-weight="bold">isolation:</text>
+<text x="300" y="716" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#C2185B" text-anchor="start" font-weight="normal">pack cannot</text>
+<text x="300" y="732" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#C2185B" text-anchor="start" font-weight="normal">backfeed USB</text>
+<polyline points="1180,560 1180,611" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1180" cy="560" r="4.5" fill="#1A1A1A"/>
+<line x1="1154" y1="611" x2="1206" y2="611" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+<path d="M 1154 631 A 30 16 0 0 0 1206 631" fill="none" stroke="#1A1A1A" stroke-width="3"/>
+<text x="1146" y="604" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#1A1A1A" text-anchor="end" font-weight="bold">+</text>
+<text x="1214" y="614" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="bold">C1</text>
+<text x="1214" y="630" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">1000 uF</text>
+<polyline points="1180,633 1180,690" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1180" cy="660" r="4.5" fill="#1A1A1A"/>
+<polygon points="1190,645 1545,645 1561,660 1545,675 1190,675" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="1202" y="664" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="start" font-weight="bold">STRIP GND -&gt; J2-2, GND2 -&gt; J2-6</text>
+<line x1="1180" y1="690" x2="1180" y2="706" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="1158" y1="706" x2="1202" y2="706" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="1166" y1="713" x2="1194" y2="713" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="1173" y1="720" x2="1187" y2="720" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<text x="1140" y="748" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="end" font-weight="normal">GND</text>
+<rect x="560" y="700" width="220" height="260" rx="4" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="670" y="726" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#1A1A1A" text-anchor="middle" font-weight="bold">U3</text>
+<text x="670" y="744" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">XIAO ESP32-C3</text>
+<text x="670" y="762" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">keep USB-C reachable</text>
+<line x1="560" y1="750" x2="542" y2="750" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="568" y="753.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">5V</text>
+<line x1="560" y1="800" x2="542" y2="800" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="568" y="803.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">GND</text>
+<line x1="560" y1="850" x2="542" y2="850" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="568" y="853.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">D0</text>
+<line x1="560" y1="900" x2="542" y2="900" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="568" y="903.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">D1</text>
+<line x1="780" y1="760" x2="798" y2="760" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="772" y="763.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">D2</text>
+<line x1="780" y1="810" x2="798" y2="810" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="772" y="813.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">D10</text>
+<polyline points="542,800 500,800" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="500" y1="800" x2="500" y2="816" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="478" y1="816" x2="522" y2="816" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="486" y1="823" x2="514" y2="823" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="493" y1="830" x2="507" y2="830" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<text x="500" y="856" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GND</text>
+<polygon points="524,835 444,835 428,850 444,865 524,865" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="512" y="854" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="end" font-weight="bold">VSENSE</text>
+<polyline points="524,850 542,850" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="524,885 466,885 450,900 466,915 524,915" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="512" y="904" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="end" font-weight="bold">TRIG</text>
+<polyline points="524,900 542,900" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="670" y="930" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GPIO4 / GPIO10 out</text>
+<text x="670" y="946" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GPIO2 / GPIO3 in</text>
+<rect x="900" y="700" width="220" height="280" rx="4" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="1010" y="726" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#1A1A1A" text-anchor="middle" font-weight="bold">U2</text>
+<text x="1010" y="744" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">74AHCT125</text>
+<text x="1010" y="762" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">2 of 4 gates used</text>
+<line x1="900" y1="760" x2="882" y2="760" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="908" y="763.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">2A</text>
+<line x1="900" y1="810" x2="882" y2="810" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="908" y="813.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">1A</text>
+<line x1="1120" y1="760" x2="1138" y2="760" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1112" y="763.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">2Y</text>
+<line x1="1120" y1="810" x2="1138" y2="810" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1112" y="813.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">1Y</text>
+<line x1="950" y1="700" x2="950" y2="682" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="950" y="716" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">Vcc</text>
+<line x1="1010" y1="980" x2="1010" y2="998" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1010" y="972" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GND</text>
+<polyline points="798,760 882,760" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="798,810 882,810" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="950,682 950,560" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="950" cy="560" r="4.5" fill="#1A1A1A"/>
+<line x1="1010" y1="998" x2="1010" y2="1014" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="988" y1="1014" x2="1032" y2="1014" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="996" y1="1021" x2="1024" y2="1021" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="1003" y1="1028" x2="1017" y2="1028" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<text x="1010" y="1054" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GND</text>
+<text x="1010" y="900" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">1OE, 2OE -&gt; GND</text>
+<text x="1010" y="916" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">both gates always on</text>
+<polyline points="1138,760 1180,760" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1180,745 1238,745 1254,760 1238,775 1180,775" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="1192" y="764" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="start" font-weight="bold">GATE</text>
+<polyline points="1138,810 1186,810" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1186" y="797" width="68" height="26" rx="2" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2"/>
+<text x="1220" y="788" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="bold">R3</text>
+<text x="1220" y="844" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="normal">330 - 470 R</text>
+<polyline points="1254,810 1290,810" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1290,795 1480,795 1496,810 1480,825 1290,825" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="1302" y="814" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="start" font-weight="bold">LED_DATA -&gt; J2-3</text>
+<text x="60" y="1040" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#C2185B" text-anchor="start" font-weight="bold">MOTOR DRIVE</text>
+<polygon points="60,1105 118,1105 134,1120 118,1135 60,1135" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="72" y="1124" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="start" font-weight="bold">GATE</text>
+<polyline points="156,1120 236,1120" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="236" y="1107" width="68" height="26" rx="2" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2"/>
+<text x="270" y="1098" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="bold">R4</text>
+<text x="270" y="1154" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="normal">100 R</text>
+<polyline points="304,1120 400,1120" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="360" cy="1120" r="4.5" fill="#1A1A1A"/>
+<polyline points="360,1120 360,1186" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="347" y="1186" width="26" height="68" rx="2" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2"/>
+<text x="382" y="1214" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="bold">R5</text>
+<text x="382" y="1230" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">10 k</text>
+<polyline points="360,1254 360,1300" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="360" y1="1300" x2="360" y2="1316" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="338" y1="1316" x2="382" y2="1316" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="346" y1="1323" x2="374" y2="1323" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="353" y1="1330" x2="367" y2="1330" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<text x="360" y="1356" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GND</text>
+<text x="232" y="1300" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="end" font-weight="normal">holds the blower off</text>
+<text x="232" y="1316" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="end" font-weight="normal">while the MCU boots</text>
+<line x1="400" y1="1120" x2="446" y2="1120" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="446" y1="1086" x2="446" y2="1154" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+<line x1="460" y1="1083" x2="460" y2="1101" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+<line x1="460" y1="1111" x2="460" y2="1129" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+<line x1="460" y1="1139" x2="460" y2="1157" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+<line x1="460" y1="1092" x2="500" y2="1092" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="500" y1="1092" x2="500" y2="1050" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="460" y1="1148" x2="500" y2="1148" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="500" y1="1148" x2="500" y2="1190" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="460" y1="1120" x2="500" y2="1120" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="500" y1="1120" x2="500" y2="1148" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="518" y="1074" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="start" font-weight="bold">Q1</text>
+<text x="518" y="1090" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">logic-level N-ch</text>
+<text x="512" y="1054" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">D</text>
+<text x="512" y="1190" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">S</text>
+<text x="418" y="1110" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">G</text>
+<polyline points="500,1050 500,1010" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="510,995 678,995 694,1010 678,1025 510,1025" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="522" y="1014" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="start" font-weight="bold">MOTOR- -&gt; J3-2</text>
+<polyline points="500,1010 510,1010" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="500,1190 500,1190" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="500" y1="1190" x2="500" y2="1206" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="478" y1="1206" x2="522" y2="1206" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="486" y1="1213" x2="514" y2="1213" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="493" y1="1220" x2="507" y2="1220" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<text x="500" y="1246" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GND</text>
+<polygon points="760,1085 840,1085 856,1100 840,1115 760,1115" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="772" y="1104" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="start" font-weight="bold">MOTOR+</text>
+<polygon points="760,1245 840,1245 856,1260 840,1275 760,1275" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="772" y="1264" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="start" font-weight="bold">MOTOR-</text>
+<polyline points="856,1100 1240,1100 1240,1146" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="856,1260 1240,1260 1240,1214" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 1040 1196 L 1080 1196 L 1060 1166 Z" fill="#1A1A1A" stroke="#1A1A1A" stroke-width="2" stroke-linejoin="round"/>
+<line x1="1038" y1="1166" x2="1082" y2="1166" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+<path d="M 1038 1166 l 8 -9 M 1082 1166 l -8 -9" fill="none" stroke="#1A1A1A" stroke-width="2.4"/>
+<text x="1092" y="1174" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="bold">D1</text>
+<text x="1092" y="1190" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">1N5819</text>
+<polyline points="1060,1160 1060,1100" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1060,1200 1060,1260" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1060" cy="1100" r="4.5" fill="#1A1A1A"/>
+<circle cx="1060" cy="1260" r="4.5" fill="#1A1A1A"/>
+<circle cx="1240" cy="1180" r="34" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2"/>
+<text x="1240" y="1187" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" fill="#1A1A1A" text-anchor="middle" font-weight="bold">M</text>
+<text x="1240" y="1132" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="bold">M1</text>
+<text x="1240" y="1240" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="normal">bubble kit blower</text>
+<line x1="940" y1="1060" x2="940" y2="1310" stroke="#5A5A5A" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="6 7"/>
+<text x="940" y="1046" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">J3 + J5 (SM-2)</text>
+<text x="1180" y="1318" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">D1 and M1 both live at the blower end</text>
+<text x="60" y="1380" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#C2185B" text-anchor="start" font-weight="bold">TRIGGER  (this hand only)</text>
+<line x1="160" y1="1430" x2="178" y2="1430" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="222" y1="1430" x2="240" y2="1430" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="178" y1="1430" x2="218" y2="1404" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<circle cx="178" cy="1430" r="4" fill="#1A1A1A"/>
+<circle cx="222" cy="1430" r="4" fill="#1A1A1A"/>
+<text x="200" y="1390" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="bold">SW2</text>
+<text x="200" y="1456" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="normal">lever microswitch</text>
+<polyline points="160,1430 120,1430" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="120" y1="1430" x2="120" y2="1446" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="98" y1="1446" x2="142" y2="1446" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="106" y1="1453" x2="134" y2="1453" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="113" y1="1460" x2="127" y2="1460" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
+<text x="120" y="1486" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GND</text>
+<polyline points="240,1430 300,1430" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="300,1415 358,1415 374,1430 358,1445 300,1445" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="312" y="1434" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="start" font-weight="bold">TRIG</text>
+<text x="430" y="1416" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#5A5A5A" text-anchor="start" font-weight="normal">idle high on the XIAO's pull-up; the</text>
+<text x="430" y="1434" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#5A5A5A" text-anchor="start" font-weight="normal">squeeze pulls it down to ground</text>
+<text x="430" y="1452" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#5A5A5A" text-anchor="start" font-weight="normal">J6 (ZH-2) sits at the switch itself</text>
+<rect x="760" y="1330" width="760" height="154" rx="6" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="776" y="1356" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="start" font-weight="bold">RULES THIS SHEET ENFORCES</text>
+<text x="776" y="1382" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">One common ground: U1 IN-/OUT-, U3 GND, U2 GND, Q1 source, C1-, R2,</text>
+<text x="776" y="1404" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">and both elbow ground pins (J2-2 and J2-6) all land on the same net.</text>
+<text x="776" y="1426" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">Set U1 to 5.00 V on the meter before the XIAO is ever connected.</text>
+<text x="776" y="1448" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">D2 costs ~0.3 V: the XIAO sees ~4.7 V, well inside its regulator.</text>
+<text x="776" y="1470" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">SW1 kills the pack without unplugging anything. J1 still comes out.</text>
+<text x="40" y="1552" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">generated by docs/schematic/schematic.py - do not hand-edit</text>
+</svg>

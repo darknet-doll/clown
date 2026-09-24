@@ -12,7 +12,11 @@
 //
 // Power:  split rail off one 18650. The cell feeds the blower directly at its
 //         native ~3.7V, and a small boost converter feeds the strip and this
-//         board at 5V. See PARTS.md and BUILD.md.
+//         board at 5V, through a Schottky so the pack can't backfeed USB.
+//         See SCHEMATIC.md, PARTS.md and BUILD.md.
+//
+// Battery: warning at 3.40V with hysteresis, hard shutoff at 3.00V sustained.
+//         The cell's own protection board is the backstop, not the plan.
 
 #include <FastLED.h>
 
@@ -65,8 +69,32 @@ constexpr uint8_t FRAME_MS    = 16;   // ~60 fps
 // Battery monitor. Read through a 100k/100k divider, so the pin sees half the
 // cell voltage. Protected cells cut themselves off around 2.8-3.0V; warn well
 // before that so you can swap rather than die mid-performance.
-constexpr uint16_t VBAT_WARN_MV   = 3400;
-constexpr uint16_t VBAT_SAMPLE_MS = 2000;
+//
+// Two thresholds, not one, and they are deliberately apart. A cell sitting right
+// on a single threshold drifts either side of it every time the motor starts, so
+// the warning strobes on and off and stops meaning anything. WARN asserts at
+// VBAT_WARN_MV and only clears again above VBAT_WARN_CLEAR_MV.
+constexpr uint16_t VBAT_WARN_MV       = 3400;
+constexpr uint16_t VBAT_WARN_CLEAR_MV = 3550;   // hysteresis band, ~150 mV
+constexpr uint16_t VBAT_SAMPLE_MS     = 2000;
+
+// Low-voltage shutoff. The cell's own protection board is the last line of
+// defence, not the plan -- it opens somewhere around 2.5-3.0V, and getting there
+// repeatedly is what kills 18650s. Shut the arm down first, on our terms.
+//
+// Latched on purpose: once we cut, we stay cut until the cell is swapped. Motor
+// off -> cell recovers a little -> threshold crosses back -> motor on -> sag.
+// That cycle is exactly what deep-discharge damage looks like.
+constexpr uint16_t VBAT_CUTOFF_MV      = 3000;  // sustained = swap the cell
+constexpr uint16_t VBAT_RECOVER_MV     = 3600;  // clears the latch: a fresh cell
+constexpr uint8_t  VBAT_CUTOFF_CONFIRM = 3;     // consecutive samples, 3 x 2s
+
+// Below this there is no cell on the divider at all -- we are running on USB
+// with the battery unplugged, which is the normal bench case. A protected cell
+// never reads this low while it is still connected: its protection board opens
+// first. Without this, bench-flashing over USB would latch straight into
+// shutdown before you could test anything.
+constexpr uint16_t VBAT_ABSENT_MV = 2500;
 
 // Pins (XIAO ESP32-C3 silkscreen -> GPIO). Avoid D8/D9, they're boot straps.
 constexpr uint8_t PIN_LED   = 10;  // D10, via 74AHCT125 then 330-470R
@@ -83,7 +111,7 @@ constexpr int VIRTUAL_LEN = FOREARM_PX + GAP_PX + HAND_PX;
 
 CRGB leds[NUM_LEDS];
 
-enum State : uint8_t { IDLE, FIRING, RELEASING };
+enum State : uint8_t { IDLE, FIRING, RELEASING, LOCKOUT };
 State state = IDLE;
 
 uint32_t cometStart   = 0;   // when the current comet launched
@@ -95,8 +123,10 @@ bool     trigLastRaw  = false;
 uint32_t trigChangeAt = 0;
 
 uint32_t vbatLastRead = 0;
-uint16_t vbatMv       = 4200;   // assume full until the first real reading
-bool     vbatLow      = false;
+uint16_t vbatMv       = 4200;   // primed from a real reading in setup()
+bool     vbatLow      = false;  // warning latch, with hysteresis
+bool     vbatDead     = false;  // shutoff latch, cleared only by a fresh cell
+uint8_t  vbatLowCount = 0;      // consecutive samples under the cutoff
 
 // Map a virtual pixel index onto the physical strip, skipping the wrist gap.
 // Returns -1 for positions that fall inside the gap (nothing to light there).
@@ -136,16 +166,51 @@ static void readTrigger() {
   }
 }
 
+// One reading of the cell, in millivolts at the cell, divider undone.
+static uint16_t sampleBatteryMv() {
+  return (uint16_t)(analogReadMilliVolts(PIN_VBAT) * 2);
+}
+
 // Sample the cell occasionally and smooth it, so a motor-start sag doesn't
-// flash a false warning.
+// flash a false warning, then run both latches off the smoothed value.
 static void readBattery() {
   uint32_t now = millis();
   if (now - vbatLastRead < VBAT_SAMPLE_MS) return;
   vbatLastRead = now;
 
-  uint16_t raw = (uint16_t)(analogReadMilliVolts(PIN_VBAT) * 2);  // undo divider
-  vbatMv = (uint16_t)((vbatMv * 3 + raw) / 4);
-  vbatLow = (vbatMv < VBAT_WARN_MV);
+  vbatMv = (uint16_t)((vbatMv * 3 + sampleBatteryMv()) / 4);
+
+  // No cell on the divider: bench power over USB. Don't warn, don't cut, and
+  // release a latch we may have set on the way down as the cell was unplugged.
+  if (vbatMv < VBAT_ABSENT_MV) {
+    vbatLowCount = 0;
+    vbatLow      = false;
+    vbatDead     = false;
+    return;
+  }
+
+  // Warning, with hysteresis. Asserts low, clears high, so a cell hovering at
+  // the threshold stays warned instead of flickering.
+  if (!vbatLow && vbatMv < VBAT_WARN_MV)             vbatLow = true;
+  else if (vbatLow && vbatMv > VBAT_WARN_CLEAR_MV)   vbatLow = false;
+
+  // Shutoff. Require several consecutive samples so a motor kick, a cold cell
+  // or one bad ADC read can't take the arm down mid-performance. Three samples
+  // at VBAT_SAMPLE_MS is about six seconds under the line -- no transient.
+  if (vbatMv < VBAT_CUTOFF_MV) {
+    if (vbatLowCount < VBAT_CUTOFF_CONFIRM) vbatLowCount++;
+    if (vbatLowCount >= VBAT_CUTOFF_CONFIRM) vbatDead = true;
+  } else {
+    vbatLowCount = 0;
+  }
+
+  // A fresh cell clears the latch. Swapping the cell normally power-cycles the
+  // board anyway; this covers the case where USB is also plugged in, so the
+  // board stays alive across the swap.
+  if (vbatDead && vbatMv > VBAT_RECOVER_MV) {
+    vbatDead = false;
+    vbatLow  = false;
+  }
 }
 
 static void setMotor(uint8_t duty) {
@@ -194,12 +259,29 @@ static void renderReleasing() {
 // Slow red pulse on the elbow pixel when the cell is nearly flat. Deliberately
 // at the elbow: it's the end you can see without breaking character.
 static void overlayLowBattery() {
-  if (!vbatLow) return;
+  if (vbatDead || !vbatLow) return;   // dead has its own, louder, render
   uint8_t pulse = cubicwave8((millis() / 8) & 0xFF);
   leds[0] = CRGB(scale8(pulse, 180), 0, 0);
 }
 
+// Cell is flat and we have cut the motor. Everything dark except a slow red
+// double-blink at the elbow, which is unmistakably different from the low
+// warning's single pulse and draws almost nothing. Swap the cell to clear it.
+static void renderLockout() {
+  fill_solid(leds, NUM_LEDS, CRGB::Black);
+  uint16_t phase = millis() % 2000;
+  bool on = (phase < 120) || (phase >= 260 && phase < 380);
+  if (on) leds[0] = CRGB(120, 0, 0);
+}
+
 void setup() {
+  // Gate low first, before anything slow runs. Between reset and this line the
+  // pin floats, and the only thing holding the blower off is the 10k pulldown
+  // at the MOSFET gate -- which is why that resistor is not optional. See
+  // BUILD.md step 4.
+  pinMode(PIN_MOTOR, OUTPUT);
+  digitalWrite(PIN_MOTOR, LOW);
+
   pinMode(PIN_TRIG, INPUT_PULLUP);
 
   // ESP32 Arduino core 3.x. On core 2.x replace with:
@@ -207,6 +289,14 @@ void setup() {
   //   ledcAttachPin(PIN_MOTOR, CHANNEL);
   ledcAttach(PIN_MOTOR, MOTOR_PWM_HZ, MOTOR_PWM_BITS);
   setMotor(0);
+
+  // Prime the smoothed reading from the real cell, so a flat one is caught in
+  // the first couple of seconds rather than after the filter has crawled down
+  // from an assumed 4.2V.
+  vbatMv = sampleBatteryMv();
+  if (vbatMv >= VBAT_ABSENT_MV && vbatMv < VBAT_CUTOFF_MV) vbatDead = true;
+  if (vbatMv >= VBAT_ABSENT_MV && vbatMv < VBAT_WARN_MV)   vbatLow  = true;
+  state = vbatDead ? LOCKOUT : IDLE;
 
   FastLED.addLeds<WS2812B, PIN_LED, GRB>(leds, NUM_LEDS);
   FastLED.setBrightness(MAX_BRIGHTNESS);
@@ -217,6 +307,14 @@ void loop() {
   readTrigger();
   readBattery();
   uint32_t now = millis();
+
+  // Low-voltage shutoff overrides every other state. Cut the motor on the way
+  // in -- the blower is most of the load, and it is the part that drags a tired
+  // cell down into damage.
+  if (vbatDead && state != LOCKOUT) {
+    setMotor(0);
+    state = LOCKOUT;
+  }
 
   switch (state) {
     case IDLE:
@@ -247,12 +345,20 @@ void loop() {
         setMotor(MOTOR_KICK_DUTY);
       }
       break;
+
+    case LOCKOUT:
+      // Squeezing does nothing now, deliberately. readBattery() releases us if
+      // a charged cell turns up.
+      setMotor(0);
+      if (!vbatDead) state = IDLE;
+      break;
   }
 
   switch (state) {
     case IDLE:      renderIdle();      break;
     case FIRING:    renderFiring();    break;
     case RELEASING: renderReleasing(); break;
+    case LOCKOUT:   renderLockout();   break;
   }
 
   overlayLowBattery();

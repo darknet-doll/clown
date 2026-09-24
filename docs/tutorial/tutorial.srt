@@ -1,0 +1,1095 @@
+1
+00:00:00,350 --> 00:00:04,870
+This is the build tutorial for the bubble clown costume. Make a gun shape with either hand,
+
+2
+00:00:04,930 --> 00:00:09,450
+squeeze, and a comet of light runs from your elbow down to your fingertips,
+
+3
+00:00:09,510 --> 00:00:14,030
+arriving exactly as bubbles start firing out of your fingers. We will build it in twelve steps.
+
+4
+00:00:14,090 --> 00:00:18,610
+Follow them in order and you will not have to guess at anything.
+
+5
+00:00:19,920 --> 00:00:24,732
+Two arms, two identical rigs. Each hand has its own trigger and fires its own arm.
+
+6
+00:00:24,792 --> 00:00:29,605
+The light strips hide under the glove and the sleeve, so the glow reads as coming from inside the
+
+7
+00:00:29,665 --> 00:00:34,477
+costume. And each arm comes apart into four modules that unplug from each other.
+
+8
+00:00:35,787 --> 00:00:40,807
+Here is the sequence you are building. You squeeze. The blower gets a brief over drive pulse to break
+
+9
+00:00:40,867 --> 00:00:45,887
+static friction, then settles to its run speed. A comet of light launches from the elbow.
+
+10
+00:00:45,947 --> 00:00:50,966
+About two hundred and fifty milliseconds later the comet lands at your fingertips just as the blower
+
+11
+00:00:51,026 --> 00:00:56,046
+reaches full speed, and bubbles start. The light travel is the spin up delay.
+
+12
+00:00:56,106 --> 00:01:01,126
+That is the whole trick. It reads as the light causing the bubbles, instead of reading as lag.
+
+13
+00:01:02,435 --> 00:01:07,299
+Nothing is soldered end to end across a joint. The pod sits on your upper arm and holds the brain
+
+14
+00:01:07,359 --> 00:01:12,224
+and the battery. The sleeve holds the forearm strip. The glove holds the hand strip and that hand's
+
+15
+00:01:12,284 --> 00:01:17,148
+trigger. And the bubbler is its own module. Each one unplugs, which is what lets you get out of the
+
+16
+00:01:17,208 --> 00:01:22,072
+costume alone, with soapy hands, without dislocating a shoulder.
+
+17
+00:01:23,382 --> 00:01:28,635
+There are five kinds of connector, and this is deliberate. No two plugs on one arm share both family
+
+18
+00:01:28,695 --> 00:01:33,948
+and pin count. The three two pin plugs are three different pitches, so none of them will mate with
+
+19
+00:01:34,008 --> 00:01:39,261
+the others. That is what stops you putting three point seven volts onto a logic pin in a dark room.
+
+20
+00:01:40,571 --> 00:01:45,793
+This is the one rule you will use constantly. Battery out before you mate or unmate anything.
+
+21
+00:01:45,853 --> 00:01:51,076
+Feeding data into an unpowered strip pushes current through its input protection diodes,
+
+22
+00:01:51,136 --> 00:01:56,358
+and that is the classic way to kill pixel zero. Unplug the cell first. Every single time.
+
+23
+00:01:57,668 --> 00:02:02,285
+Before you pick up the iron. Use the protected cells that came with the kits,
+
+24
+00:02:02,345 --> 00:02:06,962
+and never charge a damaged or puffy one. It is strapped to your arm. Check polarity with a multimeter
+
+25
+00:02:07,022 --> 00:02:11,639
+before you connect the battery the first time, because reversed power destroys the brain and the strip
+
+26
+00:02:11,699 --> 00:02:16,316
+instantly and permanently. And solder somewhere ventilated.
+
+27
+00:02:17,626 --> 00:02:21,602
+Steps one through ten build one complete arm. Step eleven is the second arm,
+
+28
+00:02:21,662 --> 00:02:25,638
+which takes about half as long because you will already know what you are doing.
+
+29
+00:02:25,698 --> 00:02:29,674
+Step twelve is the costume itself. One thing worth hearing now, before you start.
+
+30
+00:02:29,734 --> 00:02:33,710
+Heat shrink goes onto the wire before you solder the joint, never after. Everybody learns this the
+
+31
+00:02:33,770 --> 00:02:37,746
+hard way once.
+
+32
+00:02:39,056 --> 00:02:41,426
+Step one. Measure your arm.
+
+33
+00:02:42,736 --> 00:02:47,222
+Put on the glove and the sleeve you are actually going to use, and hold your arm out in the finger
+
+34
+00:02:47,282 --> 00:02:51,768
+gun pose. Measure elbow to wrist crease, which is usually around twenty five centimetres.
+
+35
+00:02:51,828 --> 00:02:56,314
+Then measure wrist crease to knuckles across the back of your hand, usually around ten.
+
+36
+00:02:56,374 --> 00:03:00,860
+And mark the spot on your palm where your middle and ring finger pads land when you squeeze.
+
+37
+00:03:00,920 --> 00:03:05,406
+That is where the trigger goes. Use a fabric pen.
+
+38
+00:03:06,717 --> 00:03:11,720
+Now turn those into pixel counts. At sixty LEDs per metre each pixel is one point six seven centimetres.
+
+39
+00:03:11,780 --> 00:03:16,783
+Divide each measurement by that. For typical arms you get about fifteen pixels on the forearm and
+
+40
+00:03:16,843 --> 00:03:21,846
+six on the hand. Round down. A slightly short strip is fine. One that does not fit is not.
+
+41
+00:03:21,906 --> 00:03:26,909
+Then subtract about four centimetres from the forearm figure, because the wrist umbilical and its
+
+42
+00:03:26,969 --> 00:03:31,972
+connector need to live in the last few centimetres of forearm. Write these numbers down.
+
+43
+00:03:32,032 --> 00:03:37,035
+You will type them into the firmware in step eight.
+
+44
+00:03:38,345 --> 00:03:40,471
+Step two. Cut the strip.
+
+45
+00:03:41,781 --> 00:03:47,097
+The strip has marked cut lines between every pixel, with copper pads either side.
+
+46
+00:03:47,157 --> 00:03:52,472
+Cut through the middle of the pads, not next to them, so you have pad left on both pieces to solder
+
+47
+00:03:52,532 --> 00:03:57,848
+to. Cut two pieces, one for the forearm and one for the hand. Then check the little printed arrows.
+
+48
+00:03:57,908 --> 00:04:03,223
+Data flows elbow to fingertips, so both pieces must have their arrows pointing the same way,
+
+49
+00:04:03,283 --> 00:04:08,599
+toward your fingers. Tape the elbow end of the forearm piece. That end is pixel zero.
+
+50
+00:04:09,909 --> 00:04:13,784
+It is worth saying plainly. Getting the arrows backwards is the single most common mistake in this
+
+51
+00:04:13,844 --> 00:04:17,719
+build, and the fix is unsoldering everything. Check both pieces twice before the iron goes anywhere
+
+52
+00:04:17,779 --> 00:04:21,654
+near them.
+
+53
+00:04:22,964 --> 00:04:27,758
+Here is the layout you are aiming for. Fifteen pixels on the forearm, a gap of about eight centimetres
+
+54
+00:04:27,818 --> 00:04:32,613
+at the wrist, then six pixels across the back of the hand. The reason it is split is that your wrist
+
+55
+00:04:32,673 --> 00:04:37,467
+bends constantly. A single continuous strip across that joint will crack its internal copper traces
+
+56
+00:04:37,527 --> 00:04:42,322
+within a few hours of wear, and everything past the crack goes dark. The flexible umbilical you build
+
+57
+00:04:42,382 --> 00:04:47,176
+next absorbs that movement instead.
+
+58
+00:04:48,486 --> 00:04:51,112
+Step three. Build the wrist umbilical.
+
+59
+00:04:52,422 --> 00:04:57,723
+The umbilical carries five conductors. The strip's five volts, ground and data,
+
+60
+00:04:57,783 --> 00:05:03,083
+plus this hand's two trigger wires. Use a J S T S M five pin pigtail pair, and fix this pin convention
+
+61
+00:05:03,143 --> 00:05:08,444
+now. Pin one five volts, pin two ground, pin three data, pins four and five the trigger.
+
+62
+00:05:08,504 --> 00:05:13,804
+Keep it identical on both arms, or your spares are not spares.
+
+63
+00:05:15,114 --> 00:05:20,012
+Sleeve side first. Slide the heat shrink onto every wire now. Solder short silicone leads to the output
+
+64
+00:05:20,072 --> 00:05:24,970
+end of the forearm piece, five volts, ground and data out, and take those three to pins one,
+
+65
+00:05:25,030 --> 00:05:29,928
+two and three of one half of the pigtail. Pins four and five get two lengths of thin silicone wire,
+
+66
+00:05:29,988 --> 00:05:34,886
+long enough to run all the way up the forearm to the elbow. That is the trigger's path to the pod.
+
+67
+00:05:34,946 --> 00:05:39,844
+Shrink everything down, and seal the exposed strip end with a blob of hot glue or clear silicone.
+
+68
+00:05:39,904 --> 00:05:44,802
+That is your soap proofing.
+
+69
+00:05:46,111 --> 00:05:51,042
+Glove side. Solder pins one, two and three of the other pigtail half to the input end of the hand
+
+70
+00:05:51,102 --> 00:05:56,034
+piece. Five volts to five volts, ground to ground, and pin three to data in.
+
+71
+00:05:56,094 --> 00:06:01,025
+Data in, not data out. Pins four and five get wire long enough to reach your palm,
+
+72
+00:06:01,085 --> 00:06:06,017
+ending in the female half of a J S T Z H two pin pigtail. That is where the microswitch will plug
+
+73
+00:06:06,077 --> 00:06:11,008
+in at step five. Shrink and seal, same as before.
+
+74
+00:06:12,319 --> 00:06:17,408
+Mate the pair about three to four centimetres above the wrist crease, on the forearm,
+
+75
+00:06:17,468 --> 00:06:22,556
+where the skin barely moves. The crease itself is the worst possible place for a rigid twenty millimetre
+
+76
+00:06:22,616 --> 00:06:27,705
+plastic body. The glove side wire is the flex element, so leave it long enough to cross the wrist
+
+77
+00:06:27,765 --> 00:06:32,854
+with a service loop. Keep the whole thing short. Every centimetre between the last forearm pixel and
+
+78
+00:06:32,914 --> 00:06:38,003
+the first hand pixel is dark arm that the comet has to cross. Eight centimetres is fine.
+
+79
+00:06:38,063 --> 00:06:43,151
+Fifteen will look like a gap. Measure the finished pixel to pixel distance and write it down.
+
+80
+00:06:43,211 --> 00:06:48,300
+Then gently tug every joint. Find a weak one now, not inside a sewn glove.
+
+81
+00:06:49,610 --> 00:06:55,533
+Step four. Build the controller pod. This is the longest step, so take it in pieces.
+
+82
+00:06:56,843 --> 00:07:02,096
+Start with the shape of the power. One protected eighteen six fifty cell feeds two rails.
+
+83
+00:07:02,156 --> 00:07:07,409
+The blower motor runs straight off the cell at its native three point seven volts,
+
+84
+00:07:07,469 --> 00:07:12,723
+which is exactly how the kit was designed. Only the strip and the brain get boosted to five volts,
+
+85
+00:07:12,783 --> 00:07:18,036
+and that is a light load, about zero point three amps, so a small inexpensive boost module is genuinely
+
+86
+00:07:18,096 --> 00:07:23,349
+adequate. A two amp polyfuse goes inline at the battery positive, before anything else.
+
+87
+00:07:24,659 --> 00:07:28,952
+These are the core connections. The fuse goes first, right at the battery. Everything downstream of
+
+88
+00:07:29,012 --> 00:07:33,306
+it shares one common ground. Data leaves pin D ten, through the level shifter,
+
+89
+00:07:33,366 --> 00:07:37,659
+through a three hundred and thirty to four hundred and seventy ohm resistor,
+
+90
+00:07:37,719 --> 00:07:42,013
+and out of the elbow connector. The trigger arrives on D one. Motor P W M leaves on D two.
+
+91
+00:07:42,073 --> 00:07:46,366
+And D zero reads the battery.
+
+92
+00:07:47,676 --> 00:07:53,017
+One detail that is easy to get wrong. The X I A O's pins only swing to three point three volts,
+
+93
+00:07:53,077 --> 00:07:58,417
+but most so called logic level MOSFETs are specified fully on at five. At three point three they only
+
+94
+00:07:58,477 --> 00:08:03,818
+partly open, they dissipate the difference as heat, and the blower runs slow and inconsistent.
+
+95
+00:08:03,878 --> 00:08:09,218
+The level shifter in your pod has four gates and the strip only uses one. So route D two through a
+
+96
+00:08:09,278 --> 00:08:14,619
+second gate, exactly the way you route the LED data through the first. The MOSFET then sees a clean
+
+97
+00:08:14,679 --> 00:08:20,019
+five volt signal, and it costs you nothing. Add a hundred ohm resistor in series with the gate,
+
+98
+00:08:20,079 --> 00:08:25,420
+and a ten k pulldown from gate to source, so the FET is held off while the board boots.
+
+99
+00:08:26,730 --> 00:08:31,493
+And a warning that will save you an evening. Do not use an I R F five twenty module.
+
+100
+00:08:31,553 --> 00:08:36,317
+It is the top search result for arduino mosfet module and it is not a logic level part.
+
+101
+00:08:36,376 --> 00:08:41,140
+Its gate threshold runs up to four volts and it wants about ten to open properly.
+
+102
+00:08:41,200 --> 00:08:45,963
+It half works, which is much harder to diagnose than not working at all.
+
+103
+00:08:47,273 --> 00:08:51,571
+Everything the pod sends down the arm leaves through exactly two plugs. A six pin at the elbow for
+
+104
+00:08:51,631 --> 00:08:55,930
+the strip and the trigger, and a two pin for the motor. Pin six is not a spare,
+
+105
+00:08:55,990 --> 00:09:00,288
+it is a job. The elbow run is the longest in the costume and carries the whole strip's current.
+
+106
+00:09:00,348 --> 00:09:04,646
+A second ground conductor cuts the voltage drop and gives the data line a better return path.
+
+107
+00:09:04,706 --> 00:09:09,004
+Tie it to common ground at both ends. And the motor gets its own plug on purpose.
+
+108
+00:09:09,064 --> 00:09:13,363
+Roughly an amp of switched P W M bundled against a data line is asking for flicker.
+
+109
+00:09:13,423 --> 00:09:17,721
+Twist the motor pair.
+
+110
+00:09:19,031 --> 00:09:24,080
+The battery monitor is three connections. Two one hundred k resistors in series across the cell,
+
+111
+00:09:24,139 --> 00:09:29,188
+and the midpoint goes to D zero. That midpoint sits at exactly half the battery voltage,
+
+112
+00:09:29,248 --> 00:09:34,297
+which is safely inside what the brain can measure. The firmware uses it to pulse the elbow pixel red
+
+113
+00:09:34,356 --> 00:09:39,405
+below three point four volts, so you get a warning instead of a sudden death.
+
+114
+00:09:40,715 --> 00:09:45,612
+Two parts here are easy to fit backwards. The one thousand microfarad capacitor goes across the strip's
+
+115
+00:09:45,672 --> 00:09:50,570
+five volts and ground, physically close to the elbow connector. Watch its polarity.
+
+116
+00:09:50,630 --> 00:09:55,527
+The marked stripe is the negative leg. The one N five eight one nine diode goes directly across the
+
+117
+00:09:55,587 --> 00:10:00,485
+motor's two terminals at the blower end, and its banded end goes to the positive side.
+
+118
+00:10:00,545 --> 00:10:05,442
+Backwards, it is a dead short. Check that one twice.
+
+119
+00:10:06,752 --> 00:10:12,006
+Four rules worth taping inside the pod. Everything shares one common ground.
+
+120
+00:10:12,066 --> 00:10:17,319
+Skipping this causes bizarre, hard to diagnose behaviour. Keep the cell on its factory P H two plug,
+
+121
+00:10:17,379 --> 00:10:22,633
+because the kit's charger mates to the same connector, so a flat cell goes pod to charger with no
+
+122
+00:10:22,693 --> 00:10:27,947
+adapter. Never put anything on D eight or D nine, they are boot strapping pins.
+
+123
+00:10:28,007 --> 00:10:33,260
+And design the printed pod so you can reach the U S B C port without taking anything apart.
+
+124
+00:10:33,320 --> 00:10:38,574
+Use a data capable cable. A charge only cable looks identical and will cost you half an hour.
+
+125
+00:10:39,884 --> 00:10:42,672
+Step five. Wire this hand's trigger.
+
+126
+00:10:43,982 --> 00:10:48,425
+Solder two lengths of thin silicone wire to the microswitch's common and normally open terminals,
+
+127
+00:10:48,485 --> 00:10:52,929
+and terminate them in the male half of a Z H two pin pigtail. That is the mate to the one you left
+
+128
+00:10:52,989 --> 00:10:57,432
+on the glove side in step three. Mount the switch on a small printed plate,
+
+129
+00:10:57,492 --> 00:11:01,936
+positioned so the lever sits under your middle and ring finger pads, at the spot you marked in step
+
+130
+00:11:01,996 --> 00:11:06,439
+one. Orient the lever so a natural squeeze presses across its length. You should be able to fire it
+
+131
+00:11:06,499 --> 00:11:10,943
+with your eyes closed, in one motion, every time. If you find yourself aiming,
+
+132
+00:11:11,003 --> 00:11:15,446
+move the plate.
+
+133
+00:11:16,756 --> 00:11:21,862
+Two reasons this tiny plug exists. First, your field kit carries a spare microswitch already on a
+
+134
+00:11:21,922 --> 00:11:27,029
+pigtail, so swapping a dead trigger at an event is a ten second job instead of a soldering job.
+
+135
+00:11:27,089 --> 00:11:32,195
+Second, and more important, it must not be P H two point zero. Every cell in this build ships on a
+
+136
+00:11:32,255 --> 00:11:37,362
+P H two lead. If the trigger used the same connector, one wrong plug in a dark room puts three point
+
+137
+00:11:37,422 --> 00:11:42,528
+seven volts directly onto a logic pin. Z H is one point five millimetre pitch,
+
+138
+00:11:42,588 --> 00:11:47,695
+P H is two. They will not mate. That incompatibility is the entire reason for the choice,
+
+139
+00:11:47,755 --> 00:11:52,861
+so do not simplify it away later.
+
+140
+00:11:54,171 --> 00:11:58,399
+Step six. Bench test, before anything goes into a glove.
+
+141
+00:11:59,709 --> 00:12:04,746
+Lay the whole thing out flat on the table, fully wired, every connector mated,
+
+142
+00:12:04,806 --> 00:12:09,844
+nothing mounted yet. Meter first. Battery plus and minus where you expect them,
+
+143
+00:12:09,904 --> 00:12:14,941
+and the boost output reading close to five point zero volts. Only then connect the brain.
+
+144
+00:12:15,001 --> 00:12:20,038
+Then beep through every connector, pin by pin. A crimp that did not seat looks perfect and works intermittently.
+
+145
+00:12:20,098 --> 00:12:25,135
+Find that now, not at the venue. Power it up. You should see the dim breathing idle glow.
+
+146
+00:12:25,195 --> 00:12:30,233
+Press the microswitch by hand. The comet should launch from the elbow end and travel toward the fingertips,
+
+147
+00:12:30,293 --> 00:12:35,330
+and the motor should spin. Let it run five minutes and check for heat.
+
+148
+00:12:36,640 --> 00:12:41,697
+If the comet runs backwards, from the fingertips to the elbow, your strip pieces are reversed.
+
+149
+00:12:41,757 --> 00:12:46,815
+Fix that in the wiring, not in the code. Both arms run byte identical firmware and keeping that true
+
+150
+00:12:46,875 --> 00:12:51,933
+is worth the resolder. On heat, warm is fine, too hot to touch is not. Power down and look for a short.
+
+151
+00:12:51,992 --> 00:12:57,050
+If you can borrow a thermal camera, use it here instead of your fingertip. It shows you a boost module
+
+152
+00:12:57,110 --> 00:13:02,168
+running hot because something downstream is shorted, or a MOSFET that turned out not to be logic level.
+
+153
+00:13:02,227 --> 00:13:07,285
+One borrowed session is plenty.
+
+154
+00:13:08,596 --> 00:13:10,931
+Step seven. Fit the bubbler.
+
+155
+00:13:12,241 --> 00:13:17,495
+First, understand what you actually have. The kit is not one object. It is a bottle,
+
+156
+00:13:17,555 --> 00:13:22,808
+a cap with a one way valve, and a blower head, joined by silicone hose. There is about fifty millimetres
+
+157
+00:13:22,868 --> 00:13:28,122
+of hose inside the bottle ending in a blue gravity ball, which sinks, so the pickup stays in solution
+
+158
+00:13:28,182 --> 00:13:33,436
+at any arm angle, even inverted. Which means the heavy thing, the bottle, and the thing that must
+
+159
+00:13:33,496 --> 00:13:38,749
+point past your fingertips, the blower head, do not have to be in the same place.
+
+160
+00:13:38,809 --> 00:13:44,063
+That opens up a much better mount, if the blower can pull solution far enough.
+
+161
+00:13:45,374 --> 00:13:50,312
+Now the hose test. Twenty minutes, one length of three by five silicone tube,
+
+162
+00:13:50,372 --> 00:13:55,310
+and it decides your whole mount design. Do it the day the kit arrives, before any of the soldering.
+
+163
+00:13:55,370 --> 00:14:00,309
+Assemble the kit as supplied and confirm it makes bubbles. Then replace the outside hose with about
+
+164
+00:14:00,369 --> 00:14:05,307
+a hundred and fifty millimetres of tube, and run it again, held roughly the way your arm will hold
+
+165
+00:14:05,367 --> 00:14:10,305
+it. The question is simply, does it still make bubbles at the same rate.
+
+166
+00:14:11,615 --> 00:14:15,838
+If it passes, put the bottle on the forearm and the blower head at the knuckles,
+
+167
+00:14:15,898 --> 00:14:20,121
+pointing past your fingertips. The bubbles still appear to come from your fingers,
+
+168
+00:14:20,182 --> 00:14:24,405
+so the illusion is intact, and the heaviest item on the arm moves off the end of the lever where it
+
+169
+00:14:24,465 --> 00:14:28,688
+was costing you the most. This is the better build if you can get it.
+
+170
+00:14:29,998 --> 00:14:34,391
+If it fails, put both on the back of the hand, exactly as the kit intends, nozzle past the fingertips.
+
+171
+00:14:34,451 --> 00:14:38,844
+It works as shipped with no modification and no risk. You just manage the weight instead.
+
+172
+00:14:38,904 --> 00:14:43,297
+Run the bottle half full, mount the body back toward the wrist with the cap forward to shorten the
+
+173
+00:14:43,357 --> 00:14:47,750
+lever arm, and anchor it to a wrist strap. A glove will not hold two hundred grams swinging for an
+
+174
+00:14:47,810 --> 00:14:52,203
+evening.
+
+175
+00:14:53,513 --> 00:14:58,624
+One job on the bubbler that is not cosmetic. The kit ships the motor on a P H two point zero female
+
+176
+00:14:58,684 --> 00:15:03,795
+plug that mates straight to the cell. Cut it off and fit an S M two pin instead.
+
+177
+00:15:03,855 --> 00:15:08,966
+If you leave it, the cell can be plugged directly into the motor, bypassing the MOSFET entirely,
+
+178
+00:15:09,026 --> 00:15:14,136
+and then the trigger does nothing. While you are there, use silicone wire for the motor run,
+
+179
+00:15:14,196 --> 00:15:19,307
+because it flexes constantly, and give the bubbler a quick release strap. Nothing about its mount
+
+180
+00:15:19,367 --> 00:15:24,478
+should bridge the wrist, or the glove cannot come off without removing the bottle first.
+
+181
+00:15:25,788 --> 00:15:28,251
+Step eight. Flash the firmware.
+
+182
+00:15:29,561 --> 00:15:34,514
+Install the Arduino I D E, then add E S P thirty two board support through Boards Manager,
+
+183
+00:15:34,574 --> 00:15:39,526
+searching for esp thirty two and installing the Espressif package. Then install the Fast L E D library
+
+184
+00:15:39,586 --> 00:15:44,539
+from Library Manager. Select the X I A O E S P thirty two C three as your board,
+
+185
+00:15:44,599 --> 00:15:49,551
+open the sketch, plug in U S B C and upload. If the upload fails, hold the boot button while plugging
+
+186
+00:15:49,611 --> 00:15:54,564
+the cable in, to force bootloader mode.
+
+187
+00:15:55,874 --> 00:16:01,110
+Before you upload, edit the three layout constants at the top of the sketch to match your own measurements.
+
+188
+00:16:01,170 --> 00:16:06,407
+Forearm pixels, hand pixels, and gap pixels. Gap pixels is the measured pixel to pixel distance across
+
+189
+00:16:06,467 --> 00:16:11,703
+the finished umbilical, connector body included, which is most of it, divided by one point six seven
+
+190
+00:16:11,763 --> 00:16:17,000
+centimetres. About eight centimetres of umbilical gives you five. Guessing at this number is exactly
+
+191
+00:16:17,060 --> 00:16:22,296
+what makes the comet look like it stumbles at the wrist. And flash the identical sketch to both arms.
+
+192
+00:16:22,356 --> 00:16:27,593
+There is deliberately no left or right setting. As long as pixel zero is at the elbow on each arm,
+
+193
+00:16:27,653 --> 00:16:32,889
+the mirroring is physical only.
+
+194
+00:16:34,199 --> 00:16:37,879
+Step nine. Tune the timing. This is the step that makes the whole effect work,
+
+195
+00:16:37,939 --> 00:16:41,619
+and it can only be done on the finished arm.
+
+196
+00:16:42,929 --> 00:16:48,204
+The goal is that the comet reaches your fingertips at the exact moment the first bubble appears.
+
+197
+00:16:48,264 --> 00:16:53,539
+When it is right, the light looks like it is causing the bubbles. When it is wrong by even a tenth
+
+198
+00:16:53,599 --> 00:16:58,874
+of a second, it looks like lag. So film yourself firing it in slow motion. Any modern phone does a
+
+199
+00:16:58,934 --> 00:17:04,208
+hundred and twenty or two hundred and forty frames a second. Watch it back frame by frame.
+
+200
+00:17:04,268 --> 00:17:09,543
+If the comet arrives before the bubbles, increase comet travel milliseconds to slow it down.
+
+201
+00:17:09,603 --> 00:17:14,878
+If it arrives after, decrease it. Reflash, film again. Expect three or four rounds.
+
+202
+00:17:14,938 --> 00:17:20,213
+The default is two hundred and fifty milliseconds, and if you built the forearm bottle mount,
+
+203
+00:17:20,273 --> 00:17:25,548
+expect a slightly longer number, because a longer feed hose takes marginally longer to prime.
+
+204
+00:17:26,858 --> 00:17:29,936
+Step ten. Mount it into the glove and the sleeve.
+
+205
+00:17:31,246 --> 00:17:36,458
+Hiding the strip under fabric is a genuine upgrade, not a compromise, because the fabric diffuses
+
+206
+00:17:36,518 --> 00:17:41,730
+the pixels into one smooth continuous streak instead of visible dots. But it only works if the fabric
+
+207
+00:17:41,790 --> 00:17:47,003
+cooperates. Thin, pale and stretchy glows beautifully. Thick or dark, especially leather,
+
+208
+00:17:47,062 --> 00:17:52,275
+swallows almost all of it. So before you commit, hold a powered section of strip under the actual
+
+209
+00:17:52,335 --> 00:17:57,547
+glove, in a dark room. If you cannot see it clearly, no firmware setting will rescue it.
+
+210
+00:17:57,607 --> 00:18:02,819
+Get a different glove. And test the sleeve at the same time.
+
+211
+00:18:04,130 --> 00:18:08,816
+If you are building the lace version from the design board, this section is overridden.
+
+212
+00:18:08,876 --> 00:18:13,563
+Lace is open mesh. Light passes straight through the holes, so the strip stays visibly a strip,
+
+213
+00:18:13,623 --> 00:18:18,309
+a hard bright line with dots, rather than a glow. You can lean into that, because circuitry under
+
+214
+00:18:18,369 --> 00:18:23,056
+something delicate is on theme. Or you can add a diffuser layer underneath,
+
+215
+00:18:23,116 --> 00:18:27,802
+thin white organza, tulle, or a frosted silicone channel, which gives you the soft glow with the lace
+
+216
+00:18:27,862 --> 00:18:32,549
+pattern silhouetted on top. It is a taste call and it is cheap to test both.
+
+217
+00:18:32,609 --> 00:18:37,295
+Do it with a scrap, before the gloves are cut into.
+
+218
+00:18:38,604 --> 00:18:42,982
+Route the strip across the back of the hand, over the knuckles. Never the palm.
+
+219
+00:18:43,042 --> 00:18:47,421
+That is where the trigger is and where you grip things. Stop short of the fingertips,
+
+220
+00:18:47,481 --> 00:18:51,859
+because the nozzle needs that space and finger joints flex too much for strip to survive.
+
+221
+00:18:51,919 --> 00:18:56,297
+Sew a fabric channel for the strip to sit in rather than gluing it down flat,
+
+222
+00:18:56,357 --> 00:19:00,736
+so it can slide a little as your hand flexes. Glued taut strip tears itself off,
+
+223
+00:19:00,796 --> 00:19:05,174
+or tears the glove. And the connector is never the anchor. Tack the cable to the garment on both sides
+
+224
+00:19:05,234 --> 00:19:09,612
+of every plug, so a snag pulls the tack rather than the latch. Leave a service loop either side.
+
+225
+00:19:09,672 --> 00:19:14,051
+Finally, a smear of dielectric grease in each connector shell keeps soap residue from corroding the
+
+226
+00:19:14,111 --> 00:19:18,489
+contacts.
+
+227
+00:19:19,800 --> 00:19:23,254
+Step eleven. Build the second arm. It is a repeat of steps one to ten, with two things to be careful
+
+228
+00:19:23,314 --> 00:19:26,768
+about.
+
+229
+00:19:28,077 --> 00:19:33,471
+Pixel zero goes at the elbow on this arm too. It is tempting to mirror the wiring along with the physical
+
+230
+00:19:33,531 --> 00:19:38,925
+build. Do not. Identical wiring means identical firmware, which means one thing to maintain instead
+
+231
+00:19:38,985 --> 00:19:44,378
+of two. And keep the same five pin and six pin conventions. If one arm puts the trigger on pins four
+
+232
+00:19:44,438 --> 00:19:49,832
+and five and the other puts it on one and two, then your spares are not spares,
+
+233
+00:19:49,892 --> 00:19:55,286
+and one wrong plug at an event costs you a board. Write the pinout on a bit of tape inside each pod.
+
+234
+00:19:56,596 --> 00:19:59,314
+Step twelve. Assemble the costume.
+
+235
+00:20:00,625 --> 00:20:05,280
+With both arms built, run a checkout before any event. Cells out of both pods.
+
+236
+00:20:05,340 --> 00:20:09,996
+Mate every connector and count them, four per arm, plus the Z H two at each microswitch.
+
+237
+00:20:10,056 --> 00:20:14,711
+Cells in, and both arms should show the idle glow. Fire each hand separately.
+
+238
+00:20:14,771 --> 00:20:19,427
+The left trigger drives the left arm only, the right drives the right only.
+
+239
+00:20:19,486 --> 00:20:24,142
+If one trigger fires the other arm, you have crossed something, because there is no cross arm wiring
+
+240
+00:20:24,202 --> 00:20:28,857
+in this design at all. Then fire both at once and watch for either arm dimming or glitching.
+
+241
+00:20:28,917 --> 00:20:33,573
+They are electrically independent, so they should not interact. Then run both for the length of a
+
+242
+00:20:33,633 --> 00:20:38,288
+bottle of solution. That is your real duty cycle.
+
+243
+00:20:39,598 --> 00:20:44,981
+Getting into it. Order matters, and cells go in last, always. Pods onto the upper arms and strapped,
+
+244
+00:20:45,041 --> 00:20:50,424
+with the cells out. Sleeves on, and mate the elbow six pin and two pin on each side.
+
+245
+00:20:50,484 --> 00:20:55,867
+Gloves on, and mate the wrist five pin. Bubblers strapped on, mate the wrist two pin,
+
+246
+00:20:55,927 --> 00:21:01,310
+bottles filled. Then cells in, and check both idle glows before you walk out the door.
+
+247
+00:21:02,620 --> 00:21:07,156
+Getting out is the reverse, and it is the whole point of the build. Cells out first.
+
+248
+00:21:07,216 --> 00:21:11,752
+Both arms are now dead and safe to unplug. Wrist two pin and the bubbler strap,
+
+249
+00:21:11,812 --> 00:21:16,348
+and the bottles go somewhere upright. Wrist five pin, and the gloves peel off.
+
+250
+00:21:16,408 --> 00:21:20,944
+Elbow six pin and two pin, and the sleeves come off. Then the pod straps. Four releases per arm,
+
+251
+00:21:21,004 --> 00:21:25,540
+and none of them need a second person or a flat surface.
+
+252
+00:21:26,850 --> 00:21:31,835
+Here is the test that matters. Can you get out of it alone, in a bathroom, with soapy hands,
+
+253
+00:21:31,895 --> 00:21:36,881
+in under a minute? If you cannot, then something is still soldered that should not be,
+
+254
+00:21:36,941 --> 00:21:41,926
+or a strap is fighting a connector. Fix that before the event, not at it.
+
+255
+00:21:43,236 --> 00:21:48,310
+Afterwards. Cells out for storage, always. Never store the costume with cells connected.
+
+256
+00:21:48,370 --> 00:21:53,444
+Rinse the blower head and the cap in warm water, because dried bubble solution glues the one way valve
+
+257
+00:21:53,504 --> 00:21:58,577
+shut. Leave the silicone sleeve on the cap protrusion so the bottle does not empty into your bag.
+
+258
+00:21:58,637 --> 00:22:03,711
+And wipe soap residue off any connector that got sprayed, then re grease it.
+
+259
+00:22:05,021 --> 00:22:09,720
+Most faults in this build come from a short list. If nothing lights at all,
+
+260
+00:22:09,780 --> 00:22:14,479
+check your common ground, your boost output, and that data is going into the input end of the strip.
+
+261
+00:22:14,539 --> 00:22:19,238
+If it worked yesterday and not today, check every latch, because a half seated plug looks mated.
+
+262
+00:22:19,298 --> 00:22:23,997
+If pixel zero died after a reconnect, the strip was plugged in live. If the comet jumps at the wrist,
+
+263
+00:22:24,057 --> 00:22:28,756
+your gap pixels number does not match reality. And if the motor is weak and the MOSFET is hot,
+
+264
+00:22:28,816 --> 00:22:33,515
+your gate is being driven at three point three volts, or the part is not logic level.
+
+265
+00:22:33,575 --> 00:22:38,274
+The full table is in the build manual.
+
+266
+00:22:39,584 --> 00:22:44,167
+Last thing. Your field kit. Carry a charged spare cell per arm, a pre made spare wrist umbilical,
+
+267
+00:22:44,227 --> 00:22:48,809
+a spare microswitch already on its pigtail, and one spare S M pigtail pair of each size.
+
+268
+00:22:48,869 --> 00:22:53,452
+Those are the things that fail during an event, and because of the connector design,
+
+269
+00:22:53,512 --> 00:22:58,094
+all of them now swap without a soldering iron. Also carry extra bubble solution.
+
+270
+00:22:58,154 --> 00:23:02,737
+It runs out long before the battery does.
+
+271
+00:23:04,046 --> 00:23:08,580
+And that is the build. Work one arm at a time, bench test before you sew anything into a glove,
+
+272
+00:23:08,640 --> 00:23:13,174
+and keep the cell out of the pod whenever you are plugging things together.
+
+273
+00:23:13,234 --> 00:23:17,768
+Full detail is in the build manual, the reasoning behind every part is in the parts list,
+
+274
+00:23:17,828 --> 00:23:22,362
+and the costume direction is in the design document. Go make some bubbles.

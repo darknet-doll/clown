@@ -21,7 +21,9 @@ Read order if you're new:
 
 1. This file — what the parts are
 2. [BUILD.md](BUILD.md) — how they go together
-3. [README.md](README.md) — why the design is shaped this way
+3. [SCHEMATIC.md](SCHEMATIC.md) — the same circuit as a drawing, with every
+   designator (`D2`, `R5`, `SW1`…) this file refers to
+4. [README.md](README.md) — why the design is shaped this way
 
 ---
 
@@ -65,11 +67,13 @@ buy links are the same ones repeated there, so you can shop straight from here.
 | Seeed XIAO ESP32-C3 | 1 | **2** | [Seeed 3-pack](https://www.amazon.com/XIAO-ESP32C3-3PCS-Pack-Bluetooth5-0/dp/B0DGX3LSC7) |
 | 74AHCT125 level shifter | 1 | **2** (buy 5, they're cheap) | [DIP 5-pack](https://www.amazon.com/Juried-Engineering-SN74AHCT125N-SN74AHCT125-Breadboard-Friendly/dp/B08FHD994N) · [Adafruit](https://www.amazon.com/Adafruit-Accessories-Quad-Level-Shifter-piece/dp/B00XW2L39K) |
 | MOSFET module (AO3400 / IRLZ44N) | 1 | **2** | [RFP30N06LE 6-pack](https://www.amazon.com/Cylewet-RFP30N06LE-N-Channel-Control-Arduino/dp/B073D399M1) |
-| 1N5819 diode | 1 | **2** (buy 10) | [search](https://www.amazon.com/s?k=1N5819+schottky+diode) |
+| 1N5819 diode | 2 | **4** (buy 10) | [search](https://www.amazon.com/s?k=1N5819+schottky+diode) |
+| Battery disconnect switch, 3 A DC | 1 | **2** | [search](https://www.amazon.com/s?k=waterproof+toggle+switch+boot+SPST+12V) |
 | Protected 18650 cell | 1 | **2 in use + 2 spares** (2 come free in the kits) | [search](https://www.amazon.com/s?k=protected+18650+battery+button+top) |
 | 18650 sled with leads | 1 | **2** | [search](https://www.amazon.com/s?k=18650+battery+holder+single+slot+wire+leads) |
 | 5V boost module | 1 | **2** | [MT3608 10-pack](https://www.amazon.com/MT3608-Converter-Adjustable-Voltage-Regulator/dp/B0BGLGL9RV) |
 | 2A polyfuse | 1 | **2** (buy 5) | [search](https://www.amazon.com/s?k=PPTC+resettable+fuse+2A+radial) |
+| 18650 storage/transport case | — | **1 four-slot** | [search](https://www.amazon.com/s?k=18650+battery+storage+case+plastic) |
 | 100 kΩ resistor | 2 | **4** | [resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
 | 1000 µF capacitor | 1 | **2** | [search](https://www.amazon.com/s?k=1000uF+16V+electrolytic+capacitor) |
 | 330–470 Ω resistor | 1 | **2** | [same resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
@@ -83,6 +87,12 @@ buy links are the same ones repeated there, so you can shop straight from here.
 | Heat-shrink, assorted | — | **one assortment covers both** | [search](https://www.amazon.com/s?k=heat+shrink+tubing+assortment+kit) |
 | Hot glue sticks or clear RTV silicone | — | **1** | [search](https://www.amazon.com/s?k=clear+RTV+silicone+sealant+small+tube) |
 | Dielectric grease | — | **1 small tube** | [search](https://www.amazon.com/s?k=dielectric+grease+small+tube) |
+| Conformal coating spray, clear acrylic | — | **1 can** | [search](https://www.amazon.com/s?k=clear+acrylic+conformal+coating+spray+electronics) |
+| Self-amalgamating silicone tape | — | **1 roll** | [search](https://www.amazon.com/s?k=self+amalgamating+silicone+tape) |
+| Silicone O-ring cord, 2 mm, or closed-cell foam tape | — | **1** | [O-ring cord](https://www.amazon.com/s?k=silicone+o+ring+cord+2mm+solid) · [foam tape](https://www.amazon.com/s?k=closed+cell+foam+weatherstrip+tape+thin) |
+| M3 heat-set inserts + M3 screws | — | **1 kit** | [search](https://www.amazon.com/s?k=M3+heat+set+threaded+inserts+brass+kit) |
+| Cable gland or rubber grommet, 4–6 mm | 1 | **2 + spares** | [search](https://www.amazon.com/s?k=small+rubber+grommet+assortment+kit) |
+| PETG filament | — | **1 spool** | [search](https://www.amazon.com/s?k=PETG+filament+1.75mm) |
 | Needle and thread, or fabric glue | — | **1** | [sewing kit](https://www.amazon.com/s?k=hand+sewing+kit+needles+thread+ballpoint) · [fabric glue](https://www.amazon.com/s?k=fabric+glue+permanent+washable) |
 | Fabric marker pen | — | **1** | [search](https://www.amazon.com/s?k=washable+fabric+marker+pen+air+erasable) |
 | USB-C cable, **data capable** | — | **1** | [search](https://www.amazon.com/s?k=USB+C+data+sync+cable) |
@@ -282,19 +292,52 @@ Even genuine logic-level parts are usually specified at **Vgs = 5 V**, not 3.3 V
   Bare transistors, so add a **100 Ω** gate series resistor and a **10 kΩ**
   gate-to-source pulldown — both come from the resistor kit below
 
+#### The 10 kΩ gate pulldown, whichever part you buy
+
+- **Problem it fixes:** between reset and the first line of firmware, the gate pin
+  is an input and floats. A floating gate holds its last charge, and the blower
+  twitches — or runs — at every power-up and every reflash
+- **Does:** ties the gate to source, so "no signal" unambiguously means "off"
+- **Bare transistor →** it is not included. Fit one
+- **Module →** *check*. Most of the cheap modules do not have one. Meter it
+  gate-to-source with the board unpowered: a few kΩ means it's there, open means
+  add your own
+- **Skip it →** the blower kicks every time you plug in USB, and nothing in the
+  code is doing it
+
 > Note this supersedes the older "buy a module, not a bare chip" advice. That was
 > sound in principle, but the modules actually on sale are the wrong transistor.
 
-### 1N5819 flyback diode — 1 per arm · **buy 2** (get 10)
+### 1N5819 diode — **2 per arm** · **buy 4** (get 10)
+
+Two jobs, same part, and they are easy to confuse — one is `D1`, one is `D2`.
+
+#### `D1` — flyback, across the motor
 
 - **Is:** a one-way valve for electricity
 - **Problem it fixes:** a motor is a big coil
   - cut power to a coil → it kicks back a high-voltage spike into your circuit
 - **Does:** gives that spike a safe loop to run around until it dies out
 - **Skip it →** MOSFET eventually dies, maybe takes the brain with it
+- Goes at the **blower end**, banded end (cathode) to motor **+**
 - Costs ~20¢. Fit it
+
+#### `D2` — USB isolation, between the boost and the XIAO
+
+- **Is:** the same one-way valve, doing a different job
+- **Problem it fixes:** the XIAO's `5V` pad is wired straight to its USB-C VBUS,
+  with nothing in between
+  - plug in a USB cable while the pack is connected and your boost converter is
+    now feeding the laptop
+  - a host port pushing back into a boost output is not a fight either of them is
+    designed for
+- **Does:** lets the boost feed the XIAO and nothing feed back out of it
+- **Fit:** banded end (cathode) toward the **XIAO**
+- **Costs ~0.3 V**, so the XIAO sees ~4.7 V — well inside its regulator. The strip
+  and the level shifter stay on the boost output directly, at a full 5 V
+- **Skip it →** works fine right up until the night you reflash with the cell in
 - **Suggested product:** [search 1N5819 Schottky diodes](https://www.amazon.com/s?k=1N5819+schottky+diode)
-  — any bag of 10 or more; they're pennies each
+  — any bag of 10 or more; they're pennies each, and you need two per arm
 
 ---
 
@@ -346,6 +389,32 @@ Even genuine logic-level parts are usually specified at **Vgs = 5 V**, not 3.3 V
 - Cheap insurance for a lithium cell worn against your body
 - **Suggested product:** [search 2A PPTC resettable fuse](https://www.amazon.com/s?k=PPTC+resettable+fuse+2A+radial)
 
+### Battery disconnect switch — 1 per arm · **buy 2**
+
+- **Is:** an ordinary SPST switch, in the cell's positive lead, ahead of the fuse
+- **Does:** kills the whole arm in one motion, through the costume, one-handed
+- **Why it's here:** this is a lithium cell strapped to your arm inside a sealed
+  box. "Unplug it" should not mean "open the pod first"
+- **Spec that actually matters:** **rated 3 A or more at DC.** Small rockers and
+  toggles are usually specced for mains AC and far less for DC — read the DC line
+- **Get one with a rubber boot.** It keeps its own seal, and a booted toggle is
+  findable by feel in the dark
+- **It does not replace pulling the cell.** It makes the pod safe to open and the
+  arm safe to unplug; the cell still comes out for storage and charging
+- **Suggested product:**
+  [search booted SPST toggle switch](https://www.amazon.com/s?k=waterproof+toggle+switch+boot+SPST+12V)
+  — confirm the DC rating in the listing text, not just the picture
+
+### 18650 storage case — **buy 1 four-slot**
+
+- **Is:** a hard plastic box with a slot per cell
+- **Does:** stops a spare cell shorting against keys, coins, or another cell
+- A bare 18650's entire can is the negative terminal. The shrink wrap is the only
+  insulation it has, and a nick in that wrap is how a cell in a bag goes wrong
+- **Check the wrap on every cell before every event.** Re-wrap or bin any that are
+  torn
+- **Suggested product:** [search 18650 storage case](https://www.amazon.com/s?k=18650+battery+storage+case+plastic)
+
 ### Two 100 kΩ resistors (battery monitor) — 2 per arm · **buy 4**
 
 - **Is:** two resistors forming a "divider"
@@ -353,8 +422,12 @@ Even genuine logic-level parts are usually specified at **Vgs = 5 V**, not 3.3 V
   - brain can only safely measure up to ~3.3V
   - full cell is 4.2V
 - **Does:** shrinks battery voltage neatly in half → safe to read
-- **Gets you:** costume pulses red when the battery is nearly flat
-  - instead of dying with no warning
+- **Gets you:** two things, both in firmware
+  - a **warning** — slow red pulse at the elbow at 3.4 V, with hysteresis so it
+    doesn't strobe on and off as the motor loads the cell
+  - a **shutoff** — at a sustained 3.0 V the arm cuts the motor and stops firing,
+    so the cell's own protection board never has to save it. Double blink, not a
+    single pulse, so you can tell them apart across a room
 - **Suggested product:** buy an assortment, not singles —
   [search 1/4W metal film resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W)
   — one kit covers the 100 kΩ pair, the 330–470 Ω data resistor, and the 100 Ω / 10 kΩ
@@ -622,6 +695,76 @@ the strip, the trigger, and a second ground.
 
 ---
 
+## Sealing and enclosures
+
+Step 11 of [BUILD.md](BUILD.md) is the reasoning: arms go up at a rave, so nothing
+on this costume is reliably "above the spray". These are what that step needs.
+
+None of it is exotic and all of it is cheap. Buying it now saves a second order
+halfway through the build.
+
+### Conformal coating, clear acrylic spray — **buy 1 can**
+
+- **Is:** a thin lacquer that seals a finished board against moisture
+- **Does:** turns a soaked pod into one you rinse, dry and keep using
+- **Mask first:** USB-C port, boost trimpot, MOSFET tab, connector housings,
+  microswitch. Two thin coats, not one thick one
+- **Do it after the bench test passes.** Reworking a coated board is miserable
+- **Suggested product:**
+  [search clear acrylic conformal coating](https://www.amazon.com/s?k=clear+acrylic+conformal+coating+spray+electronics)
+
+### Self-amalgamating silicone tape — **buy 1 roll**
+
+- **Is:** silicone tape with no adhesive — it fuses to *itself* under tension
+- **Does:** one wrap over each mated connector keeps soap out of the shell
+- Comes off in one piece and leaves no residue, which is exactly what you want on
+  something you unplug every night
+- **Suggested product:** [search self-amalgamating silicone tape](https://www.amazon.com/s?k=self+amalgamating+silicone+tape)
+
+### Silicone O-ring cord, 2 mm — **buy 1 length**, or closed-cell foam tape
+
+- **Is:** solid silicone cord that sits in a groove in the printed lid
+- **Does:** the actual seal between pod and lid
+- Foam weatherstrip tape works too and needs no groove modelled; it just doesn't
+  last as many open/close cycles
+- **Nothing sticky and permanent** — you will be opening this
+- **Suggested products:** [O-ring cord](https://www.amazon.com/s?k=silicone+o+ring+cord+2mm+solid) ·
+  [closed-cell foam tape](https://www.amazon.com/s?k=closed+cell+foam+weatherstrip+tape+thin)
+
+### M3 heat-set inserts and screws — **buy 1 kit**
+
+- **Does:** lets the pod lid be screwed shut and reopened without stripping plastic
+- Four per pod. A gasket only seals if something squeezes it evenly
+- **Suggested product:** [search M3 heat-set inserts](https://www.amazon.com/s?k=M3+heat+set+threaded+inserts+brass+kit)
+
+### Rubber grommets or a small cable gland — 1 per arm · **buy 2 + spares**
+
+- **Does:** wires leave the pod through this, not through a bare printed hole
+- A printed edge cuts silicone insulation over a season of movement, and the gap
+  around it is the main way water gets in
+- Fit it on the **underside**, and leave a drip loop below it — see step 11
+- **Suggested product:** [search rubber grommet assortment](https://www.amazon.com/s?k=small+rubber+grommet+assortment+kit)
+
+### PETG filament — **buy 1 spool**
+
+- **Does:** pod, lid, sled, trigger plate, bubbler mount
+- **Not PLA:** PLA softens in a hot car and is brittle exactly where a strapped-on
+  part flexes. PETG is tougher and its layer lines seal better
+- Four perimeters, 1.6 mm walls minimum. Thin FDM walls leak through the layer
+  lines themselves, gasket or no gasket
+- **Suggested product:** [search PETG filament](https://www.amazon.com/s?k=PETG+filament+1.75mm)
+
+### A scrap of nitrile glove or thin silicone sheet — **free**
+
+- **Does:** the membrane over the trigger microswitch lever
+- The microswitch is the least sealed part of the whole build and it lives in your
+  soapy palm. A stretched membrane over a printed pocket passes the press through
+  and keeps the liquid out
+- The alternative is buying a sealed IP67 microswitch with the same lever, which is
+  harder to source than it sounds
+
+---
+
 ## Tools
 
 One of each — these are not per arm.
@@ -714,10 +857,13 @@ The continuity beeper is what you'll actually live in.
 Ordered by how much pain skipping them causes:
 
 1. **74AHCT125** → random flicker, only in the field, impossible to reproduce
-2. **1N5819 diode** → dead MOSFET, later, for no visible reason
+2. **`D1` 1N5819** → dead MOSFET, later, for no visible reason
 3. **Common ground** (not a part — a rule) → bizarre unrepeatable behaviour
-4. **330–470 Ω resistor** → first pixel only, wrong colour
-5. **1000 µF capacitor** → voltage dips when pixels light, brain gets confused
+4. **10 kΩ gate pulldown** → the blower twitches at every boot and the code is
+   innocent
+5. **`D2` 1N5819** → the pack backfeeds whatever you plug the USB cable into
+6. **330–470 Ω resistor** → first pixel only, wrong colour
+7. **1000 µF capacitor** → voltage dips when pixels light, brain gets confused
 
 ## The one connector mistake that costs a board
 

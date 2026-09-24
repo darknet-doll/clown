@@ -88,13 +88,30 @@ like the white side.
 the soap spray. But this costume is off-shoulder with sheer lace over the upper
 arm — there's nothing opaque to hide a pod and an 18650 behind.
 
+**And "above the spray" no longer survives contact with a rave.** Arms go up, so
+solution runs *down* the arm at the pod, and the air is full of atomised soap
+regardless. The pod has to be a sealed, drained box wherever it ends up — see
+[BUILD.md](BUILD.md) step 11. That changes what we're hiding: not a bare board and
+a cell, but a PETG box with a gasketed lid, a booted switch on the outside, and
+wires leaving the underside in drip loops.
+
+Two things this adds to the concealment problem:
+
+- **The disconnect switch has to be reachable through the costume**, one-handed,
+  without opening anything. It can be disguised — a switch under a bow reads as
+  trim — but it cannot be buried.
+- **Openings face down.** Whatever trim hides the pod must not close off its drain
+  hole or its cable entry, or it becomes a sponge held against the box.
+
 Candidate answers:
 
 - **Disguise the pod as costume trim.** The design already has black pom-poms down
   the corset and black bows at the cuffs, garters and shoulders. A black lump on
   the upper arm reads as intentional if it's shaped like one more pom-pom or bow.
   This is my pick — it hides the hardware in plain sight and needs no new visual
-  vocabulary.
+  vocabulary. **Trim over a box, not trim instead of a box**: a pom-pom skirt
+  around a sealed PETG pod, with the underside left clear to drain and the switch
+  poking through a slit.
 - **Garter-mounted**, using the existing lace leg garters. Costs a cable run from
   thigh to hand, which is awkward across the hip and easy to snag.
 - **Corset-back pouch.** Most capacity, but it's a long cable run per arm and
@@ -138,3 +155,7 @@ within at the moment the bubbles fire.
       bottle (Mount A)? Blocked on the hose test in [BUILD.md](BUILD.md) step 7 —
       and Mount C makes the housing much smaller and lighter
 - [ ] Can the ruffle cuff hide the SM-5 plug without pressing it into your wrist?
+      (It has to sit **above** the cuff — a cuff funnels solution into the shell)
+- [ ] How does the disconnect switch read as costume? A bow over a booted toggle,
+      or something more deliberate?
+- [ ] Does the pod's drain hole survive whatever trim goes over it?

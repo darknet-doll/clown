@@ -20,6 +20,10 @@ Markdown equivalents, if you'd rather read them here:
 [PARTS.md](PARTS.md) (parts and what they do) and
 [BUILD.md](BUILD.md) (step-by-step assembly).
 
+**Circuit:** [SCHEMATIC.md](SCHEMATIC.md) — two generated sheets, one for the
+electronics and one for the harness. That's the drawing to review, and the one to
+check your wiring against.
+
 **Costume direction:** [DESIGN.md](DESIGN.md) — the concept board, and the three
 places where it changes the build.
 
@@ -68,7 +72,7 @@ Nothing is soldered end to end across a joint. Each arm is four modules:
 
 | Module | Holds | Unplugs at |
 |---|---|---|
-| **Pod** — upper arm | brain, boost, level shifter, MOSFET, fuse, battery sled | battery plug + straps |
+| **Pod** — upper arm | brain, boost, level shifter, MOSFET, fuse, disconnect, battery sled | `SW1` + battery plug + straps |
 | **Sleeve** — forearm | forearm strip, 15 px | elbow: SM 6-pin + SM 2-pin |
 | **Glove** — hand | hand strip 6 px, this hand's trigger | wrist: SM 5-pin |
 | **Bubbler** | bottle, cap, hose, blower head | wrist: SM 2-pin + its strap |
@@ -104,7 +108,7 @@ and 2.5 mm — so none will mate with the others.
 WS2812 pushes current through its input protection diodes — the classic way to kill
 pixel 0.
 
-Full detail in [PARTS.md](PARTS.md) and [BUILD.md](BUILD.md) step 12.
+Full detail in [PARTS.md](PARTS.md) and [BUILD.md](BUILD.md) step 13.
 
 ---
 
@@ -113,9 +117,20 @@ Full detail in [PARTS.md](PARTS.md) and [BUILD.md](BUILD.md) step 12.
 Each arm runs off **one swappable protected 18650**, on a split rail:
 
 ```
-18650 ─┬─> MOSFET ──> blower motor        (3.7V native)
-       └─> 5V boost ──> LED strip + XIAO  (~0.3A)
+18650 ─> SW1 ─> 2A fuse ─┬─> MOSFET ──> blower motor          (3.7V native)
+                         └─> 5V boost ─┬─> LED strip + shifter (~0.3A)
+                                       └─> D2 ──> XIAO 5V pad
 ```
+
+**`SW1` is a master disconnect** in the cell positive — one motion, through the
+costume, kills the arm without opening the pod. The cell still comes out for
+storage and charging; the switch is what makes the pod safe to open and the arm
+safe to unplug in a hurry.
+
+**`D2` is an isolation Schottky.** The XIAO's 5V pad is tied straight to its USB-C
+VBUS, so without it, plugging in to reflash with the cell connected puts the boost
+output on the host port. The strip and the level shifter stay on the boost
+directly at a full 5 V; only the MCU sits behind the diode.
 
 The blower is fed straight from the cell at its native voltage — which is exactly
 how Bambu designed the kit. Only the strip and the brain need boosting to 5V, and
@@ -145,8 +160,17 @@ A 2600 mAh cell comfortably outlasts a bottle of bubble solution at any realisti
 duty cycle. Swappable cells are for convenience, not because runtime is tight —
 **you'll be refilling solution long before the battery matters.**
 
-The firmware reads cell voltage through a divider and pulses the elbow pixel red
-when it drops below 3.4 V, so you get warning rather than a sudden death.
+The firmware reads cell voltage through a divider and does two things with it:
+
+- **3.4 V → warning.** The elbow pixel pulses red, slowly, once per beat. There's a
+  150 mV band before it clears again, so it doesn't strobe on and off every time
+  the motor loads the cell.
+- **3.0 V sustained → shutoff.** The motor cuts, the trigger stops working, and
+  the elbow pixel double-blinks. It latches until a charged cell turns up.
+
+The cell's own protection board is the backstop, not the plan — repeatedly hauling
+an 18650 down to its protection cutoff is what kills it. Both thresholds are
+tunable at the top of the sketch.
 
 ---
 
@@ -209,13 +233,15 @@ Full detail in [BUILD.md](BUILD.md) step 10.
 
 Per arm, XIAO ESP32-C3:
 
+Full drawing: [SCHEMATIC.md](SCHEMATIC.md).
+
 | Signal | XIAO pin | GPIO | To |
 |---|---|---|---|
 | LED data | D10 | 10 | 74AHCT125 input, then 330–470 Ω, then elbow SM-6 pin 3 |
 | Trigger | D1 | 3 | Elbow SM-6 pin 4 (internal pull-up, active low) |
 | Motor PWM | D2 | 4 | MOSFET module gate input |
 | Battery sense | D0 | 2 | Midpoint of a 100 kΩ / 100 kΩ divider across the cell |
-| 5V | 5V pad | — | Boost output, elbow SM-6 pin 1, 74AHCT125 Vcc |
+| 5V | 5V pad | — | Boost output **through `D2`** (cathode to the XIAO) |
 | GND | GND | — | Common ground for everything |
 
 Everything the pod sends down the arm leaves through two plugs:
@@ -233,7 +259,12 @@ Avoid D8 / D9 (GPIO8 / GPIO9) — they're boot strapping pins.
 
 Notes:
 
-- A 2 A polyfuse goes inline at the battery positive, before anything else.
+- `SW1`, a 3 A-rated DC disconnect, goes in the battery positive first, then the
+  2 A polyfuse, then everything else.
+- `D2`, a 1N5819, goes between the boost output and the XIAO's 5V pad only — the
+  strip and the shifter stay on the boost directly.
+- A 10 kΩ gate-to-source pulldown holds the blower off while the XIAO boots. If
+  your MOSFET module already has one, meter it and skip; most don't.
 - The 1000 µF cap goes across the strip's 5V/GND, close to the elbow connector.
 - The 330–470 Ω resistor goes in series on the data line, at the connector end.
 - The 1N5819 goes across the motor terminals, cathode to +, at the blower end.
@@ -262,7 +293,8 @@ Tunables live in one block at the top:
 | `MOTOR_RUN_DUTY` | 230 | Bubble rate |
 | `MOTOR_KICK_DUTY` / `MOTOR_KICK_MS` | 255 / 80 | Kickstart pulse |
 | `THEME_HUE` | 192 | Comet color |
-| `VBAT_WARN_MV` | 3400 | Low-cell warning threshold |
+| `VBAT_WARN_MV` / `VBAT_WARN_CLEAR_MV` | 3400 / 3550 | Low-cell warning, with hysteresis |
+| `VBAT_CUTOFF_MV` | 3000 | Sustained → shut the arm down |
 
 Tune `COMET_TRAVEL_MS` last, on the assembled arm: film it in slow motion and
 adjust until the first bubble leaves your fingers on the same frame the comet
@@ -272,13 +304,17 @@ lands. See [BUILD.md](BUILD.md) step 9.
 
 ## Field notes
 
-- **Soap gets everywhere.** IP65 strip, sealed strip ends, and keep the controller
-  pod on the *upper* arm, above the spray.
+- **Soap gets everywhere, and "above the spray" is a lie at a rave.** Your arms go
+  up; the pod is then under the runoff, not above it. Sealed, drained, downward-
+  facing openings, drip loops on every wire — [BUILD.md](BUILD.md) step 11.
+- **`SW1` off, then cell out.** In that order, every time you stop.
 - **Test the trigger in the gun pose, not on the bench.** The lever needs to sit
   under your middle and ring finger pads so the squeeze lands every time without
   aiming.
 - **Cell out before you mate or unmate any connector.** Every time. It is the one
   habit that protects pixel 0.
+- **Spare cells live in a plastic case**, never loose in a bag. The whole can of an
+  18650 is its negative terminal and the wrap is all that covers it.
 - **Carry spares:** a charged cell per arm, a pre-made wrist umbilical, a spare
   microswitch on its ZH-2 pigtail, and one SM pigtail pair of each size. Those are
   what fail during an event — and now all of them swap without a soldering iron.
@@ -295,7 +331,8 @@ lands. See [BUILD.md](BUILD.md) step 9.
 - [x] Parts list with explanations — [PARTS.md](PARTS.md)
 - [x] Build manual — [BUILD.md](BUILD.md)
 - [x] Printable PDF manual — [Clown-Build-Manual.pdf](Clown-Build-Manual.pdf)
-- [x] Firmware v1, incl. low-battery warning
+- [x] Firmware v1, incl. low-battery warning with hysteresis and a 3.0 V shutoff
+- [x] Schematic and harness drawing — [SCHEMATIC.md](SCHEMATIC.md)
 - [x] Concept direction — [DESIGN.md](DESIGN.md)
 - [x] Connector architecture — four modules per arm, no soldered joints across a joint
 - [ ] **Pull the kit's technical drawings from the Bambu site** — needed for the
@@ -313,8 +350,14 @@ lands. See [BUILD.md](BUILD.md) step 9.
 - [ ] Decide where the controller pod hides
 - [ ] One arm assembled and timed
 - [ ] Second arm
-- [ ] Both-arms checkout and doffing drill ([BUILD.md](BUILD.md) step 12)
-- [ ] Printed enclosures (trigger plate, battery sled, controller pod, bubbler mount)
+- [ ] Both-arms checkout and doffing drill ([BUILD.md](BUILD.md) step 13)
+- [ ] **Engineering review of [SCHEMATIC.md](SCHEMATIC.md)** — checklist at the
+      bottom of that file
+- [ ] Printed enclosures (trigger plate, battery sled, controller pod, bubbler
+      mount) — sealed to [BUILD.md](BUILD.md) step 11, not just printed
+- [ ] **Soak test** — powered arm, overhead, sprayed for a minute, then opened and
+      inspected ([BUILD.md](BUILD.md) step 11)
+- [ ] Source the disconnect switches — **check the DC rating**, not the AC one
 - [ ] Optional: ESP-NOW sync between arms
 
 ---

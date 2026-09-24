@@ -204,23 +204,36 @@ PARTS = [
          "big current through. <b>Do not buy an IRF520 module</b> &mdash; it is the top "
          "search result and it is not logic-level, so at 3.3V it only half-opens and gets "
          "hot. Prefer AO3400, or drive the gate at 5V through a spare gate on the "
-         "74AHCT125 [9], which is what Step 4 does."),
-        (11, "1N5819 flyback diode", "1", "2 (get 10)",
-         "A motor is really just a coil of wire, and cutting power to a coil makes it kick "
-         "a nasty voltage spike backwards. This is a one-way valve that gives the spike a "
-         "safe loop to burn itself out in. It costs 20 cents; skip it and the MOSFET [10] "
-         "eventually dies."),
+         "74AHCT125 [9], which is what Step 4 does. <b>Whatever you buy, it needs a 10k "
+         "gate-to-source pulldown</b> &mdash; without one the gate floats while the board "
+         "boots and the blower twitches at every power-up. Bare transistors do not have "
+         "one; most modules do not either. Meter it and fit one if it reads open."),
+        (11, "1N5819 diode", "2", "4 (get 10)",
+         "A one-way valve for electricity, and you need <b>two per arm</b> doing two "
+         "different jobs. <b>D1:</b> a motor is really just a coil of wire, and cutting "
+         "power to a coil makes it kick a nasty voltage spike backwards &mdash; D1 gives "
+         "that spike a safe loop to burn itself out in, at the blower end, banded leg to "
+         "positive. Skip it and the MOSFET [10] eventually dies. <b>D2:</b> the XIAO's [8] "
+         "5V pad is wired straight to its USB-C port, so with the cell [12] connected the "
+         "boost [14] would feed whatever you plug in to reflash from &mdash; D2 sits "
+         "between boost and XIAO, banded leg to the XIAO, and stops that."),
     ]),
     ("POWER", [
         (12, "Protected 18650 cell", "1", "2 + 2 spares",
          "A rechargeable battery &mdash; one comes free with each bubble kit [1], already on "
          "a <b>PH2.0 pigtail</b>. Keep that pigtail: it is what the kit's charger mates to, "
          "so a flat cell swaps pod to charger with no adapter. <i>Protected</i> means a "
-         "guardian circuit cuts it off before you over-drain it. Never substitute unprotected "
-         "cells. This is strapped to your arm."),
+         "guardian circuit cuts it off before you over-drain it, and the firmware shuts the "
+         "arm down at 3.0V so that circuit never has to act. Never substitute unprotected "
+         "cells. This is strapped to your arm. Carry spares in a case [37], never loose in "
+         "a bag &mdash; the whole can of an 18650 is its negative terminal and the thin "
+         "wrap is all that covers it."),
         (13, "18650 sled with wire leads", "1", "2",
          "The slot the battery sits in, so you can swap a flat cell for a fresh one "
-         "without a soldering iron. Print one with a lid that clicks shut."),
+         "without a soldering iron. Print a lid that clicks shut and <b>opens without a "
+         "tool</b> &mdash; getting the cell out fast is a safety feature, not a "
+         "convenience. Heat-shrink over the sled's solder tabs: a bare tab and a stray "
+         "strand is a dead short across a lithium cell, an inch from your skin."),
         (14, "5V boost converter module", "1", "2",
          "A pump, but for voltage. The battery only makes about 3.7V and the lights and "
          "brain need 5V. Here it only has to carry the lights (~0.3A) because the motor "
@@ -325,6 +338,45 @@ PARTS = [
         (35, "3D printer", "&mdash;", "1",
          "For the trigger plate, the battery sled [13], the controller pod and the bubbler "
          "mount. You already have one."),
+    ]),
+    ("SEALING, AND GETTING THE CELL OUT FAST", [
+        (36, "Battery disconnect switch, SPST", "1", "2",
+         "An ordinary switch in the cell's positive lead, ahead of the fuse [15], so one "
+         "motion through the costume kills the arm without opening the pod. <b>Rated 3A or "
+         "more at DC</b> &mdash; small switches are usually specced for mains AC and far "
+         "less for DC, so read the DC line. Get one with a rubber boot: it keeps its own "
+         "seal and you can find it by feel in the dark. It does not replace pulling the "
+         "cell [12]; it makes the pod safe to open and the arm safe to unplug."),
+        (37, "18650 storage case", "&mdash;", "1 four-slot",
+         "A hard box with a slot per cell, so a spare cannot short against keys, coins or "
+         "another cell. Check every cell's wrap before every event and re-wrap any that are "
+         "nicked."),
+        (38, "Conformal coating, clear acrylic spray", "&mdash;", "1 can",
+         "A thin lacquer over the finished board that turns a soaked pod into one you "
+         "rinse, dry and keep using. Mask the USB-C port, the boost trimpot [14], the "
+         "MOSFET tab [10] and every connector first. Two thin coats. Do it after the bench "
+         "test passes, not before &mdash; reworking a coated board is miserable."),
+        (39, "Self-amalgamating silicone tape", "&mdash;", "1 roll",
+         "Tape with no adhesive: it fuses to itself. One wrap over each mated connector "
+         "keeps soap out of the shell, and it comes off in one piece leaving no residue, "
+         "which matters on something you unplug every night."),
+        (40, "Silicone O-ring cord 2 mm, or foam tape", "&mdash;", "1",
+         "The actual seal between the pod and its lid, sitting in a printed groove. Foam "
+         "weatherstrip tape works too and needs no groove modelled; it just survives fewer "
+         "open-and-close cycles. Nothing sticky and permanent &mdash; you will be opening "
+         "this."),
+        (41, "M3 heat-set inserts and screws", "&mdash;", "1 kit",
+         "Four per pod, so the lid screws shut and reopens without stripping the plastic. A "
+         "gasket [40] only seals if something squeezes it evenly."),
+        (42, "Rubber grommet or small cable gland", "1", "2 + spares",
+         "Wires leave the pod through this, on the underside, not through a bare printed "
+         "hole. A printed edge saws through silicone insulation [25] over a season, and the "
+         "gap around it is the main way water gets in."),
+        (43, "PETG filament", "&mdash;", "1 spool",
+         "For the pod, lid, sled [13], trigger plate and bubbler mount. <b>Not PLA:</b> PLA "
+         "softens in a hot car and is brittle exactly where a strapped-on part flexes. Four "
+         "perimeters and 1.6 mm walls minimum &mdash; thin FDM walls leak through the layer "
+         "lines themselves, gasket or no gasket."),
     ]),
 ]
 # --------------------------------------------------------------------------
@@ -564,9 +616,9 @@ def story():
     s.append(grid([
         ["Module", "Holds", "Unplugs at"],
         ["<b>Pod</b> &mdash; upper arm",
-         "brain %s, boost %s, level shifter %s, MOSFET %s, fuse %s, sled %s"
-         % (ref(8), ref(14), ref(9), ref(10), ref(15), ref(13)),
-         "battery plug + straps"],
+         "brain %s, boost %s, level shifter %s, MOSFET %s, fuse %s, disconnect %s, "
+         "sled %s" % (ref(8), ref(14), ref(9), ref(10), ref(15), ref(36), ref(13)),
+         "switch %s + battery plug + straps" % ref(36)],
         ["<b>Sleeve</b> &mdash; forearm", "forearm strip %s, 15 px" % ref(5),
          "elbow: SM 6-pin %s + SM 2-pin %s" % (ref(20), ref(22))],
         ["<b>Glove</b> &mdash; hand",
@@ -575,7 +627,7 @@ def story():
         ["<b>Bubbler</b>", "bottle %s, cap, hose, blower head" % ref(2),
          "wrist: SM 2-pin %s + its strap" % ref(22)],
     ], [1.30 * inch, 3.55 * inch, 1.55 * inch]))
-    s.append(P("<b>Steps 1&ndash;10 build one arm. Step 11 is the second arm. Step 12 is the "
+    s.append(P("<b>Steps 1&ndash;11 build one arm. Step 12 is the second arm. Step 13 is the "
                "costume</b> &mdash; the two arms together, and how you get in and out of it.",
                "body"))
 
@@ -586,9 +638,13 @@ def story():
         "<b>Check polarity with the multimeter %s before you connect the battery the "
         "first time</b> &mdash; reversed power destroys the brain %s and the strip %s "
         "instantly and permanently.<br/><br/>"
+        "<b>You must be able to kill and remove the cell in seconds, one-handed.</b> That "
+        "is what the disconnect switch %s and a tool-free sled lid %s are for. If getting "
+        "the battery out needs two hands, a screwdriver, or taking a sleeve off first, the "
+        "pod is not finished. Carry spare cells in a case %s, never loose in a bag.<br/><br/>"
         "Solder somewhere ventilated. The fumes are flux, not lead &mdash; unpleasant "
         "whichever solder %s you bought."
-        % (ref(12), ref(31), ref(8), ref(5), ref(32))))
+        % (ref(12), ref(31), ref(8), ref(5), ref(36), ref(13), ref(37), ref(32))))
 
     s.append(callout(
         "The connector rule you will use constantly",
@@ -683,16 +739,23 @@ def story():
     # Step 4
     s.append(P("Step 4 &mdash; Build the controller pod", "h2"))
     s.append(P("This all lives on a small piece of protoboard %s that sits on your "
-               "<b>upper arm</b>, above the soap spray." % ref(27), "body"))
+               "<b>upper arm</b>. It used to say \"above the soap spray\" &mdash; Step 11 "
+               "explains why that stopped being true and what the enclosure has to do "
+               "instead." % ref(27), "body"))
     s.append(grid([
         ["From", "To", "Notes"],
-        ["Battery %s + (PH2.0)" % ref(12), "Polyfuse %s, then everything else" % ref(15),
-         "Fuse goes first, right at the cell"],
+        ["Battery %s + (PH2.0)" % ref(12), "Disconnect switch %s" % ref(36),
+         "Kills the arm without opening the pod"],
+        ["Disconnect %s out" % ref(36), "Polyfuse %s, then everything else" % ref(15),
+         "Fuse next, before anything else"],
         ["Battery %s &minus; (PH2.0)" % ref(12), "Common ground", "Everything shares this"],
         ["Battery + (after fuse)", "Boost %s IN+" % ref(14), ""],
         ["Boost %s OUT+ (5V)" % ref(14),
-         "XIAO %s 5V pad, 74AHCT125 %s Vcc, elbow SM-6 %s pin 1"
-         % (ref(8), ref(9), ref(20)), ""],
+         "74AHCT125 %s Vcc, elbow SM-6 %s pin 1" % (ref(9), ref(20)),
+         "Strip and shifter, straight off the boost"],
+        ["Boost %s OUT+ (5V)" % ref(14),
+         "D2 %s anode; its banded leg to the XIAO %s 5V pad" % (ref(11), ref(8)),
+         "<b>Isolation diode &mdash; see below</b>"],
         ["Battery + (after fuse)", "Motor +, via elbow SM-2 %s" % ref(22),
          "Motor runs <b>direct from the cell</b>, not from 5V"],
         ["Motor &minus; (via elbow SM-2)", "MOSFET %s output" % ref(10), ""],
@@ -726,6 +789,46 @@ def story():
         "MOSFET module\" and it is not logic-level: its gate threshold runs to 4V and it "
         "wants ~10V to open properly. It half-works, which is harder to diagnose than not "
         "working at all." % (ref(8), ref(9))))
+
+    s.append(callout(
+        "Two things that hold the blower off when nothing is telling it to run",
+        "<b>The 10k gate-to-source pulldown is not optional.</b> Between the moment the "
+        "board resets and the first line of firmware, the gate pin is an input and floats, "
+        "and a floating gate holds its last charge. The failure looks like the blower "
+        "twitching, or briefly running, every time you power up or reflash &mdash; with the "
+        "code doing nothing at all. Bare transistors do not include one. <b>Modules mostly "
+        "do not either: meter gate to source with the board unpowered.</b> A few k is fine; "
+        "open means fit your own.<br/><br/>"
+        "The firmware also drives the pin low as the very first thing it does, but that is "
+        "belt to the resistor's braces &mdash; it cannot act before it runs."))
+
+    s.append(callout(
+        "Isolate the XIAO's 5V pad &mdash; fit D2",
+        "<b>The XIAO's %s 5V pad is wired straight to its USB-C VBUS.</b> There is no diode "
+        "on the board. So with the cell %s connected and a USB cable plugged in, your boost "
+        "%s output is sitting on the host port &mdash; a laptop, a phone charger, whatever "
+        "you reflash from.<br/><br/>"
+        "Fit a <b>1N5819</b> %s between the boost output and the XIAO's 5V pad, <b>banded "
+        "leg (cathode) to the XIAO</b>. Current flows boost &rarr; XIAO and nothing flows "
+        "back. It costs about 0.3V, so the XIAO sees ~4.7V, comfortably inside its "
+        "regulator.<br/><br/>"
+        "<b>Only the XIAO goes behind the diode.</b> The strip %s and the level shifter %s "
+        "stay on the boost output directly, at a full 5V &mdash; they are the load that "
+        "cares." % (ref(8), ref(12), ref(14), ref(11), ref(5), ref(9))))
+
+    s.append(callout(
+        "Fit the master disconnect &mdash; SW1",
+        "The switch %s goes in the <b>cell positive</b>, between the battery plug and the "
+        "fuse %s, so it kills everything downstream including the motor tap and the boost "
+        "%s.<br/><br/>"
+        "Mount it so you can reach it <b>through the costume, one-handed</b>, without "
+        "opening the pod, and <b>label which way is off</b>. Standing in the dark unsure "
+        "whether you just switched it off is the failure this part exists to prevent."
+        "<br/><br/>"
+        "It does not replace pulling the cell %s. It makes the pod safe to open and the arm "
+        "safe to unplug in one motion; the cell still comes out for storage, for charging, "
+        "and any time something is actually wrong."
+        % (ref(36), ref(15), ref(14), ref(12))))
 
     s.append(P("The pod's two outward plugs", "h2"))
     s.append(P("Everything the pod sends down the arm leaves through exactly two "
@@ -825,12 +928,22 @@ def story():
         "arrow is genuinely miserable. Test it flat on the table first, with every "
         "connector mated." % ref(6)))
     s += bullets([
-        "<b>Check polarity with the multimeter</b> %s. Battery + and &minus; where you "
-        "expect; boost %s output close to 5.0V. Only then connect the brain %s."
-        % (ref(31), ref(14), ref(8)),
+        "<b>Before any power: meter gate to source on the MOSFET</b> %s. A few k, not open. "
+        "Open means the pulldown is missing and the blower will twitch at every boot."
+        % ref(10),
+        "<b>Before any power: check both diodes</b> %s. D1 banded leg to motor +, at the "
+        "blower end. D2 banded leg to the XIAO %s. D1 backwards is a dead short across the "
+        "cell through the MOSFET, so check that one twice." % (ref(11), ref(8)),
         "<b>Beep through every connector, pin by pin.</b> A pigtail with a crimp that did "
         "not seat looks perfect and works intermittently. Find it now, not at the venue.",
+        "<b>Check polarity with the multimeter</b> %s. Battery + and &minus; where you "
+        "expect. <b>Set the boost %s to 5.00V on its trimpot before the brain %s is ever "
+        "connected.</b>" % (ref(31), ref(14), ref(8)),
+        "<b>Confirm D2 is doing its job:</b> boost output ~5.0V, XIAO 5V pad ~4.7V. That "
+        "0.3V step is the diode. The same reading on both sides means you shorted past it.",
         "Power up. You should get the dim breathing idle glow.",
+        "<b>Watch the blower as it powers up. It must not twitch.</b> If it kicks, stop: "
+        "floating gate.",
         "Press the microswitch %s by hand. The comet should launch from the <b>elbow</b> "
         "end and travel to the <b>fingertip</b> end, and the motor should spin." % ref(19),
         "If the comet runs backwards, the strip pieces are reversed. <b>Fix it in the "
@@ -838,6 +951,17 @@ def story():
         "is worth a resolder.",
         "Let it run five minutes, then check for heat.",
     ])
+    s.append(callout(
+        "Test the low-voltage shutoff, once per arm",
+        "Do it on the bench once, so you recognise it in the field and know it works. Feed "
+        "the pod <b>2.95V</b> from a bench supply in place of the cell %s: within about six "
+        "seconds the elbow pixel starts a slow <b>double</b> blink, the motor stops, and the "
+        "trigger does nothing. Wind up to 3.7V and it comes back. No bench supply? Run an "
+        "arm flat &mdash; tedious, but it also measures your real runtime.<br/><br/>"
+        "<b>Single slow pulse = warning</b> (swap soon). <b>Double blink = shut down</b> "
+        "(swap now). They are deliberately different at a glance. Do not lower the cutoff to "
+        "squeeze out more runtime: under 3.0V you are trading cell life for a couple of "
+        "minutes of bubbles." % ref(12)))
     s.append(callout(
         "Checking for heat",
         "Touch the boost %s and MOSFET %s. Warm is fine; too hot to touch means power down "
@@ -988,8 +1112,132 @@ def story():
         "for six hours is uncomfortable." % ref(24)))
 
     # Step 11
-    s.append(P("Step 11 &mdash; Build the second arm", "h2"))
-    s.append(P("Repeat Steps 1 to 10. Two things to be careful about:", "body"))
+    s.append(PageBreak())
+    s.append(P("Step 11 &mdash; Seal it against the soap", "h1"))
+    s.append(P("The build used to assume the pod sits on your upper arm, <b>above</b> the "
+               "spray. That holds on a bench and fails at a rave, where your arms go up. "
+               "Point a bubble gun at the ceiling for four hours and the pod is no longer "
+               "above anything. <b>Assume every surface gets wet, from every angle, all "
+               "night.</b>", "body"))
+
+    s.append(P("What actually gets in", "h2"))
+    s += bullets([
+        "<b>Arms overhead.</b> Solution runs <i>down</i> the arm, straight at the pod and "
+        "into anything that faces up.",
+        "<b>Blowback.</b> The blower %s atomises solution. A fine soapy mist settles on "
+        "everything within a metre, including the inside of any vent you left open." % ref(1),
+        "<b>Wicking &mdash; the one people miss.</b> Soap film creeps <i>along wire "
+        "insulation</i> %s, into a connector shell and out the other end, hours after the "
+        "splash that started it. Sealing the box is not enough if the wires are a wick." % ref(25),
+        "<b>Other people.</b> Hands go up, drinks get waved, and someone will absolutely "
+        "grab your forearm.",
+        "<b>Condensation.</b> Warm arm, cold night, sealed box. Water forms <i>inside</i> a "
+        "perfectly sealed enclosure with no help from outside.",
+    ])
+    s.append(P("Dried bubble solution is also mildly conductive and hygroscopic &mdash; it "
+               "pulls moisture back out of the air, so a \"dry\" residue across two pins is "
+               "a leakage path that comes back every humid night until you clean it off.",
+               "body"))
+
+    s.append(callout(
+        "The rule: drain it, do not hermetically seal it",
+        "Chasing a watertight box is the wrong target. You cannot get there with an FDM "
+        "print, a USB port and six wires leaving the case &mdash; and if you did, "
+        "condensation would defeat you from the inside.<br/><br/>"
+        "Aim for this instead: <b>nothing that gets in can pool on a board; everything that "
+        "gets in has a way out at the bottom; everything that gets in dries between "
+        "events.</b>"))
+
+    s.append(P("The pod enclosure", "h2"))
+    s += bullets([
+        "<b>PETG %s, not PLA.</b> PLA goes soft in a hot car and is brittle where this part "
+        "flexes under a strap. <b>Four perimeters, 1.6 mm walls minimum</b> &mdash; thin FDM "
+        "walls leak through the layer lines themselves." % ref(43),
+        "<b>A lid with a gasket groove</b>, closed with four M3 screws into heat-set inserts "
+        "%s, with 2 mm silicone cord %s in the groove. Nothing sticky &mdash; you will be "
+        "opening this." % (ref(41), ref(40)),
+        "<b>Every opening faces down or aft.</b> Nothing on the top surface, nothing on the "
+        "fingertip-facing end.",
+        "<b>A 2 mm drain hole at the lowest corner</b>, plus a small vent at the opposite "
+        "high corner so it can breathe. Yes, this is a hole in your waterproof box. It is "
+        "the difference between a box that drains and a box that holds a puddle against your "
+        "protoboard %s." % ref(27),
+        "<b>Cable entry through a grommet</b> %s on the underside, and <b>a drip loop on "
+        "every wire leaving the pod</b> &mdash; a downward loop below the entry, so water "
+        "running along the insulation drips off instead of tracking in." % ref(42),
+        "<b>A silicone plug or hinged flap over the USB-C port.</b> It has to stay reachable "
+        "and it has to be shut by default.",
+    ])
+
+    s.append(callout(
+        "Conformal coat the board",
+        "The enclosure is the first line, not the only one. A thin coat of clear acrylic "
+        "spray %s over the assembled protoboard %s turns a soaked board into one you rinse, "
+        "dry and keep using.<br/><br/>"
+        "<b>Mask first:</b> the USB-C connector, the boost trimpot %s, the MOSFET tab %s, "
+        "every connector housing, and the microswitch %s. Two thin coats beat one thick one. "
+        "<b>Do it after the bench test passes</b> &mdash; coating a board you then have to "
+        "rework is miserable. Clear RTV %s dabbed over the strip's cut ends does the same "
+        "job at the wet end of the arm."
+        % (ref(38), ref(27), ref(14), ref(10), ref(19), ref(28))))
+
+    s.append(P("The battery gets its own sealed compartment", "h2"))
+    s += bullets([
+        "<b>A wall between the cell %s and the electronics</b>, so a leaking or vented cell "
+        "does not take the board with it, and so soap that gets in during a swap does not "
+        "reach the brain %s." % (ref(12), ref(8)),
+        "<b>Heat-shrink %s over the sled's solder tabs</b> %s. A bare tab and a stray strand "
+        "of wire is a dead short across a lithium cell, an inch from your skin."
+        % (ref(26), ref(13)),
+        "<b>Nothing metal loose in the compartment.</b> No stray screws, no washers, no "
+        "snipped lead ends. Check every time you close it.",
+        "<b>Check the cell's own wrap before every event.</b> A nicked 18650 sleeve exposes "
+        "the can, which is the negative terminal over the whole body of the cell &mdash; "
+        "that is how a cell shorts against something it is only resting on. Re-wrap or bin "
+        "any that are torn; they cost almost nothing.",
+        "<b>The sled lid closes positively and opens without a tool.</b> A click, a screw or "
+        "a strap.",
+    ])
+
+    s.append(callout(
+        "The trigger is the leakiest part of the build",
+        "A bare lever microswitch %s in your palm, under a glove %s, in soapy water, is not "
+        "a sealed part. Cheapest fix first: <b>a printed pocket with a nitrile or silicone "
+        "membrane</b> over the lever &mdash; a scrap of a nitrile glove, stretched and glued "
+        "around the rim, passes the press through and keeps the liquid out. Otherwise buy a "
+        "sealed IP67 microswitch with the same lever, which is harder to source than it "
+        "sounds.<br/><br/>"
+        "Either way, seal the ZH-2 %s joint: heat-shrink %s over the solder, and dielectric "
+        "grease %s in the shell." % (ref(19), ref(6), ref(23), ref(26), ref(24))))
+
+    s.append(P("The connectors", "h2"))
+    s += bullets([
+        "<b>Grease every shell</b> %s &mdash; you were doing this for corrosion anyway; it "
+        "also keeps water out of the contacts." % ref(24),
+        "<b>Wrap each mated plug</b> in a turn of self-amalgamating silicone tape %s. It "
+        "fuses to itself, takes no adhesive with it, and comes off in one piece when you "
+        "need to unplug." % ref(39),
+        "<b>Point the plug down</b>, or at worst sideways. A shell facing up is a cup.",
+        "The wrist SM-5 %s sits <b>above</b> the cuff, not under it &mdash; a cuff channels "
+        "solution straight into the plug." % ref(21),
+    ])
+
+    s.append(callout(
+        "Test it before you trust it",
+        "With the arm assembled, sealed and <b>powered</b> (an unpowered box tells you "
+        "nothing about tracking or shorts):<br/><br/>"
+        "<b>1.</b> Hold it overhead, the way you would actually fire it. "
+        "<b>2.</b> Spray it all over with real bubble solution %s for a full minute &mdash; "
+        "from above, from the sides, at the connectors. "
+        "<b>3.</b> Fire the trigger a dozen times through the wetting. "
+        "<b>4.</b> Leave it ten minutes, still powered, still wet. "
+        "<b>5.</b> Open it.<br/><br/>"
+        "<b>Look for water inside, and for water tracking along the inside of the wire "
+        "entry.</b> Both mean you move the entry point or add a drip loop." % ref(4)))
+
+    # Step 12
+    s.append(P("Step 12 &mdash; Build the second arm", "h2"))
+    s.append(P("Repeat Steps 1 to 11. Two things to be careful about:", "body"))
     s += bullets([
         "<b>Pixel 0 goes at the elbow on this arm too.</b> It is tempting to mirror the "
         "wiring along with the physical build. Do not. Identical wiring means identical "
@@ -1000,9 +1248,9 @@ def story():
         "each pod." % (ref(21), ref(20)),
     ])
 
-    # Step 12
+    # Step 13
     s.append(PageBreak())
-    s.append(P("Step 12 &mdash; Assemble the costume", "h1"))
+    s.append(P("Step 13 &mdash; Assemble the costume", "h1"))
     s.append(P("Both arms exist. This step is about the thing you actually wear.", "body"))
 
     s.append(P("Both-arms checkout", "h2"))
@@ -1024,29 +1272,36 @@ def story():
 
     s.append(grid([
         ["Getting into it &mdash; cells go in LAST", "Getting out of it &mdash; cells come out FIRST"],
-        ["<b>1.</b> Pods on the upper arms, strapped, cells <b>out</b>.<br/>"
+        ["<b>1.</b> Pods on, strapped, cells <b>out</b>, switches %s <b>off</b>.<br/>"
          "<b>2.</b> Sleeves on. Mate elbow SM-6 and SM-2 each side.<br/>"
          "<b>3.</b> Gloves on. Mate wrist SM-5 each side.<br/>"
          "<b>4.</b> Bubblers strapped on, mate wrist SM-2, bottles filled.<br/>"
-         "<b>5. Cells in.</b> Check both idle glows before you walk out.",
-         "<b>1. Cells out.</b> Both arms are now dead and safe to unplug.<br/>"
-         "<b>2.</b> Wrist SM-2 + bubbler strap &rarr; bubblers off, bottles upright.<br/>"
-         "<b>3.</b> Wrist SM-5 &rarr; gloves peel off.<br/>"
-         "<b>4.</b> Elbow SM-6 + SM-2 &rarr; sleeves come off.<br/>"
-         "<b>5.</b> Pod straps.<br/><br/>"
-         "Four releases per arm, none needing a second person or a flat surface."],
+         "<b>5. Cells in, then switches on.</b> Check both idle glows." % ref(36),
+         ("<b>1. Switches %s off, then cells out.</b> Both arms are now dead.<br/>"
+          "<b>2.</b> Wrist SM-2 + bubbler strap &rarr; bubblers off, bottles upright.<br/>"
+          "<b>3.</b> Wrist SM-5 &rarr; gloves peel off.<br/>"
+          "<b>4.</b> Elbow SM-6 + SM-2 &rarr; sleeves come off.<br/>"
+          "<b>5.</b> Pod straps.<br/><br/>"
+          "Four releases per arm, none needing a second person or a flat surface."
+          % ref(36))],
     ], [3.60 * inch, 3.60 * inch]))
 
     s.append(callout(
-        "The test that matters",
+        "The two tests that matter",
         "<b>Can you get out of it alone, in a bathroom, with soapy hands, in under a "
-        "minute?</b><br/><br/>"
-        "If not, something is still soldered that should not be, or a strap is fighting a "
-        "connector. Fix it before the event, not at it."))
+        "minute?</b> If not, something is still soldered that should not be, or a strap is "
+        "fighting a connector.<br/><br/>"
+        "<b>Can you kill and remove either battery %s, one-handed, in under ten seconds?</b> "
+        "Switch %s off, sled lid, plug. If either takes longer, fix the pod before the "
+        "event. When something goes wrong mid-event the order is: switch off, cell out, "
+        "<i>then</i> work out what happened." % (ref(12), ref(36))))
 
     s.append(P("Care afterwards", "h2"))
     s += bullets([
-        "<b>Cells out for storage.</b> Never store the costume with cells connected.",
+        "<b>Cells out for storage.</b> Never store the costume with cells connected. The "
+        "switch %s being off is not storage &mdash; a switch can be knocked on in a bag." % ref(36),
+        "<b>Open the pods and let them dry</b> before they go away. A sealed damp box is "
+        "worse than an open damp box. See Step 11.",
         "Rinse the blower head and cap in warm water &mdash; dried bubble solution glues the "
         "one-way valve shut.",
         "Leave the silicone sleeve on the cap protrusion so the bottle does not empty into "
@@ -1097,8 +1352,24 @@ def story():
          % (ref(12), ref(15))],
         ["Works, then dies after a few minutes",
          "Cell %s protection circuit cutting out. Recharge or swap." % ref(12)],
-        ["Elbow pixel pulsing red",
-         "Low-battery warning. Swap the cell %s." % ref(12)],
+        ["Elbow pixel pulsing red, slow single pulse",
+         "Low-battery warning. Swap the cell %s soon." % ref(12)],
+        ["Elbow pixel double-blinking red, motor dead, trigger does nothing",
+         "Low-voltage shutoff, latched at 3.0V. Swap the cell %s; it clears itself."
+         % ref(12)],
+        ["Blower twitches every time you power up or reflash",
+         "Missing 10k gate pulldown on the MOSFET %s. Meter gate to source &mdash; it "
+         "should not read open. Step 4." % ref(10)],
+        ["Laptop complains about USB power, or the pod stays alive with the cell out and "
+         "USB in",
+         "Missing or reversed D2 %s. The pack is backfeeding the host port. Step 4."
+         % ref(11)],
+        ["Arm completely dead, cell freshly charged",
+         "Disconnect switch %s off, or its DC rating gave out. Check the switch before you "
+         "suspect the board." % ref(36)],
+        ["It worked, got sprayed, now behaves oddly",
+         "Soap tracking across pins. Switch %s off, open it, rinse with isopropyl, dry "
+         "fully. Then Step 11." % ref(36)],
         ["One trigger fires the other arm",
          "Not possible by design &mdash; you have cross-plugged two arms. Check each arm is "
          "self-contained."],
@@ -1130,7 +1401,11 @@ def story():
         ["MAX_BRIGHTNESS", "Overall brightness, for your glove's fabric"],
         ["IDLE_BRIGHTNESS", "Resting glow. Set to 0 for fully dark when idle"],
         ["MOTOR_RUN_DUTY", "Bubble rate"],
-        ["VBAT_WARN_MV", "When the low-cell warning starts"],
+        ["VBAT_WARN_MV / VBAT_WARN_CLEAR_MV",
+         "When the low-cell warning starts and stops. Keep them apart &mdash; that gap is "
+         "the hysteresis that stops it strobing as the motor loads the cell"],
+        ["VBAT_CUTOFF_MV",
+         "Where the arm shuts itself down. Raising it is fine; lowering it costs cell life"],
     ], [1.75 * inch, 5.45 * inch]))
     s.append(P("The XIAO %s has Wi-Fi and Bluetooth sitting unused, already paid for. "
                "Natural next steps, in rough order of effort: more patterns with a "
@@ -1146,7 +1421,8 @@ def story():
                "<b>without a soldering iron</b> &mdash; that is what the connectors bought "
                "you:", "body"))
     s += bullets([
-        "A spare charged cell %s per arm, on its PH2.0 pigtail." % ref(12),
+        "A spare charged cell %s per arm, on its PH2.0 pigtail, <b>each in its own "
+        "case</b> %s &mdash; never loose in the bag." % (ref(12), ref(37)),
         "<b>A pre-made spare wrist umbilical</b> %s &mdash; genuinely swappable now that "
         "both ends are connectors." % ref(21),
         "A spare microswitch %s, already on its ZH-2 pigtail %s." % (ref(19), ref(23)),
@@ -1156,6 +1432,9 @@ def story():
         "Spare 3 x 5 silicone tube %s, in case a feed hose splits." % ref(3),
         "A solder pen %s, for repairs you cannot connector your way out of." % ref(32),
         "A small screwdriver and some electrical tape.",
+        "<b>Self-amalgamating tape</b> %s, for re-wrapping a plug you had to open." % ref(39),
+        "<b>Isopropyl and a cloth.</b> Wiping dried solution off a connector at the venue is "
+        "the difference between one dead arm and two.",
     ])
 
     return s

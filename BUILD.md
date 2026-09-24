@@ -6,7 +6,7 @@
 
 | Module | Holds | Unplugs at |
 |---|---|---|
-| **Pod** — upper arm | brain, boost, level shifter, MOSFET, fuse, battery sled | battery plug + straps |
+| **Pod** — upper arm | brain, boost, level shifter, MOSFET, fuse, disconnect, battery sled | `SW1` + battery plug + straps |
 | **Sleeve** — forearm | forearm strip, 15 px | elbow: SM 6-pin + SM 2-pin |
 | **Glove** — hand | hand strip 6 px, this hand's trigger | wrist: SM 5-pin |
 | **Bubbler** | bottle, cap, hose, blower head | wrist: SM 2-pin + its strap |
@@ -14,11 +14,13 @@
 Nothing is soldered end to end across a joint. That is what lets you get out of
 the costume alone, with soapy hands, without dislocating a shoulder.
 
-Steps 1–10 build **one arm**. Step 11 is the second arm. **Step 12 is the costume**
+Steps 1–11 build **one arm**. Step 12 is the second arm. **Step 13 is the costume**
 — the two arms together, and how you get in and out of it.
 
 Read [PARTS.md](PARTS.md) first if you haven't — it explains what each component
 actually does, which makes these steps make a lot more sense.
+[SCHEMATIC.md](SCHEMATIC.md) is the same circuit as a drawing; keep it open
+alongside step 4.
 
 **Estimated time:** a full afternoon for the first arm. The second one takes about
 half that, because you'll already know what you're doing.
@@ -37,11 +39,23 @@ you solder, and you bench-test *before* anything goes into the glove).
   Never short the terminals, never charge an obviously damaged or puffy cell, and
   don't leave it charging unattended. It's strapped to your arm — treat it with
   respect.
+- **You must be able to kill and remove the cell in seconds, one-handed.** That is
+  what `SW1` (step 4) and a tool-free sled lid (step 11) are for. If getting the
+  battery out of this costume needs two hands, a screwdriver, or taking a sleeve
+  off first, it is not finished.
+- **Carry and store spare cells in a plastic case**, never loose in a bag with
+  keys or coins. A bare 18650's whole can is the negative terminal — the wrap is
+  the only insulation it has.
+- **Protected cells are the backstop, not the plan.** The firmware shuts the arm
+  down at 3.0 V so the cell's own protection board never has to act. Don't remove
+  either layer.
 - **Check polarity with a multimeter before connecting the battery the first
   time.** Reversed power will destroy the brain and the LED strip instantly and
   permanently. Two minutes with a meter saves you re-ordering parts.
-- **Soap and electronics.** Everything that can get wet is sealed or lives on
-  your upper arm, above the spray. This is a design constraint, not a suggestion.
+- **Soap and electronics.** Assume every surface of this costume gets wet, from
+  every angle, all night — arms go up, and "above the spray" stops meaning
+  anything the moment they do. Sealing is step 11, and it is a design constraint,
+  not a suggestion.
 - Solder in a ventilated space. The fumes are flux, not lead — they're unpleasant
   whichever solder you bought. A cheap fan pulling air away from your face fixes it.
 
@@ -172,29 +186,73 @@ bench than inside a glove.
 
 ## Step 4 — Build the controller pod
 
-This all lives on a small piece of protoboard that will sit on your **upper arm**,
-above the soap spray.
+This all lives on a small piece of protoboard that will sit on your **upper arm**.
+It used to say "above the soap spray" — step 11 explains why that is no longer the
+plan, and what the enclosure has to do instead.
+
+**Work from [SCHEMATIC.md](SCHEMATIC.md) sheet 1.** The table below is the same
+circuit in words; the drawing is what to check your work against.
 
 ### Connections
 
 | From | To | Notes |
 |---|---|---|
-| Battery **PH2.0** + | Polyfuse → everything's + | Fuse goes first, right at the battery |
+| Battery **PH2.0** + | `SW1` master disconnect | Disconnect first, right at the cell |
+| `SW1` out | Polyfuse → everything's + | Fuse next, before anything else |
 | Battery **PH2.0** − | Common ground | Everything shares this ground |
 | Battery + (after fuse) | Boost module IN+ | |
 | Battery − | Boost module IN− | |
-| Boost OUT+ (5V) | XIAO 5V pad, 74AHCT125 Vcc, elbow SM-6 pin 1 | |
+| Boost OUT+ (5V) | 74AHCT125 Vcc, elbow SM-6 pin 1 | Strip and shifter, direct |
+| Boost OUT+ (5V) | `D2` anode; `D2` cathode → XIAO 5V pad | **Isolation diode — see below** |
 | Boost OUT− | Common ground | |
 | Battery + (after fuse) | Motor +, via elbow SM-2 | Motor runs direct from battery, not 5V |
 | Motor − (via elbow SM-2) | MOSFET module output | |
 | MOSFET module ground | Common ground | |
 | XIAO D2 (GPIO4) | 74AHCT125 **second** gate input | Gate drive — see below |
-| 74AHCT125 second gate output | 100 Ω → MOSFET gate | 10 kΩ gate-to-source pulldown |
+| 74AHCT125 second gate output | 100 Ω → MOSFET gate | With a 10 kΩ gate-to-source pulldown — see below |
 | XIAO D10 (GPIO10) | 74AHCT125 input pin | |
 | 74AHCT125 output pin | 330–470 Ω resistor → elbow SM-6 pin 3 | Resistor close to the connector |
 | XIAO D1 (GPIO3) | Elbow SM-6 pin 4 | Trigger, arriving from the hand |
 | Elbow SM-6 pin 5 | Common ground | Trigger return |
 | XIAO D0 (GPIO2) | Midpoint of the two 100 kΩ resistors | Battery monitor |
+
+### Fit the master disconnect
+
+`SW1` goes in the **cell positive**, between the battery plug and the polyfuse —
+so it kills everything downstream, including the motor tap and the boost.
+
+- **Rated for at least 3 A DC.** Most small rocker and toggle switches are rated
+  for mains AC and much less for DC. Check the DC number, not the AC one
+- **Mounted so you can reach it through the costume, one-handed**, without
+  opening the pod. A rubber-booted toggle keeps its own seal and gives you a
+  positive click you can find by feel
+- **Label which way is off**, or fit a guard. Standing in the dark unsure whether
+  you just switched it off is the failure this part exists to prevent
+- It does **not** replace pulling the cell. It makes the pod safe to open and the
+  arm safe to unplug in one motion; the cell still comes out for storage, for
+  charging, and any time something is actually wrong
+
+Together with a sled lid that opens without a tool (step 11), this is the answer to
+"get the battery out of this costume, now."
+
+### Isolate the XIAO's 5 V pad
+
+**The XIAO's `5V` pad is wired straight to its USB-C VBUS.** There is no diode on
+the board. So with the pack connected and a USB cable plugged in, the boost output
+is sitting on the host's USB port — feeding a laptop, a phone charger, or whatever
+else you reflash from.
+
+Fit a **1N5819 Schottky, `D2`, between the boost output and the XIAO's 5V pad,
+banded end (cathode) to the XIAO.**
+
+- Current flows boost → XIAO. Nothing flows back into a host port
+- Costs about 0.3 V: the XIAO sees ~4.7 V, comfortably inside its regulator
+- **Only the XIAO goes behind the diode.** The strip and the 74AHCT125 stay on the
+  boost output directly, at a full 5 V — they're the load that cares
+- You bought these for the motor flyback anyway. Buy a couple more
+
+> Without `D2`, the safe habit is "never plug in USB with the cell connected" — and
+> you will break that habit at 2 a.m. with one hand full. The diode is 20¢.
 
 ### Drive the MOSFET gate at 5V, not 3.3V
 
@@ -207,11 +265,29 @@ second gate exactly the way you route the LED data through the first. The MOSFET
 then sees a clean 5 V gate signal.
 
 - Costs nothing — the chip is already in the pod
-- Add a **100 Ω** resistor in series with the gate, and a **10 kΩ** pulldown from
-  gate to source, so the FET is held off while the XIAO boots
+- Add a **100 Ω** resistor in series with the gate
 - **If you bought an AO3400-based part** it will work at 3.3 V directly, since AO3400
   is specified down to 2.5 V. Doing it through the shifter anyway costs nothing and
   removes the question
+
+### The gate pulldown is not optional
+
+Between the moment the XIAO resets and the moment `setup()` runs, `D2`/GPIO4 is an
+**input, floating**. A floating gate on a MOSFET holds whatever charge it last
+had. The failure looks like the blower twitching, or briefly running, every time
+you power up or reflash — with the firmware doing nothing at all.
+
+**A 10 kΩ resistor from gate to source fixes it permanently.** It is the only thing
+holding the blower off during boot.
+
+- **Bare transistor (RFP30N06LE, IRLZ44N):** fit one. It is not included
+- **Module:** check, don't assume. Most "MOSFET module" boards do **not** have a
+  gate pulldown. With the module unpowered and nothing else connected, measure
+  **gate to source**:
+  - reads around 10 kΩ (or anything from ~1 kΩ to ~100 kΩ) → it has one, you're done
+  - reads open / megohms → add your own 10 kΩ across those two pins
+- The firmware also drives the pin low as the very first thing in `setup()`, but
+  that is belt to the resistor's braces — it cannot act before it runs
 
 > **Do not use an IRF520 module.** It is the top search result for "Arduino MOSFET
 > module" and it is not logic-level — its gate threshold runs to 4 V and it wants
@@ -268,6 +344,10 @@ the flat cell out of the pod, plug it straight into the charger, plug a fresh on
 in. No adapters, no rework.
 
 **PH2.0 must be the only PH connector in the whole build.** See Step 5.
+
+The cell plug is also your last-resort disconnect. `SW1` is the one you reach for;
+`J1` is the one that makes the arm genuinely inert. Design the pod so you can get
+to both — the sled lid and the plug on the underside, the switch on the outside.
 
 ### Rules that matter
 
@@ -334,18 +414,52 @@ reversed data arrow is genuinely miserable.
 Lay the whole thing out flat on the table, fully wired but not mounted, with every
 connector mated.
 
-1. **Check polarity with the multimeter.** Battery + and − where you expect.
-   Boost output reading close to 5.0V. Only then connect the brain.
-2. **Check continuity through every connector**, pin by pin, with the beeper. A
+**Before any power at all:**
+
+1. **Measure gate to source on the MOSFET.** You want a few kΩ, not open. Open
+   means the pulldown is missing and the blower will twitch at every boot — go
+   back to step 4.
+2. **Check `D1` and `D2` orientation** against [SCHEMATIC.md](SCHEMATIC.md).
+   `D1` banded end to motor **+**; `D2` banded end to the **XIAO**. `D1` backwards
+   is a dead short across the cell through the MOSFET.
+3. **Check continuity through every connector**, pin by pin, with the beeper. A
    pigtail with a crimp that didn't seat looks perfect and works intermittently.
    Find that now, not at the venue.
-3. Power it up. You should get the dim breathing idle glow.
-4. Press the microswitch by hand. The comet should launch from the **elbow end**
+
+**Then, cell in, `SW1` on:**
+
+4. **Check polarity with the multimeter.** Battery + and − where you expect.
+   **Set the boost to 5.00 V on its trimpot before the XIAO is ever connected.**
+5. **Check the isolation diode did its job.** Boost output ~5.0 V, XIAO 5V pad
+   ~4.7 V. A ~0.3 V step across `D2` means it is in series and the right way
+   round. Same reading on both sides means you shorted past it, and the pack is
+   still able to backfeed a USB host.
+6. Power it up. You should get the dim breathing idle glow.
+7. **Watch the blower as it powers up. It must not twitch.** If it kicks, stop:
+   floating gate.
+8. Press the microswitch by hand. The comet should launch from the **elbow end**
    and travel to the **fingertip end**, and the motor should spin.
-5. If the comet runs backwards, your strip pieces are reversed — fix it in the
+9. If the comet runs backwards, your strip pieces are reversed — fix it in the
    wiring, **not** in the code. (Both arms run identical firmware. Keeping that
    true is worth the resolder.)
-6. Let it run for five minutes, then check for heat.
+10. Let it run for five minutes, then check for heat.
+
+### Test the low-voltage shutoff, once
+
+Worth doing on the bench exactly once per arm, so you recognise it in the field and
+know it works:
+
+- **With a bench supply:** feed the pod 2.95 V in place of the cell. Within about
+  six seconds the elbow pixel starts a slow **double** blink, the motor stops, and
+  the trigger does nothing. Wind up to 3.7 V and it comes back.
+- **Without one:** run an arm until it gets there. Tedious, but it also tells you
+  your real runtime.
+- **Single slow pulse = warning** (swap soon). **Double blink = shut down** (swap
+  now). They're deliberately different at a glance.
+
+The thresholds are `VBAT_WARN_MV` and `VBAT_CUTOFF_MV` in the firmware. Don't lower
+the cutoff to squeeze out more runtime — under 3.0 V you are trading cell life for
+a couple of minutes of bubbles.
 
 ### Checking for heat
 
@@ -546,12 +660,156 @@ thicker you can push it higher, but watch two things:
   miserable to diagnose.
 - Position the mated plugs where they **won't be pressed against your skin** by a
   tight sleeve. A 20 mm plastic body under a cuff for six hours is uncomfortable.
+- **Sealing comes next.** Step 11 covers wrapping the mated plugs, which way they
+  should face, and why the wrist plug sits above the cuff rather than under it.
 
 ---
 
-## Step 11 — Build the second arm
+## Step 11 — Seal it against the soap
 
-Repeat Steps 1–10.
+The build used to assume the pod sits on your upper arm, **above** the spray. That
+assumption holds on a bench and fails at a rave, where your arms go up. Point a
+bubble gun at the ceiling for four hours and the pod is no longer above anything.
+
+So: assume every surface of this costume gets wet, from every angle, all night.
+
+### What actually gets in
+
+- **Arms overhead.** Solution runs *down* the arm, straight at the pod and into
+  any opening that faces up.
+- **Blowback.** The blower atomises solution. A fine soapy mist settles on
+  everything within a metre, including the inside of any vent you left open.
+- **Wicking.** This is the one people miss. Soap film creeps *along wire
+  insulation*, into a connector shell, and out the other end, hours after the
+  splash that started it. Sealing the box is not enough if the wires are a wick.
+- **Other people.** Hands go up, drinks get waved, and someone will absolutely
+  grab your forearm.
+- **Condensation.** Warm arm, cold night, sealed box. Water forms *inside* a
+  perfectly sealed enclosure with no help from the outside.
+
+Dried bubble solution is also mildly conductive and hygroscopic — it pulls
+moisture back out of the air, so a "dry" residue across two pins is a leakage path
+that comes back every humid night until you clean it off.
+
+### The rule: drain it, don't hermetically seal it
+
+Chasing a watertight box is the wrong target. You cannot get there with an FDM
+print, a USB port and six wires leaving the case, and if you *did*, condensation
+would defeat you from the inside.
+
+Aim for this instead:
+
+- Nothing that gets in can **pool** on a board
+- Everything that gets in has a **way out at the bottom**
+- Everything that gets in **dries** between events
+
+### The pod enclosure
+
+- **PETG, not PLA.** PLA goes soft in a hot car and is brittle where this part
+  wants to flex under a strap.
+- **Four perimeters, 1.6 mm walls minimum.** Thin FDM walls leak through the layer
+  lines themselves, gasket or no gasket.
+- **A lid with a gasket groove**, closed with four M3 screws into heat-set inserts.
+  2 mm silicone O-ring cord in the groove, or closed-cell foam tape if you'd rather
+  not model a groove. Both are fine; nothing sticky, because you will open this.
+- **Every opening faces down or aft.** Nothing on the top surface. Nothing on the
+  fingertip-facing end.
+- **A 2 mm drain hole at the lowest corner**, as the box sits on your arm, plus a
+  second small hole at the opposite high corner so it can breathe. Yes, this is a
+  hole in your waterproof box. It is the difference between a box that drains and a
+  box that holds a puddle against your protoboard.
+- **Cable entry through a grommet**, on the underside, and **a drip loop on every
+  wire leaving the pod** — a downward loop below the entry point, so water running
+  along the insulation reaches the bottom of the loop and drips off instead of
+  tracking into the case.
+- **A silicone plug or a hinged flap over the USB-C port.** It has to stay
+  reachable (you will reflash this constantly) and it has to be shut by default.
+
+### Conformal coat the board
+
+The enclosure is the first line, not the only one. A thin coat of clear acrylic
+conformal spray over the assembled protoboard turns a soaked board into one you
+rinse, dry and keep using.
+
+- **Mask before you spray:** the USB-C connector, the boost module's trimpot, the
+  MOSFET tab, every connector housing, and the microswitch.
+- Two thin coats beat one thick one.
+- **Do it after the bench test passes**, not before. Coating a board you then have
+  to rework is miserable.
+- Clear RTV dabbed over the solder joints on the strip's cut ends does the same job
+  at the wet end of the arm.
+
+### The battery gets its own sealed compartment
+
+The cell is the part that hurts you if this goes wrong, so it gets treated
+separately from everything else:
+
+- **A wall between the cell and the electronics**, so a vented or leaking cell
+  doesn't take the board with it, and so soap that gets into the sled compartment
+  during a swap doesn't reach the XIAO.
+- **The sled's tabs get heat-shrink** over the solder joints. A bare tab and a
+  stray strand of wire is a dead short across a lithium cell, an inch from your
+  skin.
+- **Nothing metal in the compartment.** No stray screws, no washers, no snipped
+  lead ends. Check it every time you close it.
+- **Check the cell's own wrap** before every event. A nicked 18650 shrink-wrap
+  exposes the can, which is the negative terminal over the whole body of the cell —
+  that's how a cell shorts against something it's only *resting* on. Re-wrap any
+  cell whose sleeve is torn; they cost almost nothing.
+- **The sled lid closes positively** — a click, a screw, or a strap — and opens
+  without a tool.
+
+### The trigger is the leakiest part of the build
+
+A bare lever microswitch in your palm, under a glove, in soapy water, is not a
+sealed part. Options, cheapest first:
+
+- **A printed pocket with a silicone or nitrile membrane** over the lever. A scrap
+  of a nitrile glove, stretched and glued around the rim, passes the press through
+  and keeps the liquid out.
+- **A sealed (IP67) microswitch**, if you can get one with the same lever.
+- **Either way, the ZH-2 pigtail joint gets sealed** — heat-shrink over the solder,
+  and a smear of dielectric grease in the shell.
+
+### The connectors
+
+- **Grease every shell** — you were doing this anyway for corrosion; it also keeps
+  water out of the contacts.
+- **Wrap each mated plug** in a turn of self-amalgamating silicone tape. It fuses
+  to itself, takes no adhesive with it when you unwrap it, and comes off in one
+  piece when you need to unplug.
+- **Point the plug down**, or at worst sideways. A shell facing up is a cup.
+- The wrist SM-5 sits **above the cuff**, not under it — a cuff channels solution
+  straight into the plug.
+
+### Test it before you trust it
+
+With the arm assembled, sealed, and **powered** (this is the point — an unpowered
+box tells you nothing about tracking or shorts):
+
+1. Hold it overhead, the way you'd actually fire it.
+2. Spray it all over with a spray bottle of the real bubble solution for a full
+   minute, from above, from the sides, and at the connectors.
+3. Fire the trigger a dozen times through the wetting.
+4. Leave it for ten minutes, still powered, still wet.
+5. Open it. **Look for water inside, and for water *tracking* along the inside of
+   the wire entry.** Both mean you move the entry point or add a drip loop.
+
+### After every event
+
+- **Cell out. SW1 off first, then the cell.**
+- Open the pod and leave it open overnight. A sealed damp box is worse than an open
+  damp box.
+- Rinse the blower head and cap in warm water — dried solution glues the one-way
+  valve shut.
+- Wipe soap residue off every connector that got sprayed, and re-grease it. Dried
+  residue is conductive when the humidity comes back.
+
+---
+
+## Step 12 — Build the second arm
+
+Repeat Steps 1–11.
 
 Two things to be careful about:
 
@@ -565,7 +823,7 @@ Two things to be careful about:
 
 ---
 
-## Step 12 — Assemble the costume
+## Step 13 — Assemble the costume
 
 Both arms exist. This step is about the thing you actually wear.
 
@@ -589,17 +847,17 @@ With both arms built, before any event:
 
 **Order matters. Cells go in last, always.**
 
-1. Pods on the upper arms, strapped, cells **out**.
+1. Pods on the upper arms, strapped, cells **out**, `SW1` **off** on both.
 2. Sleeves on. Mate the elbow SM-6 and SM-2 on each side.
 3. Gloves on. Mate the wrist SM-5 on each side.
 4. Bubblers strapped on, mate the wrist SM-2, bottles filled.
-5. **Cells in.** Check both idle glows before you walk out.
+5. **Cells in, then `SW1` on.** Check both idle glows before you walk out.
 
 ### Getting out of it
 
 Reverse. The whole point of the build:
 
-1. **Cells out.** Both arms are now dead and safe to unplug.
+1. **`SW1` off, then cells out.** Both arms are now dead and safe to unplug.
 2. Wrist SM-2 + bubbler strap → bubblers off, bottles go somewhere upright.
 3. Wrist SM-5 → gloves peel off.
 4. Elbow SM-6 + SM-2 → sleeves come off.
@@ -607,16 +865,30 @@ Reverse. The whole point of the build:
 
 Four releases per arm, none of them needing a second person or a flat surface.
 
+### If something goes wrong mid-event
+
+In order, fastest first:
+
+1. **`SW1` off.** One motion, through the costume, no looking. The arm is dead.
+2. **Cell out.** Sled lid, plug, done. Now it's inert and you can carry it.
+3. Only then work out what happened.
+
+Practise both. If either takes more than a few seconds with one hand, fix the pod
+before the event — that's step 11's job, not the night's.
+
 ### The test that matters
 
 > Can you get out of it alone, in a bathroom, with soapy hands, in under a minute?
+> And can you kill and remove either battery, one-handed, in under ten seconds?
 
 If not, something is still soldered that shouldn't be, or a strap is fighting a
 connector. Fix it before the event, not at it.
 
 ### Care afterwards
 
-- **Cells out** for storage. Never store the costume with cells connected.
+- **Cells out** for storage. Never store the costume with cells connected. `SW1`
+  off is not storage — a switch can be knocked on in a bag.
+- **Open the pods and let them dry** before they go away. See step 11.
 - Rinse the blower head and cap in warm water; dried bubble solution glues the
   one-way valve shut.
 - Leave the silicone sleeve on the cap protrusion so the bottle doesn't empty into
@@ -644,7 +916,12 @@ connector. Fix it before the event, not at it.
 | Motor runs constantly, trigger does nothing | Motor still on its factory PH2.0 lead, plugged straight to the cell. Rework it to SM-2 (Step 7) |
 | Everything dies when the motor starts | Battery sagging, or the polyfuse tripping. Check the cell's charge |
 | Lights work, then die after a few minutes | Battery protection circuit cutting out — recharge or swap the cell |
-| Elbow pixel pulsing red | Low-battery warning. Swap the cell |
+| Elbow pixel pulsing red, slow single pulse | Low-battery warning. Swap the cell soon |
+| Elbow pixel double-blinking red, motor dead, trigger does nothing | Low-voltage shutoff latched at 3.0 V. Swap the cell; it clears itself |
+| Blower twitches or kicks every time you power up or reflash | Missing gate pulldown. Measure gate to source — it should not read open (Step 4) |
+| Laptop warns about a USB device drawing power, or the pod stays alive with the cell out and USB in | Missing or reversed `D2`. The pack is backfeeding the host port (Step 4) |
+| Arm completely dead, cell freshly charged | `SW1` off, or its DC rating gave out. Check the switch before you suspect the board |
+| It worked, got sprayed, now behaves oddly | Soap tracking across pins. Kill `SW1`, open it, rinse with isopropyl, dry fully. Then step 11 |
 | One trigger fires the other arm | Not possible by design — you've cross-plugged two arms. Check each arm is self-contained |
 | Board won't accept uploads | Hold BOOT while plugging in USB. If the port isn't recognised at all, suspect a charge-only USB-C cable |
 | Strip goes dark past the wrist | Cracked trace or failed umbilical joint — this is the failure mode the umbilical exists to prevent |
@@ -673,6 +950,8 @@ of `clown_arm.ino`. Edit, reflash over USB-C, done:
 | `MAX_BRIGHTNESS` | Overall brightness, for your glove's fabric |
 | `IDLE_BRIGHTNESS` | Resting glow. Set to 0 for fully dark when idle |
 | `MOTOR_RUN_DUTY` | Bubble rate |
+| `VBAT_WARN_MV` / `VBAT_WARN_CLEAR_MV` | When the low-cell warning starts and stops. Keep them apart — that gap is the hysteresis that stops the warning strobing |
+| `VBAT_CUTOFF_MV` | Where the arm shuts itself down. Raising it is fine; lowering it costs cell life |
 
 ### Going further
 
@@ -694,7 +973,8 @@ None of these need extra hardware. They're already paid for.
 
 Things to have with you when you actually wear this:
 
-- Spare charged 18650 per arm, on its PH2.0 pigtail
+- Spare charged 18650 per arm, on its PH2.0 pigtail, **each in its own plastic
+  case** — never loose in the bag
 - **A pre-made spare wrist umbilical** — now genuinely swappable, since both ends
   are connectors
 - A spare microswitch, already on its ZH-2 pigtail
@@ -703,3 +983,8 @@ Things to have with you when you actually wear this:
 - Spare 3 × 5 silicone tube, in case a feed hose splits
 - A solder pen, for repairs you can't connector your way out of
 - A small screwdriver and some electrical tape
+- **Self-amalgamating silicone tape**, for re-wrapping a plug you had to open
+- A few **cable ties or a spare strap** — a pod that works loose ends up pointing
+  its openings upward
+- **Isopropyl and a cloth.** Wiping dried solution off a connector at the venue is
+  the difference between one dead arm and two
