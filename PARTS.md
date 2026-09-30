@@ -32,7 +32,11 @@ Read order if you're new:
 
 ## About the buy links
 
-Each part below has a **Suggested product** line pointing at a real Amazon listing.
+Each part below has a **Suggested product** line pointing at a real Amazon listing —
+this is the "Recommended" half of the [shopping list](#shopping-list). A part that was
+actually ordered also has a **Bought** line under it, with the listing and the date it
+arrived. **Where the two lines differ, the Bought line is the truth** and the
+difference is deliberate — read it.
 
 - **What I checked:** the listing exists and its spec matches what this build needs
 - **What I could not check:** price, current stock, and whether it ships to Bothell
@@ -253,6 +257,9 @@ bought; the rest are not tracked here.
 - Two kits → two blower heads + two cells. One per arm
 - **Suggested product:** not sold on Amazon —
   [Bambu Lab US store](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01)
+- **Bought:** ×2 from that store · **received 2026-09-23** — the only seller, so
+  suggested and bought are the same thing here. This one purchase also brought the
+  two 18650 cells and the two microswitches
 
 ### How the kit actually works
 
@@ -291,18 +298,19 @@ Worth understanding before you design a mount, because it isn't what you'd guess
   [search 3mm ID x 5mm OD silicone tubing](https://www.amazon.com/s?k=silicone+tubing+3mm+ID+5mm+OD)
   — any food-grade roll; you need about a metre
 
-### Bubble solution — **buy as much as you can carry**
+### Bubble solution — **in hand** · 32 oz concentrate, makes 2.5 gal
 
 - This runs out long before the battery does. It is the actual limit on your night
 - Buy it by the gallon, decant into the bottles, and carry a refill jug
 - **Suggested product:** [search bubble solution refill gallon](https://www.amazon.com/s?k=bubble+solution+refill+gallon)
-- **Bought:** [32 oz concentrate, refills to 2.5 gal](https://www.amazon.com/dp/B08XY8WP6B)
+- **Bought:** [32 oz concentrate, refills to 2.5 gal](https://www.amazon.com/dp/B08XY8WP6B) ·
+  **received 2026-09-29**
 
 ---
 
 ## The lights
 
-### WS2812B LED strip, 60 LED/m, 5V, black PCB, IP65 — 0.4 m per arm · **buy a 1 m roll**
+### WS2812B LED strip, 60 LED/m, 5V, black PCB, IP65 — 0.4 m per arm · **in hand: 5 m**
 
 - **Is:** ribbon of lights, each with its own tiny chip inside
 - **Does:** lets you set every light separately, down one single data wire
@@ -325,7 +333,8 @@ Why these exact specs:
 — select **1 m / 60 LEDs / black PCB / IP65**. Read the option dropdown carefully;
 this listing also sells 30 and 144 LED/m and IP30, which are the wrong parts.
 
-**Bought:** [WESIRI 5 m / 300 LED / IP67](https://www.amazon.com/dp/B07P7WWRVH) — 60 LED/m
+**Bought:** [WESIRI 5 m / 300 LED / IP67](https://www.amazon.com/dp/B07P7WWRVH) ·
+**received 2026-09-29.** A different listing from the suggested Luopan roll: 60 LED/m
 is right and IP67 beats IP65. **The listing does not state PCB colour**, so check the
 roll: a white PCB shows through pale fabric when the strip is off. 5 m for 0.8 m of
 need, so cut generously. The bundled mini controller is not used.
@@ -341,7 +350,7 @@ need, so cut generously. The bundled mini controller is not used.
 
 ## The brain
 
-### Seeed XIAO ESP32-C3 — 1 per arm · **bought: 4**
+### Seeed XIAO ESP32-C3 — 1 per arm · **in hand: 4**
 
 - **Is:** a whole computer, 21 × 17.5 mm
 - **Does:** ~60×/second, decides
@@ -358,12 +367,13 @@ need, so cut generously. The bundled mini controller is not used.
   [Seeed XIAO ESP32C3, 3-pack](https://www.amazon.com/XIAO-ESP32C3-3PCS-Pack-Bluetooth5-0/dp/B0DGX3LSC7)
   — two arms plus a spare, which you will want the first time you kill a pin
 - **Bought:** that [3-pack](https://www.amazon.com/dp/B0DGX3LSC7) **and** a single
-  [pre-soldered board](https://www.amazon.com/dp/B0DRNSV5CS) — **4 boards, 2 needed**
+  [pre-soldered board](https://www.amazon.com/dp/B0DRNSV5CS) · **received 2026-09-29**
+  — **4 boards, 2 needed**
   - the pre-soldered one has headers already fitted, which adds height. **Check it
     fits the pod** before you plan an arm around it; the bare ones are the safer pick
     and the pre-soldered one makes a good bench-test board
 
-### 74AHCT125 level shifter chip — 1 per arm · **bought**
+### 74AHCT125 level shifter chip — 1 per arm · **ordered, ⚠ not received**
 
 - **Is:** a translator that also shouts
 - **Problem it fixes:**
@@ -379,6 +389,10 @@ need, so cut generously. The bundled mini controller is not used.
   [Juried Engineering SN74AHCT125N, DIP-14, 5-pack](https://www.amazon.com/Juried-Engineering-SN74AHCT125N-SN74AHCT125-Breadboard-Friendly/dp/B08FHD994N)
   - or [Adafruit ADA1787, single](https://www.amazon.com/Adafruit-Accessories-Quad-Level-Shifter-piece/dp/B00XW2L39K)
     if you would rather buy the known-good one twice
+- **Bought:** the [Juried DIP-14 5-pack](https://www.amazon.com/dp/B08FHD994N) ·
+  ⚠ **not received yet** — as of 2026-09-29 this is the **only** outstanding order,
+  and it blocks two things at once: the strip's data buffer and the 5 V gate drive
+  the bought MOSFET depends on. Nothing downstream of it can be trusted until it lands
 - **You use one of its four gates for the strip.** Keep the chip in mind — the
   MOSFET section below has a use for a second gate
 - **The two gates you don't use still need wiring.** They're CMOS inputs, and a
@@ -394,7 +408,7 @@ need, so cut generously. The bundled mini controller is not used.
 
 ## The motor control
 
-### N-channel logic-level MOSFET — 1 per arm · **bought: RFP30N06LE ×6**
+### N-channel logic-level MOSFET — 1 per arm · **in hand: RFP30N06LE ×6**
 
 - **Is:** an electrical switch, no moving parts
 - **Problem it fixes:** brain can decide, but can't push enough current to spin a motor
@@ -444,10 +458,12 @@ Even genuine logic-level parts are usually specified at **Vgs = 5 V**, not 3.3 V
   Bare transistors, so add a **100 Ω** gate series resistor and a **10 kΩ**
   gate-to-source pulldown — both come from the resistor kit below
 
-- **This is what was bought.** So the 5 V gate-drive path above is the build, not an
-  option: at 3.3 V the RFP30N06LE is the marginal part in that table. And because
-  they are bare transistors, **`R4` and `R5` are on you** — and no resistor kit was
-  bought yet. See [Bought — the actual listings](#bought--the-actual-listings)
+- **Bought:** that [Cylewet RFP30N06LE 6-pack](https://www.amazon.com/dp/B073D399M1) ·
+  **received 2026-09-29** — the suggested listing, so no substitution here
+  - **So the 5 V gate-drive path above is the build, not an option.** At 3.3 V the
+    RFP30N06LE is the marginal row in that table
+  - Bare transistors, so **`R4` and `R5` are on you** — and no resistor kit has been
+    bought. See [Bought — the actual listings](#bought--the-actual-listings)
 
 #### The 10 kΩ gate pulldown, whichever part you buy
 
@@ -465,7 +481,7 @@ Even genuine logic-level parts are usually specified at **Vgs = 5 V**, not 3.3 V
 > Note this supersedes the older "buy a module, not a bare chip" advice. That was
 > sound in principle, but the modules actually on sale are the wrong transistor.
 
-### 1N5819 diode — **2 per arm** · **buy 4** (get 10)
+### 1N5819 diode — **2 per arm** · **in hand: 150**
 
 Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`.
 
@@ -498,7 +514,8 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
   and the level shifter stay on the boost output directly, at a full 5 V
 - **Skip it →** works fine right up until the night you reflash with the cell in
 - **Suggested product:** [search 1N5819 Schottky diodes](https://www.amazon.com/s?k=1N5819+schottky+diode)
-- **Bought:** [EEEEE 1N5819, 150-pack](https://www.amazon.com/dp/B0FC2CWKPL) — 1 A / 40 V
+- **Bought:** [EEEEE 1N5819, 150-pack](https://www.amazon.com/dp/B0FC2CWKPL) ·
+  **received 2026-09-29** — 1 A / 40 V, correct for both `CR1` and `CR2`
   — any bag of 10 or more; they're pennies each, and you need two per arm
 
 ---
@@ -523,6 +540,9 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
 - **Suggested product**, if you change your mind on spares:
   [search protected 18650 button-top cells](https://www.amazon.com/s?k=protected+18650+battery+button+top)
   — the listing must say **protected**; most cheap 18650s are not
+- **Bought:** nothing separately — both cells came inside the
+  [bubble kits](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01) ·
+  **received 2026-09-23**
 
 ### 18650 battery sled / holder with wire leads — **skipped** · fallback only
 
@@ -539,7 +559,7 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
 - **Suggested product**, if you ever need one:
   [search single-slot 18650 holder with wire leads](https://www.amazon.com/s?k=18650+battery+holder+single+slot+wire+leads)
 
-### 5V boost converter module — 1 per arm · **buy 2**
+### 5V boost converter module — 1 per arm · **in hand: 10, untrimmed**
 
 - **Is:** a pump, but for voltage
 - **Problem it fixes:** cell makes ~3.7V, brain + LEDs need 5V
@@ -551,10 +571,12 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
   [Dorhea MT3608 step-up, 10-pack](https://www.amazon.com/MT3608-Converter-Adjustable-Voltage-Regulator/dp/B0BGLGL9RV)
   — **it is adjustable, so set it to 5.0 V with the trimpot and verify on the meter
   before you connect the XIAO.** Out of the bag it can be anything
-- **Bought:** [Dorhea MT3608, 10-pack](https://www.amazon.com/dp/B089JYBF25) — same
-  chip, different seller. The trim-and-meter step still applies
+- **Bought:** [Dorhea MT3608, 10-pack](https://www.amazon.com/dp/B089JYBF25) ·
+  **received 2026-09-29** — a different listing from the suggested one, same chip.
+  **The meter arrived the same day, so the trim is now the next step and nothing
+  blocks it.** Set 5.0 V and verify before a XIAO goes anywhere near it
 
-### 2A resettable fuse (polyfuse / PPTC) — 1 per arm · **buy 2** (get 5)
+### 2A resettable fuse (polyfuse / PPTC) — 1 per arm · **in hand: 25, values unconfirmed**
 
 - **Is:** a safety valve that resets itself
 - **Does:** on a current spike, suddenly becomes very resistant → chokes the flow
@@ -562,10 +584,15 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
 - Let it cool → back to normal by itself
 - Cheap insurance for a lithium cell worn against your body
 - **Suggested product:** [search 2A PPTC resettable fuse](https://www.amazon.com/s?k=PPTC+resettable+fuse+2A+radial)
-- **Bought:** [GBX radial PPTC assortment, 50 pc](https://www.amazon.com/dp/B0F19BP842)
-  — **there is no 2.0 A part in it.** Values run GBX-020 through GBX-250, so fit
-  **GBX-185** (1.85 A hold) or **GBX-250** (2.5 A). The pod draws ~0.3 A plus the
-  motor, so 1.85 A is the tighter, safer choice
+- **Bought:** a **25-piece GBX radial PPTC assortment** · **received 2026-09-29** —
+  **the listing was not recorded, and it is not the
+  [50-piece one](https://www.amazon.com/dp/B0F19BP842) written down earlier**, so its
+  value spread is unknown
+  - **There is no 2.0 A part anywhere in the GBX family.** The two usable values are
+    **GBX-185** (1.85 A hold) and **GBX-250** (2.5 A)
+  - The pod draws ~0.3 A plus the motor, so **1.85 A is the tighter, safer choice**
+  - **Open item:** confirm one of those two is actually in the pack. If neither is,
+    this row goes back to being an unfilled `buy`
 
 ### Battery disconnect switch — 1 per arm · **buy 2**
 
@@ -692,6 +719,10 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
   [Connectors](#connectors)
 - **Suggested product**, only if you break both or want spares:
   [Saim long hinge lever microswitch, 10-pack](https://www.amazon.com/Saim-Momentary-Switch-Roller-Action/dp/B01NBK00FD)
+- **Bought:** nothing separately — both switches came inside the
+  [bubble kits](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01) ·
+  **received 2026-09-23.** So the roller-versus-lever check below is a question about
+  what is already in the box, not about what to order
 - **Prefer the plain lever over the roller version.** A roller is a hard point that
   presses into your palm for hours. If the only listing you can get has rollers, the
   roller pops off most of these
@@ -799,7 +830,7 @@ the strip, the trigger, and a second ground.
 
 ## Wire and materials
 
-### Silicone-insulated hookup wire, 22–26 AWG — **one assortment covers both arms**
+### Silicone-insulated hookup wire, 22–26 AWG — **in hand: both gauges**
 
 - **Is:** wire with soft rubbery insulation, not stiff plastic
 - **Does:** bends thousands of times without the copper snapping
@@ -811,11 +842,11 @@ the strip, the trigger, and a second ground.
 - **Suggested product:**
   [search silicone stranded wire kit 22-26 AWG](https://www.amazon.com/s?k=silicone+wire+kit+22+24+26+AWG+stranded)
   — a multi-colour spool set; colour-coding pays for itself at the connectors
-- **Bought, as two kits covering both gauges:**
+- **Bought, as two kits rather than the one suggested assortment:**
   [Fermerry 22 AWG, 6 colours × 10 ft](https://www.amazon.com/dp/B089CQHRDT) for power
   and the motor run, and
   [SCHDRA 26 AWG, 6 colours × 20 ft](https://www.amazon.com/dp/B0C9MB4DTY) for data and
-  trigger. Both silicone, stranded, tinned copper
+  trigger · **both received 2026-09-29.** Silicone, stranded, tinned copper
 
 ### Heat-shrink tubing, assorted — **one assortment covers both arms**
 
@@ -824,12 +855,13 @@ the strip, the trigger, and a second ground.
 - **Slide it on *before* you solder** — everyone forgets exactly once
 - **Suggested product:** [search heat shrink tubing assortment](https://www.amazon.com/s?k=heat+shrink+tubing+assortment+kit)
 
-### Hot glue or clear RTV silicone — **buy 1**
+### Hot glue or clear RTV silicone — **in hand** · Dynatex clear RTV, 85 g
 
 - **Does:** seals the cut ends of the strip against soap
 - Used in [BUILD.md](BUILD.md) step 3. Easy to forget when ordering, annoying to lack
 - **Suggested product:** [search clear RTV silicone](https://www.amazon.com/s?k=clear+RTV+silicone+sealant+small+tube)
-- **Bought:** [Dynatex clear RTV, 85 g](https://www.amazon.com/dp/B003VW21C4)
+- **Bought:** [Dynatex clear RTV, 85 g](https://www.amazon.com/dp/B003VW21C4) ·
+  **received 2026-09-29**
   — or any hot glue gun you already own
 
 ### Protoboard, small — 1 per arm · **on hand: 2**
@@ -1090,8 +1122,9 @@ a table in bad light.
   — overkill for this build, correct for the next twenty years. Only worth it if you
   expect to keep doing electronics
 
-**Bought:** [INNOVA 3320 auto-ranging DMM](https://www.amazon.com/dp/B000EVYGZA). It
-meets the spec above — DC current to 10 A, an audible continuity beeper that sounds
+**Bought:** [INNOVA 3320 auto-ranging DMM](https://www.amazon.com/dp/B000EVYGZA) ·
+**received 2026-09-29** — none of the three suggested meters above, but it
+meets the spec — DC current to 10 A, an audible continuity beeper that sounds
 below ~120 Ω, resistance, auto-ranging. **Two gaps, neither fatal:** no capacitance
 range, so the 1000 µF caps go in on their markings alone; and **confirm the 10 A jack
 is fused** before you use it for a current draw measurement.
