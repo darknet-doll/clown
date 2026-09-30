@@ -77,22 +77,42 @@ provenance.** Read the Note column: **four of these thirteen need a decision or 
 check before they go in the build** — the polyfuse, the strip's PCB colour, the
 MOSFET's gate drive, and the pre-soldered XIAO's height.
 
-| Bought | Covers | Note |
-|---|---|---|
-| [Bambu Bubble Maker Kit 01](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01) ×2 | the kit, **and** the 18650 ×2 and microswitch ×2 inside it | one purchase, three rows |
-| [Juried SN74AHCT125N DIP-14, 5-pack](https://www.amazon.com/dp/B08FHD994N) | 74AHCT125 level shifter | exactly the listing this file recommended |
-| [XIAO ESP32C3 3-pack](https://www.amazon.com/dp/B0DGX3LSC7) | Seeed XIAO ESP32-C3 | the recommended listing |
-| [XIAO ESP32C3, 1 pre-soldered](https://www.amazon.com/dp/B0DRNSV5CS) | Seeed XIAO ESP32-C3 | **4 boards total, 2 needed.** Pre-soldered = headers fitted; check it still fits the pod before you count on it |
-| [Cylewet RFP30N06LE TO-220, 6-pack](https://www.amazon.com/dp/B073D399M1) | N-channel MOSFET `Q1` | bare transistors, and RFP30N06LE is only marginal at a 3.3 V gate. **The 5 V gate-drive path is now mandatory, not optional** — see [the fix that costs nothing](#the-fix-that-costs-nothing) — and `R4`/`R5` are not included |
-| [Dorhea MT3608 boost, 10-pack](https://www.amazon.com/dp/B089JYBF25) | 5V boost module | same chip as the recommended listing, different seller. **Still trim it to 5.0 V and meter it before the XIAO goes on** |
-| [EEEEE 1N5819, 150-pack](https://www.amazon.com/dp/B0FC2CWKPL) | `CR1` flyback + `CR2` USB isolation | 1 A / 40 V, correct for both |
-| [GBX PPTC assortment, 50 pc](https://www.amazon.com/dp/B0F19BP842) | 2A polyfuse `F1` | **the assortment has no 2.0 A part.** Values run GBX-020…250, so use **GBX-185** (1.85 A hold) or **GBX-250** (2.5 A) — 185 is the safer pick for a 0.3 A load |
-| [WESIRI WS2812B, 5 m / 300 LED / IP67](https://www.amazon.com/dp/B07P7WWRVH) | WS2812B strip | 60 LED/m ✓, IP67 beats the IP65 spec. **PCB colour is not stated — if it arrived white, it will show through pale fabric when off.** 5 m against 0.8 m needed, so there is plenty to cut. The bundled mini controller is unused |
-| [Fermerry 22 AWG, 6 × 10 ft](https://www.amazon.com/dp/B089CQHRDT) | hookup wire — power and motor runs | silicone, stranded, tinned ✓ |
-| [SCHDRA 26 AWG, 6 × 20 ft](https://www.amazon.com/dp/B0C9MB4DTY) | hookup wire — signal runs | together these cover the 22–26 AWG spec |
-| [Dynatex clear RTV silicone, 85 g](https://www.amazon.com/dp/B003VW21C4) | potting and strain relief | clear, waterproof, electrically insulating ✓ |
-| [32 oz concentrated bubble solution](https://www.amazon.com/dp/B08XY8WP6B) | bubble solution | refills to 2.5 gallons diluted |
-| [INNOVA 3320 auto-ranging DMM](https://www.amazon.com/dp/B000EVYGZA) | multimeter | meets the spec: DC amps to 10 A, continuity beeper (<120 Ω), auto-ranging. **No capacitance** — a nice-to-have here, not a blocker. Confirm the 10 A jack is fused before using it |
+| Bought | Arrived | Covers | Note |
+|---|---|---|---|
+| [Bambu Bubble Maker Kit 01](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01) ×2 | **yes** · 09-23 | the kit, **and** the 18650 ×2 and microswitch ×2 inside it | one purchase, three rows |
+| [Juried SN74AHCT125N DIP-14, 5-pack](https://www.amazon.com/dp/B08FHD994N) | no | 74AHCT125 level shifter | exactly the listing this file recommended |
+| [XIAO ESP32C3 3-pack](https://www.amazon.com/dp/B0DGX3LSC7) | **yes** · 09-29 | Seeed XIAO ESP32-C3 | the recommended listing |
+| [XIAO ESP32C3, 1 pre-soldered](https://www.amazon.com/dp/B0DRNSV5CS) | **yes** · 09-29 | Seeed XIAO ESP32-C3 | **4 boards total, 2 needed.** Pre-soldered = headers fitted; check it still fits the pod before you count on it |
+| [Cylewet RFP30N06LE TO-220, 6-pack](https://www.amazon.com/dp/B073D399M1) | **yes** · 09-29 | N-channel MOSFET `Q1` | bare transistors, and RFP30N06LE is only marginal at a 3.3 V gate. **The 5 V gate-drive path is now mandatory, not optional** — see [the fix that costs nothing](#the-fix-that-costs-nothing) — and `R4`/`R5` are not included |
+| [Dorhea MT3608 boost, 10-pack](https://www.amazon.com/dp/B089JYBF25) | no | 5V boost module | same chip as the recommended listing, different seller. **Still trim it to 5.0 V and meter it before the XIAO goes on** |
+| [EEEEE 1N5819, 150-pack](https://www.amazon.com/dp/B0FC2CWKPL) | **yes** · 09-29 | `CR1` flyback + `CR2` USB isolation | 1 A / 40 V, correct for both |
+| [GBX PPTC assortment, 50 pc](https://www.amazon.com/dp/B0F19BP842) | no | 2A polyfuse `F1` | **the assortment has no 2.0 A part.** Values run GBX-020…250, so use **GBX-185** (1.85 A hold) or **GBX-250** (2.5 A) — 185 is the safer pick for a 0.3 A load |
+| [WESIRI WS2812B, 5 m / 300 LED / IP67](https://www.amazon.com/dp/B07P7WWRVH) | **yes** · 09-29 | WS2812B strip | 60 LED/m ✓, IP67 beats the IP65 spec. **PCB colour is not stated — if it arrived white, it will show through pale fabric when off.** 5 m against 0.8 m needed, so there is plenty to cut. The bundled mini controller is unused |
+| [Fermerry 22 AWG, 6 × 10 ft](https://www.amazon.com/dp/B089CQHRDT) | no | hookup wire — power and motor runs | silicone, stranded, tinned ✓ |
+| [SCHDRA 26 AWG, 6 × 20 ft](https://www.amazon.com/dp/B0C9MB4DTY) | **yes** · 09-29 | hookup wire — signal runs | together these cover the 22–26 AWG spec |
+| [Dynatex clear RTV silicone, 85 g](https://www.amazon.com/dp/B003VW21C4) | **yes** · 09-29 | potting and strain relief | clear, waterproof, electrically insulating ✓ |
+| [32 oz concentrated bubble solution](https://www.amazon.com/dp/B08XY8WP6B) | **yes** · 09-29 | bubble solution | refills to 2.5 gallons diluted |
+| [INNOVA 3320 auto-ranging DMM](https://www.amazon.com/dp/B000EVYGZA) | no | multimeter | meets the spec: DC amps to 10 A, continuity beeper (<120 Ω), auto-ranging. **No capacitance** — a nice-to-have here, not a blocker. Confirm the 10 A jack is fused before using it |
+
+**Arrived so far: nine of the fourteen orders**, counted 2026-09-29. **Four of the
+five still out are the ones that gate first power-up:**
+
+- **74AHCT125** — nothing can be driven without it. It is both the LED strip's data
+  buffer *and* the 5 V gate drive the bought MOSFET now depends on
+- **MT3608 boost** — no 5 V rail, so no XIAO and no strip
+- **GBX polyfuse** — the cell's inline protection. Do not bench-test off a battery
+  without it
+- **INNOVA 3320** — the meter every polarity and trim check in
+  [BUILD.md](BUILD.md) is measured with
+
+The fifth is the **Fermerry 22 AWG** kit. The 26 AWG arrived, so signal and trigger
+runs are covered, but **there is no power wire on hand** — nothing from the cell to
+the switch, fuse, boost or motor.
+
+Everything that *has* arrived is either passive, structural or consumable. **The pod
+cannot be powered up, or even fully wired, until those five land** — so the useful
+work in the meantime is the printing, the strip cutting and the connector rework on
+the kit's motor and trigger leads.
 
 **What these thirteen do not cover:** `R4` (100 Ω) and `R5` (10 kΩ) for the MOSFET
 gate. The shelf has 100 kΩ and 330–470 Ω only, and no resistor kit was bought — so
