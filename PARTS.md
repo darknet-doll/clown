@@ -65,6 +65,40 @@ you can shop from the table without re-reading this.
 - **Lever microswitch ×2** — *came in the kits*, one per kit
 - **Protected 18650 ×2** — one per kit, already on its PH2.0 pigtail
 
+**Where the shelf stock came from is not recorded.** The caps, resistors and
+protoboard were already here; only the kits and the rows below have a traceable
+listing.
+
+### Bought — the actual listings
+
+Thirteen orders, recorded 2026-09-29. These are the listings actually purchased, not
+spec-matched suggestions — so unlike the rest of this file's links, **these are
+provenance.** Read the Note column: **four of these thirteen need a decision or a
+check before they go in the build** — the polyfuse, the strip's PCB colour, the
+MOSFET's gate drive, and the pre-soldered XIAO's height.
+
+| Bought | Covers | Note |
+|---|---|---|
+| [Bambu Bubble Maker Kit 01](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01) ×2 | the kit, **and** the 18650 ×2 and microswitch ×2 inside it | one purchase, three rows |
+| [Juried SN74AHCT125N DIP-14, 5-pack](https://www.amazon.com/dp/B08FHD994N) | 74AHCT125 level shifter | exactly the listing this file recommended |
+| [XIAO ESP32C3 3-pack](https://www.amazon.com/dp/B0DGX3LSC7) | Seeed XIAO ESP32-C3 | the recommended listing |
+| [XIAO ESP32C3, 1 pre-soldered](https://www.amazon.com/dp/B0DRNSV5CS) | Seeed XIAO ESP32-C3 | **4 boards total, 2 needed.** Pre-soldered = headers fitted; check it still fits the pod before you count on it |
+| [Cylewet RFP30N06LE TO-220, 6-pack](https://www.amazon.com/dp/B073D399M1) | N-channel MOSFET `Q1` | bare transistors, and RFP30N06LE is only marginal at a 3.3 V gate. **The 5 V gate-drive path is now mandatory, not optional** — see [the fix that costs nothing](#the-fix-that-costs-nothing) — and `R4`/`R5` are not included |
+| [Dorhea MT3608 boost, 10-pack](https://www.amazon.com/dp/B089JYBF25) | 5V boost module | same chip as the recommended listing, different seller. **Still trim it to 5.0 V and meter it before the XIAO goes on** |
+| [EEEEE 1N5819, 150-pack](https://www.amazon.com/dp/B0FC2CWKPL) | `CR1` flyback + `CR2` USB isolation | 1 A / 40 V, correct for both |
+| [GBX PPTC assortment, 50 pc](https://www.amazon.com/dp/B0F19BP842) | 2A polyfuse `F1` | **the assortment has no 2.0 A part.** Values run GBX-020…250, so use **GBX-185** (1.85 A hold) or **GBX-250** (2.5 A) — 185 is the safer pick for a 0.3 A load |
+| [WESIRI WS2812B, 5 m / 300 LED / IP67](https://www.amazon.com/dp/B07P7WWRVH) | WS2812B strip | 60 LED/m ✓, IP67 beats the IP65 spec. **PCB colour is not stated — if it arrived white, it will show through pale fabric when off.** 5 m against 0.8 m needed, so there is plenty to cut. The bundled mini controller is unused |
+| [Fermerry 22 AWG, 6 × 10 ft](https://www.amazon.com/dp/B089CQHRDT) | hookup wire — power and motor runs | silicone, stranded, tinned ✓ |
+| [SCHDRA 26 AWG, 6 × 20 ft](https://www.amazon.com/dp/B0C9MB4DTY) | hookup wire — signal runs | together these cover the 22–26 AWG spec |
+| [Dynatex clear RTV silicone, 85 g](https://www.amazon.com/dp/B003VW21C4) | potting and strain relief | clear, waterproof, electrically insulating ✓ |
+| [32 oz concentrated bubble solution](https://www.amazon.com/dp/B08XY8WP6B) | bubble solution | refills to 2.5 gallons diluted |
+| [INNOVA 3320 auto-ranging DMM](https://www.amazon.com/dp/B000EVYGZA) | multimeter | meets the spec: DC amps to 10 A, continuity beeper (<120 Ω), auto-ranging. **No capacitance** — a nice-to-have here, not a blocker. Confirm the 10 A jack is fused before using it |
+
+**What these thirteen do not cover:** `R4` (100 Ω) and `R5` (10 kΩ) for the MOSFET
+gate. The shelf has 100 kΩ and 330–470 Ω only, and no resistor kit was bought — so
+a kit is now a `buy` row of its own in the [shopping list](#shopping-list). Without
+`R5` the blower twitches at every power-up and reflash.
+
 ### Deciding later — the costume layer
 
 - **Glove** — fingerless, pale, thin
@@ -106,8 +140,9 @@ Everything, in one table. Details and reasoning are in the sections below; the
 buy links are the same ones repeated there, so you can shop straight from here.
 **Price, stock and delivery are unverified — confirm in your cart.**
 
-Status column: **have** = on the shelf · `later` = costume layer, deferred ·
-~~skip~~ = dropped on purpose, reason in
+Status column: **have** = on the shelf · **bought** = ordered, listing recorded in
+[Bought — the actual listings](#bought--the-actual-listings) · `later` = costume
+layer, deferred · ~~skip~~ = dropped on purpose, reason in
 [What's already on hand](#whats-already-on-hand) · `buy` = still to order.
 **Every `buy` row is what's actually left.**
 
@@ -116,35 +151,36 @@ Status column: **have** = on the shelf · `later` = costume layer, deferred ·
 | Bambu Electric Bubble Maker Kit 01 | **have** | 1 | **0** — both on hand | [Bambu store](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01) |
 | Bottle, 24T or 30T neck | buy | 1 | **2** + a spare | [search](https://www.amazon.com/s?k=24-410+30-410+plastic+bottle+with+cap) |
 | Silicone tube, 3 × 5 mm | buy | — | **1 m** | [search](https://www.amazon.com/s?k=silicone+tubing+3mm+ID+5mm+OD) |
-| Bubble solution | buy | — | **as much as you can carry** | [search](https://www.amazon.com/s?k=bubble+solution+refill+gallon) |
-| WS2812B strip, 60/m, 5V, IP65, black PCB | buy | 0.4 m | **1 m roll** | [Luopan](https://www.amazon.com/WS2812B-pixels-WS2812-Decorative-Lighting/dp/B0CG5V735Q) |
+| Bubble solution | **bought** | — | **as much as you can carry** | [32 oz concentrate](https://www.amazon.com/dp/B08XY8WP6B) — makes 2.5 gal |
+| WS2812B strip, 60/m, 5V, IP65, black PCB | **bought** | 0.4 m | **1 m roll** | [WESIRI 5 m, 300 LED, IP67](https://www.amazon.com/dp/B07P7WWRVH) — **check the PCB colour** |
 | Glove — pale, thin, fingerless | later | 1 | **a pair** | [sheer lace](https://www.amazon.com/s?k=white+lace+long+fingerless+gloves+arm+warmers) · [ribbon lace-up](https://www.amazon.com/s?k=lace+up+ribbon+knit+arm+warmers+fingerless+white) |
 | Sleeve or arm warmer | later | 1 | **a pair** (one elbow-to-hand piece covers both) | [search](https://www.amazon.com/s?k=long+white+lace+arm+warmers+fingerless) |
 | Diffuser layer — white organza or tulle | later | — | **½ yd** | [organza](https://www.amazon.com/s?k=white+organza+fabric+by+the+yard) · [tulle](https://www.amazon.com/s?k=white+tulle+fabric+bolt) · [channel](https://www.amazon.com/s?k=silicone+LED+diffuser+channel+10mm+flexible) |
 | Satin ribbon, 6–10 mm | later | — | **1 roll** | [search](https://www.amazon.com/s?k=white+satin+ribbon+6mm) |
-| Seeed XIAO ESP32-C3 | buy | 1 | **2** | [Seeed 3-pack](https://www.amazon.com/XIAO-ESP32C3-3PCS-Pack-Bluetooth5-0/dp/B0DGX3LSC7) |
-| 74AHCT125 level shifter | buy | 1 | **2** (buy 5, they're cheap) | [DIP 5-pack](https://www.amazon.com/Juried-Engineering-SN74AHCT125N-SN74AHCT125-Breadboard-Friendly/dp/B08FHD994N) · [Adafruit](https://www.amazon.com/Adafruit-Accessories-Quad-Level-Shifter-piece/dp/B00XW2L39K) |
-| MOSFET module (AO3400 / IRLZ44N) | buy | 1 | **2** | [RFP30N06LE 6-pack](https://www.amazon.com/Cylewet-RFP30N06LE-N-Channel-Control-Arduino/dp/B073D399M1) |
-| 1N5819 diode | buy | 2 | **4** (buy 10) | [search](https://www.amazon.com/s?k=1N5819+schottky+diode) |
+| Seeed XIAO ESP32-C3 | **bought** | 1 | **2** | [3-pack](https://www.amazon.com/dp/B0DGX3LSC7) + [1 pre-soldered](https://www.amazon.com/dp/B0DRNSV5CS) — 4 total |
+| 74AHCT125 level shifter | **bought** | 1 | **2** (buy 5, they're cheap) | [Juried DIP-14 5-pack](https://www.amazon.com/dp/B08FHD994N) |
+| MOSFET, bare RFP30N06LE | **bought** | 1 | **2** | [Cylewet 6-pack](https://www.amazon.com/dp/B073D399M1) — **5 V gate drive now required** |
+| 1N5819 diode | **bought** | 2 | **4** (buy 10) | [EEEEE 150-pack](https://www.amazon.com/dp/B0FC2CWKPL) |
 | Battery disconnect switch, 3 A DC | buy | 1 | **2** | [search](https://www.amazon.com/s?k=waterproof+toggle+switch+boot+SPST+12V) |
 | Protected 18650 cell | **have** | 1 | **0** — 2 come in the kits | [search](https://www.amazon.com/s?k=protected+18650+battery+button+top) |
 | 18650 sled with leads | ~~skip~~ | — | **0** — kit cell is on a pigtail | [search](https://www.amazon.com/s?k=18650+battery+holder+single+slot+wire+leads) |
-| 5V boost module | buy | 1 | **2** | [MT3608 10-pack](https://www.amazon.com/MT3608-Converter-Adjustable-Voltage-Regulator/dp/B0BGLGL9RV) |
-| 2A polyfuse | buy | 1 | **2** (buy 5) | [search](https://www.amazon.com/s?k=PPTC+resettable+fuse+2A+radial) |
+| 5V boost module | **bought** | 1 | **2** | [Dorhea MT3608 10-pack](https://www.amazon.com/dp/B089JYBF25) — **trim to 5.0 V first** |
+| 2A polyfuse | **bought** | 1 | **2** (buy 5) | [GBX 50-pc assortment](https://www.amazon.com/dp/B0F19BP842) — **no 2.0 A value; use GBX-185 or -250** |
 | 18650 storage/transport case | ~~skip~~ | — | **0** — no spares to carry | [search](https://www.amazon.com/s?k=18650+battery+storage+case+plastic) |
 | 100 kΩ resistor | **have** | 2 | **0** — 4 on hand | [resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
 | 1000 µF capacitor | **have** | 1 | **0** — 2 on hand | [search](https://www.amazon.com/s?k=1000uF+16V+electrolytic+capacitor) |
 | 0.1 µF ceramic capacitor | buy | 1 | **2** (buy an assortment) | [ceramic cap kit](https://www.amazon.com/s?k=ceramic+capacitor+assortment+kit+0.1uF+50V) · [0.1 µF 50-pack](https://www.amazon.com/s?k=0.1uF+100nF+50V+ceramic+capacitor+through+hole) |
 | 330–470 Ω resistor | **have** | 1 | **0** — 2 on hand | [same resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
+| 100 Ω gate series (`R4`) + 10 kΩ gate pulldown (`R5`) | buy | 1 each | **1 kit** | [1/4W metal film resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) — **not on the shelf; nothing bought covers these** |
 | Lever microswitch | **have** | 1 | **0** — 2 come in the kits | [Saim 10-pack](https://www.amazon.com/Saim-Momentary-Switch-Roller-Action/dp/B01NBK00FD) |
 | JST-SM pigtail pair, 6-pin | buy | 1 | **2 + 1 spare** | [ACTOO, 10 pairs](https://www.amazon.com/ACTOO-Connector-Female-Terminal-Adapter/dp/B07YWHCPW5) |
 | JST-SM pigtail pair, 5-pin | buy | 1 | **2 + 1 spare** | [BTF-LIGHTING, 10 pairs](https://www.amazon.com/BTF-LIGHTING-Pairs-Female-Connector-Flexible/dp/B01DC0KNY2) |
 | JST-SM pigtail pair, 2-pin | buy | 2 | **4 + 2 spares** | [VANDESAIL, 20 pairs](https://www.amazon.com/VANDESAIL-Connector-Adapter-Electrical-Female/dp/B0CQX8D3QR) |
 | JST-ZH pigtail pair, 2-pin, 1.5 mm | buy | 1 | **2 + 2 spares** | [XUGERIP, 20 pairs](https://www.amazon.com/XUGERIP-1-5mm-Male-Female-Connector/dp/B0D9SN5BTP) |
 | Protoboard, small | **have** | 1 | **0** — 2 on hand | [search](https://www.amazon.com/s?k=double+sided+perfboard+prototype+PCB+assorted) |
-| Silicone hookup wire 22–26 AWG | buy | — | **one assortment covers both** | [search](https://www.amazon.com/s?k=silicone+wire+kit+22+24+26+AWG+stranded) |
+| Silicone hookup wire 22–26 AWG | **bought** | — | **one assortment covers both** | [Fermerry 22 AWG](https://www.amazon.com/dp/B089CQHRDT) + [SCHDRA 26 AWG](https://www.amazon.com/dp/B0C9MB4DTY) |
 | Heat-shrink, assorted | buy | — | **one assortment covers both** | [search](https://www.amazon.com/s?k=heat+shrink+tubing+assortment+kit) |
-| Hot glue sticks or clear RTV silicone | buy | — | **1** | [search](https://www.amazon.com/s?k=clear+RTV+silicone+sealant+small+tube) |
+| Hot glue sticks or clear RTV silicone | **bought** | — | **1** | [Dynatex clear RTV, 85 g](https://www.amazon.com/dp/B003VW21C4) |
 | Dielectric grease | buy | — | **1 small tube** | [search](https://www.amazon.com/s?k=dielectric+grease+small+tube) |
 | Conformal coating spray, clear acrylic | buy | — | **1 can** | [search](https://www.amazon.com/s?k=clear+acrylic+conformal+coating+spray+electronics) |
 | Self-amalgamating silicone tape | buy | — | **1 roll** | [search](https://www.amazon.com/s?k=self+amalgamating+silicone+tape) |
@@ -158,7 +194,8 @@ Status column: **have** = on the shelf · `later` = costume layer, deferred ·
 
 Tools, one of each: soldering iron, flux-core solder, flux pen, wire strippers,
 side cutters, heat gun, multimeter, 3D printer. Thermal camera optional but very
-useful — see [Tools](#tools).
+useful — see [Tools](#tools). **Multimeter bought:**
+[INNOVA 3320](https://www.amazon.com/dp/B000EVYGZA).
 
 ---
 
@@ -223,6 +260,7 @@ Worth understanding before you design a mount, because it isn't what you'd guess
 - This runs out long before the battery does. It is the actual limit on your night
 - Buy it by the gallon, decant into the bottles, and carry a refill jug
 - **Suggested product:** [search bubble solution refill gallon](https://www.amazon.com/s?k=bubble+solution+refill+gallon)
+- **Bought:** [32 oz concentrate, refills to 2.5 gal](https://www.amazon.com/dp/B08XY8WP6B)
 
 ---
 
@@ -251,6 +289,11 @@ Why these exact specs:
 — select **1 m / 60 LEDs / black PCB / IP65**. Read the option dropdown carefully;
 this listing also sells 30 and 144 LED/m and IP30, which are the wrong parts.
 
+**Bought:** [WESIRI 5 m / 300 LED / IP67](https://www.amazon.com/dp/B07P7WWRVH) — 60 LED/m
+is right and IP67 beats IP65. **The listing does not state PCB colour**, so check the
+roll: a white PCB shows through pale fabric when the strip is off. 5 m for 0.8 m of
+need, so cut generously. The bundled mini controller is not used.
+
 **Alternative:** SK6812 RGBW
 
 - drop-in swap
@@ -262,7 +305,7 @@ this listing also sells 30 and 144 LED/m and IP30, which are the wrong parts.
 
 ## The brain
 
-### Seeed XIAO ESP32-C3 — 1 per arm · **buy 2**
+### Seeed XIAO ESP32-C3 — 1 per arm · **bought: 4**
 
 - **Is:** a whole computer, 21 × 17.5 mm
 - **Does:** ~60×/second, decides
@@ -278,8 +321,13 @@ this listing also sells 30 and 144 LED/m and IP30, which are the wrong parts.
 - **Suggested product:**
   [Seeed XIAO ESP32C3, 3-pack](https://www.amazon.com/XIAO-ESP32C3-3PCS-Pack-Bluetooth5-0/dp/B0DGX3LSC7)
   — two arms plus a spare, which you will want the first time you kill a pin
+- **Bought:** that [3-pack](https://www.amazon.com/dp/B0DGX3LSC7) **and** a single
+  [pre-soldered board](https://www.amazon.com/dp/B0DRNSV5CS) — **4 boards, 2 needed**
+  - the pre-soldered one has headers already fitted, which adds height. **Check it
+    fits the pod** before you plan an arm around it; the bare ones are the safer pick
+    and the pre-soldered one makes a good bench-test board
 
-### 74AHCT125 level shifter chip — 1 per arm · **buy 2** (get 5, they're cheap)
+### 74AHCT125 level shifter chip — 1 per arm · **bought**
 
 - **Is:** a translator that also shouts
 - **Problem it fixes:**
@@ -310,7 +358,7 @@ this listing also sells 30 and 144 LED/m and IP30, which are the wrong parts.
 
 ## The motor control
 
-### N-channel logic-level MOSFET — 1 per arm · **buy 2**
+### N-channel logic-level MOSFET — 1 per arm · **bought: RFP30N06LE ×6**
 
 - **Is:** an electrical switch, no moving parts
 - **Problem it fixes:** brain can decide, but can't push enough current to spin a motor
@@ -356,9 +404,14 @@ Even genuine logic-level parts are usually specified at **Vgs = 5 V**, not 3.3 V
 - **Direct 3.3 V drive** — get an **AO3400**-based module and check the listing
   actually names AO3400, not IRF520
 - **5 V gate drive** (recommended) —
-  [Cylewet RFP30N06LE logic-level TO-220, 6-pack](https://www.amazon.com/Cylewet-RFP30N06LE-N-Channel-Control-Arduino/dp/B073D399M1).
+  [Cylewet RFP30N06LE logic-level TO-220, 6-pack](https://www.amazon.com/dp/B073D399M1).
   Bare transistors, so add a **100 Ω** gate series resistor and a **10 kΩ**
   gate-to-source pulldown — both come from the resistor kit below
+
+- **This is what was bought.** So the 5 V gate-drive path above is the build, not an
+  option: at 3.3 V the RFP30N06LE is the marginal part in that table. And because
+  they are bare transistors, **`R4` and `R5` are on you** — and no resistor kit was
+  bought yet. See [Bought — the actual listings](#bought--the-actual-listings)
 
 #### The 10 kΩ gate pulldown, whichever part you buy
 
@@ -409,6 +462,7 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
   and the level shifter stay on the boost output directly, at a full 5 V
 - **Skip it →** works fine right up until the night you reflash with the cell in
 - **Suggested product:** [search 1N5819 Schottky diodes](https://www.amazon.com/s?k=1N5819+schottky+diode)
+- **Bought:** [EEEEE 1N5819, 150-pack](https://www.amazon.com/dp/B0FC2CWKPL) — 1 A / 40 V
   — any bag of 10 or more; they're pennies each, and you need two per arm
 
 ---
@@ -461,6 +515,8 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
   [Dorhea MT3608 step-up, 10-pack](https://www.amazon.com/MT3608-Converter-Adjustable-Voltage-Regulator/dp/B0BGLGL9RV)
   — **it is adjustable, so set it to 5.0 V with the trimpot and verify on the meter
   before you connect the XIAO.** Out of the bag it can be anything
+- **Bought:** [Dorhea MT3608, 10-pack](https://www.amazon.com/dp/B089JYBF25) — same
+  chip, different seller. The trim-and-meter step still applies
 
 ### 2A resettable fuse (polyfuse / PPTC) — 1 per arm · **buy 2** (get 5)
 
@@ -470,6 +526,10 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
 - Let it cool → back to normal by itself
 - Cheap insurance for a lithium cell worn against your body
 - **Suggested product:** [search 2A PPTC resettable fuse](https://www.amazon.com/s?k=PPTC+resettable+fuse+2A+radial)
+- **Bought:** [GBX radial PPTC assortment, 50 pc](https://www.amazon.com/dp/B0F19BP842)
+  — **there is no 2.0 A part in it.** Values run GBX-020 through GBX-250, so fit
+  **GBX-185** (1.85 A hold) or **GBX-250** (2.5 A). The pod draws ~0.3 A plus the
+  motor, so 1.85 A is the tighter, safer choice
 
 ### Battery disconnect switch — 1 per arm · **buy 2**
 
@@ -715,6 +775,11 @@ the strip, the trigger, and a second ground.
 - **Suggested product:**
   [search silicone stranded wire kit 22-26 AWG](https://www.amazon.com/s?k=silicone+wire+kit+22+24+26+AWG+stranded)
   — a multi-colour spool set; colour-coding pays for itself at the connectors
+- **Bought, as two kits covering both gauges:**
+  [Fermerry 22 AWG, 6 colours × 10 ft](https://www.amazon.com/dp/B089CQHRDT) for power
+  and the motor run, and
+  [SCHDRA 26 AWG, 6 colours × 20 ft](https://www.amazon.com/dp/B0C9MB4DTY) for data and
+  trigger. Both silicone, stranded, tinned copper
 
 ### Heat-shrink tubing, assorted — **one assortment covers both arms**
 
@@ -728,6 +793,7 @@ the strip, the trigger, and a second ground.
 - **Does:** seals the cut ends of the strip against soap
 - Used in [BUILD.md](BUILD.md) step 3. Easy to forget when ordering, annoying to lack
 - **Suggested product:** [search clear RTV silicone](https://www.amazon.com/s?k=clear+RTV+silicone+sealant+small+tube)
+- **Bought:** [Dynatex clear RTV, 85 g](https://www.amazon.com/dp/B003VW21C4)
   — or any hot glue gun you already own
 
 ### Protoboard, small — 1 per arm · **on hand: 2**
@@ -987,6 +1053,12 @@ a table in bad light.
   [Fluke 115](https://www.amazon.com/Fluke-115-Compact-True-RMS-Multimeter/dp/B000OCFFMW)
   — overkill for this build, correct for the next twenty years. Only worth it if you
   expect to keep doing electronics
+
+**Bought:** [INNOVA 3320 auto-ranging DMM](https://www.amazon.com/dp/B000EVYGZA). It
+meets the spec above — DC current to 10 A, an audible continuity beeper that sounds
+below ~120 Ω, resistance, auto-ranging. **Two gaps, neither fatal:** no capacitance
+range, so the 1000 µF caps go in on their markings alone; and **confirm the 10 A jack
+is fused** before you use it for a current draw measurement.
 
 For *this* build any of the three is sufficient — nothing here is a hard measurement.
 The continuity beeper is what you'll actually live in.
