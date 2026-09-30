@@ -86,33 +86,38 @@ MOSFET's gate drive, and the pre-soldered XIAO's height.
 | [Cylewet RFP30N06LE TO-220, 6-pack](https://www.amazon.com/dp/B073D399M1) | **yes** · 09-29 | N-channel MOSFET `Q1` | bare transistors, and RFP30N06LE is only marginal at a 3.3 V gate. **The 5 V gate-drive path is now mandatory, not optional** — see [the fix that costs nothing](#the-fix-that-costs-nothing) — and `R4`/`R5` are not included |
 | [Dorhea MT3608 boost, 10-pack](https://www.amazon.com/dp/B089JYBF25) | no | 5V boost module | same chip as the recommended listing, different seller. **Still trim it to 5.0 V and meter it before the XIAO goes on** |
 | [EEEEE 1N5819, 150-pack](https://www.amazon.com/dp/B0FC2CWKPL) | **yes** · 09-29 | `CR1` flyback + `CR2` USB isolation | 1 A / 40 V, correct for both |
-| [GBX PPTC assortment, 50 pc](https://www.amazon.com/dp/B0F19BP842) | no | 2A polyfuse `F1` | **the assortment has no 2.0 A part.** Values run GBX-020…250, so use **GBX-185** (1.85 A hold) or **GBX-250** (2.5 A) — 185 is the safer pick for a 0.3 A load |
+| GBX PPTC assortment, **25 pc — listing not recorded** (the [50-pc listing](https://www.amazon.com/dp/B0F19BP842) is *not* what arrived) |  **yes** · 09-29 | 2A polyfuse `F1` | **the assortment has no 2.0 A part.** Values run GBX-020…250, so use **GBX-185** (1.85 A hold) or **GBX-250** (2.5 A) — 185 is the safer pick for a 0.3 A load |
 | [WESIRI WS2812B, 5 m / 300 LED / IP67](https://www.amazon.com/dp/B07P7WWRVH) | **yes** · 09-29 | WS2812B strip | 60 LED/m ✓, IP67 beats the IP65 spec. **PCB colour is not stated — if it arrived white, it will show through pale fabric when off.** 5 m against 0.8 m needed, so there is plenty to cut. The bundled mini controller is unused |
-| [Fermerry 22 AWG, 6 × 10 ft](https://www.amazon.com/dp/B089CQHRDT) | no | hookup wire — power and motor runs | silicone, stranded, tinned ✓ |
+| [Fermerry 22 AWG, 6 × 10 ft](https://www.amazon.com/dp/B089CQHRDT) | **yes** · 09-29 | hookup wire — power and motor runs | silicone, stranded, tinned ✓ |
 | [SCHDRA 26 AWG, 6 × 20 ft](https://www.amazon.com/dp/B0C9MB4DTY) | **yes** · 09-29 | hookup wire — signal runs | together these cover the 22–26 AWG spec |
 | [Dynatex clear RTV silicone, 85 g](https://www.amazon.com/dp/B003VW21C4) | **yes** · 09-29 | potting and strain relief | clear, waterproof, electrically insulating ✓ |
 | [32 oz concentrated bubble solution](https://www.amazon.com/dp/B08XY8WP6B) | **yes** · 09-29 | bubble solution | refills to 2.5 gallons diluted |
 | [INNOVA 3320 auto-ranging DMM](https://www.amazon.com/dp/B000EVYGZA) | no | multimeter | meets the spec: DC amps to 10 A, continuity beeper (<120 Ω), auto-ranging. **No capacitance** — a nice-to-have here, not a blocker. Confirm the 10 A jack is fused before using it |
 
-**Arrived so far: nine of the fourteen orders**, counted 2026-09-29. **Four of the
-five still out are the ones that gate first power-up:**
+**Arrived so far: eleven of the fourteen orders**, counted 2026-09-29. Both wire
+gauges and the polyfuse assortment are now in hand, so **every passive, every
+consumable and all the wire is here.** Three are still out, and two of them are the
+ones that gate first power-up:
 
 - **74AHCT125** — nothing can be driven without it. It is both the LED strip's data
   buffer *and* the 5 V gate drive the bought MOSFET now depends on
 - **MT3608 boost** — no 5 V rail, so no XIAO and no strip
-- **GBX polyfuse** — the cell's inline protection. Do not bench-test off a battery
-  without it
-- **INNOVA 3320** — the meter every polarity and trim check in
-  [BUILD.md](BUILD.md) is measured with
+- **INNOVA 3320** — not a blocker for wiring, but it is the meter every polarity
+  check and the boost trim in [BUILD.md](BUILD.md) is measured with. **Do not trim
+  the boost or power the XIAO without it**
 
-The fifth is the **Fermerry 22 AWG** kit. The 26 AWG arrived, so signal and trigger
-runs are covered, but **there is no power wire on hand** — nothing from the cell to
-the switch, fuse, boost or motor.
+**Check the polyfuse pack before you fit one.** What arrived is a 25-piece assortment
+from a different listing than the 50-piece one recorded above, so **its value spread
+is unknown.** What matters is that **GBX-185 (1.85 A hold) or GBX-250 (2.5 A) is
+actually in the pack** — there is no 2.0 A part in this family, and those are the only
+two usable values. If neither is in there, the fuse is still an open `buy`.
 
-Everything that *has* arrived is either passive, structural or consumable. **The pod
-cannot be powered up, or even fully wired, until those five land** — so the useful
-work in the meantime is the printing, the strip cutting and the connector rework on
-the kit's motor and trigger leads.
+**The pod can now be wired, but not powered.** With the level shifter and boost still
+out, the work that pays off is printing, cutting and tinning the strip, the kit's
+motor and trigger connector rework, and laying in the wire runs.
+
+**One unidentified arrival.** A part logged only as "vuot" came in on 2026-09-29 and
+does not match any of the fourteen orders. Unresolved — check the box and add it here.
 
 **What these thirteen do not cover:** `R4` (100 Ω) and `R5` (10 kΩ) for the MOSFET
 gate. The shelf has 100 kΩ and 330–470 Ω only, and no resistor kit was bought — so
