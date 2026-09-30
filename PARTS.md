@@ -84,7 +84,7 @@ MOSFET's gate drive, and the pre-soldered XIAO's height.
 | [XIAO ESP32C3 3-pack](https://www.amazon.com/dp/B0DGX3LSC7) | **yes** · 09-29 | Seeed XIAO ESP32-C3 | the recommended listing |
 | [XIAO ESP32C3, 1 pre-soldered](https://www.amazon.com/dp/B0DRNSV5CS) | **yes** · 09-29 | Seeed XIAO ESP32-C3 | **4 boards total, 2 needed.** Pre-soldered = headers fitted; check it still fits the pod before you count on it |
 | [Cylewet RFP30N06LE TO-220, 6-pack](https://www.amazon.com/dp/B073D399M1) | **yes** · 09-29 | N-channel MOSFET `Q1` | bare transistors, and RFP30N06LE is only marginal at a 3.3 V gate. **The 5 V gate-drive path is now mandatory, not optional** — see [the fix that costs nothing](#the-fix-that-costs-nothing) — and `R4`/`R5` are not included |
-| [Dorhea MT3608 boost, 10-pack](https://www.amazon.com/dp/B089JYBF25) | no | 5V boost module | same chip as the recommended listing, different seller. **Still trim it to 5.0 V and meter it before the XIAO goes on** |
+| [Dorhea MT3608 boost, 10-pack](https://www.amazon.com/dp/B089JYBF25) | **yes** · 09-29 | 5V boost module | same chip as the recommended listing, different seller. **Still trim it to 5.0 V and meter it before the XIAO goes on** |
 | [EEEEE 1N5819, 150-pack](https://www.amazon.com/dp/B0FC2CWKPL) | **yes** · 09-29 | `CR1` flyback + `CR2` USB isolation | 1 A / 40 V, correct for both |
 | GBX PPTC assortment, **25 pc — listing not recorded** (the [50-pc listing](https://www.amazon.com/dp/B0F19BP842) is *not* what arrived) |  **yes** · 09-29 | 2A polyfuse `F1` | **the assortment has no 2.0 A part.** Values run GBX-020…250, so use **GBX-185** (1.85 A hold) or **GBX-250** (2.5 A) — 185 is the safer pick for a 0.3 A load |
 | [WESIRI WS2812B, 5 m / 300 LED / IP67](https://www.amazon.com/dp/B07P7WWRVH) | **yes** · 09-29 | WS2812B strip | 60 LED/m ✓, IP67 beats the IP65 spec. **PCB colour is not stated — if it arrived white, it will show through pale fabric when off.** 5 m against 0.8 m needed, so there is plenty to cut. The bundled mini controller is unused |
@@ -92,19 +92,20 @@ MOSFET's gate drive, and the pre-soldered XIAO's height.
 | [SCHDRA 26 AWG, 6 × 20 ft](https://www.amazon.com/dp/B0C9MB4DTY) | **yes** · 09-29 | hookup wire — signal runs | together these cover the 22–26 AWG spec |
 | [Dynatex clear RTV silicone, 85 g](https://www.amazon.com/dp/B003VW21C4) | **yes** · 09-29 | potting and strain relief | clear, waterproof, electrically insulating ✓ |
 | [32 oz concentrated bubble solution](https://www.amazon.com/dp/B08XY8WP6B) | **yes** · 09-29 | bubble solution | refills to 2.5 gallons diluted |
-| [INNOVA 3320 auto-ranging DMM](https://www.amazon.com/dp/B000EVYGZA) | no | multimeter | meets the spec: DC amps to 10 A, continuity beeper (<120 Ω), auto-ranging. **No capacitance** — a nice-to-have here, not a blocker. Confirm the 10 A jack is fused before using it |
+| [INNOVA 3320 auto-ranging DMM](https://www.amazon.com/dp/B000EVYGZA) | **yes** · 09-29 | multimeter | meets the spec: DC amps to 10 A, continuity beeper (<120 Ω), auto-ranging. **No capacitance** — a nice-to-have here, not a blocker. Confirm the 10 A jack is fused before using it |
 
-**Arrived so far: eleven of the fourteen orders**, counted 2026-09-29. Both wire
-gauges and the polyfuse assortment are now in hand, so **every passive, every
-consumable and all the wire is here.** Three are still out, and two of them are the
-ones that gate first power-up:
+**Arrived so far: thirteen of the fourteen orders**, counted 2026-09-29. **One thing
+is still out:**
 
-- **74AHCT125** — nothing can be driven without it. It is both the LED strip's data
-  buffer *and* the 5 V gate drive the bought MOSFET now depends on
-- **MT3608 boost** — no 5 V rail, so no XIAO and no strip
-- **INNOVA 3320** — not a blocker for wiring, but it is the meter every polarity
-  check and the boost trim in [BUILD.md](BUILD.md) is measured with. **Do not trim
-  the boost or power the XIAO without it**
+- **74AHCT125** — the last blocker, and it blocks two separate things. It is the LED
+  strip's data buffer, *and* it is the 5 V gate drive the bought RFP30N06LE depends on
+  to be a fully-on part instead of a marginal one. Neither the lights nor the blower
+  is trustworthy without it
+
+**The boost and the meter both landed, which unblocks the trim.** That is the next
+real step and it needs nothing else: set each MT3608 to **5.0 V** on the trimpot and
+verify it on the 3320 **before any XIAO goes near it.** Out of the bag they can be
+anything, and 12 V into a XIAO ends that board.
 
 **Check the polyfuse pack before you fit one.** What arrived is a 25-piece assortment
 from a different listing than the 50-piece one recorded above, so **its value spread
@@ -112,9 +113,12 @@ is unknown.** What matters is that **GBX-185 (1.85 A hold) or GBX-250 (2.5 A) is
 actually in the pack** — there is no 2.0 A part in this family, and those are the only
 two usable values. If neither is in there, the fuse is still an open `buy`.
 
-**The pod can now be wired, but not powered.** With the level shifter and boost still
-out, the work that pays off is printing, cutting and tinning the strip, the kit's
-motor and trigger connector rework, and laying in the wire runs.
+**Everything except the strip data path and the gate drive can now be built and
+tested.** Trim the boosts, print the pod, cut and tin the strip, rework the kit's
+motor and trigger leads, lay in the wire runs, and flash a XIAO over USB. Hold the
+strip and MOSFET wiring until the 74AHCT125 arrives — see
+[the fix that costs nothing](#the-fix-that-costs-nothing) for why the spare gate is
+now load-bearing.
 
 **One unidentified arrival.** A part logged only as "vuot" came in on 2026-09-29 and
 does not match any of the fourteen orders. Unresolved — check the box and add it here.
