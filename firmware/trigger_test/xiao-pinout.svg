@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="620" viewBox="0 0 760 620" font-family="Helvetica, Arial, sans-serif">
+  <rect width="760" height="620" fill="#ffffff"/>
+  <text x="380" y="38" text-anchor="middle" font-size="24" font-weight="bold" fill="#222">XIAO ESP32-C3 — top view, USB-C pointing up</text>
+
+  <!-- USB-C -->
+  <rect x="335" y="70" width="90" height="44" rx="10" fill="#9aa0a6" stroke="#555" stroke-width="2"/>
+  <text x="380" y="98" text-anchor="middle" font-size="16" font-weight="bold" fill="#222">USB-C</text>
+
+  <!-- board -->
+  <rect x="250" y="100" width="260" height="420" rx="18" fill="#1f6f43" stroke="#0f3d24" stroke-width="3"/>
+  <rect x="300" y="150" width="160" height="150" rx="6" fill="#c9ccd1" stroke="#888" stroke-width="2"/>
+  <text x="380" y="222" text-anchor="middle" font-size="16" fill="#333">metal shield</text>
+  <text x="380" y="244" text-anchor="middle" font-size="14" fill="#333">XIAO ESP32C3</text>
+
+  <!-- left pins: D0..D6 -->
+  <g font-size="18">
+    <g id="L">
+      <circle cx="270" cy="150" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+      <circle cx="270" cy="200" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+      <circle cx="270" cy="250" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+      <circle cx="270" cy="300" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+      <circle cx="270" cy="350" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+      <circle cx="270" cy="400" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+      <circle cx="270" cy="450" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+    </g>
+    <text x="230" y="156" text-anchor="end" fill="#888">D0</text>
+    <rect x="58" y="182" width="180" height="36" rx="6" fill="#1a73e8"/>
+    <text x="230" y="206" text-anchor="end" fill="#fff" font-weight="bold">D1 → switch NO</text>
+    <text x="230" y="256" text-anchor="end" fill="#888">D2</text>
+    <text x="230" y="306" text-anchor="end" fill="#888">D3</text>
+    <text x="230" y="356" text-anchor="end" fill="#888">D4</text>
+    <text x="230" y="406" text-anchor="end" fill="#888">D5</text>
+    <text x="230" y="456" text-anchor="end" fill="#888">D6</text>
+
+    <!-- right pins: 5V GND 3V3 D10 D9 D8 D7 -->
+    <circle cx="490" cy="150" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+    <circle cx="490" cy="200" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+    <circle cx="490" cy="250" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+    <circle cx="490" cy="300" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+    <circle cx="490" cy="350" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+    <circle cx="490" cy="400" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+    <circle cx="490" cy="450" r="9" fill="#e8c34a" stroke="#7a5d00" stroke-width="2"/>
+    <text x="530" y="156" fill="#c0392b">5V — leave empty</text>
+    <rect x="522" y="182" width="226" height="36" rx="6" fill="#111"/>
+    <text x="530" y="206" fill="#fff" font-weight="bold">GND → blue − rail</text>
+    <text x="530" y="256" fill="#c0392b">3V3 — leave empty</text>
+    <rect x="522" y="282" width="226" height="36" rx="6" fill="#d35400"/>
+    <text x="530" y="306" fill="#fff" font-weight="bold">D10 → resistor → LED</text>
+    <text x="530" y="356" fill="#888">D9</text>
+    <text x="530" y="406" fill="#888">D8</text>
+    <text x="530" y="456" fill="#888">D7</text>
+  </g>
+
+  <text x="380" y="560" text-anchor="middle" font-size="16" fill="#333">GND = right side, 2nd pin down from the USB-C end.</text>
+  <text x="380" y="586" text-anchor="middle" font-size="16" fill="#333">LED short leg and switch COM also go to the blue − rail.</text>
+</svg>
