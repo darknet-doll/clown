@@ -135,20 +135,20 @@ differ, the difference is the thing to read.
 | Diffuser layer — white organza or tulle | later | — | **½ yd** | — | Recommended: [organza](https://www.amazon.com/s?k=white+organza+fabric+by+the+yard) · [tulle](https://www.amazon.com/s?k=white+tulle+fabric+bolt) · [channel](https://www.amazon.com/s?k=silicone+LED+diffuser+channel+10mm+flexible) |
 | Satin ribbon, 6–10 mm | later | — | **1 roll** | — | Recommended: [search](https://www.amazon.com/s?k=white+satin+ribbon+6mm) |
 | Seeed XIAO ESP32-C3 | **bought** | 1 | **0** — 4 in hand | **09-29** | **Bought:** [3-pack](https://www.amazon.com/dp/B0DGX3LSC7) **+** [1 pre-soldered](https://www.amazon.com/dp/B0DRNSV5CS) — pre-soldered one sits taller, check pod fit<br>Recommended: [Seeed 3-pack](https://www.amazon.com/XIAO-ESP32C3-3PCS-Pack-Bluetooth5-0/dp/B0DGX3LSC7) |
-| 74AHCT125 level shifter | **bought** | 1 | **0** — ordered | ⚠ **no** | **Bought:** [Juried DIP-14 5-pack](https://www.amazon.com/dp/B08FHD994N) — ⚠ **still out.** the last part out, and it blocks both the strip data and the gate drive<br>Recommended: [the same DIP 5-pack](https://www.amazon.com/Juried-Engineering-SN74AHCT125N-SN74AHCT125-Breadboard-Friendly/dp/B08FHD994N) · [Adafruit](https://www.amazon.com/Adafruit-Accessories-Quad-Level-Shifter-piece/dp/B00XW2L39K) |
+| 74AHCT125 level shifter | **bought** | 1 | **0** — 5 in hand | **10-02** | **Bought:** [Juried DIP-14 5-pack](https://www.amazon.com/dp/B08FHD994N) — 5 in hand, logged from the inventory check — **arrival date not recorded, 10-02 is the day it was counted**<br>Recommended: [the same DIP 5-pack](https://www.amazon.com/Juried-Engineering-SN74AHCT125N-SN74AHCT125-Breadboard-Friendly/dp/B08FHD994N) · [Adafruit](https://www.amazon.com/Adafruit-Accessories-Quad-Level-Shifter-piece/dp/B00XW2L39K) |
 | MOSFET, bare RFP30N06LE | **bought** | 1 | **0** — 6 in hand | **09-29** | **Bought:** [Cylewet 6-pack](https://www.amazon.com/dp/B073D399M1) — bare parts, so **5 V gate drive is required** and `R4`/`R5` are not included<br>Recommended: the same listing |
 | 1N5819 diode | **bought** | 2 | **0** — 150 in hand | **09-29** | **Bought:** [EEEEE 150-pack](https://www.amazon.com/dp/B0FC2CWKPL) — 1 A / 40 V<br>Recommended: [search](https://www.amazon.com/s?k=1N5819+schottky+diode) |
 | Battery disconnect switch, 3 A DC | buy | 1 | **2** | — | Recommended: [search](https://www.amazon.com/s?k=waterproof+toggle+switch+boot+SPST+12V) |
 | Protected 18650 cell | **have** | 1 | **0** — 2 come in the kits | **09-23** | **Bought:** inside the [kits](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01)<br>Recommended, only for spares: [search](https://www.amazon.com/s?k=protected+18650+battery+button+top) |
 | 18650 sled with leads | ~~skip~~ | — | **0** — kit cell is on a pigtail | — | Recommended: [search](https://www.amazon.com/s?k=18650+battery+holder+single+slot+wire+leads) |
 | 5V boost module | **bought** | 1 | **0** — 10 in hand | **09-29** | **Bought:** [Dorhea MT3608 10-pack](https://www.amazon.com/dp/B089JYBF25) — **trim to 5.0 V and meter it before any XIAO**<br>Recommended: [a different MT3608 10-pack](https://www.amazon.com/MT3608-Converter-Adjustable-Voltage-Regulator/dp/B0BGLGL9RV) — same chip |
-| 2A polyfuse | **bought** | 1 | **0** — 25 in hand, values unconfirmed | **09-29** | **Bought:** a 25-pc GBX assortment, **listing not recorded** — **no 2.0 A part exists in this family; confirm GBX-185 or GBX-250 is in the pack**<br>Recommended: [search](https://www.amazon.com/s?k=PPTC+resettable+fuse+2A+radial) — the [50-pc listing](https://www.amazon.com/dp/B0F19BP842) is *not* what arrived |
+| 2A polyfuse | **bought** | 1 | **0** — kit in hand | **09-29** | **Bought:** [GBX radial PPTC assortment, 50 pc](https://www.amazon.com/dp/B0F19BP842) — **no 2.0 A part exists in this family; fit GBX-185 (1.85 A) or GBX-250 (2.5 A)**<br>Recommended: [search](https://www.amazon.com/s?k=PPTC+resettable+fuse+2A+radial) |
 | 18650 storage/transport case | ~~skip~~ | — | **0** — no spares to carry | — | Recommended: [search](https://www.amazon.com/s?k=18650+battery+storage+case+plastic) |
 | 100 kΩ resistor | **have** | 2 | **0** — 4 on hand | on shelf | Already on the shelf — **not bought for this build, provenance not recorded**<br>Recommended, to re-buy: [resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
-| 1000 µF capacitor | **have** | 1 | **0** — 2 on hand | on shelf | Already on the shelf — **not bought for this build, provenance not recorded**<br>Recommended, to re-buy: [search](https://www.amazon.com/s?k=1000uF+16V+electrolytic+capacitor) |
-| 0.1 µF ceramic capacitor | buy | 1 | **2** (buy an assortment) | — | Recommended: [ceramic cap kit](https://www.amazon.com/s?k=ceramic+capacitor+assortment+kit+0.1uF+50V) · [0.1 µF 50-pack](https://www.amazon.com/s?k=0.1uF+100nF+50V+ceramic+capacitor+through+hole) |
+| 1000 µF capacitor | **have** | 1 | **0** — 2 on hand, plus 10 more in the 24-value electrolytic kit | on shelf | Already on the shelf — **not bought for this build, provenance not recorded**<br>Recommended, to re-buy: [search](https://www.amazon.com/s?k=1000uF+16V+electrolytic+capacitor) |
+| 0.1 µF ceramic capacitor | **bought** | 1 | **0** — ordered, 30 in the kit | ⚠ **no** — due 10-03 | **Bought:** [BOJACK 300-pc ceramic kit](https://www.amazon.com/dp/B085RDTCCV) — 10 values, **0.1 µF (marked 104) ×30**; **not here yet**, and it gates the 74AHCT125 wiring<br>Recommended: [ceramic cap kit](https://www.amazon.com/s?k=ceramic+capacitor+assortment+kit+0.1uF+50V) · [0.1 µF 50-pack](https://www.amazon.com/s?k=0.1uF+100nF+50V+ceramic+capacitor+through+hole) |
 | 330–470 Ω resistor | **have** | 1 | **0** — 2 on hand | on shelf | Already on the shelf — **not bought for this build, provenance not recorded**<br>Recommended, to re-buy: [same resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
-| 100 Ω gate series (`R4`) + 10 kΩ gate pulldown (`R5`) | buy | 1 each | **1 kit** | — | Recommended: [1/4W metal film resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) — **not on the shelf; nothing bought covers these** |
+| 100 Ω gate series (`R4`) + 10 kΩ gate pulldown (`R5`) | **have** | 1 each | **0** — 50 of each in the kit | on shelf | Already on hand in the **AUSTOR 1/4 W 1 % metal film kit** (50 pc each of 100 Ω and 10 kΩ; also 330 Ω, 470 Ω, 100 kΩ at 25 pc) — checked against the listing photo, **not bought for this build, provenance not recorded**<br>Recommended, to re-buy: [1/4W metal film resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
 | Lever microswitch | **have** | 1 | **0** — 2 come in the kits | **09-23** | **Bought:** inside the [kits](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01)<br>Recommended, only for spares: [Saim 10-pack](https://www.amazon.com/Saim-Momentary-Switch-Roller-Action/dp/B01NBK00FD) |
 | JST-SM pigtail pair, 6-pin | buy | 1 | **2 + 1 spare** | — | Recommended: [ACTOO, 10 pairs](https://www.amazon.com/ACTOO-Connector-Female-Terminal-Adapter/dp/B07YWHCPW5) |
 | JST-SM pigtail pair, 5-pin | buy | 1 | **2 + 1 spare** | — | Recommended: [BTF-LIGHTING, 10 pairs](https://www.amazon.com/BTF-LIGHTING-Pairs-Female-Connector-Flexible/dp/B01DC0KNY2) |
@@ -170,38 +170,29 @@ differ, the difference is the thing to read.
 | USB-C cable, **data capable** | buy | — | **1** | — | Recommended: [search](https://www.amazon.com/s?k=USB+C+data+sync+cable) |
 | Multimeter *(tool, not a part)* | **bought** | — | **0** — in hand | **09-29** | **Bought:** [INNOVA 3320](https://www.amazon.com/dp/B000EVYGZA) — meets the spec; **no capacitance range**, confirm the 10 A jack is fused<br>Recommended: [Neoteck](https://www.amazon.com/Neoteck-Multimeter-Multimeters-Resistance-Transistor/dp/B01NAVAT9S) · [Proster](https://www.amazon.com/Proster-PSTTL334-Multimeter-Temperature-Capacitance/dp/B0194VGLFS) · [Fluke 115](https://www.amazon.com/Fluke-115-Compact-True-RMS-Multimeter/dp/B000OCFFMW) |
 
-### Where this stands — 2026-09-29
+### Where this stands — 2026-10-02
 
-**Thirteen of the fourteen orders are here. One thing is still out:**
+**Fourteen of the fifteen orders are here. One thing is still out:**
 
-- **74AHCT125** — the last blocker, and it blocks two things at once. It is the LED
-  strip's data buffer, *and* it is the 5 V gate drive the bought RFP30N06LE depends on
-  to be a fully-on part instead of a marginal one. Neither the lights nor the blower is
-  trustworthy without it
+- **0.1 µF ceramic (`C2`)** — the BOJACK 300-pc kit, **due 10-03**. A small part, but it
+  is the decoupling cap that sits across the 74AHCT125's pins 14 and 7. The 500-pc
+  electrolytic kit already on hand is *not* a substitute
 
-**The boost and the meter landed together, which unblocks the trim.** That is the next
-real step and needs nothing else: set each MT3608 to **5.0 V** on the trimpot and
-verify it on the 3320 **before any XIAO goes near it.** Out of the bag they can be
-anything, and 12 V into a XIAO ends that board.
+**The 74AHCT125 is in** (five of them, counted in the inventory check), and so is
+everything else, so the next real step is trimming the boosts: set each MT3608 to
+**5.0 V** on the trimpot and verify it on the 3320 **before any XIAO goes near it.** Out of
+the bag they can be anything, and 12 V into a XIAO ends that board.
 
-**Everything except the strip data path and the gate drive can be built now.** Trim the
-boosts, print the pod, cut and tin the strip, rework the kit's motor and trigger leads,
-lay in the wire runs, flash a XIAO over USB. Hold the strip and MOSFET wiring until the
-74AHCT125 arrives — see [the fix that costs nothing](#the-fix-that-costs-nothing) for
-why that spare gate is now load-bearing.
+**Everything can be built now except the last wire on the 74AHCT125.** It is the LED
+strip's data buffer *and* the 5 V gate drive the bought RFP30N06LE depends on — see
+[the fix that costs nothing](#the-fix-that-costs-nothing) for why the spare gates are
+load-bearing. Seat and wire it, but hold the strip and MOSFET bench test until `C2` is
+across its pins: it works on the bench without it and misbehaves on the arm.
 
-Three open items, none of them orders:
+One open item, not an order:
 
-- **The polyfuse pack.** A 25-piece assortment arrived, from a different listing than
-  the 50-piece one, so its value spread is unknown. **Confirm GBX-185 (1.85 A) or
-  GBX-250 (2.5 A) is actually in it** — there is no 2.0 A part in this family and those
-  are the only two usable values. If neither is there, the fuse is an open `buy` again
-- **`R4` and `R5`.** The 100 Ω gate series and 10 kΩ gate pulldown have no source: the
-  shelf holds 100 kΩ and 330–470 Ω only, no resistor kit was bought, and the bought
-  MOSFET is a bare transistor. Without `R5` the blower twitches at every power-up and
-  reflash
 - **One unidentified arrival**, logged only as "vuot" on 2026-09-29. Matches none of
-  the fourteen orders
+  the fifteen orders
 
 Tools, one of each: soldering iron, flux-core solder, flux pen, wire strippers,
 side cutters, heat gun, multimeter, 3D printer. Thermal camera optional but very
@@ -421,8 +412,8 @@ Even genuine logic-level parts are usually specified at **Vgs = 5 V**, not 3.3 V
 
 - **This is what was bought.** So the 5 V gate-drive path above is the build, not an
   option: at 3.3 V the RFP30N06LE is the marginal part in that table. And because
-  they are bare transistors, **`R4` and `R5` are on you** — and no resistor kit was
-  bought yet. See the [shopping list](#shopping-list)
+  they are bare transistors, **`R4` and `R5` are on you** — both are in the resistor kit
+  already on hand. See the [shopping list](#shopping-list)
 
 #### The 10 kΩ gate pulldown, whichever part you buy
 
@@ -537,7 +528,7 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
 - Let it cool → back to normal by itself
 - Cheap insurance for a lithium cell worn against your body
 - **Suggested product:** [search 2A PPTC resettable fuse](https://www.amazon.com/s?k=PPTC+resettable+fuse+2A+radial)
-- **Bought:** [GBX radial PPTC assortment, 50 pc](https://www.amazon.com/dp/B0F19BP842)
+- **Bought, in hand:** [GBX radial PPTC assortment, 50 pc](https://www.amazon.com/dp/B0F19BP842)
   — **there is no 2.0 A part in it.** Values run GBX-020 through GBX-250, so fit
   **GBX-185** (1.85 A hold) or **GBX-250** (2.5 A). The pod draws ~0.3 A plus the
   motor, so 1.85 A is the tighter, safer choice
@@ -608,7 +599,7 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
   [search 1000uF 16V electrolytic capacitors](https://www.amazon.com/s?k=1000uF+16V+electrolytic+capacitor)
   — 10 V would technically do, but 16 V or 25 V costs the same
 
-### 0.1 µF ceramic capacitor — 1 per arm · **buy 2** (get an assortment)
+### 0.1 µF ceramic capacitor — 1 per arm · **ordered: 30 in a kit, due 10-03**
 
 - **Is:** a very small, very fast water tank, bolted to the thirsty part itself
 - **Problem it fixes:** the 74AHCT125 gulps current in nanoseconds every time it
@@ -624,7 +615,12 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
 - **Skip it →** works on the bench, misbehaves on the arm: stray wrong pixels, a
   blower that stutters when the strip changes brightness. Intermittent, and it will
   not reproduce on your desk
+- **The electrolytic kit on hand is not a substitute.** Its 0.1 µF is an aluminium
+  electrolytic — polarised, and too slow at the nanosecond edges this cap exists for.
+  Wait for the ceramic kit
 - **Not the same part as `C1`.** Fit both — bulk at the strip, decoupling at the chip
+- **Bought:** [BOJACK 300-pc ceramic kit](https://www.amazon.com/dp/B085RDTCCV) — 0.1 µF
+  (marked **104**) ×30 plus nine other values. **Not here yet**, due 10-03
 - **Suggested product:**
   [ceramic capacitor assortment kit](https://www.amazon.com/s?k=ceramic+capacitor+assortment+kit+0.1uF+50V)
   — pennies, and you will want the other values eventually. A
