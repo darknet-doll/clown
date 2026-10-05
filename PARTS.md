@@ -129,7 +129,7 @@ differ, the difference is the thing to read.
 | Bottle, 24T or 30T neck | buy | 1 | **2** + a spare | — | Recommended: [search](https://www.amazon.com/s?k=24-410+30-410+plastic+bottle+with+cap) |
 | Silicone tube, 3 × 5 mm | buy | — | **1 m** | — | Recommended: [search](https://www.amazon.com/s?k=silicone+tubing+3mm+ID+5mm+OD) |
 | Bubble solution | **bought** | — | **0** — in hand | **09-29** | **Bought:** [32 oz concentrate](https://www.amazon.com/dp/B08XY8WP6B) — makes 2.5 gal diluted<br>Recommended: [search](https://www.amazon.com/s?k=bubble+solution+refill+gallon) |
-| WS2812B strip, 60/m, 5V, IP65, black PCB | **bought** | 0.4 m | **0** — 5 m in hand | **09-29** | **Bought:** [WESIRI 5 m / 300 LED / IP67](https://www.amazon.com/dp/B07P7WWRVH) — 60/m ✓, IP67 ✓, **PCB colour unstated: check the roll**<br>Recommended: [Luopan, 1 m](https://www.amazon.com/WS2812B-pixels-WS2812-Decorative-Lighting/dp/B0CG5V735Q) |
+| WS2812B strip, 60/m, 5V, IP65, black PCB | **bought** | 0.5 m | **0** — 5 m in hand | **09-29** | **Bought:** [WESIRI 5 m / 300 LED / IP67](https://www.amazon.com/dp/B07P7WWRVH) — 60/m ✓, IP67 ✓, **PCB colour unstated: check the roll**<br>Recommended: [Luopan, 1 m](https://www.amazon.com/WS2812B-pixels-WS2812-Decorative-Lighting/dp/B0CG5V735Q) |
 | Glove — pale, thin, fingerless | later | 1 | **a pair** | — | Recommended: [sheer lace](https://www.amazon.com/s?k=white+lace+long+fingerless+gloves+arm+warmers) · [ribbon lace-up](https://www.amazon.com/s?k=lace+up+ribbon+knit+arm+warmers+fingerless+white) |
 | Sleeve or arm warmer | later | 1 | **a pair** (one elbow-to-hand piece covers both) | — | Recommended: [search](https://www.amazon.com/s?k=long+white+lace+arm+warmers+fingerless) |
 | Diffuser layer — white organza or tulle | later | — | **½ yd** | — | Recommended: [organza](https://www.amazon.com/s?k=white+organza+fabric+by+the+yard) · [tulle](https://www.amazon.com/s?k=white+tulle+fabric+bolt) · [channel](https://www.amazon.com/s?k=silicone+LED+diffuser+channel+10mm+flexible) |
@@ -150,9 +150,10 @@ differ, the difference is the thing to read.
 | 330–470 Ω resistor | **have** | 1 | **0** — 2 on hand | on shelf | Already on the shelf — **not bought for this build, provenance not recorded**<br>Recommended, to re-buy: [same resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
 | 100 Ω gate series (`R4`) + 10 kΩ gate pulldown (`R5`) | **have** | 1 each | **0** — 50 of each in the kit | on shelf | Already on hand in the **AUSTOR 1/4 W 1 % metal film kit** (50 pc each of 100 Ω and 10 kΩ; also 330 Ω, 470 Ω, 100 kΩ at 25 pc) — checked against the listing photo, **not bought for this build, provenance not recorded**<br>Recommended, to re-buy: [1/4W metal film resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
 | Lever microswitch | **have** | 1 | **0** — 2 come in the kits | **09-23** | **Bought:** inside the [kits](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01)<br>Recommended, only for spares: [Saim 10-pack](https://www.amazon.com/Saim-Momentary-Switch-Roller-Action/dp/B01NBK00FD) |
-| JST-SM pigtail pair, 6-pin | buy | 1 | **2 + 1 spare** | — | Recommended: [ACTOO, 10 pairs](https://www.amazon.com/ACTOO-Connector-Female-Terminal-Adapter/dp/B07YWHCPW5) |
+| JST-SM pigtail pair, 3-pin | buy | 2 | **4 + 2 spares** | — | Recommended: [search](https://www.amazon.com/s?k=JST+SM+3+pin+pigtail+pairs) — check the strip reel first, it may already carry some |
+| JST-SM pigtail pair, 4-pin | buy | 1 | **2 + 1 spare** | — | Recommended: [search](https://www.amazon.com/s?k=JST+SM+4+pin+pigtail+pairs) |
 | JST-SM pigtail pair, 5-pin | buy | 1 | **2 + 1 spare** | — | Recommended: [BTF-LIGHTING, 10 pairs](https://www.amazon.com/BTF-LIGHTING-Pairs-Female-Connector-Flexible/dp/B01DC0KNY2) |
-| JST-SM pigtail pair, 2-pin | buy | 2 | **4 + 2 spares** | — | Recommended: [VANDESAIL, 20 pairs](https://www.amazon.com/VANDESAIL-Connector-Adapter-Electrical-Female/dp/B0CQX8D3QR) |
+| JST-SM pigtail pair, 2-pin | buy | 1 | **2 + 2 spares** | — | Recommended: [VANDESAIL, 20 pairs](https://www.amazon.com/VANDESAIL-Connector-Adapter-Electrical-Female/dp/B0CQX8D3QR) |
 | JST-ZH pigtail pair, 2-pin, 1.5 mm | buy | 1 | **2 + 2 spares** | — | Recommended: [XUGERIP, 20 pairs](https://www.amazon.com/XUGERIP-1-5mm-Male-Female-Connector/dp/B0D9SN5BTP) |
 | Protoboard, small | **have** | 1 | **0** — 2 on hand | on shelf | Already on the shelf — **not bought for this build, provenance not recorded**<br>Recommended, to re-buy: [search](https://www.amazon.com/s?k=double+sided+perfboard+prototype+PCB+assorted) |
 | Silicone hookup wire 22–26 AWG | **bought** | — | **0** — both gauges in hand | **09-29** | **Bought:** [Fermerry 22 AWG](https://www.amazon.com/dp/B089CQHRDT) **+** [SCHDRA 26 AWG](https://www.amazon.com/dp/B0C9MB4DTY)<br>Recommended: [search](https://www.amazon.com/s?k=silicone+wire+kit+22+24+26+AWG+stranded) — one kit; two were bought instead |
@@ -268,7 +269,7 @@ Worth understanding before you design a mount, because it isn't what you'd guess
 
 ## The lights
 
-### WS2812B LED strip, 60 LED/m, 5V, black PCB, IP65 — 0.4 m per arm · **buy a 1 m roll**
+### WS2812B LED strip, 60 LED/m, 5V, black PCB, IP65 — 0.5 m per arm · **buy a 1 m roll**
 
 - **Is:** ribbon of lights, each with its own tiny chip inside
 - **Does:** lets you set every light separately, down one single data wire
@@ -290,11 +291,17 @@ Why these exact specs:
 [Luopan WS2812B, configurable](https://www.amazon.com/WS2812B-pixels-WS2812-Decorative-Lighting/dp/B0CG5V735Q)
 — select **1 m / 60 LEDs / black PCB / IP65**. Read the option dropdown carefully;
 this listing also sells 30 and 144 LED/m and IP30, which are the wrong parts.
+Two arms take **54 pixels** (6 + 15 + 6 each), so a 1 m roll covers it with 6 to
+spare.
 
 **Bought:** [WESIRI 5 m / 300 LED / IP67](https://www.amazon.com/dp/B07P7WWRVH) — 60 LED/m
 is right and IP67 beats IP65. **The listing does not state PCB colour**, so check the
-roll: a white PCB shows through pale fabric when the strip is off. 5 m for 0.8 m of
+roll: a white PCB shows through pale fabric when the strip is off. 5 m for 0.9 m of
 need, so cut generously. The bundled mini controller is not used.
+
+**Check the reel's ends for JST-SM 3-pin pairs.** That's the standard WS2812 strip
+connector, and many reels ship with one already fitted at each end — free pigtails
+toward the four SM-3 pairs this build needs.
 
 **Alternative:** SK6812 RGBW
 
@@ -311,7 +318,7 @@ need, so cut generously. The bundled mini controller is not used.
 
 - **Is:** a whole computer, 21 × 17.5 mm
 - **Does:** ~60×/second, decides
-  - the colour of all 21 pixels
+  - the colour of all 27 pixels
   - whether the motor runs
 - **Watches:** the palm trigger on its own arm
 - **Why this board:**
@@ -677,8 +684,8 @@ to end across a joint.
 
 | Module | Holds | Unplugs at |
 |---|---|---|
-| **Pod** (upper arm) | brain, boost, shifter, MOSFET, fuse, cell cradle | battery plug + straps |
-| **Sleeve** (forearm) | forearm strip, 15 px | elbow, SM 6-pin + SM 2-pin |
+| **Pod** (upper arm) | brain, boost, shifter, MOSFET, fuse, disconnect, cell cradle, upper-arm strip 6 px | `SW1` + battery plug + straps |
+| **Sleeve** (forearm) | forearm strip, 15 px | elbow, SM 4-pin + SM 3-pin |
 | **Glove** (hand) | hand strip 6 px, trigger | wrist, SM 5-pin |
 | **Bubbler** | bottle, cap, hose, blower head | wrist, SM 2-pin + its strap |
 
@@ -687,15 +694,16 @@ to end across a joint.
 | Boundary | buy | Carries | Connector | Per arm · **buy** |
 |---|---|---|---|---|
 | Cell ↔ pod, cell ↔ charger | buy | 2 | **JST-PH 2.0, 2-pin** *(already on the cell)* | — |
-| Pod → sleeve, at the **elbow** | buy | strip 3 + trigger 2 + spare GND | **JST-SM 6-pin** | 1 · **2 + 1** |
-| Motor run, at the **elbow** | buy | motor 2 | **JST-SM 2-pin** | 1 · **4 + 2** |
+| Pod → upper-arm strip | buy | strip 3 | **JST-SM 3-pin** | 2 · **4 + 2** |
+| Strip across the **elbow** | buy | strip 3 | **JST-SM 3-pin** | *(same bag as above)* |
+| Pod → sleeve, at the **elbow** | buy | motor 2 + trigger 2 | **JST-SM 4-pin** | 1 · **2 + 1** |
 | Sleeve → glove, at the **wrist** | buy | strip 3 + trigger 2 | **JST-SM 5-pin** | 1 · **2 + 1** |
-| Motor run, at the **wrist** | buy | motor 2 | **JST-SM 2-pin** | *(same bag as above)* |
+| Motor run, at the **wrist** | buy | motor 2 | **JST-SM 2-pin** | 1 · **2 + 2** |
 | Microswitch pigtail | buy | switch 2 | **JST-ZH 1.5 mm, 2-pin** | 1 · **2 + 2** |
 
-**Both the trigger and the motor have to reach the pod from the hand**, so both
-cross *both* joints. That's why the elbow plug is 6-pin, not 3-pin — it carries
-the strip, the trigger, and a second ground.
+**The trigger and the motor both have to reach the pod from the hand**, so they
+cross *both* joints. At the elbow they share one 4-pin lead, while the strip
+crosses on its own 3-pin.
 
 - Buy them as **pre-wired pigtail pairs**. No crimp tool, no housings to assemble
 - All of them latch. None of them is friction-only
@@ -704,7 +712,8 @@ the strip, the trigger, and a second ground.
 
 | Need | Listing |
 |---|---|
-| SM 6-pin | [ACTOO 6-pin JST-SM, 10 pairs](https://www.amazon.com/ACTOO-Connector-Female-Terminal-Adapter/dp/B07YWHCPW5) |
+| SM 3-pin | [search JST-SM 3-pin pigtail pairs](https://www.amazon.com/s?k=JST+SM+3+pin+pigtail+pairs) — check the strip reel first |
+| SM 4-pin | [search JST-SM 4-pin pigtail pairs](https://www.amazon.com/s?k=JST+SM+4+pin+pigtail+pairs) |
 | SM 5-pin | [BTF-LIGHTING 5-pin JST-SM, 10 pairs](https://www.amazon.com/BTF-LIGHTING-Pairs-Female-Connector-Flexible/dp/B01DC0KNY2) |
 | SM 2-pin | [VANDESAIL 2-pin JST-SM, 20 pairs](https://www.amazon.com/VANDESAIL-Connector-Adapter-Electrical-Female/dp/B0CQX8D3QR) |
 | ZH 2-pin, 1.5 mm | [XUGERIP JST-ZH 1.5 mm 2-pin, 20 pairs](https://www.amazon.com/XUGERIP-1-5mm-Male-Female-Connector/dp/B0D9SN5BTP) |
@@ -720,11 +729,13 @@ the strip, the trigger, and a second ground.
   a cuff (~20 × 7 × 5 mm)
 - The **wrist 5-pin carries the strip's 3 conductors plus the trigger's 2**, so the
   whole glove comes off with one pull
-- The **elbow 6-pin** carries the same five plus a **second ground**. The elbow run is
-  the longest in the costume and carries the whole strip's current; doubling the
-  ground conductor cuts the voltage drop and gives the data line a better return
-- The **motor gets its own 2-pin**, deliberately not bundled with the data line.
-  ~1 A of PWM alongside a WS2812 data wire is asking for trouble. Twist the motor
+- The **strip starts at the pod**, on a **3-pin** — 5V, GND, data, nothing else —
+  and crosses the elbow on a second **3-pin**. Same reasoning as the wrist: no
+  continuous strip across a flexing joint
+- The **elbow 4-pin carries the motor and the trigger** — a 4-conductor lead from the
+  pod down the upper arm. The motor is deliberately not bundled with the strip data:
+  ~1 A of PWM alongside a WS2812 data wire is asking for trouble. At the elbow it
+  rides with the trigger instead; at the wrist it has its own 2-pin. Twist the motor
   pair anyway
 - The **cell keeps its factory PH2.0**. That's what the kit's charger mates to, so
   a flat cell goes pod → charger with no adapter and no rework. PH2.0 is rated 2 A
@@ -735,13 +746,14 @@ the strip, the trigger, and a second ground.
 
 > **No two connectors on one arm may share both family and pin count.**
 
-- Check it against the table: PH-2 · ZH-2 · SM-2 · SM-5 · SM-6
+- Check it against the table: PH-2 · ZH-2 · SM-2 · SM-3 (×2) · SM-4 · SM-5
 - The three 2-pin plugs are **different families** — PH is 2.0 mm pitch, ZH is 1.5 mm,
   SM is 2.5 mm. None of them will mate with either of the others
-- **The one deliberate exception:** the motor's two SM-2 plugs, at the elbow and at
-  the wrist, are identical. That's safe *by construction* — they sit on the same net,
-  so cross-mating them just shortens the motor run. Nothing else in the build has
-  that property
+- **The one deliberate exception:** the two SM-3 strip plugs, at the pod and at the
+  elbow, are identical. That's safe *by construction* — same strip nets, same pin
+  order, so cross-mating the pod plug onto the forearm input just skips the
+  upper-arm segment. Nothing is damaged, and nothing else in the build has that
+  property
 - **This is why the trigger pigtail is ZH and not PH.** Plug a PH-2 trigger lead
   into the PH-2 battery lead and you put 3.7 V straight onto GPIO3 — dead pin, very
   possibly dead XIAO

@@ -1,173 +1,206 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="1000" viewBox="0 0 1560 1000" role="img">
-<rect x="0" y="0" width="1560" height="1000" fill="#FFFFFF"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1880" height="1030" viewBox="0 0 1880 1030" role="img">
+<rect x="0" y="0" width="1880" height="1030" fill="#FFFFFF"/>
 <text x="40" y="52" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="21" fill="#1A1A1A" text-anchor="start" font-weight="bold">clown — one arm — harness</text>
 <text x="40" y="76" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#5A5A5A" text-anchor="start" font-weight="normal">Sheet 2 of 2 · which net rides which pin, and where each module unplugs</text>
-<line x1="40" y1="92" x2="1520" y2="92" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round"/>
-<rect x="60" y="170" width="340" height="620" rx="10" fill="none" stroke="#5A5A5A" stroke-width="1.6" stroke-dasharray="8 8"/>
-<text x="74" y="160" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#C2185B" text-anchor="start" font-weight="bold">POD - upper arm</text>
-<rect x="560" y="170" width="340" height="620" rx="10" fill="none" stroke="#5A5A5A" stroke-width="1.6" stroke-dasharray="8 8"/>
-<text x="574" y="160" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#C2185B" text-anchor="start" font-weight="bold">SLEEVE - forearm</text>
-<rect x="1020" y="170" width="420" height="380" rx="10" fill="none" stroke="#5A5A5A" stroke-width="1.6" stroke-dasharray="8 8"/>
-<text x="1034" y="160" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#C2185B" text-anchor="start" font-weight="bold">GLOVE - hand</text>
-<rect x="1020" y="590" width="420" height="200" rx="10" fill="none" stroke="#5A5A5A" stroke-width="1.6" stroke-dasharray="8 8"/>
-<text x="1034" y="580" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#C2185B" text-anchor="start" font-weight="bold">BUBBLER</text>
-<rect x="430" y="194" width="56" height="326" rx="6" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
-<text x="458" y="168" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="middle" font-weight="bold">J2</text>
-<text x="458" y="184" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">SM-6 elbow</text>
-<line x1="414" y1="220" x2="430" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="486" y1="220" x2="502" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="458" y="224" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">1</text>
-<line x1="414" y1="270" x2="430" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="486" y1="270" x2="502" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="458" y="274" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">2</text>
-<line x1="414" y1="320" x2="430" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="486" y1="320" x2="502" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="458" y="324" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">3</text>
-<line x1="414" y1="370" x2="430" y2="370" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="486" y1="370" x2="502" y2="370" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="458" y="374" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">4</text>
-<line x1="414" y1="420" x2="430" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="486" y1="420" x2="502" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="458" y="424" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">5</text>
-<line x1="414" y1="470" x2="430" y2="470" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="486" y1="470" x2="502" y2="470" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="458" y="474" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">6</text>
-<rect x="430" y="614" width="56" height="146" rx="6" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
-<text x="458" y="588" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="middle" font-weight="bold">J3</text>
-<text x="458" y="604" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">SM-2 elbow</text>
-<line x1="414" y1="640" x2="430" y2="640" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="486" y1="640" x2="502" y2="640" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="458" y="644" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">1</text>
-<line x1="414" y1="700" x2="430" y2="700" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="486" y1="700" x2="502" y2="700" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="458" y="704" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">2</text>
-<rect x="930" y="194" width="56" height="276" rx="6" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
-<text x="958" y="168" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="middle" font-weight="bold">J4</text>
-<text x="958" y="184" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">SM-5 wrist</text>
-<line x1="914" y1="220" x2="930" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="986" y1="220" x2="1002" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="958" y="224" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">1</text>
-<line x1="914" y1="270" x2="930" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="986" y1="270" x2="1002" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="958" y="274" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">2</text>
-<line x1="914" y1="320" x2="930" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="986" y1="320" x2="1002" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="958" y="324" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">3</text>
-<line x1="914" y1="370" x2="930" y2="370" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="986" y1="370" x2="1002" y2="370" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="958" y="374" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">4</text>
-<line x1="914" y1="420" x2="930" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="986" y1="420" x2="1002" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="958" y="424" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">5</text>
-<rect x="930" y="614" width="56" height="146" rx="6" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
-<text x="958" y="588" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="middle" font-weight="bold">J5</text>
-<text x="958" y="604" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">SM-2 wrist</text>
-<line x1="914" y1="640" x2="930" y2="640" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="986" y1="640" x2="1002" y2="640" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="958" y="644" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">1</text>
-<line x1="914" y1="700" x2="930" y2="700" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="986" y1="700" x2="1002" y2="700" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="958" y="704" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">2</text>
-<text x="80" y="210" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">+5 V  from U1</text>
-<polyline points="100,220 414,220" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="40" y1="92" x2="1840" y2="92" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="60" y="170" width="300" height="640" rx="10" fill="none" stroke="#5A5A5A" stroke-width="1.6" stroke-dasharray="8 8"/>
+<text x="74" y="160" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#C2185B" text-anchor="start" font-weight="bold">POD - on the upper arm</text>
+<rect x="500" y="170" width="300" height="260" rx="10" fill="none" stroke="#5A5A5A" stroke-width="1.6" stroke-dasharray="8 8"/>
+<text x="514" y="160" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#C2185B" text-anchor="start" font-weight="bold">UPPER ARM - strip</text>
+<rect x="940" y="170" width="320" height="640" rx="10" fill="none" stroke="#5A5A5A" stroke-width="1.6" stroke-dasharray="8 8"/>
+<text x="954" y="160" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#C2185B" text-anchor="start" font-weight="bold">SLEEVE - forearm</text>
+<rect x="1400" y="170" width="420" height="380" rx="10" fill="none" stroke="#5A5A5A" stroke-width="1.6" stroke-dasharray="8 8"/>
+<text x="1414" y="160" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#C2185B" text-anchor="start" font-weight="bold">GLOVE - hand</text>
+<rect x="1400" y="590" width="420" height="220" rx="10" fill="none" stroke="#5A5A5A" stroke-width="1.6" stroke-dasharray="8 8"/>
+<text x="1414" y="580" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#C2185B" text-anchor="start" font-weight="bold">BUBBLER</text>
+<rect x="390" y="194" width="56" height="176" rx="6" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="418" y="168" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="middle" font-weight="bold">J2</text>
+<text x="418" y="184" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">SM-3 pod</text>
+<line x1="374" y1="220" x2="390" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="446" y1="220" x2="462" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="418" y="224" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">1</text>
+<line x1="374" y1="270" x2="390" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="446" y1="270" x2="462" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="418" y="274" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">2</text>
+<line x1="374" y1="320" x2="390" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="446" y1="320" x2="462" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="418" y="324" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">3</text>
+<rect x="830" y="194" width="56" height="176" rx="6" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="858" y="168" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="middle" font-weight="bold">J6</text>
+<text x="858" y="184" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">SM-3 elbow</text>
+<line x1="814" y1="220" x2="830" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="886" y1="220" x2="902" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="858" y="224" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">1</text>
+<line x1="814" y1="270" x2="830" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="886" y1="270" x2="902" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="858" y="274" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">2</text>
+<line x1="814" y1="320" x2="830" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="886" y1="320" x2="902" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="858" y="324" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">3</text>
+<rect x="830" y="594" width="56" height="202" rx="6" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="858" y="568" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="middle" font-weight="bold">J3</text>
+<text x="858" y="584" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">SM-4 elbow</text>
+<line x1="814" y1="620" x2="830" y2="620" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="886" y1="620" x2="902" y2="620" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="858" y="624" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">1</text>
+<line x1="814" y1="664" x2="830" y2="664" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="886" y1="664" x2="902" y2="664" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="858" y="668" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">2</text>
+<line x1="814" y1="708" x2="830" y2="708" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="886" y1="708" x2="902" y2="708" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="858" y="712" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">3</text>
+<line x1="814" y1="752" x2="830" y2="752" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="886" y1="752" x2="902" y2="752" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="858" y="756" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">4</text>
+<rect x="1290" y="194" width="56" height="276" rx="6" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="1318" y="168" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="middle" font-weight="bold">J4</text>
+<text x="1318" y="184" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">SM-5 wrist</text>
+<line x1="1274" y1="220" x2="1290" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="1346" y1="220" x2="1362" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1318" y="224" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">1</text>
+<line x1="1274" y1="270" x2="1290" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="1346" y1="270" x2="1362" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1318" y="274" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">2</text>
+<line x1="1274" y1="320" x2="1290" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="1346" y1="320" x2="1362" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1318" y="324" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">3</text>
+<line x1="1274" y1="370" x2="1290" y2="370" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="1346" y1="370" x2="1362" y2="370" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1318" y="374" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">4</text>
+<line x1="1274" y1="420" x2="1290" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="1346" y1="420" x2="1362" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1318" y="424" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">5</text>
+<rect x="1290" y="594" width="56" height="114" rx="6" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="1318" y="568" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="middle" font-weight="bold">J5</text>
+<text x="1318" y="584" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">SM-2 wrist</text>
+<line x1="1274" y1="620" x2="1290" y2="620" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="1346" y1="620" x2="1362" y2="620" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1318" y="624" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">1</text>
+<line x1="1274" y1="664" x2="1290" y2="664" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="1346" y1="664" x2="1362" y2="664" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1318" y="668" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">2</text>
+<text x="80" y="210" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">+5 V  from U1, C1 here</text>
+<polyline points="100,220 374,220" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="80" y="260" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">GND  common</text>
-<polyline points="100,270 414,270" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="100,270 374,270" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="80" y="310" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">LED_DATA  from R3</text>
-<polyline points="100,320 414,320" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="80" y="360" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">TRIG  to U3 GPIO3</text>
-<polyline points="100,370 414,370" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="80" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">trigger return  GND</text>
-<polyline points="100,420 414,420" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="80" y="460" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">second ground  GND</text>
-<polyline points="100,470 414,470" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="80" y="630" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">MOTOR+  VBATT after F1</text>
-<polyline points="100,640 414,640" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="80" y="690" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">MOTOR-  Q1 D</text>
-<polyline points="100,700 414,700" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="620" y="196" width="240" height="150" rx="4" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
-<text x="740" y="222" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#1A1A1A" text-anchor="middle" font-weight="bold">LD1</text>
-<text x="740" y="240" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">forearm strip</text>
-<text x="740" y="258" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">15 px, px 0 at elbow</text>
-<line x1="620" y1="220" x2="602" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="628" y="223.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">5V</text>
-<line x1="620" y1="270" x2="602" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="628" y="273.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">GND</text>
-<line x1="620" y1="320" x2="602" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="628" y="323.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">DIN</text>
-<line x1="860" y1="220" x2="878" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="852" y="223.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">5V</text>
-<line x1="860" y1="270" x2="878" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="852" y="273.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">GND</text>
-<line x1="860" y1="320" x2="878" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="852" y="323.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">DOUT</text>
-<polyline points="502,220 602,220" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="878,220 914,220" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="502,270 602,270" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="878,270 914,270" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="502,320 602,320" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="878,320 914,320" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="620" y="386" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">LD1 DOUT crosses the wrist to LD2 DIN as LED_DATA_HAND</text>
-<polyline points="502,370 914,370" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="502,420 914,420" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="502,470 590,470 590,270" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="590" cy="270" r="4.5" fill="#1A1A1A"/>
-<text x="600" y="496" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">J2-6 lands on the strip ground here:</text>
-<text x="600" y="512" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">the second conductor serves the elbow run only</text>
-<polyline points="502,640 914,640" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="502,700 914,700" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="700" y="626" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">the motor pair crosses the sleeve untouched</text>
-<rect x="1060" y="196" width="240" height="150" rx="4" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
-<text x="1180" y="222" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#1A1A1A" text-anchor="middle" font-weight="bold">LD2</text>
-<text x="1180" y="240" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">hand strip</text>
-<text x="1180" y="258" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">6 px to the knuckles</text>
-<line x1="1060" y1="220" x2="1042" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="1068" y="223.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">5V</text>
-<line x1="1060" y1="270" x2="1042" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="1068" y="273.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">GND</text>
-<line x1="1060" y1="320" x2="1042" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="1068" y="323.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">DIN</text>
-<polyline points="1002,220 1042,220" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="1002,270 1042,270" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="1002,320 1042,320" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="1060" y="394" width="56" height="126" rx="6" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
-<text x="1088" y="368" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="middle" font-weight="bold">J6</text>
-<text x="1088" y="384" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">ZH-2</text>
-<line x1="1044" y1="420" x2="1060" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="1116" y1="420" x2="1132" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="1088" y="424" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">1</text>
-<line x1="1044" y1="470" x2="1060" y2="470" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="1116" y1="470" x2="1132" y2="470" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="1088" y="474" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">2</text>
-<polyline points="1002,370 1030,370 1030,420 1044,420" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="1002,420 1010,420 1010,470 1044,470" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="1200" y1="420" x2="1218" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="1262" y1="420" x2="1280" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<line x1="1218" y1="420" x2="1258" y2="394" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<circle cx="1218" cy="420" r="4" fill="#1A1A1A"/>
-<circle cx="1262" cy="420" r="4" fill="#1A1A1A"/>
-<text x="1240" y="380" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="bold">SW2</text>
-<text x="1240" y="446" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="normal">microswitch</text>
-<text x="1140" y="406" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">TRIG</text>
-<text x="1140" y="492" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">GND</text>
-<polyline points="1132,420 1200,420" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="1280,420 1330,420 1330,470 1132,470" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="1040" y="530" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">the whole glove comes off on one plug</text>
-<rect x="1080" y="610" width="240" height="150" rx="4" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
-<text x="1200" y="636" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#1A1A1A" text-anchor="middle" font-weight="bold">M1</text>
-<text x="1200" y="654" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">blower + CR1</text>
-<text x="1200" y="672" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">flyback across the motor</text>
-<line x1="1080" y1="640" x2="1062" y2="640" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="1088" y="643.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">+</text>
-<line x1="1080" y1="700" x2="1062" y2="700" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
-<text x="1088" y="703.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">-</text>
-<polyline points="1002,640 1062,640" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<polyline points="1002,700 1062,700" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="1040" y="780" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">its own strap, so it never bridges the wrist</text>
-<rect x="60" y="830" width="1440" height="132" rx="6" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
-<text x="76" y="856" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="start" font-weight="bold">THE RULES THAT MAKE THIS SAFE TO PULL APART IN A DARK ROOM</text>
-<text x="76" y="882" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">Four plugs per arm plus the one at the switch: J2 and J3 at the elbow, J4 and J5 at the wrist, J6 in the palm.</text>
-<text x="76" y="904" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">No two connectors on one arm share both family and pin count: PH-2 (2.0 mm), ZH-2 (1.5 mm), SM-2 (2.5 mm), SM-5, SM-6.</text>
-<text x="76" y="926" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">The two SM-2 plugs are identical on purpose - same net, so cross-mating them only shortens the motor run.</text>
-<text x="76" y="948" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">SW1 off, or the cell out, before you mate or unmate anything. Feeding data into an unpowered strip is what kills pixel 0.</text>
-<text x="40" y="972" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">generated by docs/schematic/schematic.py - do not hand-edit</text>
+<polyline points="100,320 374,320" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="80" y="610" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">MOTOR+  VBATT after F1</text>
+<polyline points="100,620 814,620" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="80" y="654" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">MOTOR-  Q1 D</text>
+<polyline points="100,664 814,664" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="80" y="698" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">TRIG  to U3 GPIO3</text>
+<polyline points="100,708 814,708" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="80" y="742" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">trigger return  GND</text>
+<polyline points="100,752 814,752" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="500" y="590" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">the pod's elbow lead: motor and trigger, run down</text>
+<text x="500" y="606" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">the upper arm beside the strip, to J3</text>
+<rect x="540" y="196" width="220" height="150" rx="4" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="650" y="222" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#1A1A1A" text-anchor="middle" font-weight="bold">LD3</text>
+<text x="650" y="240" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">upper-arm strip</text>
+<text x="650" y="258" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">6 px, px 0 at pod</text>
+<line x1="540" y1="220" x2="522" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="548" y="223.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">5V</text>
+<polyline points="462,220 522,220" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="760" y1="220" x2="778" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="752" y="223.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">5V</text>
+<polyline points="778,220 814,220" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="540" y1="270" x2="522" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="548" y="273.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">GND</text>
+<polyline points="462,270 522,270" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="760" y1="270" x2="778" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="752" y="273.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">GND</text>
+<polyline points="778,270 814,270" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="540" y1="320" x2="522" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="548" y="323.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">DIN</text>
+<polyline points="462,320 522,320" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="760" y1="320" x2="778" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="752" y="323.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">DOUT</text>
+<polyline points="778,320 814,320" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="520" y="376" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">LD3 DOUT crosses the elbow to</text>
+<text x="520" y="392" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">LD1 DIN as LED_DATA_FOREARM</text>
+<rect x="980" y="196" width="220" height="150" rx="4" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="1090" y="222" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#1A1A1A" text-anchor="middle" font-weight="bold">LD1</text>
+<text x="1090" y="240" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">forearm strip</text>
+<text x="1090" y="258" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">15 px, elbow to wrist</text>
+<line x1="980" y1="220" x2="962" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="988" y="223.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">5V</text>
+<polyline points="902,220 962,220" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="1200" y1="220" x2="1218" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1192" y="223.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">5V</text>
+<polyline points="1218,220 1274,220" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="980" y1="270" x2="962" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="988" y="273.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">GND</text>
+<polyline points="902,270 962,270" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="1200" y1="270" x2="1218" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1192" y="273.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">GND</text>
+<polyline points="1218,270 1274,270" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="980" y1="320" x2="962" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="988" y="323.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">DIN</text>
+<polyline points="902,320 962,320" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="1200" y1="320" x2="1218" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1192" y="323.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="end" font-weight="normal">DOUT</text>
+<polyline points="1218,320 1274,320" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="960" y="376" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">LD1 DOUT crosses the wrist to</text>
+<text x="960" y="392" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">LD2 DIN as LED_DATA_HAND</text>
+<polyline points="902,620 1274,620" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="902,664 1274,664" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="902,708 1225,708 1225,370 1274,370" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="902,752 1240,752 1240,420 1274,420" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="960" y="606" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">the motor pair crosses the sleeve untouched</text>
+<text x="960" y="784" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">TRIG and its return climb to J4-4 / J4-5</text>
+<rect x="1440" y="196" width="240" height="150" rx="4" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="1560" y="222" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#1A1A1A" text-anchor="middle" font-weight="bold">LD2</text>
+<text x="1560" y="240" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">hand strip</text>
+<text x="1560" y="258" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">6 px to the knuckles</text>
+<line x1="1440" y1="220" x2="1422" y2="220" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1448" y="223.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">5V</text>
+<line x1="1440" y1="270" x2="1422" y2="270" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1448" y="273.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">GND</text>
+<line x1="1440" y1="320" x2="1422" y2="320" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1448" y="323.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">DIN</text>
+<polyline points="1362,220 1422,220" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1362,270 1422,270" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1362,320 1422,320" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1440" y="394" width="56" height="126" rx="6" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="1468" y="368" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="middle" font-weight="bold">J7</text>
+<text x="1468" y="384" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">ZH-2</text>
+<line x1="1424" y1="420" x2="1440" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="1496" y1="420" x2="1512" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1468" y="424" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">1</text>
+<line x1="1424" y1="470" x2="1440" y2="470" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="1496" y1="470" x2="1512" y2="470" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1468" y="474" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">2</text>
+<polyline points="1362,370 1410,370 1410,420 1424,420" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1362,420 1390,420 1390,470 1424,470" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="1580" y1="420" x2="1598" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="1642" y1="420" x2="1660" y2="420" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<line x1="1598" y1="420" x2="1638" y2="394" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<circle cx="1598" cy="420" r="4" fill="#1A1A1A"/>
+<circle cx="1642" cy="420" r="4" fill="#1A1A1A"/>
+<text x="1620" y="380" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="bold">SW2</text>
+<text x="1620" y="446" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="middle" font-weight="normal">microswitch</text>
+<text x="1520" y="406" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">TRIG</text>
+<text x="1520" y="492" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">GND</text>
+<polyline points="1512,420 1580,420" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1660,420 1710,420 1710,470 1512,470" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1420" y="530" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">the whole glove comes off on one plug</text>
+<rect x="1460" y="600" width="240" height="150" rx="4" fill="#F5F0F2" stroke="#1A1A1A" stroke-width="2"/>
+<text x="1580" y="626" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#1A1A1A" text-anchor="middle" font-weight="bold">M1</text>
+<text x="1580" y="644" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="middle" font-weight="normal">blower + CR1</text>
+<text x="1580" y="662" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="middle" font-weight="normal">flyback across the motor</text>
+<line x1="1460" y1="620" x2="1442" y2="620" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1468" y="623.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">+</text>
+<line x1="1460" y1="664" x2="1442" y2="664" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
+<text x="1468" y="667.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">-</text>
+<polyline points="1362,620 1442,620" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1362,664 1442,664" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1420" y="796" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">its own strap, so it never bridges the wrist</text>
+<rect x="60" y="850" width="1760" height="132" rx="6" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="76" y="876" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#1A1A1A" text-anchor="start" font-weight="bold">THE RULES THAT MAKE THIS SAFE TO PULL APART IN A DARK ROOM</text>
+<text x="76" y="902" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">Five plugs per arm plus the one at the switch: J2 at the pod, J6 and J3 at the elbow, J4 and J5 at the wrist, J7 in the palm.</text>
+<text x="76" y="924" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">Data runs pod -&gt; J2 -&gt; LD3 -&gt; J6 -&gt; LD1 -&gt; J4 -&gt; LD2: pixel 0 is at the pod. Families: PH-2 (2.0 mm), ZH-2 (1.5 mm), SM-2, SM-3, SM-4, SM-5.</text>
+<text x="76" y="946" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">One pair is identical on purpose: J2 and J6, both SM-3 with the same 5V / GND / data order. Cross-mating them only skips the upper-arm run.</text>
+<text x="76" y="968" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">SW1 off, or the cell out, before you mate or unmate anything. Feeding data into an unpowered strip is what kills pixel 0.</text>
+<text x="40" y="1002" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#5A5A5A" text-anchor="start" font-weight="normal">generated by docs/schematic/schematic.py - do not hand-edit</text>
 </svg>

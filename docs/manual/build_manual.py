@@ -41,115 +41,6 @@ PAGE_W, PAGE_H = LETTER
 
 
 # --------------------------------------------------------------------------
-# Parts — page 1. (number, name, qty, plain-English note)
-# --------------------------------------------------------------------------
-
-PARTS = [
-    ("THE BUBBLES", [
-        (1, "Bambu Lab Electric Bubble Maker Kit 01 (P6M)", "x1",
-         "A tiny fan that blows air across a film of soap. You are not modifying it "
-         "&mdash; you are just taking over the decision of <i>when</i> it switches on. "
-         "Each kit also includes a battery [8] and a charger."),
-    ]),
-    ("THE LIGHT", [
-        (2, "WS2812B LED strip, 60 LED/m, 5V, black PCB, IP65", "0.4 m",
-         "A ribbon where every single light has its own chip inside, so each one takes "
-         "orders individually down one data wire. That is the only reason a travelling "
-         "comet is possible &mdash; an ordinary strip can only be one colour at a time. "
-         "IP65 is the clear silicone sleeve that keeps the soap out."),
-        (3, "Thin, pale, stretchy glove", "x1",
-         "The strip hides under this. Fabric spreads the light into a smooth glow "
-         "instead of visible dots &mdash; but only if it is thin and pale. Thick or dark "
-         "fabric, especially leather, swallows almost all of it."),
-    ]),
-    ("THE BRAIN", [
-        (4, "Seeed XIAO ESP32-C3", "x1",
-         "A complete computer the size of a postage stamp. It watches the trigger and "
-         "decides what all 21 lights do, about 60 times a second. You reprogram it with "
-         "a USB-C cable."),
-        (5, "74AHCT125 level shifter", "x1",
-         "A translator that also shouts. The brain speaks at 3.3V; the strip is listening "
-         "for 5V. Usually the strip <i>sort of</i> hears it anyway &mdash; which is exactly "
-         "the problem. Leave this out and your lights flicker randomly, normally for the "
-         "first time once you are in costume. It has <b>four</b> gates: one drives the "
-         "strip [5], one drives the MOSFET gate [10], and the other two still have to be "
-         "wired to a defined level &mdash; see Step 4."),
-    ]),
-    ("MOTOR CONTROL", [
-        (6, "N-channel logic-level MOSFET module", "x1",
-         "An electric switch with no moving parts. The brain can think, but it cannot "
-         "push enough power to spin a motor, so it flicks this instead and this lets the "
-         "big current through."),
-        (7, "1N5819 flyback diode", "x1",
-         "A motor is really just a coil of wire, and cutting power to a coil makes it kick "
-         "a nasty voltage spike backwards. This is a one-way valve that gives the spike a "
-         "safe loop to burn itself out in. It costs 20 cents; skip it and the MOSFET [6] "
-         "eventually dies."),
-    ]),
-    ("POWER", [
-        (8, "Protected 18650 cell", "x1, from the kit",
-         "A rechargeable battery &mdash; one comes free with each bubble kit [1]. "
-         "<i>Protected</i> means a guardian circuit inside cuts it off before you "
-         "over-drain or over-charge it. Do not substitute cheaper unprotected cells. "
-         "This is strapped to your arm."),
-        (9, "Printed cell cradle", "x1, printed",
-         "A pocket that holds the cell still, with a lid that clicks shut and opens "
-         "without a tool. It has no electrical job: the cell arrives on its own PH2.0 "
-         "pigtail, so there is no sled and nothing in here is soldered."),
-        (10, "5V boost converter module", "x1",
-         "A pump, but for voltage. The battery only makes about 3.7V and the lights and "
-         "brain need 5V. Here it only has to carry the lights (~0.3A) because the motor "
-         "runs straight off the battery, so a small cheap one is genuinely fine."),
-        (11, "2A resettable polyfuse (PPTC)", "x1",
-         "A safety valve that resets itself. If something shorts out, it suddenly becomes "
-         "very resistant and chokes the current off before anything gets hot. Let it cool "
-         "and it goes back to normal by itself."),
-        (12, "100 kilo-ohm resistors", "x2",
-         "Two resistors that shrink the battery voltage neatly in half, so the brain [4] "
-         "can measure it without being damaged. This is what lets the costume warn you "
-         "that the cell is nearly flat instead of just dying."),
-    ]),
-    ("SIGNAL CONDITIONING", [
-        (13, "1000 uF electrolytic capacitor", "x1",
-         "A tiny water tank for electricity. When a lot of LEDs switch on in the same "
-         "instant they all gulp power at once; the tank smooths out the gulp so the "
-         "voltage does not dip. Polarised &mdash; the leg with the stripe is negative, and "
-         "backwards it pops."),
-        (14, "330-470 ohm resistor", "x1",
-         "A speed bump on the data wire. It softens the sharp edge of the signal so it "
-         "does not bounce back down the wire and garble the message to the first pixel. "
-         "Skip it and pixel 1 misbehaves while all the others are fine."),
-    ]),
-    ("THE TRIGGER", [
-        (15, "Snap-action lever microswitch", "x1",
-         "A clicky button with a little metal arm sticking off it. The arm is the whole "
-         "point: it gives you a wide target, so you can fire mid-performance without "
-         "looking or aiming. It also clicks, so you feel it go."),
-    ]),
-    ("WIRE AND MATERIALS", [
-        (16, "Silicone hookup wire, 22-26 AWG", "as needed",
-         "Wire with soft rubbery insulation instead of stiff plastic. It survives "
-         "thousands of bends. Ordinary wire &mdash; especially solid-core &mdash; snaps at "
-         "the elbow and wrist within a few hours of wearing it. Thicker for power, "
-         "thinner for signals."),
-        (17, "Heat-shrink tubing, assorted", "as needed",
-         "Plastic sleeve that shrinks tight when heated, sealing and insulating each "
-         "solder joint. Slide it onto the wire BEFORE you solder. Everyone forgets once."),
-    ]),
-    ("TOOLS", [
-        (18, "Multimeter", "x1",
-         "For checking polarity before you connect the battery the first time. Two minutes "
-         "here saves re-ordering a fried brain [4] and strip [2]."),
-        (19, "Soldering iron, solder, flux", "as needed",
-         "For all of the above. Work somewhere ventilated; flux fumes are unpleasant."),
-        (20, "3D printer", "x1",
-         "For the trigger plate, the cell cradle [9] and the controller pod. You already "
-         "have one."),
-    ]),
-]
-
-
-# --------------------------------------------------------------------------
 # Parts — page 1-2. (number, name, per-arm, buy-for-two, plain-English note)
 #
 # "Per arm" and "buy" are deliberately separate columns. Conflating them is the
@@ -174,11 +65,13 @@ PARTS = [
          "This runs out long before the battery does. It is the actual limit on your night."),
     ]),
     ("THE LIGHT", [
-        (5, "WS2812B LED strip, 60 LED/m, 5V, black PCB, IP65", "0.4 m", "1 m roll",
+        (5, "WS2812B LED strip, 60 LED/m, 5V, black PCB, IP65", "0.5 m", "1 m roll",
          "A ribbon where every single light has its own chip inside, so each one takes "
          "orders individually down one data wire. That is the only reason a travelling "
          "comet is possible &mdash; an ordinary strip can only be one colour at a time. "
-         "IP65 is the clear silicone sleeve that keeps the soap out."),
+         "IP65 is the clear silicone sleeve that keeps the soap out. Two arms take "
+         "<b>54 pixels</b> (6 + 15 + 6 each), so a 1 m roll covers both with 6 to spare. "
+         "Check the reel's ends: many ship with a JST-SM 3-pin [21] already fitted."),
         (6, "Thin, pale, stretchy glove", "1", "a pair &mdash; deciding later",
          "The hand strip hides under this. Fabric spreads the light into a smooth glow "
          "instead of visible dots &mdash; but only if it is thin and pale. Thick or dark "
@@ -191,8 +84,8 @@ PARTS = [
     ("THE BRAIN", [
         (8, "Seeed XIAO ESP32-C3", "1", "2",
          "A complete computer the size of a postage stamp. It watches its own arm's trigger "
-         "and decides what all 21 lights do, about 60 times a second. You reprogram it over "
-         "USB-C &mdash; with a data cable [35], not a charge-only one."),
+         "and decides what all 27 lights do, about 60 times a second. You reprogram it over "
+         "USB-C &mdash; with a data cable [36], not a charge-only one."),
         (9, "74AHCT125 level shifter", "1", "2 (get 5)",
          "A translator that also shouts. The brain speaks at 3.3V; the strip is listening "
          "for 5V. Usually the strip <i>sort of</i> hears it anyway &mdash; which is exactly "
@@ -231,8 +124,8 @@ PARTS = [
          "arm down at 3.0V so that circuit never has to act. Never substitute unprotected "
          "cells. This is strapped to your arm. <b>There are no spares:</b> two cells came "
          "with the two kits and none were bought, so a flat cell ends that arm for the "
-         "night. Charge both full that morning and kill the disconnect [37] between sets. "
-         "Any cell that ever travels loose goes in a case [38] &mdash; the whole can of an "
+         "night. Charge both full that morning and kill the disconnect [38] between sets. "
+         "Any cell that ever travels loose goes in a case [39] &mdash; the whole can of an "
          "18650 is its negative terminal and the thin wrap is all that covers it."),
         (13, "Printed cell cradle", "1", "0 &mdash; you print it",
          "<b>Not a sled.</b> The cell [12] already leaves the factory on a PH2.0 pigtail, "
@@ -263,7 +156,7 @@ PARTS = [
         (18, "0.1 uF ceramic capacitor", "1", "2 &mdash; get an assortment",
          "A second, much smaller capacitor that sits <b>on</b> the level shifter [9] "
          "itself, bridging its two power pins. The big one [17] is a water tank by the "
-         "elbow; this one is a cup of water held against the thirsty part. Every time the "
+         "strip plug; this one is a cup of water held against the thirsty part. Every time the "
          "chip switches it gulps current in billionths of a second, and the tank is too far "
          "away to answer that fast. Not polarised &mdash; it goes in either way round. "
          "Marked <b>104</b> on the body. Costs about three cents; skipping it buys you "
@@ -282,118 +175,124 @@ PARTS = [
          "covered and there is no spare &mdash; a dead trigger ends that arm."),
     ]),
     ("CONNECTORS &mdash; SO IT COMES APART", [
-        (21, "JST-SM pigtail pair, 6-pin", "1", "2 + 1 spare",
-         "The <b>elbow</b> plug: strip 5V, ground and data, plus the trigger's two wires, "
-         "plus a second ground. Both the trigger and the motor have to reach the pod from "
-         "your hand, so both cross <i>both</i> joints &mdash; which is why this is 6-pin and "
-         "not 3. Pin 6 is not spare: the elbow run is the longest in the costume, and a "
-         "second ground cuts the voltage drop."),
-        (22, "JST-SM pigtail pair, 5-pin", "1", "2 + 1 spare",
+        (21, "JST-SM pigtail pair, 3-pin", "2", "4 + 2 spares",
+         "The <b>strip</b> plugs: 5V, ground and data, nothing else. One at the pod, where "
+         "the pod's J2 plugs straight into pixel 0 of the upper-arm strip, and one at the "
+         "elbow, where the strip crosses to the forearm (J6). Same pin order on both "
+         "&mdash; these two are the only identical pair on an arm, and that is safe: plug "
+         "the pod's into the forearm input and the upper-arm segment is simply skipped. "
+         "Check the strip reel [5] first; it may already carry some."),
+        (22, "JST-SM pigtail pair, 4-pin", "1", "2 + 1 spare",
+         "The <b>elbow lead</b> (J3): motor +, motor &minus;, trigger and trigger return, on "
+         "a 4-conductor lead from the pod down the upper arm. Both the trigger and the "
+         "motor have to reach the pod from your hand, so both cross <i>both</i> joints. The "
+         "motor is kept off the strip's plug on purpose &mdash; an amp of switched PWM "
+         "bundled against a WS2812 data wire is asking for flicker. The trigger is a slow "
+         "switch to ground and does not care."),
+        (23, "JST-SM pigtail pair, 5-pin", "1", "2 + 1 spare",
          "The <b>wrist</b> plug: the strip's three conductors plus this hand's trigger. One "
          "pull and the whole glove [6] comes off. Mate it 3-4 cm above the wrist crease, "
          "where the skin barely moves &mdash; never on the crease itself."),
-        (23, "JST-SM pigtail pair, 2-pin", "2", "4 + 2 spares",
-         "The motor run, one at each joint. Kept off the data line on purpose: an amp of "
-         "switched PWM bundled against a WS2812 wire is asking for flicker. These two are "
-         "the only identical pair in the build, and that is safe &mdash; they sit on the same "
-         "net, so cross-mating them just shortens the run."),
-        (24, "JST-ZH pigtail pair, 2-pin, 1.5 mm", "1", "2 + 2 spares",
+        (24, "JST-SM pigtail pair, 2-pin", "1", "2 + 2 spares",
+         "The motor run at the <b>wrist</b>, to the bubbler. It gets its own plug, kept off "
+         "the data line on purpose. The kit's motor lead is reworked onto this in Step 7."),
+        (25, "JST-ZH pigtail pair, 2-pin, 1.5 mm", "1", "2 + 2 spares",
          "Goes at the microswitch [20] itself, so a dead trigger is a ten-second swap "
          "rather than a soldering job. <b>It must not be PH2.0.</b> Every cell [12] ships on "
          "a PH2.0 lead, and one wrong plug in a dark room would put 3.7V straight onto "
          "GPIO3. ZH is 1.5 mm pitch, PH is 2.0 &mdash; they physically will not mate."),
-        (25, "Dielectric grease", "&mdash;", "1 small tube",
+        (26, "Dielectric grease", "&mdash;", "1 small tube",
          "Non-conductive waterproof goo. A smear in each connector shell stops soap residue "
          "corroding the contacts over a season. The alternative is intermittent faults you "
          "will chase for hours."),
     ]),
     ("WIRE AND MATERIALS", [
-        (26, "Silicone hookup wire, 22-26 AWG", "&mdash;", "one assortment",
+        (27, "Silicone hookup wire, 22-26 AWG", "&mdash;", "one assortment",
          "Wire with soft rubbery insulation instead of stiff plastic. It survives "
          "thousands of bends. Ordinary wire &mdash; especially solid-core &mdash; snaps at "
          "the elbow and wrist within a few hours of wearing it. Thicker for power, "
          "thinner for signals."),
-        (27, "Heat-shrink tubing, assorted", "&mdash;", "one assortment",
+        (28, "Heat-shrink tubing, assorted", "&mdash;", "one assortment",
          "Plastic sleeve that shrinks tight when heated, sealing and insulating each "
          "solder joint. Slide it onto the wire BEFORE you solder. Everyone forgets once."),
-        (28, "Protoboard, small", "1", "0 &mdash; 2 on hand",
+        (29, "Protoboard, small", "1", "0 &mdash; 2 on hand",
          "The perforated board the pod's components sit on. Nothing exotic &mdash; a 4 x 6 cm "
          "piece per arm is plenty."),
-        (29, "Hot glue, or clear RTV silicone", "&mdash;", "1",
+        (30, "Hot glue, or clear RTV silicone", "&mdash;", "1",
          "Seals the cut ends of the strip [5] against soap. Easy to forget when ordering "
          "and annoying to be without at Step 3."),
-        (30, "Needle and thread, or fabric glue", "&mdash;", "1",
+        (31, "Needle and thread, or fabric glue", "&mdash;", "1",
          "For sewing the strip channels into the glove [6] and sleeve [7]. A channel the "
          "strip can slide inside &mdash; not glued down flat."),
-        (31, "Fabric marker pen", "&mdash;", "1",
+        (32, "Fabric marker pen", "&mdash;", "1",
          "For marking where your finger pads land on your palm in Step 1. That mark is "
          "where the trigger [20] goes."),
     ]),
     ("TOOLS &mdash; ONE EACH, NOT ONE PER ARM", [
-        (32, "Multimeter", "&mdash;", "1",
+        (33, "Multimeter", "&mdash;", "1",
          "Not optional. Polarity before every first power-up, continuity for tracing a dead "
          "segment, and actual current draw. Minimum spec: DC volts, AC volts, DC current to "
          "2A on a <b>fused</b> input, resistance, and <b>continuity with a fast audible "
          "beeper</b> &mdash; that beeper is what you will live in. Capacitance is worth "
          "having. Auto-ranging, backlight and hold, because you will be under a table."),
-        (33, "Soldering iron, flux-core solder, flux pen", "&mdash;", "1",
+        (34, "Soldering iron, flux-core solder, flux pen", "&mdash;", "1",
          "Buy <b>flux-core</b> solder, 0.8 mm; solid wire with no flux is miserable. The "
          "flux pen is separate &mdash; the IP65 strip pads are the grubbiest joints here and "
          "want extra. On leaded vs lead-free: <b>the fumes that make you feel ill are the "
          "flux, not the lead</b>, so ventilate either way. The real lead risk is ingestion, "
          "closed by washing your hands. Lead-free needs a hotter iron and wets worse, which "
          "bites on strip pads; 63/37 is more forgiving. Either is defensible."),
-        (34, "Thermal camera", "&mdash;", "1 (borrow it)",
+        (35, "Thermal camera", "&mdash;", "1 (borrow it)",
          "Optional, genuinely useful. Turns Step 6's \"touch it and see if it is warm\" into "
          "a measurement, and catches what a fingertip misses: a boost [14] running hot from "
          "a short downstream, a MOSFET [10] that turned out not to be logic-level, a strip "
          "section drawing more than its neighbours. One borrowed session is plenty."),
-        (35, "USB-C cable, data capable", "&mdash;", "1",
+        (36, "USB-C cable, data capable", "&mdash;", "1",
          "A charge-only cable looks identical and will cost you half an hour of confusion "
          "before you think to suspect it."),
-        (36, "3D printer", "&mdash;", "1",
+        (37, "3D printer", "&mdash;", "1",
          "For the trigger plate, the cell cradle [13], the controller pod and the bubbler "
          "mount. You already have one."),
     ]),
     ("SEALING, AND GETTING THE CELL OUT FAST", [
-        (37, "Battery disconnect switch, SPST", "1", "2",
+        (38, "Battery disconnect switch, SPST", "1", "2",
          "An ordinary switch in the cell's positive lead, ahead of the fuse [15], so one "
          "motion through the costume kills the arm without opening the pod. <b>Rated 3A or "
          "more at DC</b> &mdash; small switches are usually specced for mains AC and far "
          "less for DC, so read the DC line. Get one with a rubber boot: it keeps its own "
          "seal and you can find it by feel in the dark. It does not replace pulling the "
          "cell [12]; it makes the pod safe to open and the arm safe to unplug."),
-        (38, "18650 storage case", "&mdash;", "0 &mdash; no spare cells to carry",
+        (39, "18650 storage case", "&mdash;", "0 &mdash; no spare cells to carry",
          "A hard box with a slot per cell, so a cell cannot short against keys, coins or "
          "another cell. Skipped only because no spares were bought; buy one the day that "
          "changes. Check every cell's wrap before every event and re-wrap any that are "
          "nicked."),
-        (39, "Conformal coating, clear acrylic spray", "&mdash;", "1 can",
+        (40, "Conformal coating, clear acrylic spray", "&mdash;", "1 can",
          "A thin lacquer over the finished board that turns a soaked pod into one you "
          "rinse, dry and keep using. Mask the USB-C port, the boost trimpot [14], the "
          "MOSFET tab [10] and every connector first. Two thin coats. Do it after the bench "
          "test passes, not before &mdash; reworking a coated board is miserable."),
-        (40, "Self-amalgamating silicone tape", "&mdash;", "1 roll",
+        (41, "Self-amalgamating silicone tape", "&mdash;", "1 roll",
          "Tape with no adhesive: it fuses to itself. One wrap over each mated connector "
          "keeps soap out of the shell, and it comes off in one piece leaving no residue, "
          "which matters on something you unplug every night."),
-        (41, "Silicone O-ring cord 2 mm, or foam tape", "&mdash;", "1",
+        (42, "Silicone O-ring cord 2 mm, or foam tape", "&mdash;", "1",
          "The actual seal between the pod and its lid, sitting in a printed groove. Foam "
          "weatherstrip tape works too and needs no groove modelled; it just survives fewer "
          "open-and-close cycles. Nothing sticky and permanent &mdash; you will be opening "
          "this."),
-        (42, "M3 heat-set inserts 4.6 &times; 5.0 mm, and M3 &times; 8 mm screws", "4 + 4",
+        (43, "M3 heat-set inserts 4.6 &times; 5.0 mm, and M3 &times; 8 mm screws", "4 + 4",
          "1 kit",
          "Inserts are M3 &times; 0.5 brass, <b>4.6 mm OD &times; 5.0 mm long</b>; screws are "
          "<b>M3 &times; 8 mm button head, A2 stainless</b> &mdash; not the carbon-steel ones "
          "in the kit, which rust. Four of each per pod, so the lid screws shut and reopens "
-         "without stripping the plastic. A gasket [41] only seals if something squeezes it "
+         "without stripping the plastic. A gasket [42] only seals if something squeezes it "
          "evenly."),
-        (43, "Rubber grommet or small cable gland", "1", "2 + spares",
+        (44, "Rubber grommet or small cable gland", "1", "2 + spares",
          "Wires leave the pod through this, on the underside, not through a bare printed "
-         "hole. A printed edge saws through silicone insulation [26] over a season, and the "
+         "hole. A printed edge saws through silicone insulation [27] over a season, and the "
          "gap around it is the main way water gets in."),
-        (44, "PETG filament", "&mdash;", "1 spool",
+        (45, "PETG filament", "&mdash;", "1 spool",
          "For the pod, lid, cradle [13], trigger plate and bubbler mount. <b>Not PLA:</b> PLA "
          "softens in a hot car and is brittle exactly where a strapped-on part flexes. Four "
          "perimeters and 1.6 mm walls minimum &mdash; thin FDM walls leak through the layer "
@@ -574,8 +473,8 @@ def story():
     s.append(P("CLOWN", "title"))
     s.append(P("Bubble-shooting sleeve &mdash; build manual", "subtitle"))
     s.append(P(
-        "Squeeze your fingers into your palm and a comet of light runs from your elbow "
-        "to your fingertips, arriving exactly as bubbles start firing out of your hand. "
+        "Squeeze your fingers into your palm and a comet of light runs from your upper "
+        "arm down to your fingertips, arriving exactly as bubbles start firing out of your hand. "
         "<b>Two arms, two identical rigs, one trigger per hand.</b><br/><br/>"
         "Every part is numbered; the assembly steps refer back to those numbers in "
         "<b><font color=\"#C2185B\">[brackets]</font></b>. Each part carries "
@@ -600,8 +499,8 @@ def story():
         "in a dark room, then buy the rest.<br/>"
         "<b>Deliberately skipped:</b> spare cells, a bought battery sled %s and the cell "
         "storage case %s. See those entries for what that costs."
-        % (ref(1), ref(12), ref(20), ref(16), ref(17), ref(19), ref(28),
-           ref(2), ref(6), ref(7), ref(13), ref(38))))
+        % (ref(1), ref(12), ref(20), ref(16), ref(17), ref(19), ref(29),
+           ref(2), ref(6), ref(7), ref(13), ref(39))))
     s.append(Spacer(1, 4))
 
     # ---- Page 1-2 columns --------------------------------------------------
@@ -626,7 +525,7 @@ def story():
         "<b>And rework the kit's motor lead %s off PH2.0 to SM 2-pin %s.</b> As shipped, the "
         "cell mates straight to the motor &mdash; bypassing the MOSFET %s, so the trigger "
         "does nothing and the blower simply runs."
-        % (ref(24), ref(12), ref(1), ref(23), ref(10))))
+        % (ref(25), ref(12), ref(1), ref(24), ref(10))))
 
     s.append(NextPageTemplate("Steps"))
     s.append(PageBreak())
@@ -638,7 +537,7 @@ def story():
         "steps are much easier if you know what is coming &mdash; notably that heat-shrink "
         "%s goes on <i>before</i> you solder, and that you bench-test everything "
         "<i>before</i> anything goes inside a glove %s."
-        % (ref(33), ref(27), ref(6)), "body"))
+        % (ref(34), ref(28), ref(6)), "body"))
     s.append(P("Budget a full afternoon for the first arm. The second takes about half "
                "as long, because by then you know what you are doing.", "body"))
 
@@ -650,15 +549,17 @@ def story():
         ["Module", "Holds", "Unplugs at"],
         ["<b>Pod</b> &mdash; upper arm",
          "brain %s, boost %s, level shifter %s, MOSFET %s, fuse %s, disconnect %s, "
-         "cradle %s" % (ref(8), ref(14), ref(9), ref(10), ref(15), ref(37), ref(13)),
-         "switch %s + battery plug + straps" % ref(37)],
+         "cradle %s, upper-arm strip %s 6 px"
+         % (ref(8), ref(14), ref(9), ref(10), ref(15), ref(38), ref(13), ref(5)),
+         "switch %s + battery plug + straps + elbow: SM 4-pin %s + SM 3-pin %s"
+         % (ref(38), ref(22), ref(21))],
         ["<b>Sleeve</b> &mdash; forearm", "forearm strip %s, 15 px" % ref(5),
-         "elbow: SM 6-pin %s + SM 2-pin %s" % (ref(21), ref(23))],
+         "elbow: SM 4-pin %s + SM 3-pin %s" % (ref(22), ref(21))],
         ["<b>Glove</b> &mdash; hand",
          "hand strip 6 px, this hand's trigger %s" % ref(20),
-         "wrist: SM 5-pin %s" % ref(22)],
+         "wrist: SM 5-pin %s" % ref(23)],
         ["<b>Bubbler</b>", "bottle %s, cap, hose, blower head" % ref(2),
-         "wrist: SM 2-pin %s + its strap" % ref(23)],
+         "wrist: SM 2-pin %s + its strap" % ref(24)],
     ], [1.30 * inch, 3.55 * inch, 1.55 * inch]))
     s.append(P("<b>Steps 1&ndash;11 build one arm. Step 12 is the second arm. Step 13 is the "
                "costume</b> &mdash; the two arms together, and how you get in and out of it.",
@@ -679,61 +580,77 @@ def story():
         "Any cell that does travel loose goes in a case %s, never a bag with keys.<br/><br/>"
         "Solder somewhere ventilated. The fumes are flux, not lead &mdash; unpleasant "
         "whichever solder %s you bought."
-        % (ref(12), ref(32), ref(8), ref(5), ref(37), ref(13), ref(38), ref(33))))
+        % (ref(12), ref(33), ref(8), ref(5), ref(38), ref(13), ref(39), ref(34))))
 
     s.append(callout(
         "The connector rule you will use constantly",
         "<b>Battery out before you mate or unmate anything.</b> Feeding data into an "
         "unpowered WS2812 strip %s pushes current through its input protection diodes, "
         "which is the classic way to kill pixel 0 &mdash; and that is exactly what happens "
-        "if you plug the glove in while the pod is live. Unplug the cell %s first, every "
+        "if you plug the sleeve or the glove in while the pod is live. Unplug the cell %s first, every "
         "time. It takes one second and becomes automatic quickly." % (ref(5), ref(12))))
 
     # Step 1
     s.append(P("Step 1 &mdash; Measure your arm", "h2"))
-    s.append(P("Put on the glove %s and sleeve %s and hold your arm out in the finger-gun "
-               "pose. Measure and write down:" % (ref(6), ref(7)), "body"))
+    s.append(P("Put on the glove %s and sleeve %s, strap the pod (or a stand-in the same "
+               "size) where it will sit on your upper arm, and hold your arm out in the "
+               "finger-gun pose. Measure and write down:" % (ref(6), ref(7)), "body"))
     s += bullets([
+        "<b>Bottom of the pod to elbow crease</b>, down the outside of the upper arm, with "
+        "the pod strapped where it will actually sit &mdash; typically about 15 cm.",
         "<b>Elbow to wrist crease</b> &mdash; typically about 25 cm.",
         "<b>Wrist crease to knuckles</b>, across the back of the hand &mdash; about 10 cm.",
         "<b>Where your middle and ring finger pads land</b> on your palm when you squeeze. "
-        "That is where the trigger %s goes. Mark it with a fabric pen %s." % (ref(20), ref(31)),
+        "That is where the trigger %s goes. Mark it with a fabric pen %s." % (ref(20), ref(32)),
     ])
-    s.append(P("Convert the first two into pixel counts. At 60 LED/m each pixel on the "
+    s.append(P("Convert the first three into pixel counts. At 60 LED/m each pixel on the "
                "strip %s is <b>1.67 cm</b>:" % ref(5), "body"))
-    s.append(P("forearm pixels = forearm cm / 1.67<br/>"
-               "hand pixels&nbsp;&nbsp;&nbsp; = hand cm / 1.67", "code"))
+    s.append(P("upper-arm pixels = upper-arm cm / 1.67<br/>"
+               "forearm pixels&nbsp;&nbsp; = forearm cm / 1.67<br/>"
+               "hand pixels&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = hand cm / 1.67", "code"))
     s.append(P("That is usually about <b>15</b> forearm pixels and <b>6</b> hand pixels. "
                "Round down. <b>Then subtract about 4 cm from the forearm figure</b> &mdash; "
                "the wrist umbilical and its connector %s need to live in the last few "
                "centimetres of forearm, just above the crease where the skin barely flexes."
-               % ref(22), "body"))
+               % ref(23), "body"))
+    s.append(P("<b>Subtract about 5 cm from the upper-arm figure, for the same reason</b> "
+               "&mdash; the elbow umbilical and its plug %s live in the last few centimetres "
+               "of upper arm, just above the elbow crease. A typical 15 cm becomes 10 cm, "
+               "which is <b>6 pixels</b>. That makes a typical arm 6 + 15 + 6 = <b>27 "
+               "pixels</b>. Keep these numbers; they go into the firmware in Step 8."
+               % ref(21), "body"))
 
     # Step 2
     s.append(P("Step 2 &mdash; Cut the strip", "h2"))
     s.append(P("The strip %s has marked cut lines between every pixel, with copper pads "
                "either side. <b>Cut through the middle of the pads</b>, not beside them "
-               "&mdash; you need pad left on both pieces to solder to. Cut two pieces to "
-               "the pixel counts from Step 1." % ref(5), "body"))
+               "&mdash; you need pad left on both pieces to solder to. Cut <b>three</b> "
+               "pieces to the pixel counts from Step 1: upper arm (~6), forearm (~15) and "
+               "hand (~6)." % ref(5), "body"))
     s.append(callout(
         "Check the arrows before you cut",
         "The strip has small printed arrows showing which way data flows. Data must run "
-        "<b>elbow to fingertips</b>, so both pieces need their arrows pointing the same "
-        "way, toward your fingers. Getting this backwards is the most common build "
-        "mistake and the fix is unsoldering everything. Mark the elbow end with tape "
-        "&mdash; that end is pixel 0."))
-    s.append(P("<b>Why two pieces?</b> Your wrist bends constantly, and a single "
-               "continuous strip across that joint cracks its internal copper traces "
-               "within hours of wear. Everything past the crack then goes dark. The "
-               "flexible umbilical in Step 3 absorbs that movement instead.", "body"))
+        "<b>pod &rarr; elbow &rarr; wrist &rarr; fingertips</b>, so all three pieces need "
+        "their arrows pointing the same way, toward your fingers. Getting this backwards "
+        "is the most common build mistake and the fix is unsoldering everything. Mark the "
+        "pod end of the upper-arm piece with tape &mdash; that end is pixel 0."))
+    s.append(P("<b>Why three pieces?</b> Your elbow and your wrist bend constantly, and a "
+               "single continuous strip across either joint cracks its internal copper "
+               "traces within hours of wear. Everything past the crack then goes dark. The "
+               "flexible umbilicals in Step 3 absorb that movement instead &mdash; one at "
+               "each joint.", "body"))
 
     # Step 3
-    s.append(P("Step 3 &mdash; Build the wrist umbilical", "h2"))
-    s.append(P("This is the plug that lets the glove %s come off on its own. It carries "
+    s.append(P("Step 3 &mdash; Build the umbilicals", "h2"))
+    s.append(P("The strip crosses two joints, and each one gets a short flexible umbilical "
+               "with a plug in it: the <b>wrist</b> umbilical (forearm piece to hand piece) "
+               "and the <b>elbow</b> umbilical (upper-arm piece to forearm piece). Build the "
+               "wrist one first; the elbow one is the same job with fewer wires.", "body"))
+    s.append(P("<b>The wrist umbilical.</b> This is the plug that lets the glove %s come off on its own. It carries "
                "<b>five conductors</b>: the strip's 5V, ground and data, plus this hand's "
                "two trigger wires. Use a <b>JST-SM 5-pin pigtail pair</b> %s. Decide the "
                "pin convention now and keep it identical on both arms."
-               % (ref(6), ref(22)), "body"))
+               % (ref(6), ref(23)), "body"))
     s.append(grid([
         ["SM-5 pin", "Carries"],
         ["1", "Strip 5V"],
@@ -742,26 +659,27 @@ def story():
         ["4", "Trigger"],
         ["5", "Trigger return (to ground at the pod)"],
     ], [0.85 * inch, 6.35 * inch]))
-    s.append(P("<b>Sleeve side</b>", "body"))
+    s.append(P("<b>Wrist &mdash; sleeve side</b>", "body"))
     s += bullets([
-        "Slide heat-shrink %s onto every wire <b>now</b>, before soldering." % ref(27),
+        "Slide heat-shrink %s onto every wire <b>now</b>, before soldering." % ref(28),
         "Solder short silicone leads %s to the forearm piece's <b>output</b> end &mdash; "
-        "5V, GND and <b>DO</b> &mdash; then on to pins 1-3 of one pigtail half." % ref(26),
+        "5V, GND and <b>DO</b> &mdash; then on to pins 1-3 of one pigtail half." % ref(27),
         "Pins 4-5 get two thin wires long enough to run all the way <b>up the forearm to "
-        "the elbow</b>. They are the trigger's path to the pod.",
+        "the elbow</b>. They are the trigger's path to the pod, and they land on the sleeve "
+        "half of the elbow SM-4 %s (below)." % ref(22),
         "Shrink everything down, then seal the exposed strip end with hot glue %s or clear "
-        "silicone. That is the soap-proofing." % ref(29),
+        "silicone. That is the soap-proofing." % ref(30),
     ])
-    s.append(P("<b>Glove side</b>", "body"))
+    s.append(P("<b>Wrist &mdash; glove side</b>", "body"))
     s += bullets([
         "Solder pins 1-3 of the other half to the hand piece's <b>input</b> end: 5V to 5V, "
         "GND to GND, pin 3 to <b>DI</b>.",
         "Pins 4-5 get two wires long enough to reach the palm, ending in the <b>female half "
-        "of a JST-ZH 2-pin</b> %s. That is where the microswitch plugs in at Step 5." % ref(24),
+        "of a JST-ZH 2-pin</b> %s. That is where the microswitch plugs in at Step 5." % ref(25),
         "Shrink, and seal the strip end the same way.",
     ])
     s.append(callout(
-        "Where the connector sits, and why",
+        "Where the wrist connector sits, and why",
         "<b>Mate the pair 3-4 cm above the wrist crease</b>, on the forearm. That skin barely "
         "moves; the crease itself is the worst possible place for a rigid 20 mm plastic body. "
         "The glove-side wire is the flex element &mdash; leave a <b>service loop</b> so it is "
@@ -771,22 +689,84 @@ def story():
         "fine; 15 cm reads as a gap. <b>Measure the finished pixel-to-pixel distance and "
         "write it down</b> &mdash; it becomes GAP_PX in Step 8."))
 
+    s.append(P("<b>The elbow umbilical.</b> This is the plug that lets the sleeve's strip "
+               "come off the pod's strip. It carries <b>three conductors</b> &mdash; the "
+               "strip's 5V, ground and data &mdash; on a <b>JST-SM 3-pin pigtail pair</b> %s "
+               "(J6 on the schematic), in the same pin order as the pod's own strip plug, "
+               "on both arms." % ref(21), "body"))
+    s.append(grid([
+        ["SM-3 pin", "Carries"],
+        ["1", "Strip 5V"],
+        ["2", "Strip GND"],
+        ["3", "Strip data"],
+    ], [0.85 * inch, 6.35 * inch]))
+    s.append(P("<b>Elbow &mdash; upper-arm side</b>", "body"))
+    s += bullets([
+        "Heat-shrink %s on first." % ref(28),
+        "Solder short silicone leads %s to the upper-arm piece's <b>output</b> end &mdash; "
+        "5V, GND and <b>DO</b> &mdash; then on to pins 1-3 of one SM-3 half. Shrink, and "
+        "seal the strip end with hot glue %s or clear silicone." % (ref(27), ref(30)),
+        "The piece's <b>input</b> end &mdash; pixel 0, the end you taped &mdash; gets the "
+        "mate to the pod's own SM-3 strip plug, <b>J2</b>, in the same pin order: 5V, GND, "
+        "<b>DI</b>. Step 4 builds the pod side.",
+    ])
+    s.append(P("<b>Elbow &mdash; sleeve side</b>", "body"))
+    s += bullets([
+        "Solder pins 1-3 of the other half to the forearm piece's <b>input</b> end: 5V to "
+        "5V, GND to GND, pin 3 to <b>DI</b>. Shrink and seal.",
+    ])
+    s.append(callout(
+        "Where the elbow connector sits, and why",
+        "<b>Mate the pair a few centimetres above the elbow</b>, on the upper arm, where the "
+        "skin moves least &mdash; the crease is the worst place for a rigid plastic body, "
+        "same as at the wrist. The sleeve-side wire is the flex element: leave it a "
+        "<b>service loop</b> across the joint, so it is never under tension with the arm "
+        "fully bent.<br/><br/>"
+        "<b>It comes out longer than the wrist one</b> &mdash; typically around 12 cm pixel "
+        "to pixel, against the wrist's 8 cm, because the elbow is the bigger joint. "
+        "<b>Measure the finished distance</b>, last upper-arm pixel to first forearm pixel, "
+        "and write it down &mdash; it becomes ELBOW_GAP_PX in Step 8."))
+
+    s.append(P("<b>The sleeve half of the elbow lead.</b> The motor and the trigger cross "
+               "the elbow on their own plug, a <b>JST-SM 4-pin</b> %s, kept apart from the "
+               "strip. The pod builds the other half in Step 4." % ref(22), "body"))
+    s.append(grid([
+        ["SM-4 pin", "Carries"],
+        ["1", "Motor + (battery, after the fuse)"],
+        ["2", "Motor &minus; (MOSFET output)"],
+        ["3", "Trigger"],
+        ["4", "Trigger return (to ground at the pod)"],
+    ], [0.85 * inch, 6.35 * inch]))
+    s += bullets([
+        "Pins 3-4 take the two trigger wires coming up the forearm from the wrist: SM-5 "
+        "pin 4 to SM-4 pin 3, SM-5 pin 5 to SM-4 pin 4. Trigger to trigger, return to "
+        "return.",
+        "Pins 1-2 get a twisted pair of silicone wire %s running <b>down the forearm to the "
+        "wrist</b>, ending in the half of a <b>JST-SM 2-pin</b> %s that mates the bubbler's "
+        "motor lead (Step 7). Pin 1 to the SM-2's motor +, pin 2 to its motor &minus;."
+        % (ref(27), ref(24)),
+        "The SM-4 mates next to the SM-3, above the elbow, with the same service loop "
+        "across the joint.",
+    ])
+    s.append(P("<b>Test the joints now:</b> gently tug each wire. Better to find a weak "
+               "joint on the bench than inside a glove.", "body"))
+
     # Step 4
     s.append(P("Step 4 &mdash; Build the controller pod", "h2"))
     s.append(P("This all lives on a small piece of protoboard %s that sits on your "
                "<b>upper arm</b>. It used to say \"above the soap spray\" &mdash; Step 11 "
                "explains why that stopped being true and what the enclosure has to do "
-               "instead." % ref(28), "body"))
+               "instead." % ref(29), "body"))
     s.append(grid([
         ["From", "To", "Notes"],
-        ["Battery %s + (PH2.0)" % ref(12), "Disconnect switch %s" % ref(37),
+        ["Battery %s + (PH2.0)" % ref(12), "Disconnect switch %s" % ref(38),
          "Kills the arm without opening the pod"],
-        ["Disconnect %s out" % ref(37), "Polyfuse %s, then everything else" % ref(15),
+        ["Disconnect %s out" % ref(38), "Polyfuse %s, then everything else" % ref(15),
          "Fuse next, before anything else"],
         ["Battery %s &minus; (PH2.0)" % ref(12), "Common ground", "Everything shares this"],
         ["Battery + (after fuse)", "Boost %s IN+" % ref(14), ""],
         ["Boost %s OUT+ (5V)" % ref(14),
-         "74AHCT125 %s Vcc, elbow SM-6 %s pin 1" % (ref(9), ref(21)),
+         "74AHCT125 %s Vcc, J2 strip SM-3 %s pin 1" % (ref(9), ref(21)),
          "Strip and shifter, straight off the boost"],
         ["74AHCT125 %s Vcc (pin 14)" % ref(9),
          "0.1 uF ceramic %s, then 74AHCT125 GND (pin 7)" % ref(18),
@@ -794,9 +774,9 @@ def story():
         ["Boost %s OUT+ (5V)" % ref(14),
          "CR2 %s anode; its banded leg to the XIAO %s 5V pad" % (ref(11), ref(8)),
          "<b>Isolation diode &mdash; see below</b>"],
-        ["Battery + (after fuse)", "Motor +, via elbow SM-2 %s" % ref(23),
+        ["Battery + (after fuse)", "J3 elbow SM-4 %s pin 1 (motor +)" % ref(22),
          "Motor runs <b>direct from the cell</b>, not from 5V"],
-        ["Motor &minus; (via elbow SM-2)", "MOSFET %s output" % ref(10), ""],
+        ["J3 elbow SM-4 pin 2 (motor &minus;)", "MOSFET %s output (drain)" % ref(10), ""],
         ["XIAO GPIO4 (silk D2)", "74AHCT125 %s <b>second</b> gate input" % ref(9),
          "Gate drive &mdash; see below"],
         ["74AHCT125 %s second gate out" % ref(9),
@@ -804,11 +784,12 @@ def story():
          "Plus a 10k gate-to-source pulldown"],
         ["XIAO GPIO10 (silk D10)", "74AHCT125 %s input" % ref(9), ""],
         ["74AHCT125 %s output" % ref(9),
-         "Resistor %s, then elbow SM-6 pin 3" % ref(19),
+         "Resistor %s, then J2 strip SM-3 pin 3" % ref(19),
          "Resistor at the connector end"],
-        ["XIAO GPIO3 (silk D1)", "Elbow SM-6 pin 4",
+        ["J2 strip SM-3 pin 2", "Common ground", "Strip ground return"],
+        ["XIAO GPIO3 (silk D1)", "J3 elbow SM-4 pin 3",
          "Trigger, arriving from the hand"],
-        ["Elbow SM-6 pin 5", "Common ground", "Trigger return"],
+        ["J3 elbow SM-4 pin 4", "Common ground", "Trigger return"],
         ["XIAO GPIO2 (silk D0)", "Midpoint of the two 100k resistors %s" % ref(16),
          "Battery monitor"],
         ["74AHCT125 %s 1OE, 2OE" % ref(9), "Common ground",
@@ -828,14 +809,14 @@ def story():
         "output connected to nothing.</b>" % (ref(14), ref(5), ref(8))))
     s += steps([
         "<b>Leave the output open.</b> OUT+ and OUT&minus; go nowhere yet &mdash; not the "
-        "level shifter %s, not CR2 %s, not the elbow SM-6 %s. Fit the wires if you like, but "
-        "leave their far ends loose." % (ref(9), ref(11), ref(21)),
+        "level shifter %s, not CR2 %s, not J2 %s / the strip. Fit the wires if you like, "
+        "but leave their far ends loose." % (ref(9), ref(11), ref(21)),
         "<b>Power the input only.</b> Cell %s + through the disconnect %s and fuse %s to "
         "IN+, cell &minus; to IN&minus;. A bench supply at 3.7V with its current limit at "
         "200 mA is better still &mdash; then a wiring mistake cannot become a fire."
-        % (ref(12), ref(37), ref(15)),
+        % (ref(12), ref(38), ref(15)),
         "<b>Meter %s across OUT+ and OUT&minus;</b>, and read it <i>before</i> you turn "
-        "anything." % ref(32),
+        "anything." % ref(33),
         "<b>Wind the trimpot counter-clockwise until the reading drops below 5V</b>, then "
         "bring it up to 5.00V from underneath. Approach from above and every slip "
         "overshoots high, which is the direction that breaks things.",
@@ -904,7 +885,7 @@ def story():
         "close. The ceramic is a small store right at the pins, so the chip\'s own 5V does "
         "not dip each time it drives an edge.<br/><br/>"
         "<b>The 1000 uF %s does not cover this.</b> That one is bulk storage for the strip, "
-        "sitting by the elbow connector, and between it and the chip is a run of protoboard "
+        "sitting at the strip connector (J2), and between it and the chip is a run of protoboard "
         "wire. Different job, different capacitor &mdash; fit both. The ceramic is <b>not "
         "polarised</b>, so it goes in either way round.<br/><br/>"
         "<b>Short legs is the whole point:</b> on 30 mm of leg it is mostly wire. Solder it "
@@ -950,27 +931,42 @@ def story():
         "It does not replace pulling the cell %s. It makes the pod safe to open and the arm "
         "safe to unplug in one motion; the cell still comes out for storage, for charging, "
         "and any time something is actually wrong."
-        % (ref(37), ref(15), ref(14), ref(12))))
+        % (ref(38), ref(15), ref(14), ref(12))))
 
     s.append(P("The pod's two outward plugs", "h2"))
     s.append(P("Everything the pod sends down the arm leaves through exactly two "
-               "connectors:", "body"))
+               "connectors. The data resistor %s stays on the pod board, feeding J2 pin 3."
+               % ref(19), "body"))
     s.append(grid([
         ["Plug", "Pins"],
-        ["<b>SM 6-pin</b> %s" % ref(21),
-         "1 strip 5V &middot; 2 strip GND &middot; 3 strip data &middot; 4 trigger "
-         "&middot; 5 trigger return &middot; <b>6 second ground</b>"],
-        ["<b>SM 2-pin</b> %s" % ref(23),
-         "1 motor + (battery, after fuse) &middot; 2 motor &minus; (MOSFET output)"],
-    ], [1.35 * inch, 5.85 * inch]))
+        ["<b>J2 &mdash; SM 3-pin</b> %s, to the upper-arm strip" % ref(21),
+         "1 strip 5V &middot; 2 strip GND &middot; 3 strip data (after the resistor)"],
+        ["<b>J3 &mdash; SM 4-pin</b> %s, the elbow lead" % ref(22),
+         "1 motor + (battery, after fuse) &middot; 2 motor &minus; (MOSFET drain) &middot; "
+         "3 trigger (GPIO3) &middot; 4 trigger return / ground"],
+    ], [1.75 * inch, 5.45 * inch]))
     s += bullets([
-        "<b>Pin 6 is not spare, it is a job.</b> The elbow run is the longest in the "
-        "costume and carries the whole strip's current. A second ground conductor cuts the "
-        "voltage drop and gives the data line a better return path. Tie it to common ground "
-        "at both ends.",
-        "<b>The motor gets its own plug on purpose.</b> Roughly an amp of switched PWM "
-        "bundled against a WS2812 data line is asking for flicker. Twist the motor pair.",
+        "<b>J2 plugs straight into the upper-arm strip</b>, right at the pod. Pixel 0 is the "
+        "first thing the data reaches.",
+        "<b>J3 is a 4-conductor lead</b> run from the board down the upper arm to the elbow, "
+        "where its SM-4 plug mates the sleeve (Step 3). Twist the motor pair.",
+        "<b>The strip and the motor do not share a plug, on purpose.</b> Roughly an amp of "
+        "switched PWM bundled against a WS2812 data line is asking for flicker. The trigger "
+        "rides with the motor instead &mdash; it is a slow switch to ground and does not care.",
+        "<b>The strip's ground return is SM-3 pin 2</b>, at both the pod and the elbow. Make "
+        "those joints properly &mdash; on a three-wire run there is nothing else to cover "
+        "for a bad one.",
     ])
+    s.append(callout(
+        "Two SM-3s on one arm, and why that is allowed",
+        "No two connectors on one arm share family and pin count, so nothing mates where it "
+        "should not &mdash; with one exception: <b>PH-2 &middot; ZH-2 &middot; SM-2 &middot; "
+        "SM-3 (&times;2) &middot; SM-4 &middot; SM-5</b>.<br/><br/>"
+        "The deliberate exception is the <b>two SM-3 strip plugs</b> %s &mdash; the pod's J2 "
+        "and the elbow J6. It is safe by construction: both carry the same strip nets in the "
+        "same pin order. Plug the pod's J2 straight onto the forearm input and the upper-arm "
+        "segment is simply skipped. Nothing is damaged. Keep the pin order identical on both "
+        "and it stays that way." % ref(21)))
 
     s.append(P("The battery monitor divider", "h2"))
     sp = "&nbsp;"
@@ -982,9 +978,9 @@ def story():
 
     s.append(P("Also fit", "h2"))
     s += bullets([
-        "The <b>1000 uF capacitor</b> %s across the strip's 5V and ground, physically "
-        "close to the elbow connector. Watch polarity &mdash; the striped leg is negative."
-        % ref(17),
+        "The <b>1000 uF capacitor</b> %s, C1, across the strip's 5V and ground at the strip "
+        "connector J2 %s on the pod &mdash; stood upright next to J2. Watch polarity "
+        "&mdash; the striped leg is negative." % (ref(17), ref(21)),
         "The <b>1N5819 diode</b> %s directly across the motor's two terminals at the blower "
         "end, banded end to <b>positive</b>. Backwards it is a dead short, so check this one "
         "twice." % ref(11),
@@ -1009,7 +1005,7 @@ def story():
         "<b>3.</b> <b>Leave the USB-C port reachable</b> when you design the printed pod, "
         "and use a <b>data-capable</b> cable %s. You will reflash this far more often than "
         "you expect."
-        % (ref(8), ref(5), ref(9), ref(10), ref(14), ref(12), ref(35))))
+        % (ref(8), ref(5), ref(9), ref(10), ref(14), ref(12), ref(36))))
 
     # Step 5
     s.append(P("Step 5 &mdash; Wire this hand's trigger", "h2"))
@@ -1017,12 +1013,12 @@ def story():
                "the torso. You are wiring one of two identical, independent triggers.", "body"))
     s += bullets([
         "Solder two lengths of thin silicone wire %s to the microswitch's <b>COM</b> and "
-        "<b>NO</b> (normally open) terminals." % ref(26),
+        "<b>NO</b> (normally open) terminals." % ref(27),
         "Terminate them in the <b>male half of a JST-ZH 2-pin</b> %s &mdash; the mate to the "
-        "one you left on the glove side of the umbilical in Step 3." % ref(24),
+        "one you left on the glove side of the umbilical in Step 3." % ref(25),
         "Mount the switch %s on a small printed plate %s, positioned so the <b>lever</b> "
         "sits under your middle and ring finger pads at the spot you marked in Step 1."
-        % (ref(20), ref(36)),
+        % (ref(20), ref(37)),
     ])
     s.append(P("Orient the lever so a natural squeeze presses across its length. You "
                "should be able to fire it with your eyes closed, in one motion, every "
@@ -1040,7 +1036,7 @@ def story():
         "XIAO %s.<br/><br/>"
         "JST-ZH %s is 1.5 mm pitch; PH is 2.0 mm. They physically will not mate. That "
         "incompatibility is the entire reason for the choice &mdash; do not \"simplify\" it "
-        "later by standardising on one connector." % (ref(12), ref(8), ref(24))))
+        "later by standardising on one connector." % (ref(12), ref(8), ref(25))))
 
     # Step 6
     s.append(P("Step 6 &mdash; Bench test, before anything goes in the glove", "h2"))
@@ -1061,14 +1057,15 @@ def story():
         "<b>Check polarity with the multimeter</b> %s. Battery + and &minus; where you "
         "expect, and the boost %s output at <b>5.00V</b> &mdash; it was trimmed back in "
         "Step 4, before the brain %s was ever connected. If it is not ~5V, unplug the "
-        "brain and go retrim it." % (ref(32), ref(14), ref(8)),
+        "brain and go retrim it." % (ref(33), ref(14), ref(8)),
         "<b>Confirm CR2 is doing its job:</b> boost output ~5.0V, XIAO 5V pad ~4.7V. That "
         "0.3V step is the diode. The same reading on both sides means you shorted past it.",
         "Power up. You should get the dim breathing idle glow.",
         "<b>Watch the blower as it powers up. It must not twitch.</b> If it kicks, stop: "
         "floating gate.",
-        "Press the microswitch %s by hand. The comet should launch from the <b>elbow</b> "
-        "end and travel to the <b>fingertip</b> end, and the motor should spin." % ref(20),
+        "Press the microswitch %s by hand. The comet should launch from the <b>pod</b> "
+        "end, cross the elbow, and travel to the <b>fingertip</b> end, and the motor should "
+        "spin." % ref(20),
         "If the comet runs backwards, the strip pieces are reversed. <b>Fix it in the "
         "wiring, not in the code</b> &mdash; both arms run identical firmware and that "
         "is worth a resolder.",
@@ -1078,7 +1075,7 @@ def story():
         "Test the low-voltage shutoff, once per arm",
         "Do it on the bench once, so you recognise it in the field and know it works. Feed "
         "the pod <b>2.95V</b> from a bench supply in place of the cell %s: within about six "
-        "seconds the elbow pixel starts a slow <b>double</b> blink, the motor stops, and the "
+        "seconds the elbow pixel &mdash; the first forearm pixel &mdash; starts a slow <b>double</b> blink, the motor stops, and the "
         "trigger does nothing. Wind up to 3.7V and it comes back. No bench supply? Run an "
         "arm flat &mdash; tedious, but it also measures your real runtime.<br/><br/>"
         "<b>Single slow pulse = warning</b> (swap soon). <b>Double blink = shut down</b> "
@@ -1094,7 +1091,7 @@ def story():
         "boost running hot because something downstream is shorted, a MOSFET that turned out "
         "not to be logic-level and is dissipating the difference, or a strip section drawing "
         "more than its neighbours. One borrowed session is plenty."
-        % (ref(14), ref(10), ref(34))))
+        % (ref(14), ref(10), ref(35))))
 
     # Step 7
     s.append(P("Step 7 &mdash; Fit the bubbler", "h2"))
@@ -1145,8 +1142,8 @@ def story():
         "<b>Rework the motor lead.</b> The kit ships the motor on a <b>PH2.0 female</b> plug "
         "that mates straight to the cell %s. Cut it off and fit a <b>JST-SM 2-pin</b> %s. "
         "This is not cosmetic: leave it and the cell can power the motor directly, bypassing "
-        "the MOSFET %s, and the trigger does nothing." % (ref(12), ref(23), ref(10)),
-        "Use silicone wire %s for the motor run; it flexes constantly." % ref(26),
+        "the MOSFET %s, and the trigger does nothing." % (ref(12), ref(24), ref(10)),
+        "Use silicone wire %s for the motor run; it flexes constantly." % ref(27),
         "A longer hose holds more solution, so dribble on shutdown gets slightly worse. The "
         "silicone sleeve over the cap's protrusion &mdash; the one-way valve &mdash; is what "
         "stops it emptying into your bag.",
@@ -1162,19 +1159,27 @@ def story():
         "Open <font face=\"Courier\">firmware/clown_arm/clown_arm.ino</font>.",
         "<b>Edit the layout constants</b> at the top to match your measurements.",
         "Plug in USB-C %s and upload. If it fails, hold BOOT while plugging the cable in."
-        % ref(35),
+        % ref(36),
     ])
-    s.append(P("constexpr int FOREARM_PX = 15;&nbsp;&nbsp; // your forearm pixel count<br/>"
-               "constexpr int HAND_PX&nbsp;&nbsp;&nbsp; = 6;&nbsp;&nbsp;&nbsp; // your hand pixel count<br/>"
-               "constexpr int GAP_PX&nbsp;&nbsp;&nbsp;&nbsp; = 5;&nbsp;&nbsp;&nbsp; // umbilical length / 1.67 cm", "code"))
-    s.append(P("<b>GAP_PX is the measured pixel-to-pixel distance across the umbilical</b>, "
-               "from the last forearm pixel to the first hand pixel, divided by 1.67 cm. "
-               "Measure the finished assembly from Step 3 &mdash; <i>including the connector "
-               "body</i> %s, which is most of it. About 8 cm gives GAP_PX = 5. Guessing here "
-               "is what makes the comet look like it stumbles at the wrist." % ref(22),
-               "body"))
+    s.append(P("constexpr int UPPER_PX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 6;&nbsp;&nbsp;&nbsp;&nbsp; // upper-arm pixel count (pod to elbow)<br/>"
+               "constexpr int ELBOW_GAP_PX = 7;&nbsp;&nbsp;&nbsp;&nbsp; // elbow umbilical length / 1.67 cm<br/>"
+               "constexpr int FOREARM_PX&nbsp;&nbsp;&nbsp; = 15;&nbsp;&nbsp;&nbsp; // forearm pixel count<br/>"
+               "constexpr int HAND_PX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 6;&nbsp;&nbsp;&nbsp;&nbsp; // hand pixel count<br/>"
+               "constexpr int GAP_PX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 5;&nbsp;&nbsp;&nbsp;&nbsp; // wrist umbilical length / 1.67 cm", "code"))
+    s.append(P("<b>The two gaps are the measured pixel-to-pixel distance across each "
+               "umbilical</b>, divided by 1.67 cm. Measure the finished assemblies from Step 3 "
+               "&mdash; <i>including the connector bodies</i> %s %s, which are most of it. "
+               "<b>ELBOW_GAP_PX</b>: last upper-arm pixel to first forearm pixel; about 12 cm "
+               "gives 7. <b>GAP_PX</b>: last forearm pixel to first hand pixel, across the "
+               "wrist; about 8 cm gives 5. Guessing here is what makes the comet look like it "
+               "stumbles at the elbow or the wrist." % (ref(21), ref(23)), "body"))
+    s.append(P("The comet launches from pixel 0 at the pod and runs all the way to the "
+               "fingertips. The firmware keeps the <b>total travel time</b> the same &mdash; "
+               "about 250 ms, matched to the blower's spin-up &mdash; so on the longer path "
+               "the comet simply moves faster. The status blinks stay on the <b>elbow "
+               "pixel</b>, which is now the first forearm pixel (index UPPER_PX).", "body"))
     s.append(P("<b>Flash the identical sketch to both arms.</b> There is deliberately no "
-               "left/right setting &mdash; as long as pixel 0 is at the elbow on each "
+               "left/right setting &mdash; as long as pixel 0 is at the pod on each "
                "arm, the mirroring is physical only.", "body"))
 
     # Step 9
@@ -1219,7 +1224,9 @@ def story():
         "joints flex too much for strip to survive.",
         "Sew a <b>fabric channel</b> %s for the strip to sit in rather than gluing it down "
         "flat. The channel lets it slide as your hand flexes; glued-taut strip tears "
-        "itself off, or tears the glove." % ref(30),
+        "itself off, or tears the glove." % ref(31),
+        "Run the forearm section under the sleeve %s, same principle. The upper-arm "
+        "section runs from the pod down to the elbow plugs the same way." % ref(7),
         "<font face=\"Courier\">MAX_BRIGHTNESS</font> is preset high to punch through "
         "fabric. You can raise it further for thicker gloves, but current draw climbs "
         "with it and battery life drops.",
@@ -1232,7 +1239,7 @@ def story():
         "A smear of <b>dielectric grease</b> %s in each shell keeps soap residue from "
         "corroding the contacts over a season. And position the mated plugs where a tight "
         "sleeve will not press them into your skin &mdash; a 20 mm plastic body under a cuff "
-        "for six hours is uncomfortable." % ref(25)))
+        "for six hours is uncomfortable." % ref(26)))
 
     # Step 11
     s.append(PageBreak())
@@ -1251,7 +1258,7 @@ def story():
         "everything within a metre, including the inside of any vent you left open." % ref(1),
         "<b>Wicking &mdash; the one people miss.</b> Soap film creeps <i>along wire "
         "insulation</i> %s, into a connector shell and out the other end, hours after the "
-        "splash that started it. Sealing the box is not enough if the wires are a wick." % ref(26),
+        "splash that started it. Sealing the box is not enough if the wires are a wick." % ref(27),
         "<b>Other people.</b> Hands go up, drinks get waved, and someone will absolutely "
         "grab your forearm.",
         "<b>Condensation.</b> Warm arm, cold night, sealed box. Water forms <i>inside</i> a "
@@ -1275,11 +1282,11 @@ def story():
     s += bullets([
         "<b>PETG %s, not PLA.</b> PLA goes soft in a hot car and is brittle where this part "
         "flexes under a strap. <b>Four perimeters, 1.6 mm walls minimum</b> &mdash; thin FDM "
-        "walls leak through the layer lines themselves." % ref(44),
+        "walls leak through the layer lines themselves." % ref(45),
         "<b>A lid with a gasket groove</b>, closed with four <b>M3 &times; 8 mm button-head "
         "stainless screws</b> into <b>4.6 &times; 5.0 mm brass heat-set inserts</b> %s, with "
         "2 mm silicone cord %s in the groove. Nothing sticky &mdash; you will be opening "
-        "this." % (ref(42), ref(41)),
+        "this." % (ref(43), ref(42)),
         "<b>Model the insert bosses at 4.0 mm diameter, 6.0 mm deep</b>, with at least 2 mm "
         "of plastic all round &mdash; a boss 8.5 mm across or more. The 0.6 mm the hole is "
         "undersize is the plastic the brass melts into; the extra 1 mm of depth is somewhere "
@@ -1292,10 +1299,10 @@ def story():
         "<b>A 2 mm drain hole at the lowest corner</b>, plus a small vent at the opposite "
         "high corner so it can breathe. Yes, this is a hole in your waterproof box. It is "
         "the difference between a box that drains and a box that holds a puddle against your "
-        "protoboard %s." % ref(28),
+        "protoboard %s." % ref(29),
         "<b>Cable entry through a grommet</b> %s on the underside, and <b>a drip loop on "
         "every wire leaving the pod</b> &mdash; a downward loop below the entry, so water "
-        "running along the insulation drips off instead of tracking in." % ref(43),
+        "running along the insulation drips off instead of tracking in." % ref(44),
         "<b>A silicone plug or hinged flap over the USB-C port.</b> It has to stay reachable "
         "and it has to be shut by default.",
     ])
@@ -1310,7 +1317,7 @@ def story():
         "<b>Do it after the bench test passes</b> &mdash; coating a board you then have to "
         "rework is miserable. Clear RTV %s dabbed over the strip's cut ends does the same "
         "job at the wet end of the arm."
-        % (ref(39), ref(28), ref(14), ref(10), ref(20), ref(29))))
+        % (ref(40), ref(29), ref(14), ref(10), ref(20), ref(30))))
 
     s.append(P("The battery gets its own sealed compartment", "h2"))
     s += bullets([
@@ -1321,7 +1328,7 @@ def story():
         "pigtail there are no tabs and no joints in here to work loose &mdash; most of why "
         "the cradle beat a sled. Heat-shrink %s and a strain-relief anchor go on the J1 "
         "wires, outside the wall."
-        % (ref(13), ref(27)),
+        % (ref(13), ref(28)),
         "<b>Nothing metal loose in the compartment.</b> No stray screws, no washers, no "
         "snipped lead ends. Check every time you close it.",
         "<b>Check the cell's own wrap before every event.</b> A nicked 18650 sleeve exposes "
@@ -1344,18 +1351,18 @@ def story():
         "sealed IP67 microswitch with the same lever, which is harder to source than it "
         "sounds.<br/><br/>"
         "Either way, seal the ZH-2 %s joint: heat-shrink %s over the solder, and dielectric "
-        "grease %s in the shell." % (ref(20), ref(6), ref(24), ref(27), ref(25))))
+        "grease %s in the shell." % (ref(20), ref(6), ref(25), ref(28), ref(26))))
 
     s.append(P("The connectors", "h2"))
     s += bullets([
         "<b>Grease every shell</b> %s &mdash; you were doing this for corrosion anyway; it "
-        "also keeps water out of the contacts." % ref(25),
+        "also keeps water out of the contacts." % ref(26),
         "<b>Wrap each mated plug</b> in a turn of self-amalgamating silicone tape %s. It "
         "fuses to itself, takes no adhesive with it, and comes off in one piece when you "
-        "need to unplug." % ref(40),
+        "need to unplug." % ref(41),
         "<b>Point the plug down</b>, or at worst sideways. A shell facing up is a cup.",
         "The wrist SM-5 %s sits <b>above</b> the cuff, not under it &mdash; a cuff channels "
-        "solution straight into the plug." % ref(22),
+        "solution straight into the plug." % ref(23),
     ])
 
     s.append(callout(
@@ -1375,13 +1382,13 @@ def story():
     s.append(P("Step 12 &mdash; Build the second arm", "h2"))
     s.append(P("Repeat Steps 1 to 11. Two things to be careful about:", "body"))
     s += bullets([
-        "<b>Pixel 0 goes at the elbow on this arm too.</b> It is tempting to mirror the "
+        "<b>Pixel 0 goes at the pod on this arm too.</b> It is tempting to mirror the "
         "wiring along with the physical build. Do not. Identical wiring means identical "
         "firmware means one thing to maintain.",
-        "<b>Keep the same SM-5 %s and SM-6 %s pin conventions.</b> If arm A puts the trigger "
+        "<b>Keep the same SM-3 %s, SM-4 %s and SM-5 %s pin conventions.</b> If arm A puts the trigger "
         "on pins 4-5 and arm B puts it on pins 1-2, then spares are not spares, and one "
         "wrong plug at an event costs you a board. Write the pinout on a bit of tape inside "
-        "each pod." % (ref(22), ref(21)),
+        "each pod." % (ref(21), ref(22), ref(23)),
     ])
 
     # Step 13
@@ -1392,9 +1399,10 @@ def story():
     s.append(P("Both-arms checkout", "h2"))
     s += bullets([
         "<b>Cells %s out of both pods.</b>" % ref(12),
-        "Mate every connector on both arms. Count them: <b>four per arm</b> &mdash; elbow "
-        "SM-6 %s, elbow SM-2 %s, wrist SM-5 %s, wrist SM-2 %s &mdash; plus the ZH-2 %s at "
-        "each microswitch." % (ref(21), ref(23), ref(22), ref(23), ref(24)),
+        "Mate every connector on both arms. Count them: <b>four down each arm</b> &mdash; "
+        "elbow SM-4 %s, elbow SM-3 %s, wrist SM-5 %s, wrist SM-2 %s &mdash; plus the pod's "
+        "J2 SM-3 into the upper-arm strip, and the ZH-2 %s at each microswitch."
+        % (ref(22), ref(21), ref(23), ref(24), ref(25)),
         "Cells in. Both arms should show the idle glow.",
         "<b>Fire each hand separately.</b> Left trigger drives the left arm only; right "
         "drives right only. If one trigger fires the other arm, you have crossed something "
@@ -1409,17 +1417,17 @@ def story():
     s.append(grid([
         ["Getting into it &mdash; cells go in LAST", "Getting out of it &mdash; cells come out FIRST"],
         ["<b>1.</b> Pods on, strapped, cells <b>out</b>, switches %s <b>off</b>.<br/>"
-         "<b>2.</b> Sleeves on. Mate elbow SM-6 and SM-2 each side.<br/>"
+         "<b>2.</b> Sleeves on. Mate elbow SM-4 and SM-3 each side.<br/>"
          "<b>3.</b> Gloves on. Mate wrist SM-5 each side.<br/>"
          "<b>4.</b> Bubblers strapped on, mate wrist SM-2, bottles filled.<br/>"
-         "<b>5. Cells in, then switches on.</b> Check both idle glows." % ref(37),
+         "<b>5. Cells in, then switches on.</b> Check both idle glows." % ref(38),
          ("<b>1. Switches %s off, then cells out.</b> Both arms are now dead.<br/>"
           "<b>2.</b> Wrist SM-2 + bubbler strap &rarr; bubblers off, bottles upright.<br/>"
           "<b>3.</b> Wrist SM-5 &rarr; gloves peel off.<br/>"
-          "<b>4.</b> Elbow SM-6 + SM-2 &rarr; sleeves come off.<br/>"
+          "<b>4.</b> Elbow SM-4 + SM-3 &rarr; sleeves come off.<br/>"
           "<b>5.</b> Pod straps.<br/><br/>"
           "Four releases per arm, none needing a second person or a flat surface."
-          % ref(37))],
+          % ref(38))],
     ], [3.60 * inch, 3.60 * inch]))
 
     s.append(callout(
@@ -1430,19 +1438,19 @@ def story():
         "<b>Can you kill and remove either battery %s, one-handed, in under ten seconds?</b> "
         "Switch %s off, cradle lid, plug. If either takes longer, fix the pod before the "
         "event. When something goes wrong mid-event the order is: switch off, cell out, "
-        "<i>then</i> work out what happened." % (ref(12), ref(37))))
+        "<i>then</i> work out what happened." % (ref(12), ref(38))))
 
     s.append(P("Care afterwards", "h2"))
     s += bullets([
         "<b>Cells out for storage.</b> Never store the costume with cells connected. The "
-        "switch %s being off is not storage &mdash; a switch can be knocked on in a bag." % ref(37),
+        "switch %s being off is not storage &mdash; a switch can be knocked on in a bag." % ref(38),
         "<b>Open the pods and let them dry</b> before they go away. A sealed damp box is "
         "worse than an open damp box. See Step 11.",
         "Rinse the blower head and cap in warm water &mdash; dried bubble solution glues the "
         "one-way valve shut.",
         "Leave the silicone sleeve on the cap protrusion so the bottle does not empty into "
         "your bag.",
-        "Wipe soap residue off any connector that got sprayed, and re-grease it %s." % ref(25),
+        "Wipe soap residue off any connector that got sprayed, and re-grease it %s." % ref(26),
     ])
 
     # Troubleshooting
@@ -1463,17 +1471,22 @@ def story():
         ["Pixel 0 died after a reconnect",
          "Strip was plugged in live. <b>Cell %s out before mating</b>, every time." % ref(12)],
         ["Random flickering, especially when moving",
-         "Missing level shifter %s, or a loose ground. Check SM-6 %s pin 6 is actually tied "
-         "to ground at both ends." % (ref(9), ref(21))],
+         "Missing level shifter %s, or a loose ground. Check the strip GND (SM-3 %s pin 2) "
+         "at both ends &mdash; the pod's J2 and the elbow J6." % (ref(9), ref(21))],
         ["Odd pixel glitches or a stuttering blower, only with it all running",
          "Missing 0.1 uF %s at the level shifter %s supply pins, or fitted on long legs. "
          "Step 4." % (ref(18), ref(9))],
         ["Level shifter %s runs warm with nothing obviously wrong" % ref(9),
          "Unused inputs floating. 3A and 4A to ground, 3OE and 4OE to Vcc. Step 4."],
-        ["Comet runs fingertips to elbow",
-         "Strip %s is reversed. Fix the wiring, not the code." % ref(5)],
+        ["Comet runs fingertips to pod",
+         "Strip %s is reversed &mdash; it should run pod to fingertips. Fix the wiring, not "
+         "the code." % ref(5)],
+        ["Comet jumps or stalls at the elbow",
+         "<font face=\"Courier\">ELBOW_GAP_PX</font> does not match your measured elbow "
+         "umbilical length."],
         ["Comet jumps or stalls at the wrist",
-         "<font face=\"Courier\">GAP_PX</font> does not match your measured umbilical length."],
+         "<font face=\"Courier\">GAP_PX</font> does not match your measured wrist "
+         "umbilical length."],
         ["Colours wrong, red and green swapped",
          "Change <font face=\"Courier\">GRB</font> to <font face=\"Courier\">RGB</font> in "
          "the <font face=\"Courier\">addLeds</font> line."],
@@ -1487,7 +1500,7 @@ def story():
          "IRF520, which is not logic-level." % ref(9)],
         ["Motor runs constantly, trigger does nothing",
          "Motor still on its factory PH2.0 lead, plugged straight to the cell. Rework it to "
-         "SM-2 %s &mdash; Step 7." % ref(23)],
+         "SM-2 %s &mdash; Step 7." % ref(24)],
         ["Everything dies when the motor starts",
          "Cell %s sagging, or the polyfuse %s tripping. Check the charge."
          % (ref(12), ref(15))],
@@ -1507,22 +1520,25 @@ def story():
          % ref(11)],
         ["Arm completely dead, cell freshly charged",
          "Disconnect switch %s off, or its DC rating gave out. Check the switch before you "
-         "suspect the board." % ref(37)],
+         "suspect the board." % ref(38)],
         ["It worked, got sprayed, now behaves oddly",
          "Soap tracking across pins. Switch %s off, open it, rinse with isopropyl, dry "
-         "fully. Then Step 11." % ref(37)],
+         "fully. Then Step 11." % ref(38)],
         ["One trigger fires the other arm",
          "Not possible by design &mdash; you have cross-plugged two arms. Check each arm is "
          "self-contained."],
         ["Board will not accept uploads",
          "Hold BOOT while plugging in USB. If the port is not recognised at all, suspect a "
-         "charge-only cable %s." % ref(35)],
+         "charge-only cable %s." % ref(36)],
+        ["Strip goes dark past the elbow",
+         "Unseated elbow SM-3 %s, or a failed elbow umbilical joint &mdash; same failure as "
+         "the wrist, one joint up." % ref(21)],
         ["Strip goes dark past the wrist",
          "Cracked trace or failed umbilical joint &mdash; the failure the umbilical exists "
          "to prevent. Swap in your spare."],
         ["Trigger does nothing, one arm",
          "Check the ZH-2 plug %s first, then the switch itself. <b>No spare switch is "
-         "carried</b>, so if the switch is dead that arm is done for the night." % ref(24)],
+         "carried</b>, so if the switch is dead that arm is done for the night." % ref(25)],
         ["Bubbles weak or intermittent",
          "Gravity ball not sitting in solution, or the feed hose %s is too long. See the "
          "Step 7 hose test." % ref(3)],
@@ -1565,17 +1581,18 @@ def story():
                "<b>without a soldering iron</b> &mdash; that is what the connectors bought "
                "you:", "body"))
     s += bullets([
-        "<b>A pre-made spare wrist umbilical</b> %s &mdash; genuinely swappable now that "
-        "both ends are connectors." % ref(22),
-        "One spare SM pigtail pair of each size %s %s %s."
-        % (ref(21), ref(22), ref(23)),
+        "<b>A pre-made spare wrist umbilical</b> %s and <b>a pre-made spare elbow "
+        "umbilical</b> %s &mdash; genuinely swappable now that both ends are connectors."
+        % (ref(23), ref(21)),
+        "One spare SM pigtail pair of each size %s %s %s %s."
+        % (ref(21), ref(22), ref(23), ref(24)),
         "<b>The kit's USB charger and a power bank.</b> With no spare cells %s, recharging "
         "between sets is the only way to extend the night." % ref(12),
         "<b>Extra bubble solution</b> %s. This runs out long before the battery does." % ref(4),
         "Spare 3 x 5 silicone tube %s, in case a feed hose splits." % ref(3),
-        "A solder pen %s, for repairs you cannot connector your way out of." % ref(33),
+        "A solder pen %s, for repairs you cannot connector your way out of." % ref(34),
         "A small screwdriver and some electrical tape.",
-        "<b>Self-amalgamating tape</b> %s, for re-wrapping a plug you had to open." % ref(40),
+        "<b>Self-amalgamating tape</b> %s, for re-wrapping a plug you had to open." % ref(41),
         "<b>Isopropyl and a cloth.</b> Wiping dried solution off a connector at the venue is "
         "the difference between one dead arm and two.",
     ])
@@ -1588,7 +1605,7 @@ def story():
         "switches, one per arm, both in use; the ZH-2 pigtail %s means a spare would swap "
         "in ten seconds, there just is not one yet. Both are cheap to close later: "
         "protected 18650s and lever microswitches sell in multipacks."
-        % (ref(12), ref(37), ref(20), ref(24)), "body"))
+        % (ref(12), ref(38), ref(20), ref(25)), "body"))
 
     return s
 

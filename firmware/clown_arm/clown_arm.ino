@@ -1,10 +1,12 @@
 // clown_arm — bubble-shooting clown sleeve, one arm.
 //
 // Squeeze the palm trigger: the blower spins up while a comet of light runs
-// from the elbow to the fingertips, landing as the first bubbles fire.
+// from the pod, down the upper arm and forearm, to the fingertips, landing as
+// the first bubbles fire.
 //
-// Flash this unchanged to BOTH arms. There is no handedness here — as long as
-// pixel 0 sits at the elbow on each arm, the mirroring is physical only.
+// Flash this unchanged to BOTH arms. The firmware is byte-identical on each —
+// there is no handedness here. As long as pixel 0 sits at the pod on each arm,
+// the mirroring is physical only.
 //
 // Board:  Seeed XIAO ESP32-C3
 // Core:   ESP32 Arduino core 3.x  (see ledcAttach note below for 2.x)
@@ -24,20 +26,30 @@
 // Tunables — everything you'd want to change lives in this block.
 // ---------------------------------------------------------------------------
 
-// Physical layout. The strip is split at the wrist; GAP_PX is how many pixels
-// of *virtual* distance the umbilical spans, so the comet doesn't appear to
-// jump across the wrist. Measure your own arm (BUILD.md step 1) and adjust.
+// Physical layout. One data chain, three segments, in this order on the strip:
+// upper arm [0 .. UPPER_PX), then forearm, then hand. Pixel 0 is at the pod.
+// The chain is split at the elbow and at the wrist; ELBOW_GAP_PX and GAP_PX
+// are how many pixels of *virtual* distance each umbilical spans, so the comet
+// doesn't appear to jump across either joint. Measure your own arm (BUILD.md
+// step 1) and adjust.
 //
-// GAP_PX is the measured distance from the last forearm pixel to the first hand
-// pixel, divided by 1.67 cm. That run now includes the SM 5-pin connector body,
-// which is most of it — so measure the finished umbilical (BUILD.md step 3)
-// rather than guessing from the wire length.
-constexpr int FOREARM_PX = 15;   // elbow -> wrist
-constexpr int HAND_PX    = 6;    // wrist -> knuckles
-constexpr int GAP_PX     = 5;    // umbilical + connector, ~8 cm at 60 LED/m
+// Each gap is the measured distance from the last pixel before the joint to
+// the first pixel after it, divided by 1.67 cm. Those runs include the SM
+// connector bodies (SM 3-pin at the elbow, SM 5-pin at the wrist), which are
+// most of it — so measure the finished umbilicals (BUILD.md step 3) rather
+// than guessing from the wire length.
+constexpr int UPPER_PX     = 6;    // pod -> just above the elbow
+constexpr int ELBOW_GAP_PX = 7;    // elbow umbilical + connector, ~12 cm at 60 LED/m
+constexpr int FOREARM_PX   = 15;   // elbow -> wrist
+constexpr int GAP_PX       = 5;    // wrist umbilical + connector, ~8 cm at 60 LED/m
+constexpr int HAND_PX      = 6;    // wrist -> knuckles
 
 // Timing. COMET_TRAVEL_MS must match how long the blower takes to reach speed —
 // tune it last, on the assembled arm, with slow-motion video (BUILD.md step 9).
+// It is the time for the WHOLE run, pod to fingertips, not a per-pixel step:
+// renderFiring() spreads it over VIRTUAL_LEN. So adding the upper-arm segment
+// did not change when the comet lands — the head just moves faster (38 virtual
+// px in 250 ms now, against 25 when the strip started at the elbow).
 constexpr uint16_t COMET_TRAVEL_MS = 250;
 constexpr uint16_t COMET_REPEAT_MS = 320;   // gap between comets while held
 constexpr uint16_t RELEASE_FADE_MS = 400;   // fingertip flare after release
@@ -107,8 +119,17 @@ constexpr uint16_t DEBOUNCE_MS = 25;
 
 // ---------------------------------------------------------------------------
 
-constexpr int NUM_LEDS    = FOREARM_PX + HAND_PX;
-constexpr int VIRTUAL_LEN = FOREARM_PX + GAP_PX + HAND_PX;
+constexpr int NUM_LEDS    = UPPER_PX + FOREARM_PX + HAND_PX;
+constexpr int VIRTUAL_LEN = UPPER_PX + ELBOW_GAP_PX + FOREARM_PX + GAP_PX + HAND_PX;
+
+// The first forearm pixel — the one just below the elbow. Status indicators
+// live here, not on pixel 0, which is up at the pod.
+constexpr int ELBOW_PX = UPPER_PX;
+
+// The last virtual pixel must land on the last physical one, or the mapping
+// below would write past the end of leds[].
+static_assert(VIRTUAL_LEN - 1 - ELBOW_GAP_PX - GAP_PX == NUM_LEDS - 1,
+              "virtual layout and physical strip disagree");
 
 CRGB leds[NUM_LEDS];
 
@@ -129,13 +150,18 @@ bool     vbatLow      = false;  // warning latch, with hysteresis
 bool     vbatDead     = false;  // shutoff latch, cleared only by a fresh cell
 uint8_t  vbatLowCount = 0;      // consecutive samples under the cutoff
 
-// Map a virtual pixel index onto the physical strip, skipping the wrist gap.
-// Returns -1 for positions that fall inside the gap (nothing to light there).
+// Map a virtual pixel index onto the physical strip, skipping the elbow and
+// wrist gaps. Returns -1 for positions that fall inside a gap (nothing to
+// light there).
 static int virtualToPhysical(int v) {
+  constexpr int ELBOW_END   = UPPER_PX + ELBOW_GAP_PX;   // first forearm, virtual
+  constexpr int FOREARM_END = ELBOW_END + FOREARM_PX;    // first wrist-gap, virtual
   if (v < 0 || v >= VIRTUAL_LEN) return -1;
-  if (v < FOREARM_PX) return v;
-  if (v < FOREARM_PX + GAP_PX) return -1;   // in the umbilical
-  return v - GAP_PX;
+  if (v < UPPER_PX) return v;                            // upper arm
+  if (v < ELBOW_END) return -1;                          // in the elbow umbilical
+  if (v < FOREARM_END) return v - ELBOW_GAP_PX;          // forearm
+  if (v < FOREARM_END + GAP_PX) return -1;               // in the wrist umbilical
+  return v - ELBOW_GAP_PX - GAP_PX;                      // hand
 }
 
 // Add color to one virtual pixel, scaled. No-op if it lands in the gap.
@@ -257,22 +283,24 @@ static void renderReleasing() {
   leds[NUM_LEDS - 1] |= CHSV(THEME_HUE, 60, v);
 }
 
-// Slow red pulse on the elbow pixel when the cell is nearly flat. Deliberately
-// at the elbow: it's the end you can see without breaking character.
+// Slow red pulse on the elbow pixel (ELBOW_PX, the first forearm pixel — not
+// pixel 0, which is at the pod) when the cell is nearly flat. Deliberately at
+// the elbow: it's the spot you can see without breaking character.
 static void overlayLowBattery() {
   if (vbatDead || !vbatLow) return;   // dead has its own, louder, render
   uint8_t pulse = cubicwave8((millis() / 8) & 0xFF);
-  leds[0] = CRGB(scale8(pulse, 180), 0, 0);
+  leds[ELBOW_PX] = CRGB(scale8(pulse, 180), 0, 0);
 }
 
 // Cell is flat and we have cut the motor. Everything dark except a slow red
-// double-blink at the elbow, which is unmistakably different from the low
-// warning's single pulse and draws almost nothing. Swap the cell to clear it.
+// double-blink on the elbow pixel (ELBOW_PX), which is unmistakably different
+// from the low warning's single pulse and draws almost nothing. Swap the cell
+// to clear it.
 static void renderLockout() {
   fill_solid(leds, NUM_LEDS, CRGB::Black);
   uint16_t phase = millis() % 2000;
   bool on = (phase < 120) || (phase >= 260 && phase < 380);
-  if (on) leds[0] = CRGB(120, 0, 0);
+  if (on) leds[ELBOW_PX] = CRGB(120, 0, 0);
 }
 
 void setup() {

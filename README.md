@@ -1,8 +1,8 @@
 # clown
 
 A bubble-shooting clown costume. Make a gun shape with either hand, squeeze your
-remaining fingers into your palm, and a comet of light runs from your elbow down
-to your fingertips — arriving exactly as a stream of bubbles starts firing out of
+remaining fingers into your palm, and a comet of light runs from your upper arm
+down to your fingertips — arriving exactly as a stream of bubbles starts firing out of
 your fingers.
 
 Two arms, two identical rigs — **one trigger per hand, each firing its own arm.**
@@ -34,7 +34,8 @@ places where it changes the build.
 1. **Squeeze.** Microswitch in the palm closes.
 2. **Motor kicks.** Blower gets a brief over-drive pulse to break static friction,
    then settles to its run speed.
-3. **Comet launches** from the elbow pixel and travels toward the fingertips.
+3. **Comet launches** from pixel 0 at the pod, high on the upper arm, and travels
+   toward the fingertips.
 4. **~250 ms later** the comet lands at the fingertips and the blower has reached
    full speed — bubbles start. The light travel *is* the spin-up delay, so it
    reads as causal instead of as lag.
@@ -53,7 +54,7 @@ and trigger. Nothing crosses the torso.
 - **Each hand has its own trigger**, wired only to its own arm. There is no
   cross-arm wiring anywhere in v1.
 - If one arm dies mid-event, the other keeps working.
-- **The firmware is byte-identical on both.** As long as pixel 0 is at the elbow
+- **The firmware is byte-identical on both.** As long as pixel 0 is at the pod
   on each arm, there's no handedness in the code — flash the same binary twice.
 
 The tradeoff is buying two of everything, including two bubble maker kits and two
@@ -72,8 +73,8 @@ Nothing is soldered end to end across a joint. Each arm is four modules:
 
 | Module | Holds | Unplugs at |
 |---|---|---|
-| **Pod** — upper arm | brain, boost, level shifter, MOSFET, fuse, disconnect, cell cradle | `SW1` + battery plug + straps |
-| **Sleeve** — forearm | forearm strip, 15 px | elbow: SM 6-pin + SM 2-pin |
+| **Pod** — upper arm | brain, boost, level shifter, MOSFET, fuse, disconnect, cell cradle, upper-arm strip 6 px | `SW1` + battery plug + straps |
+| **Sleeve** — forearm | forearm strip, 15 px | elbow: SM 4-pin + SM 3-pin |
 | **Glove** — hand | hand strip 6 px, this hand's trigger | wrist: SM 5-pin |
 | **Bubbler** | bottle, cap, hose, blower head | wrist: SM 2-pin + its strap |
 
@@ -82,27 +83,32 @@ Nothing is soldered end to end across a joint. Each arm is four modules:
 | Boundary | Carries | Connector |
 |---|---|---|
 | Cell ↔ pod, cell ↔ charger | 2 | **JST-PH 2.0, 2-pin** *(factory, on the cell)* |
-| Pod → sleeve, at the elbow | strip 3 + trigger 2 + second GND | **JST-SM 6-pin** |
-| Motor run, at the elbow | motor 2 | **JST-SM 2-pin** |
+| Pod → upper-arm strip | strip 3 | **JST-SM 3-pin** |
+| Strip across the elbow | strip 3 | **JST-SM 3-pin** |
+| Pod → sleeve, at the elbow | motor 2 + trigger 2 | **JST-SM 4-pin** |
 | Sleeve → glove, at the wrist | strip 3 + trigger 2 | **JST-SM 5-pin** |
 | Motor run, at the wrist | motor 2 | **JST-SM 2-pin** |
 | Microswitch pigtail | switch 2 | **JST-ZH 1.5 mm, 2-pin** |
 
-Both the trigger and the motor have to reach the pod from the hand, so both cross
-*both* joints — which is why the elbow plug is 6-pin rather than 3.
+The trigger and the motor both have to reach the pod from the hand, so they cross
+*both* joints. At the elbow they share one 4-pin lead, while the strip crosses on
+its own 3-pin.
 
 ### Two rules that keep it safe
 
-**No two connectors on one arm share both family and pin count.** PH-2 · ZH-2 ·
-SM-2 · SM-5 · SM-6. The three 2-pin plugs are three different pitches — 2.0, 1.5
-and 2.5 mm — so none will mate with the others.
+**No two connectors on one arm share both family and pin count** — with one
+deliberate exception. PH-2 · ZH-2 · SM-2 · SM-3 (×2) · SM-4 · SM-5. The three
+2-pin plugs are three different pitches — 2.0, 1.5 and 2.5 mm — so none will mate
+with the others.
 
 - **The trigger pigtail is ZH, not PH,** because every cell ships on a PH2.0 lead.
   One wrong plug would put 3.7 V onto GPIO3.
 - **The kit's motor lead gets reworked off PH2.0 to SM-2,** because as shipped the
   cell mates straight to the motor, bypassing the MOSFET entirely.
-- The motor's two SM-2 plugs are identical to each other, which is safe *by
-  construction*: they're on the same net, so cross-mating them only shortens the run.
+- The two SM-3 strip plugs — at the pod and at the elbow — are identical to each
+  other, which is safe *by construction*: same strip nets, same pin order.
+  Cross-mating the pod plug onto the forearm input just skips the upper-arm
+  segment; nothing is damaged.
 
 **Battery out before you mate or unmate anything.** Feeding data into an unpowered
 WS2812 pushes current through its input protection diodes — the classic way to kill
@@ -183,17 +189,23 @@ tunable at the top of the sketch.
 
 ## Strip layout
 
-**Split the strip at the wrist.** A continuous strip across a flexing wrist will
-crack its traces within a few hours of wear.
+**Split the strip at the elbow and the wrist.** A continuous strip across a
+flexing joint will crack its traces within a few hours of wear.
 
 ```
-  elbow                        wrist                  fingertips
-   |------ forearm, 15 px ------|   gap   |-- hand, 6 px --|
-   px 0                      px 14        px 15         px 20
-                            ~8 cm umbilical + SM 5-pin plug
+  pod              elbow                         wrist                  fingertips
+   |-- upper, 6 px --|  gap  |------ forearm, 15 px ------|   gap   |-- hand, 6 px --|
+   px 0          px 5        px 6                     px 20        px 21         px 26
+                  ~12 cm umbilical + SM 3-pin    ~8 cm umbilical + SM 5-pin plug
 ```
 
-- Forearm segment: ~21 cm, 15 pixels, pixel 0 at the elbow, under a sleeve.
+- Upper-arm segment: ~10 cm, 6 pixels, pixel 0 at the pod, running down the upper
+  arm to just above the elbow. Plugs into the pod on a **JST-SM 3-pin**.
+- Elbow umbilical: ~12 cm spanning the joint, three conductors — the strip's 5V,
+  GND and data — through a **JST-SM 3-pin** mated a few cm above the elbow. Service
+  loop across the joint, same reasoning as the wrist.
+- Forearm segment: ~21 cm, 15 pixels, just below the elbow to the wrist, under a
+  sleeve.
 - Wrist umbilical: ~8 cm spanning the joint, five conductors — the strip's 5V, GND
   and data, plus this hand's two trigger wires — through a **JST-SM 5-pin** plug
   mated 3–4 cm above the wrist crease, where the skin barely moves. Service loop on
@@ -201,19 +213,21 @@ crack its traces within a few hours of wear.
 - Hand segment: ~10 cm, 6 pixels, across the back of the hand to the knuckles,
   under the glove.
 
-Data chains straight through, so it's one logical 21-pixel strip in code.
+Data chains straight through, so it's one logical 27-pixel strip in code.
 
-The firmware knows about the physical gap and treats it as ~5 pixels of *virtual*
-distance, so the comet's apparent speed stays constant as it crosses the wrist
-instead of appearing to jump.
+The firmware knows about both physical gaps and treats them as *virtual* distance
+— `ELBOW_GAP_PX` ~7 at the elbow, `GAP_PX` ~5 at the wrist — so the comet's
+apparent speed stays constant as it crosses each joint instead of appearing to jump.
 
-**Keep the umbilical short.** Every centimetre between the last forearm pixel and
-the first hand pixel is dark arm the comet has to cross. ~8 cm is fine; 15 cm reads
-as a gap.
+**Keep the umbilicals short.** Every centimetre between the last pixel on one side
+of a joint and the first pixel on the other is dark arm the comet has to cross. At
+the wrist ~8 cm is fine and 15 cm reads as a gap; the elbow needs more slack, but
+keep it near ~12 cm.
 
-Measure your own arm and adjust `FOREARM_PX` / `HAND_PX` / `GAP_PX` to match.
-`GAP_PX` is the measured pixel-to-pixel distance across the finished umbilical —
-connector body included, which is most of it — divided by 1.67 cm.
+Measure your own arm and adjust `UPPER_PX` / `FOREARM_PX` / `HAND_PX` /
+`ELBOW_GAP_PX` / `GAP_PX` to match. Each gap constant is the measured
+pixel-to-pixel distance across that finished umbilical — connector body included,
+which is most of it — divided by 1.67 cm.
 
 ### Under the glove
 
@@ -244,8 +258,8 @@ Full drawing: [SCHEMATIC.md](SCHEMATIC.md).
 
 | Signal | XIAO pin | Silkscreen | To |
 |---|---|---|---|
-| LED data | `U3 GPIO10` | silk `D10` | 74AHCT125 input, then 330–470 Ω, then elbow SM-6 pin 3 |
-| Trigger | `U3 GPIO3` | silk `D1` | Elbow SM-6 pin 4 (internal pull-up, active low) |
+| LED data | `U3 GPIO10` | silk `D10` | 74AHCT125 input, then 330–470 Ω, then `J2` (SM-3) pin 3 |
+| Trigger | `U3 GPIO3` | silk `D1` | `J3` (SM-4) pin 3 (internal pull-up, active low) |
 | Motor PWM | `U3 GPIO4` | silk `D2` | MOSFET module gate input |
 | Battery sense | `U3 GPIO2` | silk `D0` | Midpoint of a 100 kΩ / 100 kΩ divider across the cell |
 | 5V | `U3 5V` | silk `5V` | Boost output **through `CR2`** (cathode to the XIAO) |
@@ -260,12 +274,12 @@ Everything the pod sends down the arm leaves through two plugs:
 
 | Plug | Pins |
 |---|---|
-| **SM 6-pin** | 1 strip 5V · 2 strip GND · 3 strip data · 4 trigger · 5 trigger return · 6 second ground |
-| **SM 2-pin** | 1 motor + (battery, after fuse) · 2 motor − (MOSFET output) |
+| **`J2`, SM 3-pin** — to the upper-arm strip | 1 strip 5V · 2 strip GND · 3 strip data |
+| **`J3`, SM 4-pin** — the elbow lead | 1 motor + (battery, after fuse) · 2 motor − (MOSFET output) · 3 trigger · 4 trigger return (GND) |
 
-Pin 6 is not spare. The elbow run is the longest in the costume and carries the
-whole strip's current; a second ground conductor cuts the drop and gives the data
-line a better return path.
+The strip leaves on `J2` and goes straight into pixel 0. `J3` is a 4-conductor lead
+down the upper arm to the elbow, where its SM-4 plug mates the sleeve. The strip
+crosses the elbow separately, on its own SM-3 umbilical (`J6`).
 
 Avoid `GPIO8` / `GPIO9` (silk `D8` / `D9`) — they're boot strapping pins.
 
@@ -277,13 +291,14 @@ Notes:
   strip and the shifter stay on the boost directly.
 - A 10 kΩ gate-to-source pulldown holds the blower off while the XIAO boots. If
   your MOSFET module already has one, meter it and skip; most don't.
-- The 1000 µF cap goes across the strip's 5V/GND, close to the elbow connector.
+- The 1000 µF cap goes across the strip's 5V/GND, close to the strip connector on the pod.
 - A 0.1 µF ceramic goes across the 74AHCT125's `Vcc` and `GND` pins, legs short,
   right at the chip. Different job from the 1000 µF — fit both.
 - The 330–470 Ω resistor goes in series on the data line, at the connector end.
 - The 1N5819 goes across the motor terminals, cathode to +, at the blower end.
-- The motor gets its own plug, deliberately not bundled with the data line. Twist
-  the pair.
+- The motor is deliberately not bundled with the strip data. At the elbow it shares
+  the SM-4 with the trigger, and the data crosses on its own SM-3; at the wrist the
+  motor has its own SM-2. Twist the motor pair.
 - Common ground is mandatory — the level shifter, strip, MOSFET, boost, and MCU
   all share it.
 
@@ -299,8 +314,9 @@ Tunables live in one block at the top:
 
 | Constant | Default | What it does |
 |---|---|---|
-| `FOREARM_PX` / `HAND_PX` / `GAP_PX` | 15 / 6 / 5 | Physical layout |
-| `COMET_TRAVEL_MS` | 250 | Elbow to fingertip, must match blower spin-up |
+| `UPPER_PX` / `FOREARM_PX` / `HAND_PX` | 6 / 15 / 6 | Physical layout |
+| `ELBOW_GAP_PX` / `GAP_PX` | 7 / 5 | Virtual distance across the elbow and wrist umbilicals |
+| `COMET_TRAVEL_MS` | 250 | Pod to fingertip, must match blower spin-up |
 | `COMET_REPEAT_MS` | 320 | Gap between comets while held |
 | `MAX_BRIGHTNESS` | 180 | Global cap — raised to punch through glove fabric |
 | `IDLE_BRIGHTNESS` | 20 | Resting glow; 0 for fully dark |
@@ -327,8 +343,8 @@ lands. See [BUILD.md](BUILD.md) step 9.
   aiming.
 - **Cell out before you mate or unmate any connector.** Every time. It is the one
   habit that protects pixel 0.
-- **Carry spares:** a pre-made wrist umbilical and one SM pigtail pair of each
-  size. Those swap without a soldering iron.
+- **Carry spares:** pre-made wrist and elbow umbilicals, and one SM pigtail pair of
+  each size. Those swap without a soldering iron.
 - **Know the two you can't fix:** a flat cell and a dead trigger. One of each per
   arm, both in use, no spares bought — see [BUILD.md](BUILD.md)'s field kit.
 - **Any cell that ever travels loose gets a plastic case**, never a bag with keys
