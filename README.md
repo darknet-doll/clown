@@ -368,7 +368,9 @@ lands. See [BUILD.md](BUILD.md) step 9.
 - [x] Concept direction — [DESIGN.md](DESIGN.md)
 - [x] Connector architecture — four modules per arm, no soldered joints across a joint
 - [ ] **Pull the kit's technical drawings from the Bambu site** — needed for the
-      bubbler mount and the blower sleeve
+      bubbler mount and the blower sleeve. Interim: the pocket a third-party gun
+      cut for the same head is measured in
+      [3d-prints/bubble-housing](3d-prints/bubble-housing/bubble-housing.md)
 - [ ] **Find the IR / thermal camera** — wanted for bench test, [BUILD.md](BUILD.md) step 6
 - [ ] **Hose test** — does a 150 mm feed hose still lift solution? Decides Mount C
       vs Mount A ([BUILD.md](BUILD.md) step 7)

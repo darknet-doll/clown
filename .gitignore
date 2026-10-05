@@ -4,3 +4,9 @@ docs/tutorial/slides/
 docs/tutorial/audio/
 docs/tutorial/manifest.json
 docs/tutorial/assemble
+
+# Third-party reference model (MakerWorld Standard Digital File License, no
+# redistribution). Kept locally; only our measurements and scripts are committed.
+3d-prints/*/reference/bubble-gun-toy/*.3mf
+3d-prints/*/reference/bubble-gun-toy/stl/
+3d-prints/*/reference/bubble-gun-toy/*.png
