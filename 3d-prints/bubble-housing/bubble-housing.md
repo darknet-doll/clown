@@ -1,10 +1,30 @@
-# Bubble Housing — v0
+# Bubble Housing — v1
 
 The floral piece on the back of the hand that hides the kit's blower head
-([DESIGN.md](../../DESIGN.md)). Not designed yet. This file currently holds the
-reference geometry it will be built from.
+([DESIGN.md](../../DESIGN.md)). v1 is a plain fit test of Concept 1 rev B (saddle +
+C-clip + rear shroud + two Velcro straps), with no clown details. Left hand only.
+Concepts and renders: `concepts/`. Print files: `versions/`, from `export_v1.py`.
 
 ## Ground Truth
+
+### Kit blower head, measured (Mitutoyo digital calipers, 2026-10-05)
+
+Photos and fit check: the "Bubble Housing — Fit Measurements" doc
+(claude.ai/code/artifact/fd5f26c4-f0d6-408c-8184-20381712c91c)
+
+| ID | What | mm |
+|---|---|---|
+| B1 | Front ring OD (holds the wand wheel) | 37.50 |
+| B2 | Overall length, ring face to back of motor bracket | 52.01 |
+
+### Hand (left, back of hand; landmarks read off photos, still to confirm)
+
+| ID | What | mm |
+|---|---|---|
+| H1 | Width across the back of the hand, mid-hand | 53.02 |
+| H2 | Length along the back of the hand, wrist toward knuckles, pinky side | 44.58 |
+| H3 | Width at the wrist end of the back of the hand | 29.21 |
+| H4 | Width across the knuckles | UNKNOWN (display not in the photo) |
 
 ### Reference: "Bubble Gun Toy" REV1 (third-party pocket for the same kit)
 
@@ -64,15 +84,38 @@ reference geometry it will be built from.
 
 - Blower head intake must stay open. The REV1 revision added the top air holes
   specifically for "better airflow", so a closed shell starves the blower
-- Kit blower head outer dimensions: UNKNOWN (see Open)
+- Blower head envelope: Ø 37.50 ring (B1) × 52.01 long (B2). Drum diameter behind
+  the ring and rear bracket size: UNKNOWN (see Open)
+- Head lies along the hand, ring toward the fingers. B2 runs 7.4 past H2, and B1 is
+  8.3 wider than H3, so the drum can't sit at the wrist end
 
 ## Spec
 
-UNKNOWN. Nothing designed yet.
+v1 values. Several are guesses on purpose, so the fit test can prove or replace them.
+
+- C-clip bore: 37.8   <- the gun's proven fit for the 37.5 ring (B1, G1); coupons test 37.6–38.2
+- C-clip: 8 wide, 2.4 wall, 110° opening on top
+- Drum axis height above plate: T + 4 + 18.75   <- clip sits on a 4.5 pedestal
+- Plate: 2.4 thick (T), 48 wide x 62 long; wrist tongue 28 wide x 36 long
+- Plate underside curve: UNKNOWN for your hand. v1 follows a stand-in ellipse,
+  80 wide x 26 thick
+- Belt loops: 30 long, 3 slot, 3 bar, 4 tall; one each side at the knuckle end and on the tongue
+- Strap slots: 27 long   <- assumes 25 mm Velcro; slot coupon also tests 22 x 3 and 27 x 4
+- Shroud: 37.8 bore, 2.4 wall, 42 long, closed back, 5 top vent slots 2.4 wide,
+  wire exit 10 x 9 in the back wall
+- Shroud inside under the axis: 26 wide box   <- guess; the rear bracket is not measured
+- Rear rails: 2 x (20 x 4 x 4.5), 18 apart   <- guess, same reason
 
 ## Print Settings
 
-UNKNOWN. Nothing printed yet.
+v1 (suggested, not yet printed): PLA, 0.4 nozzle, 0.2 layers, 3 walls, 15% infill.
+
+| File | Orientation | Supports |
+|---|---|---|
+| `versions/bubble-housing-v1-base.stl` | Plate down, as exported | Tree, build plate only: the underside arches about 2.6 mm |
+| `versions/bubble-housing-v1-shroud.stl` | Back wall on the bed, open end up | None |
+| `versions/bubble-housing-v1-clip-coupons.stl` | Flat | None. Bumps on the back: 1 = 37.6, 2 = 37.8, 3 = 38.0, 4 = 38.2 bore |
+| `versions/bubble-housing-v1-slot-coupon.stl` | Flat | None. Slots left to right: 22 x 3, 27 x 3, 27 x 4 |
 
 ## Log
 
@@ -80,9 +123,15 @@ UNKNOWN. Nothing printed yet.
 
 ## Open
 
-- **Kit blower head, measured with calipers:** max OD, front OD, length, and where its
-  shoulder is. Check them against the Ø 37.8 / Ø 39.4 / 51.6 pocket above. The pocket
-  is a fit, not a drawing
+- **v1 fit test, check and log:** which clip coupon holds the ring; which slot takes
+  the Velcro flat; whether the plate rocks on the hand; whether the clip or the ring
+  hits the knuckles when the fingers curl; whether the blower's rear fits inside the
+  shroud and its rails
+- **Kit blower head, still to measure:** drum OD behind the ring, rear bracket width
+  and height, and side tab size and position. Front OD and length are done (B1, B2)
+  and match the gun's pocket to within 0.4 mm
+- **Hand:** re-take H4 with the display visible; confirm the jaw landmarks for H1–H3;
+  measure hand thickness at mid-hand and at the knuckles
 - What the 3.8 × 30.5 side slots are for (clips? wire exit? airflow?). Look at the
   kit head
 - Does the bubble ring sit inside the Ø 37.8 lip or proud of the muzzle?
