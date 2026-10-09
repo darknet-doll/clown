@@ -505,16 +505,19 @@ data resistor stays on the pod board, feeding `J2` pin 3.
 
 | Connector | Pin | Carries | Board pad |
 |---|---|---|---|
-| **`J2` — SM 3-pin**, to the upper-arm strip | 1 | Strip 5V | S2 |
-| | 2 | Strip GND | T2 |
-| | 3 | Strip data (after the resistor) | U2 |
-| **`J3` — SM 4-pin**, the elbow lead | 1 | Motor + (battery, after fuse) | U10 |
-| | 2 | Motor − (MOSFET drain) | V10 |
-| | 3 | Trigger (`GPIO3`) | V2 |
-| | 4 | Trigger return / ground | W2 |
+| **`J2` — SM 3-pin**, to the upper-arm strip | 1 | Strip 5V | Y6 |
+| | 2 | Strip GND | Y4 |
+| | 3 | Strip data (after the resistor) | Y5 |
+| **`J3` — SM 4-pin**, the elbow lead | 1 | Motor + (battery, after fuse) | Y9 |
+| | 2 | Motor − (MOSFET drain) | Y8 |
+| | 3 | Trigger (`GPIO3`) | Y3 |
+| | 4 | Trigger return / ground | Y2 |
 
-The board pads are perfboard grid positions from the board layout, not part
-designators. Pad U2 has nothing to do with `U2` the 74AHCT125.
+The board pads are positions from the board layout, not part designators.
+**Y2–Y9 are the oblong edge pads past column X**, at the harness end. "Y" isn't
+printed on the board; it's just the letter after X. The edge pads aren't connected
+to the grid, so the layout runs a jumper to each one. The pigtail wire then
+solders onto the same pad as that jumper, in one joint.
 
 - **`J2` plugs straight into the upper-arm strip**, right at the pod. Pixel 0 is
   the first thing the data reaches.
