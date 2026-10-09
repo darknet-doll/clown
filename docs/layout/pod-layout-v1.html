@@ -1,0 +1,846 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Pod Layout</title>
+<style>
+:root {
+  --bg: #f3f1ea; --fg: #2a2822; --dim: #8a8478; --surf: #faf8f2; --bdr: #d8d4c8;
+  --board: #c8b880; --bstk: #a08848; --hole: #a09058; --used: #3a3428;
+  --gnd: #3a3428; --v5: #c33; --vb: #a44; --led: #2568b0; --gate: #c87010;
+  --trig: #7a3598; --sense: #287848; --mcu: #b86830; --nc: #999;
+  --c-xi: #2a5898; --c-dip: #2a7744; --c-fet: #b87020; --c-pas: #7a6540;
+  --w-blk:#1d1d1f; --w-red:#d0312d; --w-wht:#f6f5f0; --w-grn:#1e9448; --w-blu:#2b6cd4;
+  --w-case:#2a2822; --solder:#a7adb3;
+  --c-dio: #8a3888; --c-cap: #887720; --c-fus: #b83535; --c-mod: #666; --c-con: #556;
+  --hl: #d4166a; --hl-bg: #f9e3ec;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1a1815;--fg:#e0ddd5;--dim:#908878;--surf:#252320;--bdr:#3a3835;
+  --board:#3a3518;--bstk:#5a5028;--hole:#4a4025;--used:#d0c8b0;
+  --gnd:#b0a898;--v5:#f64;--vb:#d88;--led:#59f;--gate:#fa3;
+  --trig:#b7e;--sense:#5c9;--mcu:#e94;--nc:#777;
+  --c-xi:#4488dd;--c-dip:#44bb66;--c-fet:#e89030;--c-pas:#c0a870;
+  --c-dio:#c070c0;--c-cap:#c0b040;--c-fus:#e06060;--c-mod:#aaa;--c-con:#99a;
+  --w-blk:#141414;--w-case:#d6d2c6;--solder:#8f969c;
+  --hl:#ff5c9e;--hl-bg:#3a1f2a;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#1a1815;--fg:#e0ddd5;--dim:#908878;--surf:#252320;--bdr:#3a3835;
+  --board:#3a3518;--bstk:#5a5028;--hole:#4a4025;--used:#d0c8b0;
+  --gnd:#b0a898;--v5:#f64;--vb:#d88;--led:#59f;--gate:#fa3;
+  --trig:#b7e;--sense:#5c9;--mcu:#e94;--nc:#777;
+  --c-xi:#4488dd;--c-dip:#44bb66;--c-fet:#e89030;--c-pas:#c0a870;
+  --c-dio:#c070c0;--c-cap:#c0b040;--c-fus:#e06060;--c-mod:#aaa;--c-con:#99a;
+  --w-blk:#141414;--w-case:#d6d2c6;--solder:#8f969c;
+  --hl:#ff5c9e;--hl-bg:#3a1f2a;
+  color-scheme:dark;
+}
+body { background:var(--bg); color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  padding-inline:16px; max-width:1100px; margin:0 auto; }
+h1 { font-size:1.2rem; font-weight:700; margin:0; letter-spacing:-.02em; padding-top:16px; }
+.sub { color:var(--dim); font-size:.78rem; margin:4px 0 12px; }
+
+/* step bar */
+.stepbar { position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--bg);
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; padding-block:10px;
+  border-bottom:1px solid var(--bdr); margin-bottom:16px; }
+.stepbar label[for="stepIn"] { font-size:.72rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.06em; color:var(--dim); }
+.stepper { display:flex; align-items:center; gap:4px; }
+#stepIn { width:3.4em; font:600 1rem 'SF Mono',Menlo,Consolas,monospace; text-align:center;
+  padding:4px 2px; border:1px solid var(--bdr); border-radius:5px; background:var(--surf); color:var(--fg);
+  font-variant-numeric:tabular-nums; }
+.of { font-size:.8rem; color:var(--dim); font-variant-numeric:tabular-nums; }
+.btn { font:inherit; font-size:.8rem; padding:5px 10px; border:1px solid var(--bdr);
+  background:var(--surf); color:var(--fg); border-radius:5px; cursor:pointer; }
+.btn:hover:not(:disabled) { border-color:var(--hl); }
+.btn:disabled { opacity:.4; cursor:default; }
+.btn:focus-visible, #stepIn:focus-visible, input[type=checkbox]:focus-visible, tr:focus-visible
+  { outline:2px solid var(--hl); outline-offset:1px; }
+.prog { flex:1 1 80px; min-width:60px; height:4px; background:var(--bdr); border-radius:2px; overflow:hidden; }
+.prog i { display:block; height:100%; background:var(--hl); width:0; transition:width .2s; }
+.seg { display:flex; }
+.seg .btn { border-radius:0; }
+.seg .btn:first-child { border-radius:5px 0 0 5px; }
+.seg .btn:last-child { border-radius:0 5px 5px 0; margin-left:-1px; }
+.seg .btn[aria-pressed="true"] { background:var(--hl-bg); border-color:var(--hl); color:var(--hl); font-weight:600; position:relative; }
+.allTog { display:flex; align-items:center; gap:5px; font-size:.8rem; font-weight:600; cursor:pointer; }
+
+.sbs { display:flex; gap:24px; align-items:flex-start; }
+.sbs-left { flex:0 0 auto; position:sticky; top:calc(env(safe-area-inset-top,0px) + 64px); max-width:58%; }
+.sbs-right { flex:1 1 0; min-width:0; }
+@media(max-width:820px){
+  .sbs { flex-direction:column; }
+  .sbs-left { position:static; max-width:100%; }
+}
+.board-wrap { background:var(--surf); border:1px solid var(--bdr); border-radius:8px;
+  padding:10px 6px; overflow-x:auto; text-align:center; }
+#board { display:block; margin:0 auto; max-width:100%; height:auto; }
+h2 { font-size:.95rem; font-weight:600; margin:28px 0 8px; letter-spacing:-.01em; }
+h3 { font-size:.85rem; font-weight:600; margin:20px 0 6px; color:var(--dim); }
+.leg { display:flex; flex-wrap:wrap; gap:6px 14px; font-size:.72rem; margin:10px 0 4px; }
+.leg span { display:flex; align-items:center; gap:3px; }
+.leg i { width:9px; height:9px; border-radius:50%; flex-shrink:0; display:inline-block; }
+.tbl-wrap { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-size:.78rem; }
+th,td { padding:3px 5px; text-align:left; border-bottom:1px solid var(--bdr); }
+th { font-weight:600; color:var(--dim); font-size:.68rem; text-transform:uppercase;
+  letter-spacing:.04em; }
+td:first-child { font-family:'SF Mono',Menlo,Consolas,monospace; font-size:.72rem;
+  white-space:nowrap; }
+.note { font-size:.78rem; color:var(--dim); border-left:2px solid var(--bdr);
+  padding-left:10px; margin:10px 0; }
+code { font-family:'SF Mono',Menlo,Consolas,monospace; font-size:.88em;
+  background:var(--bdr); padding:1px 3px; border-radius:2px; }
+dl { font-size:.82rem; }
+dt { font-weight:600; margin:10px 0 2px; }
+dd { margin:0 0 6px; color:var(--dim); }
+.tip { position:fixed; pointer-events:none; background:var(--fg); color:var(--bg);
+  font-size:11px; padding:3px 7px; border-radius:4px; white-space:nowrap;
+  z-index:10; opacity:0; transition:opacity .1s; font-family:'SF Mono',Menlo,monospace; }
+.tip.show { opacity:.95; }
+.w { display:inline-block; width:10px; height:10px; border-radius:2px; border:1px solid var(--w-case);
+  vertical-align:-1px; margin-right:4px; }
+.w-blk{background:var(--w-blk)} .w-red{background:var(--w-red)} .w-wht{background:var(--w-wht)}
+.w-grn{background:var(--w-grn)} .w-blu{background:var(--w-blu)} .w-brg{background:var(--solder)}
+.tog { display:flex; align-items:center; gap:5px; font-size:.75rem; margin:8px 0 2px; cursor:pointer; }
+
+/* current step card */
+.card { background:var(--surf); border:1px solid var(--hl); border-radius:8px; padding:14px 16px; }
+.eyebrow { font-size:.68rem; text-transform:uppercase; letter-spacing:.07em; color:var(--hl); font-weight:700; }
+.what { font-size:.98rem; line-height:1.55; margin:6px 0 8px; text-wrap:pretty; }
+.why { font-size:.8rem; color:var(--dim); line-height:1.5; }
+.chips { display:flex; flex-wrap:wrap; gap:5px; margin-top:10px; align-items:center; }
+.chips .lbl { font-size:.68rem; color:var(--dim); text-transform:uppercase; letter-spacing:.05em; margin-right:2px; }
+.chip { font-family:'SF Mono',Menlo,Consolas,monospace; font-size:.72rem; padding:1px 6px;
+  border-radius:3px; border:1px solid var(--bdr); background:var(--bg); white-space:nowrap; }
+.chip.hot { border-color:var(--hl); color:var(--hl); background:var(--hl-bg); font-weight:600; }
+.chip.new { border-color:var(--hl); }
+.navrow { display:flex; justify-content:space-between; gap:8px; margin-top:14px; }
+.upnext { margin-top:16px; font-size:.8rem; color:var(--dim); line-height:1.5; cursor:pointer;
+  border-left:2px solid var(--bdr); padding-left:10px; }
+.upnext:hover { border-left-color:var(--hl); }
+.upnext b { color:var(--fg); font-weight:600; }
+.counts { display:flex; flex-wrap:wrap; gap:4px 14px; font-size:.78rem; margin-top:6px;
+  font-variant-numeric:tabular-nums; }
+.counts span { display:flex; align-items:center; }
+
+/* board state */
+#board g.future { display:none; }
+body.all #board g.future { display:inline; opacity:.22; }
+#board g.cur { filter:drop-shadow(0 0 2.5px var(--hl)); }
+.ring { fill:none; stroke:var(--hl); stroke-width:1.6; animation:pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity:.3; } }
+@media (prefers-reduced-motion: reduce) { .ring { animation:none; } .prog i { transition:none; } }
+
+/* full build order */
+#order tbody tr { cursor:pointer; }
+#order tbody tr:hover td { background:var(--surf); }
+#order tbody tr.done td { color:var(--dim); }
+#order tbody tr.cur td { background:var(--hl-bg); }
+#order tbody tr.cur td:first-child { color:var(--hl); font-weight:700; }
+</style>
+
+<h1>Pod Layout</h1>
+<p class="sub">3 × 7 cm perfboard &middot; 24 columns (A–X) × 10 rows, plus edge pads <b>Y2–Y9</b> past column X &middot; 2.54 mm pitch &middot;
+<span id="viewDesc">Component side, viewed from above &middot; A1 bottom-left &middot; USB at left, harness exits right</span></p>
+
+<div class="stepbar">
+  <label for="stepIn">Step</label>
+  <div class="stepper">
+    <button class="btn" id="prevBtn" type="button" aria-label="Previous step">←</button>
+    <input id="stepIn" type="number" min="1" max="57" value="1" inputmode="numeric">
+    <button class="btn" id="nextBtn" type="button" aria-label="Next step">→</button>
+  </div>
+  <span class="of" id="ofLbl">of 57</span>
+  <div class="prog" aria-hidden="true"><i id="progFill"></i></div>
+  <div class="seg" role="group" aria-label="Board view">
+    <button class="btn" id="viewTop" type="button" aria-pressed="true">Top</button>
+    <button class="btn" id="viewBot" type="button" aria-pressed="false">Bottom</button>
+  </div>
+  <label class="allTog"><input type="checkbox" id="showAll"> Show everything</label>
+</div>
+
+<div class="sbs">
+<div class="sbs-left">
+<div class="board-wrap">
+  <svg id="board" role="img" aria-label="Perfboard as it stands at the selected step"></svg>
+</div>
+<div class="leg" id="legend"></div>
+<label class="tog"><input type="checkbox" id="showWires" checked> <span id="wiresLbl">Show back-side wires (seen through the board)</span></label>
+<div class="leg">
+  <span><i class="w w-blk"></i>GND</span><span><i class="w w-red"></i>+5 V</span>
+  <span><i class="w w-wht"></i>Battery</span><span><i class="w w-grn"></i>LED data / trigger</span>
+  <span><i class="w w-blu"></i>Motor control</span><span><i class="w w-brg"></i>Solder bridge</span>
+</div>
+</div>
+
+<div class="sbs-right">
+  <div class="card" aria-live="polite">
+    <div class="eyebrow" id="curEyebrow">Step 1 of 57</div>
+    <div class="what" id="curWhat"></div>
+    <div class="why" id="curWhy"></div>
+    <div class="chips" id="curHoles"></div>
+    <div class="navrow">
+      <button class="btn" id="prevBtn2" type="button">← Previous</button>
+      <button class="btn" id="nextBtn2" type="button">Done, next step →</button>
+    </div>
+  </div>
+  <div class="upnext" id="upNext" role="button" tabindex="0"></div>
+
+  <h2>On the board now</h2>
+  <p class="sub" style="margin:0 0 6px">After step <span id="thruN">1</span>. Faded parts on the board are still to come when “Show everything” is on.</p>
+  <h3 style="margin-top:8px">Parts</h3>
+  <div class="chips" id="partsNow" style="margin-top:0"></div>
+  <h3>Back-side wiring</h3>
+  <div class="counts" id="wiresNow"></div>
+</div>
+</div>
+
+<section id="everything" hidden>
+<h2>Component Placement</h2>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Ref</th><th>Part</th><th>Holes</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>U3</td><td>XIAO ESP32-C3</td><td>B2–H2, B8–H8</td><td>USB past col A. Male headers</td></tr>
+<tr><td>U2</td><td>74AHCT125 DIP-14</td><td>K4–Q4, K7–Q7</td><td>Notch faces col J. Pin 1 = K4</td></tr>
+<tr><td>C2</td><td>0.1 µF ceramic</td><td>I7 – K7</td><td>Horizontal, from the front. Shares K7 with DIP pin 14 — insert while K7 is still unsoldered</td></tr>
+<tr><td>R1</td><td>100 kΩ</td><td>D5 – G5</td><td>Horizontal under XIAO — solder first</td></tr>
+<tr><td>R2</td><td>100 kΩ</td><td>G5 – J5</td><td>Shares midpoint G5 with R1</td></tr>
+<tr><td>CR2</td><td>1N5819</td><td>K8 – I8</td><td>Horizontal. Band (cathode) at I8</td></tr>
+<tr><td>R3</td><td>330–470 Ω</td><td>S3 – S6</td><td>Vertical, LED data series</td></tr>
+<tr><td>R4</td><td>100 Ω</td><td>R4 – R7</td><td>Vertical, gate series. R7 bridges to Q1 gate (R8)</td></tr>
+<tr><td>R5</td><td>10 kΩ</td><td>T4 – T7</td><td>Vertical, gate pulldown. T7 bridges to Q1 source (T8)</td></tr>
+<tr><td>Q1</td><td>RFP30N06LE</td><td>R8 G, S8 D, T8 S</td><td>TO-220, tab toward row 10</td></tr>
+<tr><td>F1</td><td>PPTC fuse</td><td>P10 – R10</td><td>In VBATT+, after switch</td></tr>
+<tr><td>C1</td><td>1000 µF</td><td>W6 (+) – W4 (−)</td><td>Upright. Stripe to W4 (GND). ~10 mm body covers U–X, rows 3–7</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Wire pads — off-board</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Pad</th><th>Part</th><th>Net</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>L10</td><td>MT3608 IN+</td><td>VBATT</td><td rowspan="4">4 stranded wires to module</td></tr>
+<tr><td>M10</td><td>MT3608 IN−</td><td>GND</td></tr>
+<tr><td>N10</td><td>MT3608 OUT+</td><td>+5 V</td></tr>
+<tr><td>O10</td><td>MT3608 OUT−</td><td>GND</td></tr>
+<tr><td>S10</td><td>SW1 A</td><td>BATT+</td><td rowspan="2">To toggle switch</td></tr>
+<tr><td>T10</td><td>SW1 B</td><td>after sw</td></tr>
+<tr><td>W10</td><td>J1 batt +</td><td>BATT+</td><td rowspan="2">PH2.0 pigtail</td></tr>
+<tr><td>X10</td><td>J1 batt −</td><td>GND</td></tr>
+<tr><td>Y9</td><td>J3-1 M+</td><td>VBATT</td><td rowspan="4">SM-4 elbow lead (motor + trigger). One pigtail, motor pair at Y8–Y9, trigger pair at Y2–Y3</td></tr>
+<tr><td>Y8</td><td>J3-2 M−</td><td>drain</td></tr>
+<tr><td>Y3</td><td>J3-3 TRIG</td><td>TRIG</td></tr>
+<tr><td>Y2</td><td>J3-4 TRIG GND</td><td>GND</td></tr>
+<tr><td>Y6</td><td>J2 +5V</td><td>+5 V</td><td rowspan="3">SM-3 to the LED strip input. Fed straight off C1's legs (W6, W4) so the bulk cap sits at the plug</td></tr>
+<tr><td>Y4</td><td>J2 GND</td><td>GND</td></tr>
+<tr><td>Y5</td><td>J2 DATA</td><td>DATA</td></tr>
+<tr><td>Y7</td><td>—</td><td>unused</td><td>Spare. Also keeps the strip pads apart from the motor pair</td></tr>
+<tr><td>S2</td><td>—</td><td>+5 V</td><td>Dead end. Holds the end of red V6 from step 31 and nothing else. Leave it</td></tr>
+</tbody>
+</table>
+</div>
+
+<p class="note"><strong>Edge pads Y2–Y9:</strong> the oblong pads past column X, at the harness end.
+"Y" isn't printed on the board; it's just the next letter after X. They are not tied to the grid,
+so every one is fed by its own jumper. Rows 1 and 10 have no edge pad.</p>
+
+<p class="note"><strong>XIAO fit:</strong> test-fit on male headers — pin rows should land
+6 holes apart (rows 2 and 8).</p>
+
+<h2>Back-Side Wiring</h2>
+<p class="sub">Flip the board (solder side up). Every jumper is 22 AWG solid core, colored by what it carries.
+"Bridge" means two neighboring pads joined with solder — no wire.</p>
+
+<h3>Wire colors</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Wire</th><th>Carries</th><th>Jumpers</th></tr></thead>
+<tbody>
+<tr><td><span class="w w-blk"></span>Black</td><td>Ground — the row-1 bus and every ground tap</td><td>bus + 15</td></tr>
+<tr><td><span class="w w-red"></span>Red</td><td>+5 V from the boost</td><td>5</td></tr>
+<tr><td><span class="w w-wht"></span>White</td><td>Battery — the VBATT chain and battery sense</td><td>6</td></tr>
+<tr><td><span class="w w-grn"></span>Green</td><td>LED data (to the strip) and trigger (from the elbow lead)</td><td>4</td></tr>
+<tr><td><span class="w w-blu"></span>Blue</td><td>Motor control — gate drive and motor −</td><td>4</td></tr>
+<tr><td><span class="w w-brg"></span>Bridge</td><td>Neighboring pads, solder only</td><td>5</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>1 — Ground bus</h3>
+<p class="note"><span class="w w-blk"></span><strong>Black</strong> wire along <strong>row 1</strong> on the back, from A1 to X1, stripped bare for its
+full length (~60 mm) so it can be soldered to every pad. This is the ground spine — every black tap lands on it.</p>
+
+<h3>2 — Ground taps</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>#</th><th>From</th><th>To</th><th>Wire</th><th>What</th></tr></thead>
+<tbody>
+<tr><td>G1</td><td>G8</td><td>G1</td><td><span class="w w-blk"></span>Black</td><td>XIAO GND</td></tr>
+<tr><td>G2</td><td>K4</td><td>K1</td><td><span class="w w-blk"></span>Black</td><td>U2 1OE → GND (enables gate 1)</td></tr>
+<tr><td>G3</td><td>N4</td><td>N1</td><td><span class="w w-blk"></span>Black</td><td>U2 2OE → GND (enables gate 2)</td></tr>
+<tr><td>G4</td><td>Q4</td><td>Q1</td><td><span class="w w-blk"></span>Black</td><td>U2 pin 7 GND</td></tr>
+<tr><td>G5</td><td>I7</td><td>I1</td><td><span class="w w-blk"></span>Black</td><td>C2 GND side</td></tr>
+<tr><td>G6</td><td>M7</td><td>M1</td><td><span class="w w-blk"></span>Black</td><td>U2 4A → GND (unused input tied off)</td></tr>
+<tr><td>G7</td><td>P7</td><td>P1</td><td><span class="w w-blk"></span>Black</td><td>U2 3A → GND (unused input tied off)</td></tr>
+<tr><td>G8</td><td>J5</td><td>J1</td><td><span class="w w-blk"></span>Black</td><td>R2 GND end</td></tr>
+<tr><td>G9</td><td>T8</td><td>T1</td><td><span class="w w-blk"></span>Black</td><td>Q1 source — motor return current</td></tr>
+<tr><td>G10</td><td>W4</td><td>W1</td><td><span class="w w-blk"></span>Black</td><td>C1 neg → GND bus</td></tr>
+<tr><td>G11</td><td>M10</td><td>M1</td><td><span class="w w-blk"></span>Black</td><td>MT3608 IN−</td></tr>
+<tr><td>G12</td><td>O10</td><td>O1</td><td><span class="w w-blk"></span>Black</td><td>MT3608 OUT−</td></tr>
+<tr><td>G13</td><td>W4</td><td>Y4</td><td><span class="w w-blk"></span>Black</td><td>C1 neg → J2 GND edge pad (LED strip ground)</td></tr>
+<tr><td>G14</td><td>X1</td><td>Y2</td><td><span class="w w-blk"></span>Black</td><td>GND bus → J3-4 trigger return edge pad</td></tr>
+<tr><td>G16</td><td>X10</td><td>X1</td><td><span class="w w-blk"></span>Black</td><td>J1 batt − — all return current</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3 — +5 V distribution</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>#</th><th>From</th><th>To</th><th>Wire</th><th>What</th></tr></thead>
+<tbody>
+<tr><td>V1</td><td>N10</td><td>K7</td><td><span class="w w-red"></span>Red</td><td>Boost OUT+ → U2 Vcc (pin 14)</td></tr>
+<tr><td>V2</td><td>K7</td><td>L7</td><td><span class="w w-brg"></span>Bridge</td><td>U2 Vcc → 4OE</td></tr>
+<tr><td>V3</td><td>K7</td><td>O7</td><td><span class="w w-red"></span>Red</td><td>U2 Vcc → 3OE</td></tr>
+<tr><td>V4</td><td>K7</td><td>K8</td><td><span class="w w-brg"></span>Bridge</td><td>DIP Vcc → CR2 anode</td></tr>
+<tr><td>V5</td><td>N10</td><td>W6</td><td><span class="w w-red"></span>Red</td><td>Boost OUT+ → C1 positive</td></tr>
+<tr><td>V6</td><td>N10</td><td>S2</td><td><span class="w w-red"></span>Red</td><td>Boost OUT+ → S2. Dead end since the move to edge pads — leave it</td></tr>
+<tr><td>V7</td><td>W6</td><td>Y6</td><td><span class="w w-red"></span>Red</td><td>C1 positive → J2 +5V edge pad (LED strip power)</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>4 — VBATT and power chain</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>#</th><th>From</th><th>To</th><th>Wire</th><th>What</th></tr></thead>
+<tbody>
+<tr><td>P1</td><td>W10</td><td>S10</td><td><span class="w w-wht"></span>White</td><td>J1 batt + → SW1 terminal A</td></tr>
+<tr><td>P2</td><td>T10</td><td>P10</td><td><span class="w w-wht"></span>White</td><td>SW1 B → F1 fuse input</td></tr>
+<tr><td>P3</td><td>R10</td><td>L10</td><td><span class="w w-wht"></span>White</td><td>F1 output (VBATT) → MT IN+</td></tr>
+<tr><td>P4</td><td>R10</td><td>Y9</td><td><span class="w w-wht"></span>White</td><td>VBATT → J3-1 motor +</td></tr>
+<tr><td>P5</td><td>R10</td><td>D5</td><td><span class="w w-wht"></span>White</td><td>VBATT → R1 left end (battery divider) — longest wire</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>5 — Signal wiring</h3>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>#</th><th>From</th><th>To</th><th>Wire</th><th>What</th></tr></thead>
+<tbody>
+<tr><td>S1</td><td>B8</td><td>L4</td><td><span class="w w-grn"></span>Green</td><td>GPIO10 → U2 1A (LED data in)</td></tr>
+<tr><td>S2</td><td>M4</td><td>S6</td><td><span class="w w-grn"></span>Green</td><td>U2 1Y → R3 bottom (LED data, level shifted)</td></tr>
+<tr><td>S3</td><td>S3</td><td>Y5</td><td><span class="w w-grn"></span>Green</td><td>R3 top → J2 DATA edge pad (LED strip input)</td></tr>
+<tr><td>S4</td><td>D2</td><td>O4</td><td><span class="w w-blu"></span>Blue</td><td>GPIO4 → U2 2A (gate drive in)</td></tr>
+<tr><td>S5</td><td>P4</td><td>R4</td><td><span class="w w-blu"></span>Blue</td><td>U2 2Y → R4 top (gate drive out)</td></tr>
+<tr><td>S6</td><td>T4</td><td>R7</td><td><span class="w w-blu"></span>Blue</td><td>Pulldown top → gate node</td></tr>
+<tr><td>S7</td><td>C2</td><td>Y3</td><td><span class="w w-grn"></span>Green</td><td>GPIO3 → J3-3 TRIG edge pad (full board length)</td></tr>
+<tr><td>S8</td><td>G5</td><td>B2</td><td><span class="w w-wht"></span>White</td><td>Divider midpoint → GPIO2 (battery sense)</td></tr>
+<tr><td>S9</td><td>I8</td><td>H8</td><td><span class="w w-brg"></span>Bridge</td><td>CR2 cathode → XIAO 5 V</td></tr>
+<tr><td>S10</td><td>S8</td><td>Y8</td><td><span class="w w-blu"></span>Blue</td><td>Q1 drain → J3-2 motor − edge pad</td></tr>
+<tr><td>S11</td><td>R7</td><td>R8</td><td><span class="w w-brg"></span>Bridge</td><td>R4 bottom → Q1 gate</td></tr>
+<tr><td>S12</td><td>T7</td><td>T8</td><td><span class="w w-brg"></span>Bridge</td><td>R5 bottom → Q1 source</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Wire Guide</h2>
+<dl>
+<dt>Jumpers — 22 AWG solid core, colored by net</dt>
+<dd>Strip ~5 mm, tin the end, lay it flat on the pad, then solder. Route along the grid rather than
+diagonally where you can — easier to trace later.</dd>
+<dt>Bridges — no wire</dt>
+<dd>Only between neighboring pads. If solder won't span the gap, lay a clipped resistor-lead offcut across both pads.</dd>
+<dt>Edge pads (Y2–Y9) — jumper and pigtail together</dt>
+<dd>Each edge pad takes one jumper now and one pigtail wire at the end. Park the jumper on the pad
+(through its hole if it has one, otherwise tinned and laid flat), bend it to hold, and solder only
+when the pigtail wire goes in. Work from the back — C1's body crowds the front of the pads.</dd>
+<dt>Stranded wire — everything that leaves the board</dt>
+<dd>SW1 leads, MT3608 wires, connector pigtails (J1 battery, J2 LED strip, J3 elbow). Survives flexing.</dd>
+</dl>
+
+<h2>Build Order</h2>
+<p class="sub">Each step is one action. Don't skip ahead — some parts block access to holes underneath them. Click a row to jump to that step.</p>
+<div class="tbl-wrap">
+<table id="order">
+<thead><tr><th>Step</th><th>What to do</th><th>Why this order</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Insert R1 (100k) into D5 and G5 from the top. Flip board, solder <strong>only D5</strong>. Leave G5 unsoldered — R2 shares that hole.</td><td>Goes under the XIAO body — unreachable after step 15</td></tr>
+<tr><td>2</td><td>Insert R2 (100k) into G5 and J5 — its lead goes in alongside R1's lead at G5. Solder <strong>G5</strong> (both leads together) and <strong>J5</strong>.</td><td>One solder joint captures both resistor leads at the divider midpoint</td></tr>
+<tr><td>3</td><td>On the back, run one <span class="w w-blk"></span><strong>Black</strong> wire from A1 to X1 along row 1, stripped bare for its full length. Solder it to every pad in that row.</td><td>This is the GND bus. Everything else taps into it. Easier to lay before other back-side wires are in the way</td></tr>
+<tr><td>4</td><td>Insert U2 (74AHCT125) into K4–Q4 and K7–Q7. Notch/dot faces column J. Solder all pins <strong>except K4, N4, Q4, K7</strong> — leave those 4 unsoldered; they get their connections in steps 5–8.</td><td>10 soldered pins hold the chip flat. The 4 skipped pins each share a pad with the very next steps</td></tr>
+<tr><td>5</td><td>From the front, insert C2 (0.1µF ceramic) into I7 and K7. The K7 lead goes in alongside DIP pin 14 — this only fits because K7 was left unsoldered in step 4. Solder <strong>K7</strong> (DIP pin + C2 lead in one joint). Leave <strong>I7</strong> unsoldered — step 9 adds a jumper there.</td><td>Decoupling cap at the chip's supply pin. If the lead won't go in, K7 has solder in it — wick it fully clean first</td></tr>
+<tr><td>6</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G2: K4 → K1 (DIP 1OE to GND bus). Solder <strong>K4</strong> (DIP pin + jumper wire together).</td><td>Enables level-shifter gate 1</td></tr>
+<tr><td>7</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G3: N4 → N1 (DIP 2OE to GND bus). Solder <strong>N4</strong> (DIP pin + jumper wire together).</td><td>Enables level-shifter gate 2</td></tr>
+<tr><td>8</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G4: Q4 → Q1 (DIP pin 7 GND). Solder <strong>Q4</strong> (DIP pin + jumper wire together).</td><td>DIP ground connection</td></tr>
+<tr><td>9</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G5: I7 → I1 (C2 GND side to bus). Solder <strong>I7</strong> (C2 lead + jumper wire together).</td><td>Completes the decoupling cap's ground return</td></tr>
+<tr><td>10</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G6: M7 → M1 (DIP 4A to GND — ties off unused input)</td><td>Prevents the unused gate's input from floating</td></tr>
+<tr><td>11</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G7: P7 → P1 (DIP 3A to GND — ties off unused input)</td><td>Same — unused CMOS inputs must not float</td></tr>
+<tr><td>12</td><td><span class="w w-brg"></span><strong>Bridge</strong> V2: K7 → L7 (DIP Vcc to 4OE — disables unused gate 4)</td><td>OE is active-low, so tying it high disables the output</td></tr>
+<tr><td>13</td><td><span class="w w-red"></span><strong>Red</strong> jumper V3: K7 → O7 (DIP Vcc to 3OE — disables unused gate 3)</td><td>Same — high OE disables the output</td></tr>
+<tr><td>14</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G8: J5 → J1 (R2 GND end to bus)</td><td>Completes the voltage divider's ground leg</td></tr>
+<tr><td>15</td><td>Insert XIAO male header strips into B2–H2 and B8–H8. Place U3 on top. Solder all 14 header pins on back.</td><td>XIAO goes on after R1/R2 are soldered underneath it. Test-fit first — pin rows should span 6 holes</td></tr>
+<tr><td>16</td><td>Insert CR2 (1N5819) into K8 (anode) and I8 (cathode). Banded end at I8. Leave <strong>both unsoldered</strong> — the next two steps bridge to each pad.</td><td>USB isolation diode. Steps 17–18 solder each lead with its bridge</td></tr>
+<tr><td>17</td><td><span class="w w-brg"></span><strong>Bridge</strong> V4: K7 → K8 (DIP Vcc to CR2 anode). Solder <strong>K8</strong> — the bridge captures the CR2 lead and the +5V connection in one pass.</td><td>CR2 picks up +5V from the DIP supply pin one hole away</td></tr>
+<tr><td>18</td><td><span class="w w-brg"></span><strong>Bridge</strong> S9: I8 → H8 (CR2 cathode to XIAO 5V). Solder <strong>I8</strong> — the bridge captures the CR2 lead and the XIAO 5V connection in one pass.</td><td>Completes the isolated power path to the XIAO</td></tr>
+<tr><td>19</td><td>Insert R3 (330–470Ω) into S3 and S6. Solder on back.</td><td>LED data series resistor, placed in the open zone past the DIP</td></tr>
+<tr><td>20</td><td>Insert R4 (100Ω) into R4 and R7. Solder both.</td><td>Gate series resistor — one row below Q1's gate</td></tr>
+<tr><td>21</td><td>Insert R5 (10k) into T4 and T7. Solder both.</td><td>Gate pulldown — one row below Q1's source</td></tr>
+<tr><td>22</td><td>Insert Q1 (RFP30N06LE) into R8 (gate), S8 (drain), T8 (source). Tab faces row 10. Solder all three.</td><td>Each pin has its own hole — no shared leads</td></tr>
+<tr><td>23</td><td><span class="w w-brg"></span><strong>Bridge</strong> S11: R7 → R8 (R4 bottom to Q1 gate). <span class="w w-brg"></span><strong>Bridge</strong> S12: T7 → T8 (R5 bottom to Q1 source).</td><td>Two short bridges connect the resistors to Q1</td></tr>
+<tr><td>24</td><td>Insert F1 (PPTC fuse) into P10 and R10. Solder on back.</td><td>Fuse in the battery positive path</td></tr>
+<tr><td>25</td><td>Insert C1 (1000µF electrolytic) upright into W6 (+) and W4 (−). Stripe (−) toward W4 — the row-1 side. If the leads are closer than 2 holes, splay them gently. Solder <strong>W6</strong>. Leave <strong>W4</strong> unsoldered — step 28 adds its ground jumper.</td><td>Bulk cap in the open corner next to the J2 LED strip connector — the strip draws its current right there</td></tr>
+<tr><td>26</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G1: G8 → G1 (XIAO GND to bus)</td><td>MCU ground</td></tr>
+<tr><td>27</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G9: T8 → T1 (Q1 source to bus)</td><td>Motor return current path — keep it short and direct</td></tr>
+<tr><td>28</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G10: W4 → W1 (C1 negative to GND bus). Solder <strong>W4</strong> (C1 lead + jumper wire together).</td><td>C1's ground return, straight down column W to the bus</td></tr>
+<tr><td>29</td><td><span class="w w-red"></span><strong>Red</strong> jumper V1: N10 → K7 (boost OUT+ pad to DIP Vcc)</td><td>Main +5V feed from the boost module to the level shifter</td></tr>
+<tr><td>30</td><td><span class="w w-red"></span><strong>Red</strong> jumper V5: N10 → W6 (boost OUT+ to C1 positive)</td><td>Charges the bulk cap from the boost output</td></tr>
+<tr><td>31</td><td><span class="w w-red"></span><strong>Red</strong> jumper V6: N10 → S2 (boost OUT+ to J2 +5V pad)</td><td>+5V to the LED strip connector</td></tr>
+<tr><td>32</td><td>Meter the edge pads Y2–Y9 (the oblong pads past column X) before anything lands on them. Continuity between each pair of neighbors (Y2–Y3, Y3–Y4 … Y8–Y9) must read <strong>open</strong>. Y2 to X1 and Y9 to X10 must read <strong>open</strong>. Y pad to the X hole in its own row: either reading is fine — X2–X9 are empty.</td><td>Confirms the pads are isolated before you commit seven nets to them. Nothing to solder</td></tr>
+<tr><td>33</td><td><span class="w w-wht"></span><strong>White</strong> jumper P1: W10 → S10 (J1 batt+ pad to SW1-A pad). <strong>Wait</strong> on both ends — bend them flat to hold. W10 solders with J1+ in step 55, S10 with SW1-A in step 54.</td><td>Battery positive to the disconnect switch</td></tr>
+<tr><td>34</td><td><span class="w w-wht"></span><strong>White</strong> jumper P2: T10 → P10 (SW1-B pad to F1 input). Solder <strong>P10 now</strong> — the F1 lead is already there and this is its last branch. <strong>Wait</strong> on T10 — it solders with SW1-B in step 54.</td><td>Switch return to fuse input</td></tr>
+<tr><td>35</td><td><span class="w w-wht"></span><strong>White</strong> jumper P3: R10 → L10 (F1 output to MT3608 IN+ pad). <strong>Wait</strong> on both ends. R10 solders in step 37, once P4 and P5 are in. L10 solders with the module wire in step 53.</td><td>VBATT feeds the boost module</td></tr>
+<tr><td>36</td><td><span class="w w-wht"></span><strong>White</strong> jumper P4: R10 → <strong>Y9</strong> (VBATT to J3-1 motor+ edge pad). <strong>Wait</strong> on both ends. R10 solders in step 37. Y9 solders with the J3 M+ wire in step 56.</td><td>VBATT feeds the motor. Y9 is the edge pad nearest the fuse</td></tr>
+<tr><td>37</td><td><span class="w w-wht"></span><strong>White</strong> jumper P5: R10 → D5 (VBATT to R1 left end) — longest wire on the board. Solder <strong>D5 now</strong>. Solder <strong>R10 now</strong> — F1 lead + P3 + P4 + P5 in one joint.</td><td>Battery divider top rail. Last wire onto R10, so the VBATT node is flowed once</td></tr>
+<tr><td>38</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G11: M10 → M1 (MT3608 IN− pad to GND bus). Solder <strong>M1 now</strong>. <strong>Wait</strong> on M10 — it solders with the module wire in step 53.</td><td>Boost module ground in</td></tr>
+<tr><td>39</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G12: O10 → O1 (MT3608 OUT− pad to GND bus). Solder <strong>O1 now</strong>. <strong>Wait</strong> on O10 — step 53.</td><td>Boost module ground out</td></tr>
+<tr><td>40</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G13: W4 → <strong>Y4</strong> (C1 negative to J2 GND edge pad). Solder <strong>W4 now</strong> — its last branch. <strong>Wait</strong> on Y4 — it solders with the J2 GND wire in step 57.</td><td>Strip ground taken straight off C1, so the bulk cap sits right at the strip plug</td></tr>
+<tr><td>41</td><td><span class="w w-red"></span><strong>Red</strong> jumper V7: W6 → <strong>Y6</strong> (C1 positive to J2 +5V edge pad). Solder <strong>W6 now</strong> — its last branch. <strong>Wait</strong> on Y6 — step 57. S2 keeps the end of red V6 from step 31 and nothing else lands there now. Leave it: it's a harmless +5V dead end.</td><td>Strip +5V straight off C1. Replaces the old S2 pad</td></tr>
+<tr><td>42</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G14: X1 → <strong>Y2</strong> (GND bus to J3-4 trigger GND edge pad). <strong>Wait</strong> on X1 — G16 lands there next step. <strong>Wait</strong> on Y2 — step 56.</td><td>Trigger return ground, for the elbow lead. Short hop off the end of the bus</td></tr>
+<tr><td>43</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G16: X10 → X1 (J1 batt− pad to GND bus). Solder <strong>X1 now</strong> — bus + G14 + G16. <strong>Wait</strong> on X10 — it solders with J1− in step 55.</td><td>Battery return — carries all return current</td></tr>
+<tr><td>44</td><td><span class="w w-grn"></span><strong>Green</strong> jumper S1: B8 → L4 (GPIO10 to DIP 1A — LED data in). Solder both ends now.</td><td>MCU pixel data to level shifter input</td></tr>
+<tr><td>45</td><td><span class="w w-grn"></span><strong>Green</strong> jumper S2: M4 → S6 (DIP 1Y to R3 bottom — LED data out). Solder both ends now.</td><td>Level-shifted data to series resistor</td></tr>
+<tr><td>46</td><td><span class="w w-grn"></span><strong>Green</strong> jumper S3: S3 → <strong>Y5</strong> (R3 top to J2 DATA edge pad). Solder <strong>S3 now</strong>. <strong>Wait</strong> on Y5 — step 57.</td><td>LED data to the strip plug, between its +5V and GND pads</td></tr>
+<tr><td>47</td><td><span class="w w-blu"></span><strong>Blue</strong> jumper S4: D2 → O4 (GPIO4 to DIP 2A — gate drive in). Solder both ends now.</td><td>Motor PWM to level shifter input</td></tr>
+<tr><td>48</td><td><span class="w w-blu"></span><strong>Blue</strong> jumper S5: P4 → R4 (DIP 2Y to R4 top — gate drive out). Solder both ends now.</td><td>Level-shifted gate drive to series resistor</td></tr>
+<tr><td>49</td><td><span class="w w-blu"></span><strong>Blue</strong> jumper S6: T4 → R7 (pulldown top to gate node). Solder both ends now.</td><td>Connects the 10k pulldown to Q1's gate</td></tr>
+<tr><td>50</td><td><span class="w w-grn"></span><strong>Green</strong> jumper S7: C2 → <strong>Y3</strong> (GPIO3 to J3-3 TRIG edge pad — full board length). Solder <strong>C2 now</strong>. <strong>Wait</strong> on Y3 — step 56.</td><td>Trigger line from MCU to the elbow lead</td></tr>
+<tr><td>51</td><td><span class="w w-wht"></span><strong>White</strong> jumper S8: G5 → B2 (divider midpoint to GPIO2). G5 already holds R1 and R2 — don't push the wire into the hole. Lay the tinned end flat on the G5 pad against the joint, reheat, let it sink in. Solder B2 now.</td><td>Battery sense voltage to the ADC pin</td></tr>
+<tr><td>52</td><td><span class="w w-blu"></span><strong>Blue</strong> jumper S10: S8 → <strong>Y8</strong> (Q1 drain to J3-2 motor− edge pad). Solder <strong>S8 now</strong>. <strong>Wait</strong> on Y8 — step 56.</td><td>Switched motor negative to the motor plug. Y8 sits next to Y9 so the motor pair leaves together</td></tr>
+<tr><td>53</td><td>Solder 4 stranded wires from the MT3608 module to pads L10, M10, N10, O10. All four solder now — each is that pad's last branch.</td><td>Module sits beside the board, wires flex</td></tr>
+<tr><td>54</td><td>Solder 2 stranded wires from the toggle switch to pads S10 and T10. Both solder now, together with the P1 and P2 jumper ends parked there.</td><td>Switch mounts on the pod wall, wires run to the board</td></tr>
+<tr><td>55</td><td>Solder J1 pigtail (PH2.0) bare ends to W10 (+) and X10 (−). Both solder now, together with the P1 and G16 jumper ends.</td><td>Battery connector</td></tr>
+<tr><td>56</td><td>Elbow lead J3 (JST-SM 4-pin). Pin order (same on both arms): pin 1 M+, 2 M−, 3 TRIG, 4 TRIG GND. It's a 4-wire lead that runs down the upper arm to the elbow plug. Check each pin-to-wire with a multimeter, then, working from the back: <strong>M+ (blue) → Y9</strong>, <strong>M− (red) → Y8</strong>, <strong>TRIG (green) → Y3</strong>, <strong>TRIG GND (black) → Y2</strong>. The pigtail colors are not a polarity code — red is motor −. Go by pin number. Each pad solders now — jumper end + pigtail wire in one joint.</td><td>One 4-wire lead carries the motor and trigger down to the elbow. All four wires leave from the harness edge: the motor pair at Y8–Y9, the trigger pair at Y2–Y3</td></tr>
+<tr><td>57</td><td>LED strip connector J2 (JST-SM 3-pin): use the mate to the strip's <em>input</em> plug — the arrows on the strip point away from the pod. Pin order: pin 1 +5V, pin 2 GND, pin 3 data — identical to the elbow SM-3 (J6). Check each pin-to-wire with a multimeter, then, working from the back: <strong>+5V → Y6</strong>, <strong>GND → Y4</strong>, <strong>DATA → Y5</strong>. Pins 2 and 3 cross over — that's expected. Each pad solders now — jumper end + pigtail wire in one joint.</td><td>The upper-arm strip starts here (pixel 0) and runs down to the elbow. Swapping +5V and data can kill the first LED — check first</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<div id="tt" class="tip"></div>
+
+<script>
+const P=22,ML=20,MT=28,COLS=24,ROWS=10,HR=3;
+const W=ML+24*P+44, H=MT+9*P+22;
+const NS='http://www.w3.org/2000/svg';
+const svg=document.getElementById('board');
+svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+
+function mk(t,a,p){const e=document.createElementNS(NS,t);
+  if(a)for(const[k,v]of Object.entries(a))e.setAttribute(k,v);
+  (p||svg).appendChild(e);return e;}
+function px(c){return ML+c*P;}
+function py(r){return MT+(ROWS-1-r)*P;}
+function cl(c){return String.fromCharCode(65+c);}
+function rl(r){return ''+(r+1);}
+
+const netVar={
+  gnd:'--gnd','5v':'--v5',vbatt:'--vb',led:'--led',led3v:'--led',
+  gate:'--gate',gate3v:'--gate',trig:'--trig',sense:'--sense',
+  mcu5v:'--mcu',nc:'--nc',motor:'--gate',batt:'--vb',sw:'--vb'
+};
+const netName={
+  gnd:'GND','5v':'+5V',vbatt:'VBATT',led:'LED DATA',led3v:'LED 3V3',
+  gate:'GATE',gate3v:'GATE 3V3',trig:'TRIG',sense:'VSENSE',
+  mcu5v:'+5V MCU',nc:'float',motor:'MOTOR−',batt:'BATT+',sw:'after SW'
+};
+
+const holes=[
+  [1,1,'sense','U3','GPIO2'],[2,1,'trig','U3','GPIO3'],[3,1,'gate3v','U3','GPIO4'],
+  [4,1,null,'U3','GPIO5'],[5,1,null,'U3','GPIO6'],[6,1,null,'U3','GPIO7'],[7,1,null,'U3','GPIO21'],
+  [1,7,'led3v','U3','GPIO10'],[2,7,null,'U3','GPIO9'],[3,7,null,'U3','GPIO8'],
+  [4,7,null,'U3','GPIO20'],[5,7,null,'U3','3V3'],[6,7,'gnd','U3','GND'],[7,7,'mcu5v','U3','5V'],
+  [10,3,'gnd','U2','1OE'],[11,3,'led3v','U2','1A'],[12,3,'led','U2','1Y'],
+  [13,3,'gnd','U2','2OE'],[14,3,'gate3v','U2','2A'],[15,3,'gate','U2','2Y'],[16,3,'gnd','U2','GND'],
+  [10,6,'5v','U2','Vcc'],[11,6,'5v','U2','4OE'],[12,6,'gnd','U2','4A'],
+  [13,6,'nc','U2','4Y'],[14,6,'5v','U2','3OE'],[15,6,'gnd','U2','3A'],[16,6,'nc','U2','3Y'],
+  [8,6,'gnd','C2','−'],
+  [3,4,'vbatt','R1','left'],[6,4,'sense','R1·R2','mid'],[9,4,'gnd','R2','right'],
+  [10,7,'5v','CR2','anode'],[8,7,'mcu5v','CR2','cath'],
+  [18,2,'led','R3','top'],[18,5,'led','R3','bot'],
+  [17,3,'gate','R4','top'],[17,6,'gate','R4','bot'],
+  [19,3,'gate','R5','top'],[19,6,'gnd','R5','bot'],
+  [17,7,'gate','Q1','G'],[18,7,'motor','Q1','D'],[19,7,'gnd','Q1','S'],
+  [22,5,'5v','C1','+'],[22,3,'gnd','C1','−'],
+  [18,1,'5v','V6','dead end'],
+  [11,9,'vbatt','MT','IN+'],[12,9,'gnd','MT','IN−'],[13,9,'5v','MT','OUT+'],[14,9,'gnd','MT','OUT−'],
+  [15,9,'sw','F1','in'],[17,9,'vbatt','F1','out'],
+  [18,9,'batt','SW1','A'],[19,9,'sw','SW1','B'],
+  [22,9,'batt','J1','+'],[23,9,'gnd','J1','−'],
+  // Edge pads past column X (column Y, rows 2–9)
+  [24,1,'gnd','J3','4:TRIG GND'],[24,2,'trig','J3','3:TRIG'],
+  [24,3,'gnd','J2','GND'],[24,4,'led','J2','DATA'],[24,5,'5v','J2','+5V'],
+  [24,7,'motor','J3','2:M−'],[24,8,'vbatt','J3','1:M+'],
+];
+
+const WIRES=[
+  ['BUS','A1','X1','blk'],
+  ['G1','G8','G1','blk'],['G2','K4','K1','blk'],['G3','N4','N1','blk'],['G4','Q4','Q1','blk'],
+  ['G5','I7','I1','blk'],['G6','M7','M1','blk'],['G7','P7','P1','blk'],['G8','J5','J1','blk'],
+  ['G9','T8','T1','blk'],['G10','W4','W1','blk'],['G11','M10','M1','blk'],['G12','O10','O1','blk'],
+  ['G13','W4','Y4','blk'],['G14','X1','Y2','blk'],['G16','X10','X1','blk'],
+  ['V1','N10','K7','red'],['V2','K7','L7','brg'],['V3','K7','O7','red'],['V4','K7','K8','brg'],
+  ['V5','N10','W6','red'],['V6','N10','S2','red'],['V7','W6','Y6','red'],
+  ['P1','W10','S10','wht'],['P2','T10','P10','wht'],['P3','R10','L10','wht'],
+  ['P4','R10','Y9','wht'],['P5','R10','D5','wht'],
+  ['S1','B8','L4','grn'],['S2','M4','S6','grn'],['S3','S3','Y5','grn'],['S4','D2','O4','blu'],
+  ['S5','P4','R4','blu'],['S6','T4','R7','blu'],['S7','C2','Y3','grn'],['S8','G5','B2','wht'],
+  ['S9','I8','H8','brg'],['S10','S8','Y8','blu'],['S11','R7','R8','brg'],['S12','T7','T8','brg']
+];
+
+// What each build step adds to the board (index 0 = step 1)
+const ADDS=[
+  ['R1'],['R2'],['BUS'],['U2'],['C2'],['G2'],['G3'],['G4'],['G5'],['G6'],
+  ['G7'],['V2'],['V3'],['G8'],['U3'],['CR2'],['V4'],['S9'],['R3'],['R4'],
+  ['R5'],['Q1'],['S11','S12'],['F1'],['C1'],['G1'],['G9'],['G10'],['V1'],['V5'],
+  ['V6'],['EDGE'],['P1'],['P2'],['P3'],['P4'],['P5'],['G11'],['G12'],['G13'],
+  ['V7'],['G14'],['G16'],['S1'],['S2'],['S3'],['S4'],['S5'],['S6'],['S7'],
+  ['S8'],['S10'],['MT'],['SW1'],['J1'],['J3'],['J2']
+];
+const N=ADDS.length;
+const stepOf={};
+ADDS.forEach((refs,i)=>refs.forEach(r=>stepOf[r]=i+1));
+const wireById=new Map(WIRES.map(w=>[w[0],w]));
+const PART={R1:'R1 100k',R2:'R2 100k',U2:'U2 74AHCT125',C2:'C2 0.1µF',U3:'U3 XIAO',
+  CR2:'CR2 1N5819',R3:'R3 330–470Ω',R4:'R4 100Ω',R5:'R5 10k',Q1:'Q1 MOSFET',F1:'F1 fuse',
+  C1:'C1 1000µF',MT:'MT3608 wires',SW1:'SW1 leads',J1:'J1 battery',J3:'J3 elbow lead',J2:'J2 LED strip'};
+
+const hmap=new Map();
+holes.forEach(h=>hmap.set(h[0]+','+h[1],h));
+function hp(n){return [n.charCodeAt(0)-65,parseInt(n.slice(1),10)-1];}
+function holeRef(h){return h[3]==='R1·R2'?'R1':h[3];}
+
+// First step at which each listed hole gets something in it
+const holeStep=new Map();
+holes.forEach(h=>holeStep.set(h[0]+','+h[1],stepOf[holeRef(h)]));
+WIRES.forEach(([id,a,b])=>[a,b].forEach(n=>{
+  const [c,r]=hp(n),k=c+','+r,s=stepOf[id];
+  if(hmap.has(k)&&holeStep.get(k)>s)holeStep.set(k,s);
+}));
+
+mk('rect',{x:px(0)-8,y:MT-8,width:24*P+18,height:9*P+16,rx:4,
+  fill:'var(--board)',stroke:'var(--bstk)','stroke-width':1.2});
+
+const wireVar={blk:'--w-blk',red:'--w-red',wht:'--w-wht',grn:'--w-grn',blu:'--w-blu'};
+const wireName={blk:'black',red:'red',wht:'white',grn:'green',blu:'blue'};
+const refGroups=[];
+function grp(ref,parent){const g=mk('g',{'data-ref':ref},parent);refGroups.push(g);return g;}
+
+const wg=mk('g',{});
+const ctrX=px(11.5),ctrY=py(4.5);
+WIRES.forEach(([id,a,b,c],i)=>{
+  const g=grp(id,wg);
+  const [c1,r1]=hp(a),[c2,r2]=hp(b);
+  const x1=px(c1),y1=py(r1),x2=px(c2),y2=py(r2);
+  const tip=`${id} · ${c==='brg'?'solder bridge':wireName[c]+' wire'} · ${a} → ${b} · step ${stepOf[id]}`;
+  if(c==='brg'){
+    const l=mk('line',{x1,y1,x2,y2,stroke:'var(--solder)','stroke-width':5.5,'stroke-linecap':'round'},g);
+    l.dataset.tip=tip; return;
+  }
+  let d=`M${x1},${y1} L${x2},${y2}`;
+  if(id!=='BUS'){
+    const dx=x2-x1,dy=y2-y1,len=Math.hypot(dx,dy);
+    let nx=-dy/len,ny=dx/len;
+    const mx=(x1+x2)/2,my=(y1+y2)/2;
+    if((ctrX-mx)*nx+(ctrY-my)*ny<0){nx=-nx;ny=-ny;}
+    const amt=Math.min(len*.22,5+4*(i%4));
+    d=`M${x1},${y1} Q${mx+nx*amt},${my+ny*amt} ${x2},${y2}`;
+  }
+  const cs=mk('path',{d,fill:'none',stroke:'var(--w-case)','stroke-width':3.8,'stroke-linecap':'round',opacity:.9},g);
+  const p=mk('path',{d,fill:'none',stroke:`var(${wireVar[c]})`,'stroke-width':2.3,'stroke-linecap':'round'},g);
+  cs.dataset.tip=tip; p.dataset.tip=tip;
+});
+document.getElementById('showWires').addEventListener('change',e=>{
+  wg.setAttribute('display',e.target.checked?'inline':'none');
+});
+
+mk('text',{x:px(0)-14,y:py(4.5),'text-anchor':'middle','dominant-baseline':'middle',
+  fill:'var(--dim)','font-size':'7','font-weight':'600',
+  transform:`rotate(-90,${px(0)-14},${py(4.5)})`}).textContent='USB ←';
+mk('text',{x:px(24)+36,y:py(4.5),'text-anchor':'middle','dominant-baseline':'middle',
+  fill:'var(--dim)','font-size':'7','font-weight':'600',
+  transform:`rotate(90,${px(24)+36},${py(4.5)})`}).textContent='HARNESS →';
+for(let c=0;c<COLS;c++){
+  mk('text',{x:px(c),y:MT+(ROWS-1)*P+16,'text-anchor':'middle',fill:'var(--dim)',
+    'font-size':'7.5','font-family':'monospace','font-weight':'600'}).textContent=cl(c);
+}
+mk('text',{x:px(24),y:MT+(ROWS-1)*P+16,'text-anchor':'middle',fill:'var(--dim)',
+  'font-size':'7.5','font-family':'monospace','font-style':'italic',opacity:.7}).textContent='Y';
+for(let r=0;r<ROWS;r++){
+  mk('text',{x:ML-6,y:py(r)+3,'text-anchor':'end',fill:'var(--dim)',
+    'font-size':'7','font-family':'monospace'}).textContent=rl(r);
+}
+
+const holeEls=[];
+for(let c=0;c<COLS;c++){
+  for(let r=0;r<ROWS;r++){
+    const k=c+','+r,h=hmap.get(k);
+    const cr=mk('circle',{cx:px(c),cy:py(r),r:HR,fill:'var(--hole)'});
+    if(h){
+      const net=h[2];
+      cr.style.cursor='pointer';
+      cr.dataset.tip=`${cl(c)}${rl(r)}: ${h[3]} ${h[4]}${net?' — '+netName[net]:''}`;
+      holeEls.push({el:cr,k,fill:net?`var(${netVar[net]||'--used'})`:'var(--used)'});
+    }
+  }
+}
+
+// Edge pads Y2–Y9: oblong, isolated from the grid
+for(let r=1;r<=8;r++){
+  const k=24+','+r,h=hmap.get(k);
+  const pd=mk('rect',{x:px(24)-7,y:py(r)-3.5,width:14,height:7,rx:3.5,fill:'var(--hole)'});
+  pd.style.cursor='pointer';
+  pd.dataset.tip=h?`Y${r+1} (edge pad): ${h[3]} ${h[4]} — ${netName[h[2]]}`:`Y${r+1} (edge pad): spare`;
+  if(h)holeEls.push({el:pd,k,fill:`var(${netVar[h[2]]||'--used'})`});
+}
+
+const cg=mk('g',{});
+function box(ref,c1,r1,c2,r2,color,label,dash){
+  const g=grp(ref,cg),pad=7;
+  const y1=py(r1),y2=py(r2),top=Math.min(y1,y2),h=Math.abs(y2-y1);
+  mk('rect',{x:px(c1)-pad,y:top-pad,width:(c2-c1)*P+pad*2,height:h+pad*2,
+    rx:3,fill:'none',stroke:`var(${color})`,'stroke-width':1.5,
+    'stroke-dasharray':dash||'none','opacity':.8},g);
+  mk('text',{x:px((c1+c2)/2),y:(y1+y2)/2+1,'text-anchor':'middle','dominant-baseline':'middle',
+    fill:`var(${color})`,'font-size':'7','font-weight':'700','opacity':.7},g).textContent=label;
+}
+box('U3',1,1,7,7,'--c-xi','U3  XIAO','5,3');
+box('U2',10,3,16,6,'--c-dip','U2  74AHCT125');
+
+function comp2(c1,r1,c2,r2,color,label,horiz){
+  const g=grp(label,cg);
+  const x1=px(c1),y1=py(r1),x2=px(c2),y2=py(r2);
+  mk('line',{x1,y1,x2,y2,stroke:`var(${color})`,'stroke-width':2.5,'stroke-linecap':'round','opacity':.6},g);
+  const mx=(x1+x2)/2,my=(y1+y2)/2,off=horiz?-6:8;
+  mk('text',{x:horiz?mx:mx+off,y:horiz?my-4:my,'text-anchor':'middle','dominant-baseline':'middle',
+    fill:`var(${color})`,'font-size':'6','font-weight':'600'},g).textContent=label;
+}
+comp2(8,6,10,6,'--c-cap','C2',true);
+comp2(3,4,6,4,'--c-pas','R1',true);
+comp2(6,4,9,4,'--c-pas','R2',true);
+comp2(10,7,8,7,'--c-dio','CR2',true);
+comp2(18,2,18,5,'--c-pas','R3');
+comp2(17,3,17,6,'--c-pas','R4');
+comp2(19,3,19,6,'--c-pas','R5');
+comp2(15,9,17,9,'--c-fus','F1',true);
+mk('circle',{cx:px(22),cy:py(4),r:P*1.97,fill:'none',stroke:'var(--c-cap)','stroke-width':1.2,
+  'stroke-dasharray':'4,3',opacity:.7},grp('C1',cg));
+comp2(22,5,22,3,'--c-cap','C1');
+
+{
+  const g=grp('Q1',cg),qx=px(17)-2,qy=py(7)-5;
+  mk('rect',{x:qx,y:qy,width:2*P+4,height:10,rx:2,fill:'none',stroke:'var(--c-fet)','stroke-width':1.2},g);
+  mk('text',{x:qx+P+2,y:qy-3,'text-anchor':'middle',fill:'var(--c-fet)',
+    'font-size':'6','font-weight':'600'},g).textContent='Q1';
+}
+
+[
+  {ref:'MT',label:'MT3608',c1:11,r1:9,c2:14,color:'--c-mod'},
+  {ref:'SW1',label:'SW1',c1:18,r1:9,c2:19,color:'--c-mod'},
+  {ref:'J1',label:'J1',c1:22,r1:9,c2:23,color:'--c-con'},
+].forEach(o=>{
+  const g=grp(o.ref,cg),pad=5;
+  mk('rect',{x:px(o.c1)-pad,y:py(o.r1)-pad,width:(o.c2-o.c1)*P+pad*2,height:pad*2,
+    rx:2,fill:'none',stroke:`var(${o.color})`,'stroke-width':1,'stroke-dasharray':'3,2','opacity':.6},g);
+  mk('text',{x:px(o.c1)-pad-1,y:py(o.r1)-pad+3,'text-anchor':'end',
+    fill:`var(${o.color})`,'font-size':'5.5','font-weight':'600','opacity':.7},g).textContent=o.label;
+});
+
+[
+  {ref:'J3',label:'J3',r1:7,r2:8},
+  {ref:'J2',label:'J2',r1:3,r2:5},
+  {ref:'J3',label:'J3',r1:1,r2:2},
+].forEach(o=>{
+  const g=grp(o.ref,cg),pad=6,top=py(o.r2)-pad;
+  mk('rect',{x:px(24)-10,y:top,width:20,height:py(o.r1)-py(o.r2)+pad*2,
+    rx:3,fill:'none',stroke:'var(--c-con)','stroke-width':1,'stroke-dasharray':'3,2','opacity':.6},g);
+  mk('text',{x:px(24)+13,y:(py(o.r1)+py(o.r2))/2+2,'text-anchor':'start',
+    fill:'var(--c-con)','font-size':'6','font-weight':'600','opacity':.8},g).textContent=o.label;
+});
+
+const ringG=mk('g',{'pointer-events':'none'});
+
+// Wrap the drawing so the bottom view can mirror it left-to-right
+const root=document.createElementNS(NS,'g');
+while(svg.firstChild)root.appendChild(svg.firstChild);
+svg.appendChild(root);
+const flipX=2*px(11.5);
+const texts=[...root.querySelectorAll('text')].map(t=>({t,x:+t.getAttribute('x'),
+  tf:t.getAttribute('transform')||'',anchor:t.getAttribute('text-anchor')||'start'}));
+const swapA={start:'end',end:'start',middle:'middle'};
+let bottom=false;
+function setView(b,save=true){
+  bottom=b;
+  root.setAttribute('transform',b?`translate(${flipX},0) scale(-1,1)`:'');
+  svg.setAttribute('viewBox',`${b?flipX-W:0} 0 ${W} ${H}`);
+  // Counter-mirror each label in place so it stays readable
+  texts.forEach(o=>{
+    o.t.setAttribute('transform',b?`translate(${2*o.x},0) scale(-1,1) ${o.tf}`:o.tf);
+    o.t.setAttribute('text-anchor',b?swapA[o.anchor]:o.anchor);
+  });
+  cg.style.opacity=b?.4:1;
+  $('viewTop').setAttribute('aria-pressed',!b);
+  $('viewBot').setAttribute('aria-pressed',b);
+  $('viewDesc').innerHTML=b
+    ?'<b>Solder side, viewed from below</b> (board flipped left-to-right) &middot; A1 bottom-right &middot; USB at right, harness exits left &middot; parts shown faded through the board'
+    :'Component side, viewed from above &middot; A1 bottom-left &middot; USB at left, harness exits right';
+  $('wiresLbl').textContent=b?'Show back-side wires':'Show back-side wires (seen through the board)';
+  if(save){try{localStorage.setItem('podView',b?'bot':'top');}catch(e){}}
+}
+
+const tt=document.getElementById('tt');
+svg.addEventListener('pointermove',e=>{
+  const t=e.target.dataset?.tip;
+  if(t){tt.textContent=t;tt.className='tip show';
+    tt.style.left=(e.clientX+12)+'px';tt.style.top=(e.clientY-24)+'px';}
+  else{tt.className='tip';}
+});
+svg.addEventListener('pointerleave',()=>{tt.className='tip';});
+
+[['GND','--gnd'],['+5 V','--v5'],['VBATT','--vb'],['LED data','--led'],
+ ['Gate','--gate'],['Trigger','--trig'],['VSENSE','--sense'],['+5 V MCU','--mcu'],['Float','--nc']
+].forEach(([n,v])=>{
+  const s=document.createElement('span');
+  s.innerHTML=`<i style="background:var(${v})"></i>${n}`;
+  document.getElementById('legend').appendChild(s);
+});
+
+/* ---------- step view ---------- */
+const rows=[...document.querySelectorAll('#order tbody tr')];
+const STEPS=rows.map(tr=>({what:tr.cells[1].innerHTML,why:tr.cells[2].innerHTML}));
+const $=id=>document.getElementById(id);
+const stepIn=$('stepIn'),showAll=$('showAll');
+stepIn.max=N;$('ofLbl').textContent='of '+N;
+let step=1;
+
+function holesFor(refs){
+  const out=new Set();
+  refs.forEach(ref=>{
+    if(ref==='EDGE'){for(let r=2;r<=9;r++)out.add('Y'+r);return;}
+    const w=wireById.get(ref);
+    if(w){out.add(w[1]);out.add(w[2]);return;}
+    holes.forEach(h=>{
+      if(h[3]===ref||(h[3]==='R1·R2'&&(ref==='R1'||ref==='R2')))out.add(cl(h[0])+rl(h[1]));
+    });
+  });
+  return [...out].sort((a,b)=>a.charCodeAt(0)-b.charCodeAt(0)||parseInt(a.slice(1))-parseInt(b.slice(1)));
+}
+
+function render(){
+  const all=showAll.checked;
+  document.body.classList.toggle('all',all);
+  $('everything').hidden=!all;
+
+  refGroups.forEach(g=>{
+    const s=stepOf[g.dataset.ref];
+    g.classList.toggle('done',s<step);
+    g.classList.toggle('cur',s===step);
+    g.classList.toggle('future',s>step);
+  });
+  holeEls.forEach(o=>{
+    const on=holeStep.get(o.k)<=step;
+    o.el.setAttribute('fill',on||all?o.fill:'var(--hole)');
+    o.el.setAttribute('r',on?HR+.7:HR);
+    o.el.style.opacity=!on&&all?.45:1;
+  });
+
+  const curRefs=ADDS[step-1],curHoles=holesFor(curRefs);
+  ringG.replaceChildren();
+  curHoles.forEach(n=>{
+    const [c,r]=hp(n);
+    mk('circle',{class:'ring',cx:px(c),cy:py(r),r:HR+3.6},ringG);
+  });
+
+  $('curEyebrow').textContent=`Step ${step} of ${N}`;
+  $('curWhat').innerHTML=STEPS[step-1].what;
+  $('curWhy').innerHTML=STEPS[step-1].why;
+  $('curHoles').innerHTML='<span class="lbl">Holes</span>'+curHoles.map(n=>`<span class="chip hot">${n}</span>`).join('');
+  $('upNext').innerHTML=step<N?`<b>Up next · step ${step+1}</b><br>${STEPS[step].what}`:'<b>That was the last step.</b> The board is complete.';
+  $('upNext').style.cursor=step<N?'pointer':'default';
+
+  if(document.activeElement!==stepIn||parseInt(stepIn.value,10)!==step)stepIn.value=step;
+  $('progFill').style.width=(step/N*100)+'%';
+  ['prevBtn','prevBtn2'].forEach(id=>$(id).disabled=step<=1);
+  ['nextBtn','nextBtn2'].forEach(id=>$(id).disabled=step>=N);
+  $('nextBtn2').textContent=step>=N?'All done':'Done, next step →';
+
+  $('thruN').textContent=step;
+  const parts=[];
+  ADDS.slice(0,step).forEach((refs,i)=>refs.forEach(r=>{
+    if(PART[r])parts.push(`<span class="chip${i+1===step?' hot':''}">${PART[r]}</span>`);
+  }));
+  $('partsNow').innerHTML=parts.join('')||'<span class="sub" style="margin:0">Nothing placed yet.</span>';
+  const cnt={blk:0,red:0,wht:0,grn:0,blu:0,brg:0};
+  WIRES.forEach(w=>{if(stepOf[w[0]]<=step)cnt[w[3]]++;});
+  const tot={blk:0,red:0,wht:0,grn:0,blu:0,brg:0};
+  WIRES.forEach(w=>tot[w[3]]++);
+  const lbl={blk:'Black',red:'Red',wht:'White',grn:'Green',blu:'Blue',brg:'Bridges'};
+  $('wiresNow').innerHTML=Object.keys(cnt).map(k=>
+    `<span><i class="w w-${k}"></i>${lbl[k]} ${cnt[k]}/${tot[k]}</span>`).join('');
+
+  rows.forEach((tr,i)=>{
+    tr.classList.toggle('done',i+1<step);
+    tr.classList.toggle('cur',i+1===step);
+  });
+}
+
+function setStep(n,save=true){
+  if(!Number.isFinite(n))return;
+  step=Math.min(N,Math.max(1,Math.round(n)));
+  render();
+  if(save){
+    try{localStorage.setItem('podStep',step);}catch(e){}
+    try{history.replaceState(null,'','#step'+step);}catch(e){}
+  }
+}
+
+stepIn.addEventListener('input',()=>{const v=parseInt(stepIn.value,10);if(v>=1&&v<=N)setStep(v);});
+stepIn.addEventListener('change',()=>setStep(parseInt(stepIn.value,10)||step));
+['prevBtn','prevBtn2'].forEach(id=>$(id).addEventListener('click',()=>setStep(step-1)));
+['nextBtn','nextBtn2'].forEach(id=>$(id).addEventListener('click',()=>setStep(step+1)));
+$('upNext').addEventListener('click',()=>{if(step<N)setStep(step+1);});
+$('upNext').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&step<N){e.preventDefault();setStep(step+1);}});
+rows.forEach((tr,i)=>{
+  tr.tabIndex=0;
+  tr.addEventListener('click',()=>{setStep(i+1);window.scrollTo({top:0,behavior:'smooth'});});
+  tr.addEventListener('keydown',e=>{if(e.key==='Enter'){setStep(i+1);window.scrollTo({top:0});}});
+});
+showAll.addEventListener('change',()=>{
+  render();
+  try{localStorage.setItem('podAll',showAll.checked?'1':'0');}catch(e){}
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.closest&&e.target.closest('input,textarea'))return;
+  if(e.key==='ArrowRight')setStep(step+1);
+  else if(e.key==='ArrowLeft')setStep(step-1);
+});
+
+let start=1;
+const m=location.hash.match(/^#step(\d+)$/);
+if(m)start=+m[1];
+else{try{start=+localStorage.getItem('podStep')||1;}catch(e){}}
+try{showAll.checked=localStorage.getItem('podAll')==='1';}catch(e){}
+$('viewTop').addEventListener('click',()=>setView(false));
+$('viewBot').addEventListener('click',()=>setView(true));
+{let v=false;try{v=localStorage.getItem('podView')==='bot';}catch(e){}setView(v,false);}
+setStep(start,false);
+</script>
+
+
+</body></html>

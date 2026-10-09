@@ -558,7 +558,7 @@ data resistor stays on the pod board, feeding `J2` pin 3.
 | | 3 | Trigger (`GPIO3`) | Y3 | Green |
 | | 4 | Trigger return / ground | Y2 | Black |
 
-The board pads are positions from the board layout, not part designators.
+The board pads are positions from the [board layout](docs/layout/README.md), not part designators.
 **Y2–Y9 are the oblong edge pads past column X**, at the harness end. "Y" isn't
 printed on the board; it's just the letter after X. The edge pads aren't connected
 to the grid, so the layout runs a jumper to each one. The pigtail wire then
