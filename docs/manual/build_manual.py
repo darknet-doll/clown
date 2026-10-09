@@ -979,7 +979,8 @@ def story():
     s.append(P("Also fit", "h2"))
     s += bullets([
         "The <b>1000 uF capacitor</b> %s, C1, across the strip's 5V and ground at the strip "
-        "connector J2 %s on the pod &mdash; stood upright next to J2. Watch polarity "
+        "connector J2 %s on the pod &mdash; stood upright beside J2's edge pads, its two legs "
+        "feeding J2's 5V and GND directly. Watch polarity "
         "&mdash; the striped leg is negative." % (ref(17), ref(21)),
         "The <b>1N5819 diode</b> %s directly across the motor's two terminals at the blower "
         "end, banded end to <b>positive</b>. Backwards it is a dead short, so check this one "

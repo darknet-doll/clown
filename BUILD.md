@@ -559,7 +559,8 @@ what the brain can measure.
 ### Also fit
 
 - **1000 µF capacitor**, `C1`, across the strip's 5V and ground, at the strip
-  connector (`J2`) on the pod — stood upright at pads W6/W4, next to `J2`. **Watch
+  connector (`J2`) on the pod — stood upright at pads W6/W4. Its two legs feed `J2`'s +5V and GND
+  edge pads directly, so the charge is right at the plug. **Watch
   polarity** — the marked stripe is the negative leg.
 - **0.1 µF ceramic capacitor** across the 74AHCT125's `Vcc` and `GND` pins, on the
   chip itself. Not polarised, goes in either way round — see above.
