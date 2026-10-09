@@ -210,6 +210,11 @@ costume to duplicate, and it *will* get soaked (lace wicks).
   housing fit test; tack the hem corners down if it creeps.
 - Mount A fallback (bottle on the hand) makes the lump under this ruffle much
   bigger — if the hose test fails, re-check both hems over the real bottle.
+- **Or print it.** The lower ruffle is a candidate for a 3D printed part that
+  mounts to the housing's tongue under its own Velcro strap — rigid can't flop
+  into the wand wheel, and translucent openwork reads as stiff lace. The fabric
+  cuff keeps the band and the upper ruffle either way; nothing rigid may reach
+  the crease. Part file: [3d-prints/cuff-ruffle/](3d-prints/cuff-ruffle/cuff-ruffle.md).
 
 ---
 
@@ -230,6 +235,9 @@ costume to duplicate, and it *will* get soaked (lace wicks).
       3 × 5 hose open under suction? (Only matters if Mount C wins the hose test)
 - [ ] Lower ruffle hem: clears the shroud vents and the ring with the fingers
       curled? Check at the bubble-housing fit test
+- [ ] Lower ruffle: fabric lace or the printed cuff-ruffle part? Blocked on the
+      tongue-to-crease measurement and a hem coupon
+      ([3d-prints/cuff-ruffle/](3d-prints/cuff-ruffle/cuff-ruffle.md))
 - [ ] How does the disconnect switch read as costume? A bow over the 20 mm round
       rocker (the booted toggle became a KCD1 rocker — see PARTS.md), or something
       more deliberate?
