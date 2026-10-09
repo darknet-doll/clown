@@ -262,11 +262,11 @@ so every one is fed by its own jumper. Rows 1 and 10 have no edge pad.</p>
 <thead><tr><th>Wire</th><th>Carries</th><th>Jumpers</th></tr></thead>
 <tbody>
 <tr><td><span class="w w-blk"></span>Black</td><td>Ground — the row-1 bus and every ground tap</td><td>bus + 15</td></tr>
-<tr><td><span class="w w-red"></span>Red</td><td>+5 V from the boost</td><td>5</td></tr>
+<tr><td><span class="w w-red"></span>Red</td><td>+5 V from the boost, and CR2 to the XIAO</td><td>6</td></tr>
 <tr><td><span class="w w-wht"></span>White</td><td>Battery — the VBATT chain and battery sense</td><td>6</td></tr>
 <tr><td><span class="w w-grn"></span>Green</td><td>LED data (to the strip) and trigger (from the elbow lead)</td><td>4</td></tr>
 <tr><td><span class="w w-blu"></span>Blue</td><td>Motor control — gate drive and motor −</td><td>4</td></tr>
-<tr><td><span class="w w-brg"></span>Bridge</td><td>Neighboring pads, solder only</td><td>5</td></tr>
+<tr><td><span class="w w-brg"></span>Bridge</td><td>Neighboring pads, solder only</td><td>4</td></tr>
 </tbody>
 </table>
 </div>
@@ -280,7 +280,7 @@ full length (~60 mm) so it can be soldered to every pad. This is the ground spin
 <table>
 <thead><tr><th>#</th><th>From</th><th>To</th><th>Wire</th><th>What</th></tr></thead>
 <tbody>
-<tr><td>G1</td><td>G8</td><td>G1</td><td><span class="w w-blk"></span>Black</td><td>XIAO GND</td></tr>
+<tr><td>G1</td><td>C8</td><td>C1</td><td><span class="w w-blk"></span>Black</td><td>XIAO GND</td></tr>
 <tr><td>G2</td><td>K4</td><td>K1</td><td><span class="w w-blk"></span>Black</td><td>U2 1OE → GND (enables gate 1)</td></tr>
 <tr><td>G3</td><td>N4</td><td>N1</td><td><span class="w w-blk"></span>Black</td><td>U2 2OE → GND (enables gate 2)</td></tr>
 <tr><td>G4</td><td>Q4</td><td>Q1</td><td><span class="w w-blk"></span>Black</td><td>U2 pin 7 GND</td></tr>
@@ -334,7 +334,7 @@ full length (~60 mm) so it can be soldered to every pad. This is the ground spin
 <table>
 <thead><tr><th>#</th><th>From</th><th>To</th><th>Wire</th><th>What</th></tr></thead>
 <tbody>
-<tr><td>S1</td><td>B8</td><td>L4</td><td><span class="w w-grn"></span>Green</td><td>GPIO10 → U2 1A (LED data in)</td></tr>
+<tr><td>S1</td><td>E8</td><td>L4</td><td><span class="w w-grn"></span>Green</td><td>GPIO10 → U2 1A (LED data in)</td></tr>
 <tr><td>S2</td><td>M4</td><td>S6</td><td><span class="w w-grn"></span>Green</td><td>U2 1Y → R3 bottom (LED data, level shifted)</td></tr>
 <tr><td>S3</td><td>S3</td><td>Y5</td><td><span class="w w-grn"></span>Green</td><td>R3 top → J2 DATA edge pad (LED strip input)</td></tr>
 <tr><td>S4</td><td>D2</td><td>O4</td><td><span class="w w-blu"></span>Blue</td><td>GPIO4 → U2 2A (gate drive in)</td></tr>
@@ -342,7 +342,7 @@ full length (~60 mm) so it can be soldered to every pad. This is the ground spin
 <tr><td>S6</td><td>T4</td><td>R7</td><td><span class="w w-blu"></span>Blue</td><td>Pulldown top → gate node</td></tr>
 <tr><td>S7</td><td>C2</td><td>Y3</td><td><span class="w w-grn"></span>Green</td><td>GPIO3 → J3-3 TRIG edge pad (full board length)</td></tr>
 <tr><td>S8</td><td>G5</td><td>B2</td><td><span class="w w-wht"></span>White</td><td>Divider midpoint → GPIO2 (battery sense)</td></tr>
-<tr><td>S9</td><td>I8</td><td>H8</td><td><span class="w w-brg"></span>Bridge</td><td>CR2 cathode → XIAO 5 V</td></tr>
+<tr><td>S9</td><td>I8</td><td>B8</td><td><span class="w w-red"></span>Red</td><td>CR2 cathode → XIAO 5 V</td></tr>
 <tr><td>S10</td><td>S8</td><td>Y8</td><td><span class="w w-blu"></span>Blue</td><td>Q1 drain → J3-2 motor − edge pad</td></tr>
 <tr><td>S11</td><td>R7</td><td>R8</td><td><span class="w w-brg"></span>Bridge</td><td>R4 bottom → Q1 gate</td></tr>
 <tr><td>S12</td><td>T7</td><td>T8</td><td><span class="w w-brg"></span>Bridge</td><td>R5 bottom → Q1 source</td></tr>
@@ -366,6 +366,13 @@ when the pigtail wire goes in. Work from the back — C1's body crowds the front
 </dl>
 
 <h2>Build Order</h2>
+<p class="note"><strong>Pin fix, 2026-10-09 — the XIAO's top row was drawn reversed.</strong> With the USB
+pointing left, the top row runs <strong>5V, GND, 3V3, D10, D9, D8, D7</strong> from the left (B8→H8); earlier
+versions of this page had it backwards. Steps 18, 26 and the S1 step below are corrected. If you built them as
+first drawn, rework before continuing: <strong>1)</strong> remove the G8→G1 jumper — G8 is really GPIO8, a
+boot-strap pin, and grounded it stops the XIAO booting or flashing. Run black C8→C1 instead. <strong>2)</strong>
+remove the I8→H8 bridge — H8 is really GPIO20, which is not 5V-tolerant. Run a short red wire I8→B8 instead.
+No power has reached the board yet (the boost module's wires only attach near the end), so nothing is damaged.</p>
 <p class="sub">Each step is one action. Don't skip ahead — some parts block access to holes underneath them. Click a row to jump to that step.</p>
 <div class="tbl-wrap">
 <table id="order">
@@ -388,7 +395,7 @@ when the pigtail wire goes in. Work from the back — C1's body crowds the front
 <tr><td>15</td><td>Insert XIAO male header strips into B2–H2 and B8–H8. Place U3 on top. Solder all 14 header pins on back.</td><td>XIAO goes on after R1/R2 are soldered underneath it. Test-fit first — pin rows should span 6 holes</td></tr>
 <tr><td>16</td><td>Insert CR2 (1N5819) into K8 (anode) and I8 (cathode). Banded end at I8. Leave <strong>both unsoldered</strong> — the next two steps bridge to each pad.</td><td>USB isolation diode. Steps 17–18 solder each lead with its bridge</td></tr>
 <tr><td>17</td><td><span class="w w-brg"></span><strong>Bridge</strong> V4: K7 → K8 (DIP Vcc to CR2 anode). Solder <strong>K8</strong> — the bridge captures the CR2 lead and the +5V connection in one pass.</td><td>CR2 picks up +5V from the DIP supply pin one hole away</td></tr>
-<tr><td>18</td><td><span class="w w-brg"></span><strong>Bridge</strong> S9: I8 → H8 (CR2 cathode to XIAO 5V). Solder <strong>I8</strong> — the bridge captures the CR2 lead and the XIAO 5V connection in one pass.</td><td>Completes the isolated power path to the XIAO</td></tr>
+<tr><td>18</td><td><span class="w w-red"></span><strong>Red</strong> wire S9: I8 → B8 (CR2 cathode to XIAO 5V). B8 already holds its header pin — lay the tinned end flat on the joint, reheat, let it sink in. Then solder <strong>I8</strong>, capturing the CR2 lead and the wire in one joint.</td><td>Completes the isolated power path to the XIAO. B8 is the 5V pin with the USB pointing left — the top row reads 5V, GND, 3V3, D10… from the left</td></tr>
 <tr><td>19</td><td>Insert R3 (330–470Ω) into S3 and S6. Solder on back.</td><td>LED data series resistor, placed in the open zone past the DIP</td></tr>
 <tr><td>20</td><td>Insert R4 (100Ω) into R4 and R7. Solder both.</td><td>Gate series resistor — one row below Q1's gate</td></tr>
 <tr><td>21</td><td>Insert R5 (10k) into T4 and T7. Solder both.</td><td>Gate pulldown — one row below Q1's source</td></tr>
@@ -396,7 +403,7 @@ when the pigtail wire goes in. Work from the back — C1's body crowds the front
 <tr><td>23</td><td><span class="w w-brg"></span><strong>Bridge</strong> S11: R7 → R8 (R4 bottom to Q1 gate). <span class="w w-brg"></span><strong>Bridge</strong> S12: T7 → T8 (R5 bottom to Q1 source).</td><td>Two short bridges connect the resistors to Q1</td></tr>
 <tr><td>24</td><td>Insert F1 (PPTC fuse) into P10 and R10. Solder on back.</td><td>Fuse in the battery positive path</td></tr>
 <tr><td>25</td><td>Insert C1 (1000µF electrolytic) upright into W6 (+) and W4 (−). Stripe (−) toward W4 — the row-1 side. If the leads are closer than 2 holes, splay them gently. Solder <strong>W6</strong>. Leave <strong>W4</strong> unsoldered — step 28 adds its ground jumper.</td><td>Bulk cap in the open corner next to the J2 LED strip connector — the strip draws its current right there</td></tr>
-<tr><td>26</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G1: G8 → G1 (XIAO GND to bus)</td><td>MCU ground</td></tr>
+<tr><td>26</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G1: C8 → C1 (XIAO GND to bus). C8 already holds its header pin — lay the wire on the joint, reheat, let it sink in.</td><td>MCU ground. C8 is the GND pin — <strong>not</strong> G8, which is GPIO8, a boot-strap pin</td></tr>
 <tr><td>27</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G9: T8 → T1 (Q1 source to bus)</td><td>Motor return current path — keep it short and direct</td></tr>
 <tr><td>28</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G10: W4 → W1 (C1 negative to GND bus). Solder <strong>W4</strong> (C1 lead + jumper wire together).</td><td>C1's ground return, straight down column W to the bus</td></tr>
 <tr><td>29</td><td><span class="w w-red"></span><strong>Red</strong> jumper V1: N10 → K7 (boost OUT+ pad to DIP Vcc)</td><td>Main +5V feed from the boost module to the level shifter</td></tr>
@@ -414,7 +421,7 @@ when the pigtail wire goes in. Work from the back — C1's body crowds the front
 <tr><td>41</td><td><span class="w w-red"></span><strong>Red</strong> jumper V7: W6 → <strong>Y6</strong> (C1 positive to J2 +5V edge pad). Solder <strong>W6 now</strong> — its last branch. <strong>Wait</strong> on Y6 — step 57. S2 keeps the end of red V6 from step 31 and nothing else lands there now. Leave it: it's a harmless +5V dead end.</td><td>Strip +5V straight off C1. Replaces the old S2 pad</td></tr>
 <tr><td>42</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G14: X1 → <strong>Y2</strong> (GND bus to J3-4 trigger GND edge pad). <strong>Wait</strong> on X1 — G16 lands there next step. <strong>Wait</strong> on Y2 — step 56.</td><td>Trigger return ground, for the elbow lead. Short hop off the end of the bus</td></tr>
 <tr><td>43</td><td><span class="w w-blk"></span><strong>Black</strong> jumper G16: X10 → X1 (J1 batt− pad to GND bus). Solder <strong>X1 now</strong> — bus + G14 + G16. <strong>Wait</strong> on X10 — it solders with J1− in step 55.</td><td>Battery return — carries all return current</td></tr>
-<tr><td>44</td><td><span class="w w-grn"></span><strong>Green</strong> jumper S1: B8 → L4 (GPIO10 to DIP 1A — LED data in). Solder both ends now.</td><td>MCU pixel data to level shifter input</td></tr>
+<tr><td>44</td><td><span class="w w-grn"></span><strong>Green</strong> jumper S1: E8 → L4 (GPIO10 to DIP 1A — LED data in). Solder both ends now.</td><td>MCU pixel data to level shifter input</td></tr>
 <tr><td>45</td><td><span class="w w-grn"></span><strong>Green</strong> jumper S2: M4 → S6 (DIP 1Y to R3 bottom — LED data out). Solder both ends now.</td><td>Level-shifted data to series resistor</td></tr>
 <tr><td>46</td><td><span class="w w-grn"></span><strong>Green</strong> jumper S3: S3 → <strong>Y5</strong> (R3 top to J2 DATA edge pad). Solder <strong>S3 now</strong>. <strong>Wait</strong> on Y5 — step 57.</td><td>LED data to the strip plug, between its +5V and GND pads</td></tr>
 <tr><td>47</td><td><span class="w w-blu"></span><strong>Blue</strong> jumper S4: D2 → O4 (GPIO4 to DIP 2A — gate drive in). Solder both ends now.</td><td>Motor PWM to level shifter input</td></tr>
@@ -464,8 +471,8 @@ const netName={
 const holes=[
   [1,1,'sense','U3','GPIO2'],[2,1,'trig','U3','GPIO3'],[3,1,'gate3v','U3','GPIO4'],
   [4,1,null,'U3','GPIO5'],[5,1,null,'U3','GPIO6'],[6,1,null,'U3','GPIO7'],[7,1,null,'U3','GPIO21'],
-  [1,7,'led3v','U3','GPIO10'],[2,7,null,'U3','GPIO9'],[3,7,null,'U3','GPIO8'],
-  [4,7,null,'U3','GPIO20'],[5,7,null,'U3','3V3'],[6,7,'gnd','U3','GND'],[7,7,'mcu5v','U3','5V'],
+  [1,7,'mcu5v','U3','5V'],[2,7,'gnd','U3','GND'],[3,7,null,'U3','3V3'],
+  [4,7,'led3v','U3','GPIO10'],[5,7,null,'U3','GPIO9'],[6,7,null,'U3','GPIO8'],[7,7,null,'U3','GPIO20'],
   [10,3,'gnd','U2','1OE'],[11,3,'led3v','U2','1A'],[12,3,'led','U2','1Y'],
   [13,3,'gnd','U2','2OE'],[14,3,'gate3v','U2','2A'],[15,3,'gate','U2','2Y'],[16,3,'gnd','U2','GND'],
   [10,6,'5v','U2','Vcc'],[11,6,'5v','U2','4OE'],[12,6,'gnd','U2','4A'],
@@ -491,7 +498,7 @@ const holes=[
 
 const WIRES=[
   ['BUS','A1','X1','blk'],
-  ['G1','G8','G1','blk'],['G2','K4','K1','blk'],['G3','N4','N1','blk'],['G4','Q4','Q1','blk'],
+  ['G1','C8','C1','blk'],['G2','K4','K1','blk'],['G3','N4','N1','blk'],['G4','Q4','Q1','blk'],
   ['G5','I7','I1','blk'],['G6','M7','M1','blk'],['G7','P7','P1','blk'],['G8','J5','J1','blk'],
   ['G9','T8','T1','blk'],['G10','W4','W1','blk'],['G11','M10','M1','blk'],['G12','O10','O1','blk'],
   ['G13','W4','Y4','blk'],['G14','X1','Y2','blk'],['G16','X10','X1','blk'],
@@ -499,9 +506,9 @@ const WIRES=[
   ['V5','N10','W6','red'],['V6','N10','S2','red'],['V7','W6','Y6','red'],
   ['P1','W10','S10','wht'],['P2','T10','P10','wht'],['P3','R10','L10','wht'],
   ['P4','R10','Y9','wht'],['P5','R10','D5','wht'],
-  ['S1','B8','L4','grn'],['S2','M4','S6','grn'],['S3','S3','Y5','grn'],['S4','D2','O4','blu'],
+  ['S1','E8','L4','grn'],['S2','M4','S6','grn'],['S3','S3','Y5','grn'],['S4','D2','O4','blu'],
   ['S5','P4','R4','blu'],['S6','T4','R7','blu'],['S7','C2','Y3','grn'],['S8','G5','B2','wht'],
-  ['S9','I8','H8','brg'],['S10','S8','Y8','blu'],['S11','R7','R8','brg'],['S12','T7','T8','brg']
+  ['S9','I8','B8','red'],['S10','S8','Y8','blu'],['S11','R7','R8','brg'],['S12','T7','T8','brg']
 ];
 
 // What each build step adds to the board (index 0 = step 1)
