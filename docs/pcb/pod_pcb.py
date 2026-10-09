@@ -136,11 +136,11 @@ F, B = pcbnew.F_Cu, pcbnew.B_Cu
 POWER_ROUTES = [
     # Cell -> SW1 -> F1 -> U1 IN+, all along the bottom row on the back
     ("VBATT_RAW", B, 1.5, [(58.5, 26.8), (49.5, 26.8)]),          # J1+ to SW1 A
-    ("VBATT_SW", B, 1.5, [(46.0, 26.8), (40.0, 26.8)]),           # SW1 B to F1
-    ("VBATT", B, 1.5, [(34.92, 26.8), (17.0, 26.8)]),             # F1 to U1 IN+
+    ("VBATT_SW", B, 1.5, [(46.0, 26.8), (34.04, 26.8)]),          # SW1 B to F1
+    ("VBATT", B, 1.5, [(28.96, 26.8), (17.0, 26.8)]),             # F1 to U1 IN+
     # F1 to the motor feed J3-1, on the front above the bottom row
     # (1.2 mm where it squeezes between the resistor row and the bottom pads)
-    ("VBATT", F, 1.2, [(34.92, 26.8), (37.02, 24.7), (56.8, 24.7), (58.0, 23.5)]),
+    ("VBATT", F, 1.2, [(28.96, 26.8), (31.06, 24.7), (56.8, 24.7), (58.0, 23.5)]),
     ("VBATT", F, 1.5, [(58.0, 23.5), (58.0, 16.5), (59.5, 15.0), (66.5, 15.0)]),
     # J3-1 up the right side and along the top edge to the divider top R1
     # (signal current only)
@@ -443,13 +443,15 @@ def stage_place():
     wire_pads(board, "U1", "MT3608 module", ["IN+", "IN-", "OUT+", "OUT-"],
               [17.0, 13.5, 10.0, 6.5], [26.8] * 4, below)
     text(board, "U1 MT3608", 11.75, 24.95)
-    f1 = custom(board, "F1", "PPTC 1.85-2.5A", "PPTC_Radial_P5.08mm", 40.0, 26.8)
-    pth(f1, "1", 40.0, 26.8, 1.0, 2.0, pcbnew.PAD_SHAPE_RECT)
-    pth(f1, "2", 34.92, 26.8, 1.0, 2.0)
-    rect(f1, 32.9, 25.0, 42.0, 28.6)
-    courtyard(f1, 32.65, 24.75, 42.25, 28.85)
+    # F1: the GBX disc is 15 mm across, standing on 5 mm-pitch kinked legs
+    # that hold it 3 mm off the board. Outline is its footprint seen from above
+    f1 = custom(board, "F1", "PPTC 1.85-2.5A", "PPTC_Disc_D15mm_P5.08mm", 34.04, 26.8)
+    pth(f1, "1", 34.04, 26.8, 1.0, 2.0, pcbnew.PAD_SHAPE_RECT)
+    pth(f1, "2", 28.96, 26.8, 1.0, 2.0)
+    rect(f1, 24.0, 24.65, 39.0, 28.95)
+    courtyard(f1, 23.75, 24.4, 39.25, 29.2)
     f1.Reference().SetTextThickness(mm(TEXT_LINE))
-    f1.Reference().SetPosition(pt(37.46, 26.8))
+    f1.Reference().SetPosition(pt(31.5, 26.8))
     wire_pads(board, "SW1", "KCD1 rocker", ["A", "B"], [49.5, 46.0], [26.8] * 2, below)
     text(board, "SW1", 47.75, 24.95)
     wire_pads(board, "J1", "Cell, PH2.0", ["+", "-"], [58.5, 62.0], [26.8] * 2, below)

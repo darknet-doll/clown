@@ -13,15 +13,15 @@ two-layer board. Same parts, same nets and same designators as
 | [pod_pcb.py](pod_pcb.py) | The source: outline, placement, netlist, hand-routed power, silkscreen |
 | [build.sh](build.sh) | Rebuilds everything: place, autoroute, ground pour, DRC, export |
 
-## Before you order
+## Parts the footprints were sized to
 
-Measure two parts. Nobody recorded their sizes, and the footprints assume them:
+Measured, not assumed:
 
-- **C1, the 1000 µF cap, must be 10 mm across or less**, with 5 mm lead pitch. A
-  12.5 mm can hits U2, R3 and Q1. Use a 10 mm one from the electrolytic kit if
-  the shelf part is bigger
-- **F1, the polyfuse, must be about 10 mm wide or less**, with leads about 5 mm
-  apart. Its outline is 9.1 mm
+- **C1, the 1000 µF cap: 10 mm across**, 5 mm lead pitch. It clears U2, R3 and
+  Q1 by about 0.5 mm. A fatter can won't fit
+- **F1, the GBX polyfuse: a 15 mm disc on 5 mm-pitch legs**, standing upright.
+  Its kinked legs hold it 3 mm off the board. It sits in the bottom row between
+  U1's pads and SW1, and its outline is the disc seen from above
 
 ## Ordering on PCBWay
 
