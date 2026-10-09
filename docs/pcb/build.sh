@@ -29,7 +29,8 @@ fi
 mkdir -p build fab
 kicad python3 pod_pcb.py place
 rm -f build/clown-pod.ses
-java -jar "$FR_JAR" -de build/clown-pod.dsn -do build/clown-pod.ses -mp 100 \
+java -jar "$FR_JAR" -de build/clown-pod.dsn -do build/clown-pod.ses -mp 100 -mt 1 \
+  -inc gnd \
   --gui.enabled=false >build/freerouting.log 2>&1 || true
 [ -f build/clown-pod.ses ] || { tail -30 build/freerouting.log; exit 1; }
 kicad python3 pod_pcb.py finish
