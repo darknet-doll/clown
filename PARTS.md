@@ -138,7 +138,7 @@ differ, the difference is the thing to read.
 | 74AHCT125 level shifter | **bought** | 1 | **0** — 5 in hand | **10-02** | **Bought:** [Juried DIP-14 5-pack](https://www.amazon.com/dp/B08FHD994N) — 5 in hand, logged from the inventory check — **arrival date not recorded, 10-02 is the day it was counted**<br>Recommended: [the same DIP 5-pack](https://www.amazon.com/Juried-Engineering-SN74AHCT125N-SN74AHCT125-Breadboard-Friendly/dp/B08FHD994N) · [Adafruit](https://www.amazon.com/Adafruit-Accessories-Quad-Level-Shifter-piece/dp/B00XW2L39K) |
 | MOSFET, bare RFP30N06LE | **bought** | 1 | **0** — 6 in hand | **09-29** | **Bought:** [Cylewet 6-pack](https://www.amazon.com/dp/B073D399M1) — bare parts, so **5 V gate drive is required** and `R4`/`R5` are not included<br>Recommended: the same listing |
 | 1N5819 diode | **bought** | 2 | **0** — 150 in hand | **09-29** | **Bought:** [EEEEE 150-pack](https://www.amazon.com/dp/B0FC2CWKPL) — 1 A / 40 V<br>Recommended: [search](https://www.amazon.com/s?k=1N5819+schottky+diode) |
-| Battery disconnect switch, 3 A DC | buy | 1 | **2** | — | Recommended: [search](https://www.amazon.com/s?k=waterproof+toggle+switch+boot+SPST+12V) |
+| Battery disconnect switch, 3 A DC | **bought** | 1 | **0** — 5-pack ordered | ⚠ **no** — ordered 10-08 | **Bought:** [DaierTek KCD1 round rocker, 20 mm, SPST, 5-pack](https://www.amazon.com/dp/B07S1MV462) — 12 VDC automotive, **confirm the DC amp rating printed on the body ≥ 3 A**; a rocker, **not booted** — seal the 20 mm snap-in hole with RTV and label which way is off<br>Recommended: [search booted SPST toggle](https://www.amazon.com/s?k=waterproof+toggle+switch+boot+SPST+12V) |
 | Protected 18650 cell | **have** | 1 | **0** — 2 come in the kits | **09-23** | **Bought:** inside the [kits](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01)<br>Recommended, only for spares: [search](https://www.amazon.com/s?k=protected+18650+battery+button+top) |
 | 18650 sled with leads | ~~skip~~ | — | **0** — kit cell is on a pigtail | — | Recommended: [search](https://www.amazon.com/s?k=18650+battery+holder+single+slot+wire+leads) |
 | 5V boost module | **bought** | 1 | **0** — 10 in hand | **09-29** | **Bought:** [Dorhea MT3608 10-pack](https://www.amazon.com/dp/B089JYBF25) — **trim to 5.0 V and meter it before any XIAO**<br>Recommended: [a different MT3608 10-pack](https://www.amazon.com/MT3608-Converter-Adjustable-Voltage-Regulator/dp/B0BGLGL9RV) — same chip |
@@ -540,7 +540,7 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
   **GBX-185** (1.85 A hold) or **GBX-250** (2.5 A). The pod draws ~0.3 A plus the
   motor, so 1.85 A is the tighter, safer choice
 
-### Battery disconnect switch — 1 per arm · **buy 2**
+### Battery disconnect switch — 1 per arm · **bought: 5-pack, ⚠ not arrived**
 
 - **Is:** an ordinary SPST switch, in the cell's positive lead, ahead of the fuse
 - **Does:** kills the whole arm in one motion, through the costume, one-handed
@@ -548,13 +548,21 @@ Two jobs, same part, and they are easy to confuse — one is `CR1`, one is `CR2`
   box. "Unplug it" should not mean "open the pod first"
 - **Spec that actually matters:** **rated 3 A or more at DC.** Small rockers and
   toggles are usually specced for mains AC and far less for DC — read the DC line
-- **Get one with a rubber boot.** It keeps its own seal, and a booted toggle is
-  findable by feel in the dark
 - **It does not replace pulling the cell.** It makes the pod safe to open and the
   arm safe to unplug; the cell still comes out for storage and charging
-- **Suggested product:**
+- **Bought:** [DaierTek KCD1 round rocker, 20 mm, SPST 2-pin, 5-pack](https://www.amazon.com/dp/B07S1MV462)
+  — ordered 10-08. Marketed as 12 VDC automotive; the KCD1 family is typically
+  specced ~10 A at 12 VDC, but **read the rating printed on the switch body when
+  it arrives and confirm ≥ 3 A DC** before it goes in the cell lead
+- **It is a rocker, not the booted toggle the spec asked for.** Two consequences:
+  - **No boot, no self-seal** — it snaps into a **20 mm round hole**; seal the
+    flange to the pod wall with the RTV already on hand
+  - **Flush rockers read poorly by feel** — label which way is off, or print a
+    guard ridge beside the ON side, so "did I turn it off?" has an answer in
+    the dark
+- Recommended before the buy:
   [search booted SPST toggle switch](https://www.amazon.com/s?k=waterproof+toggle+switch+boot+SPST+12V)
-  — confirm the DC rating in the listing text, not just the picture
+  — kept here in case a booted toggle replaces the rocker later
 
 ### 18650 storage case — **skipped** · no spare cells to carry
 
