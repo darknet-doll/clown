@@ -75,8 +75,8 @@ Nothing is soldered end to end across a joint. Each arm is four modules:
 |---|---|---|
 | **Pod** — upper arm | brain, boost, level shifter, MOSFET, fuse, disconnect, cell cradle, upper-arm strip 6 px | `SW1` + battery plug + straps |
 | **Sleeve** — forearm | forearm strip, 15 px | elbow: SM 4-pin + SM 3-pin |
-| **Glove** — hand | hand strip 6 px, this hand's trigger | wrist: SM 5-pin |
-| **Bubbler** | bottle, cap, hose, blower head | wrist: SM 2-pin + its strap |
+| **Glove** — hand | hand strip 6 px, this hand's trigger | wrist: SM 3-pin + SM 4-pin |
+| **Bubbler** | bottle, cap, hose, blower head | hand: SM 2-pin + its strap |
 
 ### The connectors
 
@@ -86,20 +86,24 @@ Nothing is soldered end to end across a joint. Each arm is four modules:
 | Pod → upper-arm strip | strip 3 | **JST-SM 3-pin** |
 | Strip across the elbow | strip 3 | **JST-SM 3-pin** |
 | Pod → sleeve, at the elbow | motor 2 + trigger 2 | **JST-SM 4-pin** |
-| Sleeve → glove, at the wrist | strip 3 + trigger 2 | **JST-SM 5-pin** |
-| Motor run, at the wrist | motor 2 | **JST-SM 2-pin** |
+| Strip across the wrist | strip 3 | **JST-SM 3-pin** |
+| Sleeve → glove, at the wrist | motor 2 + trigger 2 | **JST-SM 4-pin** |
+| Motor ↔ bubbler, at the hand | motor 2 | **JST-SM 2-pin** |
 | Microswitch pigtail | switch 2 | **JST-ZH 1.5 mm, 2-pin** |
 
 The trigger and the motor both have to reach the pod from the hand, so they cross
-*both* joints. At the elbow they share one 4-pin lead, while the strip crosses on
-its own 3-pin.
+*both* joints on one shared 4-pin lead — identical pinout at the elbow and the
+wrist, the sleeve passes it straight through — while the strip crosses each joint
+on its own 3-pin.
 
 ### Two rules that keep it safe
 
-**No two connectors on one arm share both family and pin count** — with one
-deliberate exception. PH-2 · ZH-2 · SM-2 · SM-3 (×2) · SM-4 · SM-5. The three
-2-pin plugs are three different pitches — 2.0, 1.5 and 2.5 mm — so none will mate
-with the others.
+**No two connectors on one arm share both family and pin count** — with two
+deliberate exceptions, both safe by construction. PH-2 · ZH-2 · SM-2 · SM-3 (×3) ·
+SM-4 (×2): the SM-3s all carry the same strip nets in the same pin order, and the
+SM-4s the same motor + trigger nets, so a cross-mate skips a segment instead of
+breaking anything. The three 2-pin plugs are three different pitches — 2.0, 1.5
+and 2.5 mm — so none will mate with the others.
 
 - **The trigger pigtail is ZH, not PH,** because every cell ships on a PH2.0 lead.
   One wrong plug would put 3.7 V onto GPIO3.
@@ -196,7 +200,7 @@ flexing joint will crack its traces within a few hours of wear.
   pod              elbow                         wrist                  fingertips
    |-- upper, 6 px --|  gap  |------ forearm, 15 px ------|   gap   |-- hand, 6 px --|
    px 0          px 5        px 6                     px 20        px 21         px 26
-                  ~12 cm umbilical + SM 3-pin    ~8 cm umbilical + SM 5-pin plug
+                  ~12 cm umbilical + SM 3-pin    ~8 cm umbilical + SM 3-pin plug
 ```
 
 - Upper-arm segment: ~10 cm, 6 pixels, pixel 0 at the pod, running down the upper
@@ -206,10 +210,11 @@ flexing joint will crack its traces within a few hours of wear.
   loop across the joint, same reasoning as the wrist.
 - Forearm segment: ~21 cm, 15 pixels, just below the elbow to the wrist, under a
   sleeve.
-- Wrist umbilical: ~8 cm spanning the joint, five conductors — the strip's 5V, GND
-  and data, plus this hand's two trigger wires — through a **JST-SM 5-pin** plug
-  mated 3–4 cm above the wrist crease, where the skin barely moves. Service loop on
-  the glove side so it isn't under tension at full extension.
+- Wrist umbilical: ~8 cm spanning the joint, three conductors — the strip's 5V,
+  GND and data — through a **JST-SM 3-pin** plug mated 3–4 cm above the wrist
+  crease, where the skin barely moves. This hand's trigger and the motor cross
+  beside it on their own **JST-SM 4-pin**, same pinout as the elbow's. Service
+  loop on the glove side so it isn't under tension at full extension.
 - Hand segment: ~10 cm, 6 pixels, across the back of the hand to the knuckles,
   under the glove.
 
@@ -276,6 +281,9 @@ Everything the pod sends down the arm leaves through two plugs:
 |---|---|
 | **`J2`, SM 3-pin** — to the upper-arm strip | 1 strip 5V · 2 strip GND · 3 strip data |
 | **`J3`, SM 4-pin** — the elbow lead | 1 motor + (battery, after fuse) · 2 motor − (MOSFET output) · 3 trigger · 4 trigger return (GND) |
+
+`J3`'s pre-crimped pigtail colors: 1 blue · 2 red · 3 green · 4 black. Red is
+motor **−**, so go by pin number, not color.
 
 The strip leaves on `J2` and goes straight into pixel 0. `J3` is a 4-conductor lead
 down the upper arm to the elbow, where its SM-4 plug mates the sleeve. The strip

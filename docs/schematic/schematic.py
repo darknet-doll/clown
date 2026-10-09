@@ -293,7 +293,7 @@ NETS = [
     ("GND", "The one common ground. Everything returns here",
      "BT1 − · J1-2 · U1 IN− · U1 OUT− · U3 GND · U2 GND · U2 1OE · U2 2OE · "
      "U2 3A · U2 4A · Q1 S · C1 − · C2 · R2 · J2-2 · LD3 GND · J6-2 · "
-     "LD1 GND · J3-4 · J4-2 · J4-5 · LD2 GND · J7-2 · SW2 COM"),
+     "LD1 GND · J3-4 · J4-2 · J8-4 · LD2 GND · J7-2 · SW2 COM"),
     ("+5V", "Boost output. Strip, level shifter, and CR2's anode",
      "U1 OUT+ · U2 Vcc · U2 3OE · U2 4OE · C1 + · C2 · CR2 anode · J2-1 · "
      "LD3 5V · J6-1 · LD1 5V · J4-1 · LD2 5V"),
@@ -314,11 +314,11 @@ NETS = [
     ("GATE", "5 V gate drive. R5 holds it down while the MCU boots",
      "U2 2Y · R4 · R5 · Q1 G"),
     ("TRIG", "Trigger, idle high on the MCU's internal pull-up",
-     "U3 GPIO3 · J3-3 · J4-4 · J7-1 · SW2 NO"),
+     "U3 GPIO3 · J3-3 · J8-3 · J7-1 · SW2 NO"),
     ("MOTOR+", "Blower positive, straight off the cell",
-     "VBATT · J3-1 · J5-1 · CR1 cathode · M1 +"),
+     "VBATT · J3-1 · J8-1 · J5-1 · CR1 cathode · M1 +"),
     ("MOTOR-", "Blower negative, switched by the MOSFET",
-     "Q1 D · J3-2 · J5-2 · CR1 anode · M1 −"),
+     "Q1 D · J3-2 · J8-2 · J5-2 · CR1 anode · M1 −"),
 ]
 
 # Every designator on both sheets. Nothing here may repeat a pin name printed
@@ -345,8 +345,9 @@ DESIGNATORS = [
     ("SW2", "Lever microswitch, in the palm"),
     ("J2", "JST-SM 3-pin — pod to upper-arm strip"),
     ("J3", "JST-SM 4-pin — elbow lead, motor and trigger"),
-    ("J4", "JST-SM 5-pin — wrist"),
-    ("J5", "JST-SM 2-pin — wrist, motor"),
+    ("J4", "JST-SM 3-pin — wrist, strip umbilical"),
+    ("J5", "JST-SM 2-pin — at the hand, bubbler motor"),
+    ("J8", "JST-SM 4-pin — wrist lead, motor and trigger, same pinout as J3"),
     ("J6", "JST-SM 3-pin — elbow, strip umbilical"),
     ("J7", "JST-ZH 1.5 mm 2-pin — at the microswitch"),
     ("LD1", "WS2812B forearm strip, 15 px, elbow to wrist"),
@@ -574,7 +575,7 @@ def sheet_one():
     s.dot(1060, 1260)
     s.motor(1240, 1180, "M1", "bubble kit blower")
     s.line(940, 1060, 940, 1310, width=1.4, color=MUTED, dash="6 7")
-    s.text(940, 1046, "J3-1/2 (SM-4) + J5 (SM-2)", size=9.5, anchor="middle",
+    s.text(940, 1046, "J3-1/2 · J8-1/2 (SM-4) · J5 (SM-2)", size=9.5, anchor="middle",
            fill=MUTED)
     s.text(1180, 1318, "CR1 and M1 both live at the blower end", size=9.5,
            anchor="middle", fill=MUTED)
@@ -588,7 +589,7 @@ def sheet_one():
     s.flag(300, 1430, "TRIG", "r")
     s.text(430, 1416, "idle high on the XIAO's pull-up; the", size=10, fill=MUTED)
     s.text(430, 1434, "squeeze pulls it down to ground", size=10, fill=MUTED)
-    s.text(430, 1452, "J7 (ZH-2) at the switch; rides J3-3, J4-4", size=10,
+    s.text(430, 1452, "J7 (ZH-2) at the switch; rides J3-3, J8-3", size=10,
            fill=MUTED)
 
     # --- notes --------------------------------------------------------------
@@ -619,8 +620,9 @@ def sheet_two():
               "Sheet 2 of 2 · which net rides which pin, and where each module "
               "unplugs")
 
-    # Strip rows (J2, J6, J4 pins 1-3), trigger rows at the wrist (J4 pins
-    # 4-5), and the elbow lead (J3 pins 1-4; J5 shares the motor rows).
+    # Strip rows (J2, J6, J4 — all SM-3, same pinout), and the motor/trigger
+    # lead (J3 pins 1-4 at the elbow, J8 the same at the wrist; J5 shares the
+    # motor rows at the hand).
     L5V, LGND, LDATA, LTRIG, LRTN, LSW = 220, 270, 320, 370, 420, 470
     MP, MN, ETRIG, ERTN = 620, 664, 708, 752
 
@@ -632,13 +634,14 @@ def sheet_two():
     module(500, 170, 300, 260, "UPPER ARM - strip")
     module(940, 170, 320, 640, "SLEEVE - forearm")
     module(1400, 170, 420, 380, "GLOVE - hand")
-    module(1400, 590, 420, 220, "BUBBLER")
+    module(1500, 590, 320, 220, "BUBBLER")
 
     j2 = s.conn(390, 194, [""] * 3, "J2", "SM-3 pod", pitch=50)
     j6 = s.conn(830, 194, [""] * 3, "J6", "SM-3 elbow", pitch=50)
     j3 = s.conn(830, 594, [""] * 4, "J3", "SM-4 elbow", pitch=44)
-    j4 = s.conn(1290, 194, [""] * 5, "J4", "SM-5 wrist", pitch=50)
-    j5 = s.conn(1290, 594, [""] * 2, "J5", "SM-2 wrist", pitch=44)
+    j4 = s.conn(1290, 194, [""] * 3, "J4", "SM-3 wrist", pitch=50)
+    j8 = s.conn(1290, 594, [""] * 4, "J8", "SM-4 wrist", pitch=44)
+    j5 = s.conn(1430, 594, [""] * 2, "J5", "SM-2 hand", pitch=44)
 
     # --- pod side -----------------------------------------------------------
     for y, label in ((L5V, "+5 V  from U1, C1 here"),
@@ -652,6 +655,8 @@ def sheet_two():
                                     (ERTN, "trigger return  GND"))):
         s.text(80, y - 10, label, size=10)
         s.wire([(100, y), j3[i][0]])
+        s.text(806, y - 6, ("blue", "red", "green", "black")[i], size=9.5,
+               anchor="end", fill=MUTED)
     s.text(500, MP - 30, "the pod's elbow lead: motor and trigger, run down",
            size=9.5, fill=MUTED)
     s.text(500, MP - 14, "the upper arm beside the strip, to J3",
@@ -674,14 +679,12 @@ def sheet_two():
     s.text(960, 376, "LD1 DOUT crosses the wrist to", size=9.5, fill=MUTED)
     s.text(960, 392, "LD2 DIN as LED_DATA_HAND", size=9.5, fill=MUTED)
 
-    # Motor pair straight across; trigger pair climbs to J4 pins 4 and 5.
-    s.wire([j3[0][1], j5[0][0]])
-    s.wire([j3[1][1], j5[1][0]])
-    s.wire([j3[2][1], (1225, ETRIG), (1225, LTRIG), j4[3][0]])
-    s.wire([j3[3][1], (1240, ERTN), (1240, LRTN), j4[4][0]])
-    s.text(960, MP - 14, "the motor pair crosses the sleeve untouched",
+    # The whole lead crosses the sleeve untouched: J3 pin-for-pin to J8.
+    for i in range(4):
+        s.wire([j3[i][1], j8[i][0]])
+    s.text(960, MP - 14, "motor and trigger cross the sleeve untouched,",
            size=9.5, fill=MUTED)
-    s.text(960, ERTN + 32, "TRIG and its return climb to J4-4 / J4-5",
+    s.text(960, ERTN + 32, "J3 pin-for-pin to J8 - the sleeve is a pass-through",
            size=9.5, fill=MUTED)
 
     # --- glove --------------------------------------------------------------
@@ -692,33 +695,35 @@ def sheet_two():
         s.wire([j4[i][1], term])
 
     j7 = s.conn(1440, 394, [""] * 2, "J7", "ZH-2", pitch=50)
-    s.wire([j4[3][1], (1410, LTRIG), (1410, LRTN), j7[0][0]])
-    s.wire([j4[4][1], (1390, LRTN), (1390, LSW), j7[1][0]])
+    s.wire([j8[2][1], (1386, ETRIG), (1386, LRTN), j7[0][0]])
+    s.wire([j8[3][1], (1372, ERTN), (1372, LSW), j7[1][0]])
     sa, sb = s.spst(1620, LRTN, "SW2", "microswitch")
     s.text(1520, 406, "TRIG", size=9.5, fill=MUTED)
     s.text(1520, 492, "GND", size=9.5, fill=MUTED)
     s.wire([j7[0][1], sa])
     s.wire([sb, (1710, LRTN), (1710, LSW), j7[1][1]])
-    s.text(1420, 530, "the whole glove comes off on one plug", size=9.5,
+    s.text(1420, 530, "the glove comes off on two plugs, J4 + J8", size=9.5,
            fill=MUTED)
 
     # --- bubbler ------------------------------------------------------------
-    s.block(1460, 600, 240, 150, "M1", "blower + CR1", "flyback across the motor")
-    m_p = s.pin(1460, MP, "l", "+")
-    m_n = s.pin(1460, MN, "l", "-")
+    s.block(1560, 600, 240, 150, "M1", "blower + CR1", "flyback across the motor")
+    m_p = s.pin(1560, MP, "l", "+")
+    m_n = s.pin(1560, MN, "l", "-")
+    s.wire([j8[0][1], j5[0][0]])
+    s.wire([j8[1][1], j5[1][0]])
     s.wire([j5[0][1], m_p])
     s.wire([j5[1][1], m_n])
-    s.text(1420, 796, "its own strap, so it never bridges the wrist", size=9.5,
+    s.text(1516, 796, "its own strap; its SM-2 now mates at the hand", size=9.5,
            fill=MUTED)
 
     # --- notes --------------------------------------------------------------
     s.note(60, 850, 1760, [
-        "Five plugs per arm plus the one at the switch: J2 at the pod, J6 and J3 "
-        "at the elbow, J4 and J5 at the wrist, J7 in the palm.",
+        "Six plugs per arm plus the one at the switch: J2 at the pod, J6 and J3 "
+        "at the elbow, J4 and J8 at the wrist, J5 at the hand, J7 in the palm.",
         "Data runs pod -> J2 -> LD3 -> J6 -> LD1 -> J4 -> LD2: pixel 0 is at the "
-        "pod. Families: PH-2 (2.0 mm), ZH-2 (1.5 mm), SM-2, SM-3, SM-4, SM-5.",
-        "One pair is identical on purpose: J2 and J6, both SM-3 with the same "
-        "5V / GND / data order. Cross-mating them only skips the upper-arm run.",
+        "pod. Families: PH-2 (2.0 mm), ZH-2 (1.5 mm), SM-2, SM-3 (x3), SM-4 (x2).",
+        "Identical on purpose: J2, J6 and J4 share the SM-3 strip pinout, and "
+        "J3 and J8 the SM-4 lead pinout. A cross-mate only skips a segment.",
         "SW1 off, or the cell out, before you mate or unmate anything. Feeding "
         "data into an unpowered strip is what kills pixel 0.",
     ], title="THE RULES THAT MAKE THIS SAFE TO PULL APART IN A DARK ROOM")

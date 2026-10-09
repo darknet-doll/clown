@@ -150,9 +150,9 @@ differ, the difference is the thing to read.
 | 330–470 Ω resistor | **have** | 1 | **0** — 2 on hand | on shelf | Already on the shelf — **not bought for this build, provenance not recorded**<br>Recommended, to re-buy: [same resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
 | 100 Ω gate series (`R4`) + 10 kΩ gate pulldown (`R5`) | **have** | 1 each | **0** — 50 of each in the kit | on shelf | Already on hand in the **AUSTOR 1/4 W 1 % metal film kit** (50 pc each of 100 Ω and 10 kΩ; also 330 Ω, 470 Ω, 100 kΩ at 25 pc) — checked against the listing photo, **not bought for this build, provenance not recorded**<br>Recommended, to re-buy: [1/4W metal film resistor kit](https://www.amazon.com/s?k=metal+film+resistor+assortment+kit+1%2F4W) |
 | Lever microswitch | **have** | 1 | **0** — 2 come in the kits | **09-23** | **Bought:** inside the [kits](https://us.store.bambulab.com/products/electric-bubble-maker-kit-01)<br>Recommended, only for spares: [Saim 10-pack](https://www.amazon.com/Saim-Momentary-Switch-Roller-Action/dp/B01NBK00FD) |
-| JST-SM pigtail pair, 3-pin | buy | 2 | **4 + 2 spares** | — | Recommended: [search](https://www.amazon.com/s?k=JST+SM+3+pin+pigtail+pairs) — check the strip reel first, it may already carry some |
-| JST-SM pigtail pair, 4-pin | buy | 1 | **2 + 1 spare** | — | Recommended: [search](https://www.amazon.com/s?k=JST+SM+4+pin+pigtail+pairs) |
-| JST-SM pigtail pair, 5-pin | buy | 1 | **2 + 1 spare** | — | Recommended: [BTF-LIGHTING, 10 pairs](https://www.amazon.com/BTF-LIGHTING-Pairs-Female-Connector-Flexible/dp/B01DC0KNY2) |
+| JST-SM pigtail pair, 3-pin | buy | 3 | **6 + 2 spares** | — | Recommended: [search](https://www.amazon.com/s?k=JST+SM+3+pin+pigtail+pairs) — check the strip reel first, it may already carry some |
+| JST-SM pigtail pair, 4-pin | buy | 2 | **4 + 2 spares** | — | Recommended: [search](https://www.amazon.com/s?k=JST+SM+4+pin+pigtail+pairs) |
+| JST-SM pigtail pair, 5-pin | ~~skip~~ | — | **0** — design change: the wrist now crosses on SM-3 + SM-4 | — | Recommended, no longer needed: [BTF-LIGHTING, 10 pairs](https://www.amazon.com/BTF-LIGHTING-Pairs-Female-Connector-Flexible/dp/B01DC0KNY2) |
 | JST-SM pigtail pair, 2-pin | buy | 1 | **2 + 2 spares** | — | Recommended: [VANDESAIL, 20 pairs](https://www.amazon.com/VANDESAIL-Connector-Adapter-Electrical-Female/dp/B0CQX8D3QR) |
 | JST-ZH pigtail pair, 2-pin, 1.5 mm | buy | 1 | **2 + 2 spares** | — | Recommended: [XUGERIP, 20 pairs](https://www.amazon.com/XUGERIP-1-5mm-Male-Female-Connector/dp/B0D9SN5BTP) |
 | Protoboard, small | **have** | 1 | **0** — 2 on hand | on shelf | Already on the shelf — **not bought for this build, provenance not recorded**<br>Recommended, to re-buy: [search](https://www.amazon.com/s?k=double+sided+perfboard+prototype+PCB+assorted) |
@@ -694,24 +694,26 @@ to end across a joint.
 |---|---|---|
 | **Pod** (upper arm) | brain, boost, shifter, MOSFET, fuse, disconnect, cell cradle, upper-arm strip 6 px | `SW1` + battery plug + straps |
 | **Sleeve** (forearm) | forearm strip, 15 px | elbow, SM 4-pin + SM 3-pin |
-| **Glove** (hand) | hand strip 6 px, trigger | wrist, SM 5-pin |
-| **Bubbler** | bottle, cap, hose, blower head | wrist, SM 2-pin + its strap |
+| **Glove** (hand) | hand strip 6 px, trigger | wrist, SM 3-pin + SM 4-pin |
+| **Bubbler** | bottle, cap, hose, blower head | hand, SM 2-pin + its strap |
 
 ### The connectors themselves
 
 | Boundary | buy | Carries | Connector | Per arm · **buy** |
 |---|---|---|---|---|
 | Cell ↔ pod, cell ↔ charger | buy | 2 | **JST-PH 2.0, 2-pin** *(already on the cell)* | — |
-| Pod → upper-arm strip | buy | strip 3 | **JST-SM 3-pin** | 2 · **4 + 2** |
+| Pod → upper-arm strip | buy | strip 3 | **JST-SM 3-pin** | 3 · **6 + 2** |
 | Strip across the **elbow** | buy | strip 3 | **JST-SM 3-pin** | *(same bag as above)* |
-| Pod → sleeve, at the **elbow** | buy | motor 2 + trigger 2 | **JST-SM 4-pin** | 1 · **2 + 1** |
-| Sleeve → glove, at the **wrist** | buy | strip 3 + trigger 2 | **JST-SM 5-pin** | 1 · **2 + 1** |
-| Motor run, at the **wrist** | buy | motor 2 | **JST-SM 2-pin** | 1 · **2 + 2** |
+| Pod → sleeve, at the **elbow** | buy | motor 2 + trigger 2 | **JST-SM 4-pin** | 2 · **4 + 2** |
+| Strip across the **wrist** | buy | strip 3 | **JST-SM 3-pin** | *(same bag as above)* |
+| Motor + trigger across the **wrist** | buy | motor 2 + trigger 2 | **JST-SM 4-pin** | *(same bag as above)* |
+| Motor ↔ bubbler, at the **hand** | buy | motor 2 | **JST-SM 2-pin** | 1 · **2 + 2** |
 | Microswitch pigtail | buy | switch 2 | **JST-ZH 1.5 mm, 2-pin** | 1 · **2 + 2** |
 
 **The trigger and the motor both have to reach the pod from the hand**, so they
-cross *both* joints. At the elbow they share one 4-pin lead, while the strip
-crosses on its own 3-pin.
+cross *both* joints on one shared 4-pin lead — same pinout at the elbow and the
+wrist, the sleeve just passes it through — while the strip crosses each joint on
+its own 3-pin.
 
 - Buy them as **pre-wired pigtail pairs**. No crimp tool, no housings to assemble
 - All of them latch. None of them is friction-only
@@ -722,7 +724,6 @@ crosses on its own 3-pin.
 |---|---|
 | SM 3-pin | [search JST-SM 3-pin pigtail pairs](https://www.amazon.com/s?k=JST+SM+3+pin+pigtail+pairs) — check the strip reel first |
 | SM 4-pin | [search JST-SM 4-pin pigtail pairs](https://www.amazon.com/s?k=JST+SM+4+pin+pigtail+pairs) |
-| SM 5-pin | [BTF-LIGHTING 5-pin JST-SM, 10 pairs](https://www.amazon.com/BTF-LIGHTING-Pairs-Female-Connector-Flexible/dp/B01DC0KNY2) |
 | SM 2-pin | [VANDESAIL 2-pin JST-SM, 20 pairs](https://www.amazon.com/VANDESAIL-Connector-Adapter-Electrical-Female/dp/B0CQX8D3QR) |
 | ZH 2-pin, 1.5 mm | [XUGERIP JST-ZH 1.5 mm 2-pin, 20 pairs](https://www.amazon.com/XUGERIP-1-5mm-Male-Female-Connector/dp/B0D9SN5BTP) |
 
@@ -735,16 +736,16 @@ crosses on its own 3-pin.
 - **JST-SM** is the LED-strip inline connector. It has a real clicking latch, it's
   sold as male/female pigtail pairs by the bag, and it's flat enough to hide under
   a cuff (~20 × 7 × 5 mm)
-- The **wrist 5-pin carries the strip's 3 conductors plus the trigger's 2**, so the
-  whole glove comes off with one pull
+- The **wrist crosses on two plugs**: the strip's 3 conductors on an SM-3, the
+  motor + trigger on an SM-4 — two pulls and the glove is off
 - The **strip starts at the pod**, on a **3-pin** — 5V, GND, data, nothing else —
-  and crosses the elbow on a second **3-pin**. Same reasoning as the wrist: no
-  continuous strip across a flexing joint
+  and crosses the elbow and the wrist on two more **3-pins**, all in the same pin
+  order: no continuous strip across a flexing joint
 - The **elbow 4-pin carries the motor and the trigger** — a 4-conductor lead from the
   pod down the upper arm. The motor is deliberately not bundled with the strip data:
-  ~1 A of PWM alongside a WS2812 data wire is asking for trouble. At the elbow it
-  rides with the trigger instead; at the wrist it has its own 2-pin. Twist the motor
-  pair anyway
+  ~1 A of PWM alongside a WS2812 data wire is asking for trouble. At both joints
+  it rides with the trigger instead, and it meets the bubbler's own 2-pin at the
+  hand. Twist the motor pair anyway
 - The **cell keeps its factory PH2.0**. That's what the kit's charger mates to, so
   a flat cell goes pod → charger with no adapter and no rework. PH2.0 is rated 2 A
   and your peak is about 1.3 A — and the kit already runs the blower's own
@@ -754,14 +755,15 @@ crosses on its own 3-pin.
 
 > **No two connectors on one arm may share both family and pin count.**
 
-- Check it against the table: PH-2 · ZH-2 · SM-2 · SM-3 (×2) · SM-4 · SM-5
+- Check it against the table: PH-2 · ZH-2 · SM-2 · SM-3 (×3) · SM-4 (×2)
 - The three 2-pin plugs are **different families** — PH is 2.0 mm pitch, ZH is 1.5 mm,
   SM is 2.5 mm. None of them will mate with either of the others
-- **The one deliberate exception:** the two SM-3 strip plugs, at the pod and at the
-  elbow, are identical. That's safe *by construction* — same strip nets, same pin
-  order, so cross-mating the pod plug onto the forearm input just skips the
-  upper-arm segment. Nothing is damaged, and nothing else in the build has that
-  property
+- **The deliberate exceptions, both safe *by construction*:** the three SM-3 strip
+  plugs (pod, elbow, wrist) are identical — same strip nets, same pin order — so a
+  cross-mate just skips a strip segment; nothing is damaged. Likewise the two SM-4
+  motor-and-trigger plugs (elbow, wrist) carry the same four nets in the same pin
+  order, so a cross-mate skips the sleeve pass-through and nothing else. Nothing
+  else in the build has that property
 - **This is why the trigger pigtail is ZH and not PH.** Plug a PH-2 trigger lead
   into the PH-2 battery lead and you put 3.7 V straight onto GPIO3 — dead pin, very
   possibly dead XIAO
@@ -862,7 +864,7 @@ crosses on its own 3-pin.
 - Same fabric rules apply. Buy it at the same time as the glove and test both together
 - **A single elbow-to-hand arm warmer covers both** — that's the usual form for the
   lace look. It's one less seam and one fabric instead of two, but it closes the
-  wrist: the SM-5 plug ends up inside a sealed tube where you can't reach it to
+  wrist: the wrist plugs end up inside a sealed tube where you can't reach them to
   unmate. Either cut it at the wrist into two garments, or sew a short ribbon-laced
   placket over the plug, or accept three modules per arm instead of four
 - **Suggested product:** [search long white lace arm warmers](https://www.amazon.com/s?k=long+white+lace+arm+warmers+fingerless)
@@ -873,7 +875,7 @@ crosses on its own 3-pin.
   layer between the strip and the lace, with the lace pattern silhouetted on top
 - Also **backs the lace structurally**. Fine mesh won't carry strip and wires on its
   own; a sewn channel in bare lace will pull and tear
-- And it **hides the hardware** — wires, service loop, hose, the SM-5 plug body — all
+- And it **hides the hardware** — wires, service loop, hose, the wrist plug bodies — all
   of which are plainly visible through sheer lace
 - Open question in [DESIGN.md](DESIGN.md): diffuse, or leave the strip line visible.
   Buying ½ yd costs little and lets you test both

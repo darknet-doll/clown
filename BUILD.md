@@ -8,8 +8,8 @@
 |---|---|---|
 | **Pod** — upper arm | brain, boost, level shifter, MOSFET, fuse, disconnect, cell cradle, upper-arm strip 6 px | `SW1` + battery plug + straps + elbow: SM 4-pin + SM 3-pin |
 | **Sleeve** — forearm | forearm strip, 15 px | elbow: SM 4-pin + SM 3-pin |
-| **Glove** — hand | hand strip 6 px, this hand's trigger | wrist: SM 5-pin |
-| **Bubbler** | bottle, cap, hose, blower head | wrist: SM 2-pin + its strap |
+| **Glove** — hand | hand strip 6 px, this hand's trigger | wrist: SM 3-pin + SM 4-pin |
+| **Bubbler** | bottle, cap, hose, blower head | hand: SM 2-pin + its strap |
 
 Nothing is soldered end to end across a joint. That is what lets you get out of
 the costume alone, with soapy hands, without dislocating a shoulder.
@@ -151,48 +151,74 @@ plug in it: the **wrist** umbilical (forearm piece → hand piece) and the **elb
 umbilical (upper-arm piece → forearm piece). Build the wrist one first; the elbow
 one is the same job with fewer wires.
 
+### When to solder, and when to wait
+
+One rule for the whole build:
+
+- **One wire onto one pad or pin → solder it the moment you make it.** Shrink,
+  seal, done. Every joint in this step is like that
+- **More than one thing landing on the same point → don't solder it yet.** Park
+  the branches mechanically — twisted through the pad, tacked — and flow solder
+  the node **once**, after its *last* branch has arrived. A shared node soldered
+  early means reheating a finished joint for every branch that comes later, and
+  each reheat is a chance to lift a pad or cook a neighbour
+
+Where the shared nodes live: **five on the pod** (listed in Step 4) and **two at
+the blower** (Step 7). Everything else in the build — umbilicals, pigtails, strip
+pads, the microswitch — is single-wire.
+
 ### The wrist umbilical
 
-This is the plug that lets the glove come off on its own. It carries **five
-conductors**: the strip's 5V, GND and data, plus this hand's two trigger wires.
+Two plugs let the glove come off on its own: a **JST-SM 3-pin** for the strip,
+and a **JST-SM 4-pin** for the motor and this hand's trigger — the **same pinout
+as the elbow SM-4**, so the sleeve just passes those four conductors straight
+through. Keep both conventions on both arms:
 
-Use a **JST-SM 5-pin pigtail pair**. Decide a convention now and keep it on both
-arms:
-
-| SM-5 pin | Carries |
+| SM-3 pin | Carries |
 |---|---|
 | 1 | Strip 5V |
 | 2 | Strip GND |
 | 3 | Strip data |
-| 4 | Trigger |
-| 5 | Trigger return (to ground at the pod) |
+
+| SM-4 pin | Carries |
+|---|---|
+| 1 | Motor + (battery, after the fuse) |
+| 2 | Motor − (MOSFET output) |
+| 3 | Trigger |
+| 4 | Trigger return (to ground at the pod) |
 
 #### Sleeve side
 
 1. Slide heat-shrink onto every wire **now**, before soldering.
 2. Solder short silicone leads to the forearm piece's **output** end — 5V, GND and
    **DO** (data out).
-3. Solder those three to pins 1–3 of one half of the SM-5 pigtail.
-4. Pins 4–5 get two lengths of thin silicone wire long enough to run all the way
-   **up the forearm to the elbow**. They're the trigger's path to the pod, and they
-   land on the sleeve half of the elbow SM-4 (below).
+3. Solder those three to pins 1–3 of one half of the SM-3 pigtail.
+4. The wrist SM-4's sleeve half takes a four-wire run — motor pair twisted,
+   trigger pair alongside — long enough to go all the way **up the forearm to the
+   elbow**, where it lands pin-for-pin on the sleeve half of the elbow SM-4
+   (below). 1→1, 2→2, 3→3, 4→4; the sleeve is a straight pass-through.
 5. Shrink everything down. Seal the exposed strip end with a blob of hot glue or
    clear silicone — this is the soap-proofing.
 
 #### Glove side
 
-1. Solder pins 1–3 of the other pigtail half to the hand piece's **input** end —
+1. Solder pins 1–3 of the other SM-3 half to the hand piece's **input** end —
    5V to 5V, GND to GND, and pin 3 to **DI** (data in).
-2. Pins 4–5 get two lengths of thin silicone wire long enough to reach the palm,
-   ending in the **female half of a JST-ZH 2-pin** pigtail. That's where the
-   microswitch will plug in at Step 5.
+2. The glove half of the SM-4 splits in two:
+   - **Pins 3–4** get two lengths of thin silicone wire long enough to reach the
+     palm, ending in the **female half of a JST-ZH 2-pin** pigtail. That's where
+     the microswitch will plug in at Step 5.
+   - **Pins 1–2** get a short twisted pair ending in the half of a **JST-SM
+     2-pin** that mates the bubbler's motor lead (Step 7). Pin 1 to the SM-2's
+     motor +, pin 2 to its motor −. The bubbler now unplugs at the hand, next to
+     where it's mounted, not back at the wrist.
 3. Shrink, and seal the strip end the same way.
 
 #### Where the connector sits, and why
 
-- **Mate the pair about 3–4 cm above the wrist crease**, on the forearm. That skin
-  barely moves. The wrist crease itself is the worst possible place for a rigid
-  20 mm plastic body.
+- **Mate both pairs about 3–4 cm above the wrist crease**, on the forearm. That
+  skin barely moves. The wrist crease itself is the worst possible place for a
+  rigid 20 mm plastic body.
 - The **glove-side wire is the flex element** — leave it long enough to cross the
   wrist with a **service loop**, so it's never under tension at full extension.
 - **Keep the whole umbilical as short as the connector allows.** Every centimetre
@@ -256,13 +282,10 @@ kept apart from the strip. The pod builds the other half in Step 4.
 | 3 | Trigger |
 | 4 | Trigger return (to ground at the pod) |
 
-1. Pins 3–4 take the two trigger wires coming up the forearm from the wrist:
-   SM-5 pin 4 → SM-4 pin 3, SM-5 pin 5 → SM-4 pin 4. Trigger to trigger, return
-   to return.
-2. Pins 1–2 get a twisted pair of silicone wire running **down the forearm to the
-   wrist**, ending in the half of a **JST-SM 2-pin** that mates the bubbler's motor
-   lead (Step 7). Pin 1 to the SM-2's motor +, pin 2 to its motor −.
-3. The SM-4 mates next to the SM-3, above the elbow, with the same service loop
+1. All four pins take the four-wire run coming up the forearm from the wrist
+   SM-4 — pin-for-pin, 1→1 through 4→4. The sleeve carries nothing of its own on
+   this lead; it's a straight pass-through from elbow to wrist.
+2. The SM-4 mates next to the SM-3, above the elbow, with the same service loop
    across the joint.
 
 **Test the joints now:** gently tug each wire. Better to find a weak joint on the
@@ -286,31 +309,51 @@ by its GPIO number with the silkscreen number beside it, and the two diodes are
 `CR1` and `CR2` — never `D1`/`D2`, which are XIAO pins. Rules and reasoning:
 [SCHEMATIC.md](SCHEMATIC.md#naming-rules).
 
-| From | To | Notes |
-|---|---|---|
-| Battery **PH2.0** + | `SW1` master disconnect | Disconnect first, right at the cell |
-| `SW1` out | Polyfuse → everything's + | Fuse next, before anything else |
-| Battery **PH2.0** − | Common ground | Everything shares this ground |
-| Battery + (after fuse) | Boost module IN+ | |
-| Battery − | Boost module IN− | |
-| Boost OUT+ (5V) | 74AHCT125 Vcc, `J2` strip SM-3 pin 1 | Strip and shifter, direct |
-| 74AHCT125 Vcc (pin 14) | 0.1 µF ceramic → 74AHCT125 GND (pin 7) | Decoupling cap, at the chip — see below |
-| Boost OUT+ (5V) | `CR2` anode; `CR2` cathode → XIAO 5V pad | **Isolation diode — see below** |
-| Boost OUT− | Common ground | |
-| Battery + (after fuse) | `J3` elbow SM-4 pin 1 (motor +) | Motor runs direct from battery, not 5V |
-| `J3` elbow SM-4 pin 2 (motor −) | MOSFET module output (drain) | |
-| MOSFET module ground | Common ground | |
-| XIAO `GPIO4` (silk `D2`) | 74AHCT125 **second** gate input | Gate drive — see below |
-| 74AHCT125 second gate output | 100 Ω → MOSFET gate | With a 10 kΩ gate-to-source pulldown — see below |
-| 74AHCT125 `1OE`, `2OE` | Common ground | Enables the two gates you use |
-| 74AHCT125 `3A`, `4A` | Common ground | Unused inputs — must not float |
-| 74AHCT125 `3OE`, `4OE` | 5V | Unused outputs disabled. `3Y`/`4Y` stay open |
-| XIAO `GPIO10` (silk `D10`) | 74AHCT125 input pin | |
-| 74AHCT125 output pin | 330–470 Ω resistor → `J2` strip SM-3 pin 3 | Resistor close to the connector |
-| `J2` strip SM-3 pin 2 | Common ground | Strip ground return |
-| XIAO `GPIO3` (silk `D1`) | `J3` elbow SM-4 pin 3 | Trigger, arriving from the hand |
-| `J3` elbow SM-4 pin 4 | Common ground | Trigger return |
-| XIAO `GPIO2` (silk `D0`) | Midpoint of the two 100 kΩ resistors | Battery monitor |
+| From | To | Notes | Solder? |
+|---|---|---|---|
+| Battery **PH2.0** + | `SW1` master disconnect | Disconnect first, right at the cell | now |
+| `SW1` out | Polyfuse → everything's + | Fuse next, before anything else | **wait** — fuse out is the VBATT node |
+| Battery **PH2.0** − | Common ground | Everything shares this ground | **wait** — ground bus |
+| Battery + (after fuse) | Boost module IN+ | | **wait** — VBATT node |
+| Battery − | Boost module IN− | | **wait** — ground bus |
+| Boost OUT+ (5V) | 74AHCT125 Vcc, `J2` strip SM-3 pin 1 | Strip and shifter, direct | **wait** — +5V node, and the trim below |
+| 74AHCT125 Vcc (pin 14) | 0.1 µF ceramic → 74AHCT125 GND (pin 7) | Decoupling cap, at the chip — see below | **wait** — shares pins 14/7 with the rails; close it with them |
+| Boost OUT+ (5V) | `CR2` anode; `CR2` cathode → XIAO 5V pad | **Isolation diode — see below** | **wait** — anode sits on the +5V node |
+| Boost OUT− | Common ground | | **wait** — ground bus |
+| Battery + (after fuse) | `J3` elbow SM-4 pin 1 (motor +, blue) | Motor runs direct from battery, not 5V | **wait** — VBATT node |
+| `J3` elbow SM-4 pin 2 (motor −, red) | MOSFET module output (drain) | Red is motor **−** on this pigtail | now |
+| MOSFET module ground | Common ground | | **wait** — ground bus |
+| XIAO `GPIO4` (silk `D2`) | 74AHCT125 **second** gate input | Gate drive — see below | now |
+| 74AHCT125 second gate output | 100 Ω → MOSFET gate | With a 10 kΩ gate-to-source pulldown — see below | **wait** — `R4`/`R5`/gate junction |
+| 74AHCT125 `1OE`, `2OE` | Common ground | Enables the two gates you use | **wait** — ground bus |
+| 74AHCT125 `3A`, `4A` | Common ground | Unused inputs — must not float | **wait** — ground bus |
+| 74AHCT125 `3OE`, `4OE` | 5V | Unused outputs disabled. `3Y`/`4Y` stay open | **wait** — +5V node |
+| XIAO `GPIO10` (silk `D10`) | 74AHCT125 input pin | | now |
+| 74AHCT125 output pin | 330–470 Ω resistor → `J2` strip SM-3 pin 3 | Resistor close to the connector | now |
+| `J2` strip SM-3 pin 2 | Common ground | Strip ground return | **wait** — ground bus |
+| XIAO `GPIO3` (silk `D1`) | `J3` elbow SM-4 pin 3 (green) | Trigger, arriving from the hand | now |
+| `J3` elbow SM-4 pin 4 (black) | Common ground | Trigger return | **wait** — ground bus |
+| XIAO `GPIO2` (silk `D0`) | Midpoint of the two 100 kΩ resistors | Battery monitor | **wait** — VSENSE 3-way junction |
+
+### The five shared nodes — tack now, flow solder last
+
+Every **wait** above lands on one of these. Park each branch mechanically and
+solder the node **once**, after the last branch listed here is in place —
+not branch by branch as you go. "now" rows are a single wire to a single pad:
+solder those the moment you make them.
+
+| Node | Everything that lands on it |
+|---|---|
+| **Common ground** | cell −, boost IN−, boost OUT−, XIAO GND, 74AHCT125 GND + `1OE` + `2OE` + `3A` + `4A`, MOSFET source, `C1` −, `C2`, `R2`, `J2` pin 2, `J3` pin 4 |
+| **+5 V** | boost OUT+, 74AHCT125 Vcc + `3OE` + `4OE`, `C1` +, `C2`, `CR2` anode, `J2` pin 1 |
+| **VBATT, after the fuse** | boost IN+, `R1` top, `J3` pin 1 (the motor tap) |
+| **GATE, at the MOSFET** | `R4` out, `R5` top, `Q1` gate |
+| **VSENSE midpoint** | `R1` bottom, `R2` top, the `GPIO2` wire |
+
+- The boost trim (below) already forces part of the order: `OUT+`/`OUT−` touch
+  nothing until the module reads 5.00 V
+- Counting branches against this table **is** the wiring check — a node that
+  closes with a branch missing is exactly the mistake this habit catches
 
 ### Calibrate the MT3608 before it touches anything else
 
@@ -445,7 +488,8 @@ about, which is the last thing you want on the LED data line.
   `3Y` 8, `3A` 9, `3OE` 10, `4Y` 11, `4A` 12, `4OE` 13, `Vcc` 14.
   **Check the datasheet for the package you bought** — a breakout board renumbers
   everything
-- Four short wires on the protoboard. Do it while the chip is going in, not later
+- Four short wires on the protoboard. Route them while the chip is going in,
+  not later — they flow-solder with the buses they land on (shared nodes table)
 
 ### Decouple the 74AHCT125 at its own pins
 
@@ -463,8 +507,9 @@ dip each time it drives an edge.
   nanosecond edge. Different job, different capacitor. Fit both
 - **Not polarised.** A ceramic goes in either way round, unlike `C1`
 - **Short legs is the whole point.** A 0.1 µF on 30 mm of leg is mostly a length of
-  wire. Trim the legs and solder it straddling the two pins, underneath the chip or
-  right beside it
+  wire. Trim the legs and fit it straddling the two pins, underneath the chip or
+  right beside it — it solders when the +5V and ground nodes close, since it
+  shares pins 14 and 7 with the rails
 - **50 V X7R, or whatever the assortment box has.** The value matters, the rating
   doesn't — anything ≥ 16 V is fine on a 5 V rail
 - **The XIAO and the MT3608 already have their own.** They are modules; they came
@@ -503,15 +548,15 @@ holding the blower off during boot.
 Everything the pod sends down the arm leaves through exactly two connectors. The
 data resistor stays on the pod board, feeding `J2` pin 3.
 
-| Connector | Pin | Carries | Board pad |
-|---|---|---|---|
-| **`J2` — SM 3-pin**, to the upper-arm strip | 1 | Strip 5V | Y6 |
-| | 2 | Strip GND | Y4 |
-| | 3 | Strip data (after the resistor) | Y5 |
-| **`J3` — SM 4-pin**, the elbow lead | 1 | Motor + (battery, after fuse) | Y9 |
-| | 2 | Motor − (MOSFET drain) | Y8 |
-| | 3 | Trigger (`GPIO3`) | Y3 |
-| | 4 | Trigger return / ground | Y2 |
+| Connector | Pin | Carries | Board pad | Pigtail wire |
+|---|---|---|---|---|
+| **`J2` — SM 3-pin**, to the upper-arm strip | 1 | Strip 5V | Y6 | |
+| | 2 | Strip GND | Y4 | |
+| | 3 | Strip data (after the resistor) | Y5 | |
+| **`J3` — SM 4-pin**, the elbow lead | 1 | Motor + (battery, after fuse) | Y9 | Blue |
+| | 2 | Motor − (MOSFET drain) | Y8 | Red |
+| | 3 | Trigger (`GPIO3`) | Y3 | Green |
+| | 4 | Trigger return / ground | Y2 | Black |
 
 The board pads are positions from the board layout, not part designators.
 **Y2–Y9 are the oblong edge pads past column X**, at the harness end. "Y" isn't
@@ -523,6 +568,8 @@ solders onto the same pad as that jumper, in one joint.
   the first thing the data reaches.
 - **`J3` is a 4-conductor lead** run from the board down the upper arm to the
   elbow, where its SM-4 plug mates the sleeve (Step 3). Twist the motor pair.
+- **`J3`'s pigtail colors come pre-crimped and are not a polarity code.** Red is
+  motor **−** and blue is motor +. Go by pin number, not by color.
 - **The strip and the motor do not share a plug, on purpose.** Roughly an amp of
   switched PWM bundled against a WS2812 data line is asking for flicker. The
   trigger rides with the motor instead — it's a slow switch to ground and doesn't
@@ -531,17 +578,19 @@ solders onto the same pad as that jumper, in one joint.
   those joints properly — on a three-wire run there is no second ground to cover
   for a bad one.
 
-### Two SM-3s on one arm, and why that's allowed
+### Three SM-3s and two SM-4s on one arm, and why that's allowed
 
 No two connectors on one arm share family and pin count, so nothing mates where
-it shouldn't — with one exception: **PH-2 · ZH-2 · SM-2 · SM-3 (×2) · SM-4 ·
-SM-5**.
+it shouldn't — with two exceptions: **PH-2 · ZH-2 · SM-2 · SM-3 (×3) · SM-4
+(×2)**.
 
-The deliberate exception is the **two SM-3 strip plugs** — the pod's `J2` and the
-elbow `J6`. It's safe by construction: both carry the same strip nets in the same
-pin order. Plug the pod's `J2` straight onto the forearm input and the upper-arm
-segment is simply skipped. Nothing is damaged. Keep the pin order identical on
-both and it stays that way.
+Both exceptions are safe by construction. The **three SM-3 strip plugs** — the
+pod's `J2`, the elbow `J6` and the wrist `J4` — all carry the same strip nets in
+the same pin order, so a cross-mate just skips a strip segment; nothing is
+damaged. The **two SM-4 motor-and-trigger plugs** — the elbow `J3` and the wrist
+`J8` — carry the same four nets in the same pin order, so a cross-mate skips the
+sleeve pass-through and nothing else. Keep the pin orders identical everywhere
+and it stays that way.
 
 ### The battery monitor divider
 
@@ -625,6 +674,8 @@ You are wiring one of two identical, independent triggers.
    one you left on the glove side of the umbilical in Step 3.
 3. Mount the switch on a small printed plate, positioned so the **lever** sits
    under your middle and ring finger pads at the spot you marked in Step 1.
+
+Both joints here are one wire onto one terminal — solder them now, shrink, done.
 
 Orient the lever so a natural squeeze presses it across its length. You should be
 able to trigger it with your eyes closed, in one motion, every time. If you find
@@ -787,6 +838,11 @@ mount design. Do it the day the kit arrives, before any of the soldering above.
   that mates straight to the cell. Cut it off and fit a **JST-SM 2-pin** instead.
   This is not cosmetic: leave it PH2.0 and the cell can be plugged directly into
   the motor, bypassing the MOSFET, and the trigger does nothing.
+- **The blower end is the build's other two shared junctions — gather everything
+  before soldering.** Each motor terminal takes three things at once: the motor
+  lead, a leg of `CR1` (banded end on **+**), and one wire of the SM-2 pigtail.
+  Don't solder the pigtail and come back for `CR1` later — make each terminal
+  one joint with all three in it.
 - Use silicone wire for the motor run; it flexes constantly.
 - A longer hose holds more solution, so dribble on shutdown gets slightly worse.
   The silicone sleeve over the cap's protrusion — the one-way valve — is what stops
@@ -1058,8 +1114,8 @@ sealed part. Options, cheapest first:
   to itself, takes no adhesive with it when you unwrap it, and comes off in one
   piece when you need to unplug.
 - **Point the plug down**, or at worst sideways. A shell facing up is a cup.
-- The wrist SM-5 sits **above the cuff**, not under it — a cuff channels solution
-  straight into the plug.
+- The wrist plugs sit **above the cuff**, not under it — a cuff channels solution
+  straight into the shells.
 
 ### Test it before you trust it
 
@@ -1095,10 +1151,11 @@ Two things to be careful about:
 - **Pixel 0 goes at the pod on this arm too.** It's tempting to mirror the wiring
   along with the physical build. Don't. Identical wiring means identical firmware
   means one thing to maintain.
-- **Keep the same SM-3, SM-4 and SM-5 pin conventions.** If arm A puts the
+- **Keep the same SM-3 and SM-4 pin conventions.** If arm A puts the
   trigger on pins 4–5 and arm B puts it on pins 1–2, then spares aren't spares,
-  and one wrong plug at an event costs you a board. Write the pinout on a bit of tape
-  inside each pod.
+  and one wrong plug at an event costs you a board — identical pinouts are also
+  what makes the SM-3 and SM-4 cross-mates harmless. Write the pinout on a bit of
+  tape inside each pod.
 
 ---
 
@@ -1111,9 +1168,9 @@ Both arms exist. This step is about the thing you actually wear.
 With both arms built, before any event:
 
 1. **Cells out of both pods.**
-2. Mate every connector on both arms. Count them: 4 down each arm — elbow SM-4,
-   elbow SM-3, wrist SM-5, wrist SM-2 — plus the pod's `J2` SM-3 into the upper-arm
-   strip, and the ZH-2 at each microswitch.
+2. Mate every connector on both arms. Count them: 5 down each arm — elbow SM-4,
+   elbow SM-3, wrist SM-4, wrist SM-3, hand SM-2 — plus the pod's `J2` SM-3 into
+   the upper-arm strip, and the ZH-2 at each microswitch.
 3. Cells in. Both arms should show the idle glow.
 4. **Fire each hand separately.** Left trigger drives left arm only; right drives
    right only. If one trigger fires the other arm, you have crossed something —
@@ -1129,8 +1186,8 @@ With both arms built, before any event:
 
 1. Pods on the upper arms, strapped, cells **out**, `SW1` **off** on both.
 2. Sleeves on. Mate the elbow SM-4 and SM-3 on each side.
-3. Gloves on. Mate the wrist SM-5 on each side.
-4. Bubblers strapped on, mate the wrist SM-2, bottles filled.
+3. Gloves on. Mate the wrist SM-4 and SM-3 on each side.
+4. Bubblers strapped on, mate the hand SM-2, bottles filled.
 5. **Cells in, then `SW1` on.** Check both idle glows before you walk out.
 
 ### Getting out of it
@@ -1138,8 +1195,8 @@ With both arms built, before any event:
 Reverse. The whole point of the build:
 
 1. **`SW1` off, then cells out.** Both arms are now dead and safe to unplug.
-2. Wrist SM-2 + bubbler strap → bubblers off, bottles go somewhere upright.
-3. Wrist SM-5 → gloves peel off.
+2. Hand SM-2 + bubbler strap → bubblers off, bottles go somewhere upright.
+3. Wrist SM-4 + SM-3 → gloves peel off.
 4. Elbow SM-4 + SM-3 → sleeves come off.
 5. Pod straps.
 

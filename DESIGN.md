@@ -23,9 +23,9 @@ Source board: [design/concept-look.png](design/concept-look.png)
 | Variations | 1 white / 2 black / 3 mixed / 4 red accent sleeves |
 
 Several of these agree with what's already in [BUILD.md](BUILD.md): the trigger is
-palm-mounted (Step 5), and the **ruffle cuff is exactly where the wrist SM-5
-connector wants to live** — 3–4 cm above the crease, hidden under the ruffle, with
-the service loop tucked inside it (Step 3). That's a free win.
+palm-mounted (Step 5), and the **ruffle cuff is exactly where the wrist plugs
+(SM-3 + SM-4) want to live** — 3–4 cm above the crease, hidden under the ruffle,
+with the service loop tucked inside it (Step 3). That's a free win.
 
 One of them is better than it looks. **"Tubing routed under the lace" assumes the
 bottle is somewhere other than the blower head** — which is precisely what the kit
@@ -154,8 +154,10 @@ within at the moment the bubbles fire.
 - [ ] Does the floral housing hide the **blower head alone** (Mount C) or the whole
       bottle (Mount A)? Blocked on the hose test in [BUILD.md](BUILD.md) step 7 —
       and Mount C makes the housing much smaller and lighter
-- [ ] Can the ruffle cuff hide the SM-5 plug without pressing it into your wrist?
-      (It has to sit **above** the cuff — a cuff funnels solution into the shell)
-- [ ] How does the disconnect switch read as costume? A bow over a booted toggle,
-      or something more deliberate?
+- [ ] Can the ruffle cuff hide the wrist SM-3 + SM-4 plugs without pressing them
+      into your wrist? (They have to sit **above** the cuff — a cuff funnels
+      solution into the shells)
+- [ ] How does the disconnect switch read as costume? A bow over the 20 mm round
+      rocker (the booted toggle became a KCD1 rocker — see PARTS.md), or something
+      more deliberate?
 - [ ] Does the pod's drain hole survive whatever trim goes over it?
