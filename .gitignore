@@ -13,3 +13,8 @@ docs/tutorial/assemble
 
 # macOS metadata
 .DS_Store
+
+# PCB build intermediates (docs/pcb/build.sh regenerates them)
+docs/pcb/build/
+docs/pcb/*.kicad_prl
+docs/pcb/fp-info-cache

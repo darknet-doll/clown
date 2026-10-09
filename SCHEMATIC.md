@@ -210,8 +210,9 @@ pin name has been reused; a broken name never reaches the drawing.
   [BUILD.md](BUILD.md) step 11
 - **Firmware thresholds.** The low-battery warning and the low-voltage shutoff are
   in `firmware/clown_arm/clown_arm.ino`, in the tunables block
-- **Layout.** There is no PCB. The pod is protoboard; sheet 1 is the circuit, not a
-  placement
+- **Layout.** Sheet 1 is the circuit, not a placement. The pod is built on
+  protoboard ([docs/layout](docs/layout/README.md)), or on the PCB in
+  [docs/pcb](docs/pcb/README.md)
 
 ## Review checklist
 
