@@ -1,4 +1,4 @@
-# Bubble Housing — v1
+# Bubble Housing — v2
 
 The floral piece on the back of the hand that hides the kit's blower head
 ([DESIGN.md](../../DESIGN.md)). v1 is a plain fit test of Concept 1 rev B (saddle +
@@ -16,6 +16,13 @@ Photos and fit check: the "Bubble Housing — Fit Measurements" doc
 |---|---|---|
 | B1 | Front ring OD (holds the wand wheel) | 37.50 |
 | B2 | Overall length, ring face to back of motor bracket | 52.01 |
+
+### Velcro strap (measured 2026-10-08)
+
+| What | mm |
+|---|---|
+| Width | 11 |
+| Thickness | 1.1 |
 
 ### Hand (left, back of hand; landmarks read off photos, still to confirm)
 
@@ -99,8 +106,8 @@ v1 values. Several are guesses on purpose, so the fit test can prove or replace 
 - Plate: 2.4 thick (T), 48 wide x 62 long; wrist tongue 28 wide x 36 long
 - Plate underside curve: UNKNOWN for your hand. v1 follows a stand-in ellipse,
   80 wide x 26 thick
-- Belt loops: 30 long, 3 slot, 3 bar, 4 tall; one each side at the knuckle end and on the tongue
-- Strap slots: 27 long   <- assumes 25 mm Velcro; slot coupon also tests 22 x 3 and 27 x 4
+- Belt loops: 19 long, 2.5 slot, 3 bar, 4 tall; one each side at the knuckle end and on the tongue   <- v1 was 30 long x 3 slot, sized for 25 mm Velcro; real strap is 11 x 1.1
+- Strap opening: 13 x 2.5   <- 11 strap + 2 clearance; 2.5 lets the strap double back (2 x 1.1). v2 slot coupon also tests 2.0 and 3.0
 - Shroud: 37.8 bore, 2.4 wall, 42 long, closed back, 5 top vent slots 2.4 wide,
   wire exit 10 x 9 in the back wall
 - Shroud inside under the axis: 26 wide box   <- guess; the rear bracket is not measured
@@ -117,13 +124,20 @@ v1 (suggested, not yet printed): PLA, 0.4 nozzle, 0.2 layers, 3 walls, 15% infil
 | `versions/bubble-housing-v1-clip-coupons.stl` | Flat | None. Bumps on the back: 1 = 37.6, 2 = 37.8, 3 = 38.0, 4 = 38.2 bore |
 | `versions/bubble-housing-v1-slot-coupon.stl` | Flat | None. Slots left to right: 22 x 3, 27 x 3, 27 x 4 |
 
+v2 (suggested, not yet printed): same settings as v1. Only the base and slot coupon changed; shroud and clip coupons stay v1.
+
+| File | Orientation | Supports |
+|---|---|---|
+| `versions/bubble-housing-v2-base.stl` | Plate down, as exported | Tree, build plate only |
+| `versions/bubble-housing-v2-slot-coupon.stl` | Flat | None. Slots left to right: 13 x 2.0, 13 x 2.5, 13 x 3.0 |
+
 ## Log
 
 (none)
 
 ## Open
 
-- **v1 fit test, check and log:** which clip coupon holds the ring; which slot takes
+- **v1/v2 fit test, check and log:** which clip coupon holds the ring; which v2 slot takes
   the Velcro flat; whether the plate rocks on the hand; whether the clip or the ring
   hits the knuckles when the fingers curl; whether the blower's rear fits inside the
   shroud and its rails
