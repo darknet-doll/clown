@@ -141,6 +141,9 @@ v2 (suggested, not yet printed): same settings as v1. Only the base and slot cou
   the Velcro flat; whether the plate rocks on the hand; whether the clip or the ring
   hits the knuckles when the fingers curl; whether the blower's rear fits inside the
   shroud and its rails
+- **Cuff interaction** ([DESIGN.md](../../DESIGN.md) "The wrist cuff"): the cuff's lower
+  ruffle drapes over the tongue and its strap. At the fit test, confirm the hem stays
+  clear of the shroud's top vent slots and the ring, fingers curled and straight
 - **Kit blower head, still to measure:** drum OD behind the ring, rear bracket width
   and height, and side tab size and position. Front OD and length are done (B1, B2)
   and match the gun's pocket to within 0.4 mm
