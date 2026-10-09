@@ -75,6 +75,7 @@ Photos and fit check: the "Bubble Housing — Fit Measurements" doc
 | Shoulder | 0.8 mm radial step at z 8.55, facing back: stops the head sliding out the muzzle | 0.1 mm step scan at 45° |
 | Total depth, muzzle face → bulkhead | **51.6** | axial ray |
 | Top recess | r 22.7 (3 mm deeper than the bore), z 17 → 43, spans about 225°–315° (the top) | bore table |
+| Feed-nipple groove | round channel ~6 wide, r 21.9 at center (3.0 past the lip bore), z −3.7 → 16.5, where it merges into the top recess. Centered 44° off top toward the 02 half, spans ~306°–322° | 2° ray scan, 2026-10-08. The 15° bore table stepped over it |
 | Internal ribs, 01 half only | r 8.9–12.4, z 29 → 46.6, at about 120°–165° and 195°–240°. Probably the cable groove that the assembly notes mention | bore table |
 | Side slots, through the wall, both halves | 3.8 wide (y −1.9 → 1.9), z 9.5 → 40.0 | x-axis rays |
 | Top air intake slots (REV1 "air holes") | ~1.75 wide on a 5 mm pitch, at z 3, 8, 13, 18, 23, 28. Two rows at \|x\| ≈ 10–15, none on the centerline | y-axis rays |
@@ -95,13 +96,19 @@ Photos and fit check: the "Bubble Housing — Fit Measurements" doc
   the ring and rear bracket size: UNKNOWN (see Open)
 - Head lies along the hand, ring toward the fingers. B2 runs 7.4 past H2, and B1 is
   8.3 wider than H3, so the drum can't sit at the wrist end
+- **Feed nipple on top of the head** (spotted at the 2026-10-08 fit test; the gun's
+  groove sizes it): a round bump ~6 wide standing ~3 proud of the ring OD, starting
+  ~1.3 behind the ring face and running ~20 back. It carries the feed line, so both
+  the clip band and the shroud mouth must clear it, and the tube needs a route out
 
 ## Spec
 
 v1 values. Several are guesses on purpose, so the fit test can prove or replace them.
 
-- C-clip bore: 37.8   <- the gun's proven fit for the 37.5 ring (B1, G1); coupons test 37.6–38.2
+- C-clip bore: 37.6   <- fit test 2026-10-08: coupon 1 (one tick) held the ring best of the four. v1 spec'd 37.8, the gun's fit
 - C-clip: 8 wide, 2.4 wall, 110° opening on top
+- Feed nipple clearance: clock the head so the nipple sits inside the clip opening,
+  at least 10° clear of each edge. The nipple needs ~20° of arc at 3.2 radial   <- gun groove envelope + margin
 - Drum axis height above plate: T + 4 + 18.75   <- clip sits on a 4.5 pedestal
 - Plate: 2.4 thick (T), 48 wide x 62 long; wrist tongue 28 wide x 36 long
 - Plate underside curve: UNKNOWN for your hand. v1 follows a stand-in ellipse,
@@ -110,6 +117,8 @@ v1 values. Several are guesses on purpose, so the fit test can prove or replace 
 - Strap opening: 13 x 2.5   <- 11 strap + 2 clearance; 2.5 lets the strap double back (2 x 1.1). v2 slot coupon also tests 2.0 and 3.0
 - Shroud: 37.8 bore, 2.4 wall, 42 long, closed back, 5 top vent slots 2.4 wide,
   wire exit 10 x 9 in the back wall
+- Shroud nipple groove (v3): ~6.5 wide, 3.2 deep radially, from the mouth back ~12
+  (assumes the head sits flush at the back wall), doubling as the feed-line exit   <- not in any printed version yet
 - Shroud inside under the axis: 26 wide box   <- guess; the rear bracket is not measured
 - Rear rails: 2 x (20 x 4 x 4.5), 18 apart   <- guess, same reason
 
@@ -133,14 +142,25 @@ v2 (suggested, not yet printed): same settings as v1. Only the base and slot cou
 
 ## Log
 
-(none)
+### 2026-10-08 — clip coupon fit test (partial)
+
+- Coupon 1 (one tick, 37.6 bore) holds the ring best of the four. Spec moved from
+  37.8 to 37.6: the gun's 37.8 is an injection-molded fit, and our printed bores
+  come out looser at the same number
+- Found a feed nipple on top of the head that v1's clip and shroud ignore. Checked
+  the gun reference: its pocket has a matching groove the 15° bore table had stepped
+  over — ~6 wide, 3 deep, from just behind the muzzle face back to the top recess
+  (now a Ground Truth row). Clip opening must clock over it; shroud needs a groove (see Spec)
 
 ## Open
 
-- **v1/v2 fit test, check and log:** which clip coupon holds the ring; which v2 slot takes
-  the Velcro flat; whether the plate rocks on the hand; whether the clip or the ring
-  hits the knuckles when the fingers curl; whether the blower's rear fits inside the
-  shroud and its rails
+- **v1/v2 fit test, remaining checks:** which v2 slot takes the Velcro flat; whether
+  the plate rocks on the hand; whether the clip or the ring hits the knuckles when
+  the fingers curl; whether the blower's rear fits inside the shroud and its rails.
+  (Clip coupon: answered 2026-10-08, see Log)
+- **Feed nipple:** confirm its clock position relative to the wire exit when the head
+  lies in the saddle (photo suggests top-front; the gun clocks it 44° off top). If the
+  gun envelope turns out tight, caliper the nipple directly
 - **Cuff interaction** ([DESIGN.md](../../DESIGN.md) "The wrist cuff"): the cuff's lower
   ruffle drapes over the tongue and its strap. At the fit test, confirm the hem stays
   clear of the shroud's top vent slots and the ring, fingers curled and straight
