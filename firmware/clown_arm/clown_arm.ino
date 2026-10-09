@@ -305,9 +305,9 @@ static void renderLockout() {
 
 void setup() {
   // Gate low first, before anything slow runs. Between reset and this line the
-  // pin floats, and the only thing holding the blower off is the 10k pulldown
-  // at the MOSFET gate -- which is why that resistor is not optional. See
-  // BUILD.md step 4.
+  // pin floats, and the only thing holding the blower off is R6, the 100k
+  // pulldown on U2 2A. U2 drives the gate from that input, so R5 at the
+  // MOSFET gate can't hold it down on its own. See SCHEMATIC.md.
   pinMode(PIN_MOTOR, OUTPUT);
   digitalWrite(PIN_MOTOR, LOW);
 

@@ -292,7 +292,7 @@ NETS = [
      "BT1 + · J1-1 · SW1 · F1 · U1 IN+ · R1 · J3-1"),
     ("GND", "The one common ground. Everything returns here",
      "BT1 − · J1-2 · U1 IN− · U1 OUT− · U3 GND · U2 GND · U2 1OE · U2 2OE · "
-     "U2 3A · U2 4A · Q1 S · C1 − · C2 · R2 · J2-2 · LD3 GND · J6-2 · "
+     "U2 3A · U2 4A · Q1 S · C1 − · C2 · C3 · R2 · R5 · R6 · J2-2 · LD3 GND · J6-2 · "
      "LD1 GND · J3-4 · J4-2 · J8-4 · LD2 GND · J7-2 · SW2 COM"),
     ("+5V", "Boost output. Strip, level shifter, and CR2's anode",
      "U1 OUT+ · U2 Vcc · U2 3OE · U2 4OE · C1 + · C2 · CR2 anode · J2-1 · "
@@ -300,7 +300,7 @@ NETS = [
     ("+5V_MCU", "Same 5 V, one Schottky drop down, MCU only",
      "CR2 cathode · U3 5V"),
     ("VSENSE", "Half of VBATT, for the ADC",
-     "R1 · R2 · U3 GPIO2"),
+     "R1 · R2 · C3 · U3 GPIO2"),
     ("LED_DATA_3V3", "MCU-level data, level shifter input",
      "U3 GPIO10 · U2 1A"),
     ("LED_DATA", "5 V data, through the series resistor, to the upper-arm strip",
@@ -310,8 +310,8 @@ NETS = [
     ("LED_DATA_HAND", "The same chain continued past the wrist",
      "LD1 DOUT · J4-3 · LD2 DIN"),
     ("GATE_3V3", "MCU-level motor PWM, level shifter input",
-     "U3 GPIO4 · U2 2A"),
-    ("GATE", "5 V gate drive. R5 holds it down while the MCU boots",
+     "U3 GPIO4 · U2 2A · R6"),
+    ("GATE", "5 V gate drive. R5 holds it down when U2 is unpowered",
      "U2 2Y · R4 · R5 · Q1 G"),
     ("TRIG", "Trigger, idle high on the MCU's internal pull-up",
      "U3 GPIO3 · J3-3 · J8-3 · J7-1 · SW2 NO"),
@@ -339,6 +339,8 @@ DESIGNATORS = [
     ("R3", "330-470 R series resistor on the LED data line"),
     ("R4", "100 R gate series resistor"),
     ("R5", "10 k gate-to-source pulldown"),
+    ("R6", "100 k pulldown on U2 2A — holds the blower off while the MCU boots"),
+    ("C3", "0.1 uF ceramic, across R2 — filters the battery-sense divider"),
     ("Q1", "N-channel logic-level MOSFET (AO3400 / IRLZ44N / RFP30N06LE)"),
     ("CR1", "1N5819 flyback, across the motor, at the blower end"),
     ("M1", "Bubble kit blower motor"),
@@ -434,6 +436,12 @@ def sheet_one():
     s.resistor(1330, 430, "v", "R2", "100 k")
     s.wire([(1330, 464), (1330, 500)])
     s.gnd(1330, 500)
+    # C3 across R2: the ADC samples a stiff node, not 50 k of divider
+    s.wire([(1330, 385), (1420, 385), (1420, 421)])
+    s.dot(1330, 385)
+    s.cap(1420, 430, "C3", "0.1 uF")
+    s.wire([(1420, 439), (1420, 482), (1330, 482)])
+    s.dot(1330, 482)
 
     # --- isolation diode ----------------------------------------------------
     s.wire([(420, 560), (420, 590)])
@@ -552,8 +560,18 @@ def sheet_one():
     s.resistor(360, 1220, "v", "R5", "10 k")
     s.wire([(360, 1254), (360, 1300)])
     s.gnd(360, 1300)
-    s.text(232, 1300, "holds the blower off", size=10, anchor="end")
-    s.text(232, 1316, "while the MCU boots", size=10, anchor="end")
+    s.text(232, 1300, "holds the gate down", size=10, anchor="end")
+    s.text(232, 1316, "while U2 is unpowered", size=10, anchor="end")
+
+    # R6: U2 2A floats until setup() drives GPIO4, and U2 drives GATE from it
+    s.flag(60, 1180, "GATE_3V3", "r")
+    s.wire([(178, 1180), (230, 1180), (230, 1186)])
+    s.resistor(230, 1220, "v", "R6", "100 k")
+    s.wire([(230, 1254), (230, 1262), (300, 1262), (300, 1300), (360, 1300)])
+    s.dot(360, 1300)
+    s.text(60, 1236, "holds the blower", size=10)
+    s.text(60, 1252, "off while the MCU", size=10)
+    s.text(60, 1268, "boots", size=10)
 
     drain, source = s.mosfet(400, 1120, "Q1", "logic-level N-ch")
     s.wire([drain, (500, 1010)])

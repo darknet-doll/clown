@@ -98,6 +98,14 @@
 <line x1="1316" y1="523" x2="1344" y2="523" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
 <line x1="1323" y1="530" x2="1337" y2="530" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
 <text x="1330" y="556" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GND</text>
+<polyline points="1330,385 1420,385 1420,421" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1330" cy="385" r="4.5" fill="#1A1A1A"/>
+<line x1="1394" y1="421" x2="1446" y2="421" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+<line x1="1394" y1="439" x2="1446" y2="439" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+<text x="1454" y="424" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="bold">C3</text>
+<text x="1454" y="440" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">0.1 uF</text>
+<polyline points="1420,439 1420,482 1330,482" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1330" cy="482" r="4.5" fill="#1A1A1A"/>
 <polyline points="420,560 420,590" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="420" cy="560" r="4.5" fill="#1A1A1A"/>
 <path d="M 400 594 L 440 594 L 420 624 Z" fill="#1A1A1A" stroke="#1A1A1A" stroke-width="2" stroke-linejoin="round"/>
@@ -260,8 +268,19 @@
 <line x1="346" y1="1323" x2="374" y2="1323" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
 <line x1="353" y1="1330" x2="367" y2="1330" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/>
 <text x="360" y="1356" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9" fill="#5A5A5A" text-anchor="middle" font-weight="normal">GND</text>
-<text x="232" y="1300" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="end" font-weight="normal">holds the blower off</text>
-<text x="232" y="1316" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="end" font-weight="normal">while the MCU boots</text>
+<text x="232" y="1300" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="end" font-weight="normal">holds the gate down</text>
+<text x="232" y="1316" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="end" font-weight="normal">while U2 is unpowered</text>
+<polygon points="60,1165 162,1165 178,1180 162,1195 60,1195" fill="#F5F0F2" stroke="#C2185B" stroke-width="1.6"/>
+<text x="72" y="1184" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" fill="#1A1A1A" text-anchor="start" font-weight="bold">GATE_3V3</text>
+<polyline points="178,1180 230,1180 230,1186" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="217" y="1186" width="26" height="68" rx="2" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2"/>
+<text x="252" y="1214" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="bold">R6</text>
+<text x="252" y="1230" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">100 k</text>
+<polyline points="230,1254 230,1262 300,1262 300,1300 360,1300" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="360" cy="1300" r="4.5" fill="#1A1A1A"/>
+<text x="60" y="1236" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">holds the blower</text>
+<text x="60" y="1252" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">off while the MCU</text>
+<text x="60" y="1268" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" fill="#1A1A1A" text-anchor="start" font-weight="normal">boots</text>
 <line x1="400" y1="1120" x2="446" y2="1120" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round"/>
 <line x1="446" y1="1086" x2="446" y2="1154" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
 <line x1="460" y1="1083" x2="460" y2="1101" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>

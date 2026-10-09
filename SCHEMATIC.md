@@ -125,16 +125,16 @@ renumbers everything.
 | Net | What it is | Everything on it |
 |---|---|---|
 | `VBATT` | Cell positive, after SW1 and F1 | BT1 + · J1-1 · SW1 · F1 · U1 IN+ · R1 · J3-1 |
-| `GND` | The one common ground. Everything returns here | BT1 − · J1-2 · U1 IN− · U1 OUT− · U3 GND · U2 GND · U2 1OE · U2 2OE · U2 3A · U2 4A · Q1 S · C1 − · C2 · R2 · J2-2 · LD3 GND · J6-2 · LD1 GND · J3-4 · J4-2 · J8-4 · LD2 GND · J7-2 · SW2 COM |
+| `GND` | The one common ground. Everything returns here | BT1 − · J1-2 · U1 IN− · U1 OUT− · U3 GND · U2 GND · U2 1OE · U2 2OE · U2 3A · U2 4A · Q1 S · C1 − · C2 · C3 · R2 · R5 · R6 · J2-2 · LD3 GND · J6-2 · LD1 GND · J3-4 · J4-2 · J8-4 · LD2 GND · J7-2 · SW2 COM |
 | `+5V` | Boost output. Strip, level shifter, and CR2's anode | U1 OUT+ · U2 Vcc · U2 3OE · U2 4OE · C1 + · C2 · CR2 anode · J2-1 · LD3 5V · J6-1 · LD1 5V · J4-1 · LD2 5V |
 | `+5V_MCU` | Same 5 V, one Schottky drop down, MCU only | CR2 cathode · U3 5V |
-| `VSENSE` | Half of VBATT, for the ADC | R1 · R2 · U3 GPIO2 |
+| `VSENSE` | Half of VBATT, for the ADC | R1 · R2 · C3 · U3 GPIO2 |
 | `LED_DATA_3V3` | MCU-level data, level shifter input | U3 GPIO10 · U2 1A |
 | `LED_DATA` | 5 V data, through the series resistor, to the upper-arm strip | U2 1Y · R3 · J2-3 · LD3 DIN |
 | `LED_DATA_FOREARM` | The same chain continued across the elbow | LD3 DOUT · J6-3 · LD1 DIN |
 | `LED_DATA_HAND` | The same chain continued past the wrist | LD1 DOUT · J4-3 · LD2 DIN |
-| `GATE_3V3` | MCU-level motor PWM, level shifter input | U3 GPIO4 · U2 2A |
-| `GATE` | 5 V gate drive. R5 holds it down while the MCU boots | U2 2Y · R4 · R5 · Q1 G |
+| `GATE_3V3` | MCU-level motor PWM, level shifter input | U3 GPIO4 · U2 2A · R6 |
+| `GATE` | 5 V gate drive. R5 holds it down when U2 is unpowered | U2 2Y · R4 · R5 · Q1 G |
 | `TRIG` | Trigger, idle high on the MCU's internal pull-up | U3 GPIO3 · J3-3 · J8-3 · J7-1 · SW2 NO |
 | `MOTOR+` | Blower positive, straight off the cell | VBATT · J3-1 · J8-1 · J5-1 · CR1 cathode · M1 + |
 | `MOTOR-` | Blower negative, switched by the MOSFET | Q1 D · J3-2 · J8-2 · J5-2 · CR1 anode · M1 − |
@@ -157,6 +157,8 @@ renumbers everything.
 | `R3` | 330-470 R series resistor on the LED data line |
 | `R4` | 100 R gate series resistor |
 | `R5` | 10 k gate-to-source pulldown |
+| `R6` | 100 k pulldown on U2 2A — holds the blower off while the MCU boots |
+| `C3` | 0.1 uF ceramic, across R2 — filters the battery-sense divider |
 | `Q1` | N-channel logic-level MOSFET (AO3400 / IRLZ44N / RFP30N06LE) |
 | `CR1` | 1N5819 flyback, across the motor, at the blower end |
 | `M1` | Bubble kit blower motor |
