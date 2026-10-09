@@ -7,10 +7,11 @@ over the housing tongue. The fabric cuff keeps the band and the upper ruffle;
 this part replaces only the fabric nearest the spinning ring, where floppy lace
 is a snag risk and rigid print is actually safer.
 
-Concept renders: `concepts/` (r1 — look only; hand and all hem positions are
-stand-ins from the bubble-housing concept, nothing is measured). Knobs to
-iterate in `concepts/model.py`: flute count `K`, per-tier flare/amplitude,
-scallop depth, hole rows.
+Concept renders: `concepts/` (look only; hand and all hem positions are
+stand-ins from the bubble-housing concept, nothing is measured). r1 = three
+small tiers; **r2 = one big ruffle sleeve, the chosen direction**
+(darknetdoll, 2026-10-08). Knobs to iterate in `concepts/model.py`: flute
+count `K`, flare, flute amplitude, scallop depth, hole rows.
 
 ## Ground Truth
 
@@ -46,8 +47,10 @@ scallop depth, hole rows.
 - Tab width: 28   <- matches the tongue
 - Tab slot: 13 × 2.5   <- matches the housing's strap opening; revisit if the v2
   slot coupon picks 2.0 or 3.0
-- Everything else: UNKNOWN (form, flare, hem length, wall, pattern, material —
-  see Open)
+- Form: ONE big flounce toward the knuckles, no tiers   <- darknetdoll 2026-10-08, r2
+- Root offset: ≥ 6.5 above the plate   <- the single skirt's root must itself
+  clear the 4-tall tongue belt loops; r1's over-tier used to hide them
+- Everything else: UNKNOWN (flare, hem length, wall, pattern, material — see Open)
 
 ## Print Settings
 
@@ -66,9 +69,9 @@ kinder edge on skin, prints the ruffle lobes without supports less cleanly).
 - Measure: tongue wrist-end → wrist crease, hand flat AND fully extended. Sets
   max hem length; keep ≥ 10 clear at full extension if the part is rigid
 - Material: PETG (stiff, translucent, matches floral shell) or TPU 95A (flexes)?
-- Form: wavy bell skirt vs overlapping petal scallops? True lace mesh on a
-  doubly-curved ruffle is heavy modeling — scalloped openwork (broderie look)
-  gets the read at arm's length for far less effort
+- Openwork holes show what's under them — in r2 that's the bare housing plate.
+  On the real build the strap + glove lace sit underneath; decide whether the
+  top band of holes shrinks or the under-layer is enough
 - Wall: single-wall wavy shell (~0.8–1.2) is the usual trick for printed fabric
   — test a hem coupon before committing to the full skirt
 - Does it fully replace the fabric lower ruffle, or sit under a shorter fabric

@@ -54,19 +54,16 @@ def hole_rows(k, rows):
                 out.append((phi_c, s_c, 0.34*np.pi/k, 0.075))
     return out
 
-K = 13
+K = 11
 ROOT = -26.0                                  # the tongue's wrist end (concept frame)
+# r2: ONE big ruffle sleeve (darknetdoll, 2026-10-08) — single flounce toward
+# the knuckles, covers the tongue + its strap, scalloped hem still stops short
+# of the shroud mouth at x 16. Flare and flutes scaled way up.
 tiers = [
-    # main skirt toward the knuckles: covers the tongue + its strap,
-    # scalloped hem ends ~x +8, well short of the shroud mouth at x 16
-    flounce(ROOT, 34, +1, 2.5, 7.0, 3.8, K, 0.0,
-            holes=hole_rows(K, [(0.35, 0), (0.55, 1), (0.78, 0)])),
-    # over-tier, flutes interleaved, hem ~x -6
-    flounce(ROOT, 20, +1, 4.5, 6.0, 3.2, K, np.pi,
-            holes=hole_rows(K, [(0.42, 1), (0.68, 0)])),
-    # short back flounce toward the wrist. RIGID -> placeholder hem at x -34;
-    # the real limit is >=10 clear of the crease at full extension (unmeasured)
-    flounce(ROOT, 8, -1, 2.5, 5.0, 2.8, K, 0.0, holes=hole_rows(K, [(0.55, 0)])),
+    # off0 6.5: the single skirt's root must itself clear the tongue belt loops
+    # (4 tall on the plate) now that no over-tier hides them
+    flounce(ROOT, 38, +1, 6.5, 14.0, 6.5, K, 0.0, scallop=0.18,
+            holes=hole_rows(K, [(0.30, 0), (0.50, 1), (0.70, 0), (0.88, 1)])),
 ]
 
 # mount tab: same footprint as the tongue, 1.2 thick, sandwiched underneath it

@@ -1,4 +1,4 @@
-# Renders r1-*.png next to this file. Run: python3 3d-prints/cuff-ruffle/concepts/render.py
+# Renders r2-*.png next to this file. Run: python3 3d-prints/cuff-ruffle/concepts/render.py
 import pathlib, sys
 import numpy as np, pyvista as pv
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -14,10 +14,9 @@ STY = dict(hand=dict(color='#f1d3c2', opacity=0.5, smooth_shading=True),
            tab=dict(color='#9d86d6', smooth_shading=False),
            ruffle=dict(color='#fbfaf7', smooth_shading=True, specular=0.35, opacity=0.97))
 
-LABELS = [((-20, -38, 22), 'printed ruffle - openwork is the lace AND the drains'),
-          ((6, 30, 14), 'main skirt hides the tongue + strap, hem stops before the shroud'),
-          ((-33, 24, 6), 'back flounce: rigid, so it stops WELL before the crease'),
-          ((-8, 0, -18), 'tab under the tongue, held by the tongue strap'),
+LABELS = [((-15, -48, 25), 'one big printed ruffle - openwork is the lace AND the drains'),
+          ((8, 36, 16), 'hides the tongue + strap, hem still stops before the shroud'),
+          ((-8, 0, -22), 'tab under the tongue, held by the tongue strap'),
           ((-50, -24, -8), 'fabric band + upper ruffle take over here')]
 
 def shot(fn, pos, focal=(0, 0, 8), zoom=1.0, flat=False, labels=False):
@@ -35,7 +34,7 @@ def shot(fn, pos, focal=(0, 0, 8), zoom=1.0, flat=False, labels=False):
     p.camera.zoom(zoom); p.enable_anti_aliasing('ssaa')
     p.screenshot(str(HERE / fn)); p.close()
 
-shot('r1-three-quarter.png', (-150, -210, 150), zoom=1.35, labels=True)
-shot('r1-side.png', (-5, -330, 10), focal=(-5, 0, 10), zoom=1.8, flat=True)
-shot('r1-top.png', (-5, 0, 330), focal=(-5, 0, 0), zoom=1.7, flat=True)
-shot('r1-from-wrist.png', (-300, -60, 70), focal=(-10, 0, 5), zoom=1.5)
+shot('r2-three-quarter.png', (-150, -210, 150), zoom=1.35, labels=True)
+shot('r2-side.png', (-5, -330, 10), focal=(-5, 0, 10), zoom=1.8, flat=True)
+shot('r2-top.png', (-5, 0, 330), focal=(-5, 0, 0), zoom=1.7, flat=True)
+shot('r2-from-wrist.png', (-300, -60, 70), focal=(-10, 0, 5), zoom=1.5)
