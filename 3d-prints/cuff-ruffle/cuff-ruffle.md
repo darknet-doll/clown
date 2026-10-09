@@ -7,6 +7,11 @@ over the housing tongue. The fabric cuff keeps the band and the upper ruffle;
 this part replaces only the fabric nearest the spinning ring, where floppy lace
 is a snag risk and rigid print is actually safer.
 
+Concept renders: `concepts/` (r1 — look only; hand and all hem positions are
+stand-ins from the bubble-housing concept, nothing is measured). Knobs to
+iterate in `concepts/model.py`: flute count `K`, per-tier flare/amplitude,
+scallop depth, hole rows.
+
 ## Ground Truth
 
 - `reference/lace-cuff-look.png` — the look being copied (same image as
