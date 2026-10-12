@@ -82,6 +82,27 @@ Photos and fit check: the "Bubble Housing — Fit Measurements" doc
 | Side slots, through the wall, both halves | 3.8 wide (y −1.9 → 1.9), z 9.5 → 40.0 | x-axis rays |
 | Top air intake slots (REV1 "air holes") | ~1.75 wide on a 5 mm pitch, at z 3, 8, 13, 18, 23, 28. Two rows at \|x\| ≈ 10–15, none on the centerline | y-axis rays |
 
+### Gun features to borrow (measured 2026-10-12)
+
+Frame for this table: mm **behind the ring face** (= gun muzzle face), and clock positions
+**looking at the ring face with the feed nipple at 12:00** (the gun's own frame has the
+nipple 44° off its top). Scripts: `reference/bubble-gun-toy/pocket_sections.py` (1°/0.5 mm
+ray map of the pocket wall), `pocket_slices.py`, `split_face_holes.py`, `borrow_figure.py`
+(figure kept local: `gun-borrow-reference.png`).
+
+| # | Gun feature | Where (behind ring face, clock) | Borrow for v4 |
+|---|---|---|---|
+| 1 | Front lip Ø 37.8 | 0 → 13.55 | Clip grips the ring only, inside 0 → 13.5. Our printed bore: 37.6 (coupon) |
+| 2 | Main bore Ø 39.4, with a 0.8 radial step at 13.55 | 13.55 → 51.6 | Shroud bore 39.4 behind the ring (v1–v3 used 37.8: the v3 fail). The step locates the head |
+| 3 | Back wall | 51.6. Head is 52.01, so it stands 0.4 proud | Inside length 51.6 from the ring face |
+| 4 | Feed-nipple groove: +3.0 radial (r 21.9), 20° ≈ 6 wide | 1.3 → 22.0 at 12:00, runs into #5 | Full-length groove 1.3 → 22 (v3's ran 12 from the mouth) |
+| 5 | Top recess: +3.0 radial (r 22.7), ~120° wide | 21.75 → 47.25, from ~8:30 to ~12:30 | Same recess over the top of the body |
+| 6 | Side slots, 3.8 wide, through the wall | 14.25 → 44.75, at ~1:30 and ~7:30 | Likely the side tabs (confirm with M3/M6). Cut as slots or pockets |
+| 7 | Rear blocks: the gun fills one side behind 33.5, leaving the full half-circle from 12:00 clockwise to 6:00, a lobe at 9:00–11:00, and a channel at 7:30 into #6 | 33.5 → 51.6 | Motor end sits off-centre to the 3:00 side; the 7:30 channel is the likely wire path. Confirm with R1–R4 |
+| 8 | Air intake: two rows of 6 slots, 2 wide, 5 pitch, each row ~30° (~10 long) | 8 → 35, rows centred ~11:40 and ~9:20 | Copy the pattern over the same zone. REV1 added it "for better airflow" |
+| 9 | Clamshell split along the axis; head drops into one half, the other closes | — | Split the shroud the same way: answers "how does the head go in" |
+| 10 | Screws: BT2×8. Ø 2.5 through-holes above and below the pocket front (9.9 top, 13.5 bottom, 26–28 off axis); Ø 1.7–1.8 × 8–8.6 blind holes on top at 22.5 and 47.4 | as listed | Same hole sizes for joining our shroud halves: Ø 2.5 clearance, Ø 1.8 × 8.6 pilot |
+
 ### From the designer's assembly notes (text, not measured)
 
 - Hose from the blower head to the bottle lid: **50–70 mm**. Hose inside the

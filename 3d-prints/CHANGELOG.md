@@ -32,6 +32,9 @@ Spec and log: [bubble-housing/bubble-housing.md](bubble-housing/bubble-housing.m
   - add the side-tab slots and a full-length top recess
   - keep v3's nipple groove
 - **Why:** v3 failed because the whole head was bored at front-lip size
+- **Source:** the "Gun features to borrow" table in
+  [bubble-housing/bubble-housing.md](bubble-housing/bubble-housing.md): two-step bore,
+  nipple groove, top recess, side slots, air-slot pattern, split shroud with BT2×8 screws
 - **Blocked on:** the "Measure for v4" table in the fit-measurements doc
 
 ### v3 — 2026-10-11
