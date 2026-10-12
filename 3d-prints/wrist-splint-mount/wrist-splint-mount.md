@@ -16,8 +16,16 @@ the heat-molding plan and possibly the housing's own tongue + hand straps
   attribution; derivatives must carry the same license; non-commercial only.
   OK to commit to this public repo with credit; our remixed splint files
   inherit BY-NC-SA
-- **Files on the page:** `Wrist Splint` STL (2 MB) + a 0.2 mm PLA MK3S gcode.
-  **Not yet downloaded — nothing below is measured; it is all listing text**
+- **Files on the page:** `wrist-splint.stl` (model files, 2 MB) + a 0.2 mm PLA
+  MK3S gcode (print files)
+- **In `reference/wrist-splint-custom-moldable-print_files/`** (the print-files
+  bundle, found 2026-10-12 in the Desktop 3D prints folder): the model PDF and
+  `wrist-splint_02mm_pla_mk3s_4h53m.gcode` (gitignored — MK3S-only, 7.8 MB).
+  Author's slice: PLA, 0.4 nozzle, 0.2 layers, 48 g, 4.88 h
+- **`wrist-splint.stl` is NOT downloaded yet** — it is in the separate
+  model-files bundle. Nothing below is measured; it is all listing/PDF text
+- From the PDF photos (look only, no dimensions): the splint body is
+  honeycomb openwork — already close to the build's lace aesthetic
 
 From the listing (author's text, not measured):
 
@@ -69,11 +77,11 @@ Hardness and wall/infill undecided — see Open.
 
 ## Open
 
-- **Download the STL** into `reference/` (needs a Printables login; permission
-  pending). Then measure off the mesh: dorsal flat area and whether it reaches
-  the housing's position on the back of the hand, wall thickness, velcro
-  channel positions and widths, overall flat footprint
-- Write `reference/ATTRIBUTION.md` (author, link, license) when the file lands
+- **Download `wrist-splint.stl` (the model-files bundle)** into `reference/` —
+  the print-files bundle landed 2026-10-12 but only holds the MK3S gcode.
+  Needs a Printables login. Then measure off the mesh: dorsal flat area and
+  whether it reaches the housing's position on the back of the hand, wall
+  thickness, velcro channel positions and widths, overall flat footprint
 - **Measure darknetdoll's wrist circumference** → scale % (18 cm = 100%)
 - Handedness: does the thumb cutout make it side-specific? If so, mirror in
   the slicer for the left hand (a transform — flag before doing it)

@@ -12,6 +12,10 @@ docs/tutorial/assemble
 3d-prints/*/reference/bubble-gun-toy/*.png
 3d-prints/*/reference/bubble-gun-toy/*.npz
 
+# Third-party pre-sliced gcode (CC BY-NC-SA, redistributable, but 7.8 MB and
+# MK3S-only; re-downloadable from Printables model 1238124)
+3d-prints/wrist-splint-mount/reference/*/*.gcode
+
 # macOS metadata
 .DS_Store
 
