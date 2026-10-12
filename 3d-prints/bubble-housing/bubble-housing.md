@@ -1,9 +1,9 @@
-# Bubble Housing — v2
+# Bubble Housing — v3
 
 The floral piece on the back of the hand that hides the kit's blower head
 ([DESIGN.md](../../DESIGN.md)). v1 is a plain fit test of Concept 1 rev B (saddle +
 C-clip + rear shroud + two Velcro straps), with no clown details. Left hand only.
-Concepts and renders: `concepts/`. Print files: `versions/`, from `export_v1.py`.
+Concepts and renders: `concepts/`. Print files: `versions/`, from `export_v<n>.py`.
 
 ## Ground Truth
 
@@ -117,8 +117,9 @@ v1 values. Several are guesses on purpose, so the fit test can prove or replace 
 - Strap opening: 13 x 2.5   <- 11 strap + 2 clearance; 2.5 lets the strap double back (2 x 1.1). v2 slot coupon also tests 2.0 and 3.0
 - Shroud: 37.8 bore, 2.4 wall, 42 long, closed back, 5 top vent slots 2.4 wide,
   wire exit 10 x 9 in the back wall
-- Shroud nipple groove (v3): ~6.5 wide, 3.2 deep radially, from the mouth back ~12
-  (assumes the head sits flush at the back wall), doubling as the feed-line exit   <- not in any printed version yet
+- Shroud nipple groove: 6.5 wide at top center, from the mouth back 12 (assumes the
+  head sits flush at the back wall). Spec depth 3.2 radial exceeds the 2.4 wall, so
+  it is a through-slot, doubling as the feed-line exit   <- in v3; nipple stands ~3 proud and reaches ~9 into the shroud, 12 gives margin
 - Shroud inside under the axis: 26 wide box   <- guess; the rear bracket is not measured
 - Rear rails: 2 x (20 x 4 x 4.5), 18 apart   <- guess, same reason
 
@@ -139,6 +140,15 @@ v2 (suggested, not yet printed): same settings as v1. Only the base and slot cou
 |---|---|---|
 | `versions/bubble-housing-v2-base.stl` | Plate down, as exported | Tree, build plate only |
 | `versions/bubble-housing-v2-slot-coupon.stl` | Flat | None. Slots left to right: 13 x 2.0, 13 x 2.5, 13 x 3.0 |
+
+v3 (suggested, not yet printed): same settings as v1. Base clip bore moved to 37.6
+(coupon 1 result); shroud gains the feed-nipple groove. Slot coupon stays v2, clip
+coupons stay v1.
+
+| File | Orientation | Supports |
+|---|---|---|
+| `versions/bubble-housing-v3-base.stl` | Plate down, as exported | Tree, build plate only |
+| `versions/bubble-housing-v3-shroud.stl` | Back wall on the bed, open end up | None. The groove is the rim notch at the mouth; head goes in nipple-up, into the notch |
 
 ## Log
 
