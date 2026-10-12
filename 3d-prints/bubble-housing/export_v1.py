@@ -1,5 +1,5 @@
 # v1 fit-test prints for Concept 1 rev B (plain, no clown details).
-# Run from this folder: python3 export_v1.py  ->  versions/bubble-housing-v1-*.stl
+# Run from this folder: python3 export_v1.py  ->  versions/archive/bubble-housing-v1-*.stl (archived)
 #
 #   base    saddle plate + wrist tongue + 4 belt loops + C-clip + rear rails
 #   shroud  rear hood, separate so the base can be tested without it
@@ -16,7 +16,7 @@ import model as M
 from model import at, hand_top, T, axis_z, R_IN, R_OUT, X0, X1, cyl_x
 
 os.makedirs('versions', exist_ok=True)
-OUT = 'versions/bubble-housing-v1-{}.stl'
+OUT = 'versions/archive/bubble-housing-v1-{}.stl'   # v1 is archived
 
 def union(parts):
     return trimesh.boolean.union([p for p in parts], engine='manifold')

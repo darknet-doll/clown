@@ -129,16 +129,16 @@ v1 (suggested, not yet printed): PLA, 0.4 nozzle, 0.2 layers, 3 walls, 15% infil
 
 | File | Orientation | Supports |
 |---|---|---|
-| `versions/bubble-housing-v1-base.stl` | Plate down, as exported | Tree, build plate only: the underside arches about 2.6 mm |
-| `versions/bubble-housing-v1-shroud.stl` | Back wall on the bed, open end up | None |
-| `versions/bubble-housing-v1-clip-coupons.stl` | Flat | None. Bumps on the back: 1 = 37.6, 2 = 37.8, 3 = 38.0, 4 = 38.2 bore |
-| `versions/bubble-housing-v1-slot-coupon.stl` | Flat | None. Slots left to right: 22 x 3, 27 x 3, 27 x 4 |
+| `versions/archive/bubble-housing-v1-base.stl` | Plate down, as exported | Tree, build plate only: the underside arches about 2.6 mm |
+| `versions/archive/bubble-housing-v1-shroud.stl` | Back wall on the bed, open end up | None |
+| `versions/archive/bubble-housing-v1-clip-coupons.stl` | Flat | None. Bumps on the back: 1 = 37.6, 2 = 37.8, 3 = 38.0, 4 = 38.2 bore |
+| `versions/archive/bubble-housing-v1-slot-coupon.stl` | Flat | None. Slots left to right: 22 x 3, 27 x 3, 27 x 4 |
 
 v2 (suggested, not yet printed): same settings as v1. Only the base and slot coupon changed; shroud and clip coupons stay v1.
 
 | File | Orientation | Supports |
 |---|---|---|
-| `versions/bubble-housing-v2-base.stl` | Plate down, as exported | Tree, build plate only |
+| `versions/archive/bubble-housing-v2-base.stl` | Plate down, as exported | Tree, build plate only |
 | `versions/bubble-housing-v2-slot-coupon.stl` | Flat | None. Slots left to right: 13 x 2.0, 13 x 2.5, 13 x 3.0 |
 
 v3 (suggested, not yet printed): same settings as v1. Base clip bore moved to 37.6

@@ -1,5 +1,6 @@
 # v2 fit-test prints: v1 base with belt loops resized for the real Velcro.
-# Run from this folder: python3 export_v2.py  ->  versions/bubble-housing-v2-*.stl
+# Run from this folder: python3 export_v2.py  ->  versions/bubble-housing-v2-slot-coupon.stl,
+#    versions/archive/bubble-housing-v2-base.stl (archived)
 #
 #   base         v1 base, belt loops now 13 x 2.5 openings (was 27 x 3)
 #   slot-coupon  13 x 2.0, 13 x 2.5, 13 x 3.0, left to right
@@ -59,7 +60,7 @@ clip.apply_transform(trimesh.transformations.rotation_matrix(np.pi / 2, [1, 0, 0
 parts += [at(clip, 62, 0, axis_z), at(box([8, 22, 4.5]), 62, 0, T + 2.0)]
 parts += [at(box([20, 4, 4.5]), 36, s * 9, T + 2.0) for s in (1, -1)]
 base = on_bed(union(parts))
-base.export(OUT.format('base')); report('base', base)
+base.export(OUT.format('base').replace('versions/', 'versions/archive/')); report('base', base)   # v2 base is archived
 
 # --- slot coupon ------------------------------------------------------------------
 strip = box([80, 30, T]); strip.apply_translation([0, 0, T / 2])
