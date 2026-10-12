@@ -3,7 +3,9 @@
 The floral piece on the back of the hand that hides the kit's blower head
 ([DESIGN.md](../../DESIGN.md)). v1 is a plain fit test of Concept 1 rev B (saddle +
 C-clip + rear shroud + two Velcro straps), with no clown details. Left hand only.
-Concepts and renders: `concepts/`. Print files: `versions/`, from `export_v<n>.py`.
+Concepts and renders: `concepts/`. Current print files: `versions/`, from `export_v<n>.py`;
+replaced ones and finished test pieces: `versions/archive/`. What changed in every
+version and why: [../CHANGELOG.md](../CHANGELOG.md).
 
 ## Ground Truth
 
@@ -152,6 +154,16 @@ coupons stay v1.
 
 ## Log
 
+### 2026-10-12 — v3 base + shroud printed (fail)
+
+- The blower head does not go in
+- Cause: clip and shroud both used the gun's front-lip bore (37.8, then 37.6) for the
+  whole head. The gun uses that size only for the first 13.5 (the ring), then opens to
+  39.4 for 38 more, with side slots (3.8 × 30.5) and a top recess. The clip sat 8–16
+  behind the ring face, across the ring-to-body step
+- Next: v4 sized from the real body. Readings go in the "Measure for v4" table in the
+  fit-measurements doc (M1–M6, R1–R4, plus where v3 stopped)
+
 ### 2026-10-08 — clip coupon fit test (partial)
 
 - Coupon 1 (one tick, 37.6 bore) holds the ring best of the four. Spec moved from
@@ -174,8 +186,9 @@ coupons stay v1.
 - **Cuff interaction** ([DESIGN.md](../../DESIGN.md) "The wrist cuff"): the cuff's lower
   ruffle drapes over the tongue and its strap. At the fit test, confirm the hem stays
   clear of the shroud's top vent slots and the ring, fingers curled and straight
-- **Kit blower head, still to measure:** drum OD behind the ring, rear bracket width
-  and height, and side tab size and position. Front OD and length are done (B1, B2)
+- **Kit blower head, still to measure (blocks v4):** M1–M6 and R1–R4 in the fit-measurements
+  doc's "Measure for v4" table: ring section length, body OD, width across the side
+  tabs, height over the nipple, nipple position, tab length, rear bracket size and offset. Front OD and length are done (B1, B2)
   and match the gun's pocket to within 0.4 mm
 - **Hand:** re-take H4 with the display visible; confirm the jaw landmarks for H1–H3;
   measure hand thickness at mid-hand and at the knuckles
