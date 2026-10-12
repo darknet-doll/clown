@@ -82,3 +82,8 @@ kinder edge on skin, prints the ruffle lobes without supports less cleanly).
   threading, knuckle interference with fingers curled
 - Does the strap-sandwich mount rock? If the tab under the tongue lifts the
   housing, recess the tab 1.1 for the strap instead
+- Mount direction change upstream (2026-10-12): the housing may move onto a TPU
+  wrist splint ([wrist-splint-mount.md](../wrist-splint-mount/wrist-splint-mount.md)),
+  and the tongue this part's tab sandwiches under may go away in a housing v4.
+  If so, the ruffle tab mounts to the splint instead — hold the tab design
+  until that's decided

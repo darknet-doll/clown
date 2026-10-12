@@ -218,4 +218,9 @@ coupons stay v1.
 - Does the bubble ring sit inside the Ø 37.8 lip or proud of the muzzle?
 - Mount A vs Mount C ([BUILD.md](../../BUILD.md) step 7). The gun runs a 50–70 mm
   hose; Mount C needs about 150 mm
+- **Mount direction change (darknetdoll, 2026-10-12):** the housing is to sit on a
+  TPU wrist splint via velcro ([wrist-splint-mount.md](../wrist-splint-mount/wrist-splint-mount.md))
+  instead of strapping directly to the hand. The plate underside curve, tongue,
+  and belt loops may be superseded — decide at the first stack fit test whether
+  v4 drops them. Until then the v3 exports stand
 - Material, wall, intake pattern for the floral shell: UNKNOWN
