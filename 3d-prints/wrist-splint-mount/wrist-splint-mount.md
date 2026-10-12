@@ -22,10 +22,19 @@ the heat-molding plan and possibly the housing's own tongue + hand straps
   bundle, found 2026-10-12 in the Desktop 3D prints folder): the model PDF and
   `wrist-splint_02mm_pla_mk3s_4h53m.gcode` (gitignored — MK3S-only, 7.8 MB).
   Author's slice: PLA, 0.4 nozzle, 0.2 layers, 48 g, 4.88 h
-- **`wrist-splint.stl` is NOT downloaded yet** — it is in the separate
-  model-files bundle. Nothing below is measured; it is all listing/PDF text
 - From the PDF photos (look only, no dimensions): the splint body is
   honeycomb openwork — already close to the build's lace aesthetic
+
+### wrist-splint.stl, measured (mesh bounds, binary STL, mm; 2026-10-12)
+
+In `reference/wrist-splint-custom-moldable-model_files/`. 32,972 triangles,
+units mm, z up from the plate.
+
+| What | Value |
+|---|---|
+| Flat footprint (x × y) | 229.35 × 197.79 — fits the X1C 256 bed at 100% |
+| Thickness (z, printed flat) | 3.50 |
+| Secondary z plateau | ~2.5 — likely velcro-channel relief depth; confirm when the channels are mapped |
 
 From the listing (author's text, not measured):
 
@@ -77,11 +86,10 @@ Hardness and wall/infill undecided — see Open.
 
 ## Open
 
-- **Download `wrist-splint.stl` (the model-files bundle)** into `reference/` —
-  the print-files bundle landed 2026-10-12 but only holds the MK3S gcode.
-  Needs a Printables login. Then measure off the mesh: dorsal flat area and
-  whether it reaches the housing's position on the back of the hand, wall
-  thickness, velcro channel positions and widths, overall flat footprint
+- Map the mesh in detail (footprint and thickness done 2026-10-12): outline of
+  the dorsal region and whether it reaches the housing's position on the back
+  of the hand, velcro channel positions/widths, honeycomb cell size (candidate
+  sew-through points for the velcro field), thumb-hole position/handedness
 - **Measure darknetdoll's wrist circumference** → scale % (18 cm = 100%)
 - Handedness: does the thumb cutout make it side-specific? If so, mirror in
   the slicer for the left hand (a transform — flag before doing it)
