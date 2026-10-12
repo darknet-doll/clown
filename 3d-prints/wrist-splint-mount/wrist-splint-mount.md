@@ -52,6 +52,8 @@ From the listing (author's text, not measured):
   [bubble-housing.md](../bubble-housing/bubble-housing.md)) — fits the ≤20 channels
 - Housing plate: 48 × 62, 2.4 thick; wrist tongue 28 × 36
 - Hand: H3 = 29.21 (wrist end of back of hand, from photos, unconfirmed)
+- **Wrist circumference: 139.7 (5.5 in)** — darknetdoll, 2026-10-12. Well under
+  the author's 160–210 as-provided range, so the scale-down path applies
 
 ## Constraints
 
@@ -66,7 +68,13 @@ From the listing (author's text, not measured):
 
 ## Spec
 
-- Base: the JordanBurghoff splint geometry, scaled to darknetdoll's wrist   <- scale % UNKNOWN until circumference is measured
+- Base: the JordanBurghoff splint geometry at **77.6% slicer scale**   <- wrist 139.7 / 180 reference (18 cm = 100%), measured 2026-10-12
+- At 77.6%, derived from the measured mesh: footprint 178.0 × 153.5; thickness
+  2.72 if scaled uniformly; velcro channels take straps ≤ 15.5, so the 11 mm
+  strap still fits
+- Z scale: UNKNOWN — uniform 77.6% (2.72 thick) vs holding Z at 100% (3.5
+  thick, stiffer in TPU, slightly distorts chamfers). Decide with the TPU
+  flop test (see Open)
 - Material: TPU   <- darknetdoll 2026-10-12; flex replaces heat-molding, no wrap needed
 - Wrist attachment: the splint's own side velcro channels, with the 11 mm strap
 - Housing attachment: velcro field on the splint's dorsal face, mating velcro
@@ -90,12 +98,15 @@ Hardness and wall/infill undecided — see Open.
   the dorsal region and whether it reaches the housing's position on the back
   of the hand, velcro channel positions/widths, honeycomb cell size (candidate
   sew-through points for the velcro field), thumb-hole position/handedness
-- **Measure darknetdoll's wrist circumference** → scale % (18 cm = 100%)
+- Sanity-check the 139.7 circumference once before printing: tape snug (not
+  tight) around the wrist crease. 5.5 in is petite; a re-measure costs nothing,
+  a wrong scale costs a print
 - Handedness: does the thumb cutout make it side-specific? If so, mirror in
   the slicer for the left hand (a transform — flag before doing it)
-- TPU hardness: 95A flops — is the dorsal face stable enough under the
-  housing, or does it need a stiffer/thicker zone (or a rigid insert) under
-  the housing footprint?
+- TPU flop test: at 77.6% uniform the wall is 2.72 — is the dorsal face
+  stable enough under the housing in 95A, or hold Z at 100% (3.5), add a
+  stiffer/thicker zone, or a rigid insert under the housing footprint?
+  Prefer a dorsal ~40 mm coupon over a full splint print
 - Velcro peel under ring torque: locating ridge/pocket on the splint that the
   housing nests into, so velcro only holds down? Or keep one strap over the
   housing tongue as belt-and-braces?
@@ -106,9 +117,6 @@ Hardness and wall/infill undecided — see Open.
   knuckle clearance and ring sweep with fingers curled
 - Does the housing keep its tongue and belt loops (worn over the splint as
   backup) or lose them in a v4? Decide after the first stack fit test
-- Scaling the splint in the slicer is uniform — does scaling down for a
-  smaller wrist thin the velcro channels below the 11 mm strap? Check at the
-  chosen %
 - Cuff-ruffle interaction: the splint now occupies the wrist the fabric cuff
   was covering; where does the printed ruffle tab mount if the tongue goes
   away? (see [cuff-ruffle.md](../cuff-ruffle/cuff-ruffle.md))
