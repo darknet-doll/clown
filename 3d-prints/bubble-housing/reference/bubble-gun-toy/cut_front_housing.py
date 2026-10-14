@@ -14,12 +14,8 @@
 #         the top half. The other direction would have buried it against the hand.
 #   - Exports are print-oriented: each half with its split face on the bed, +z up.
 #
-# Also exports a fit COUPON (adopted as the new housing direction, 2026-10-13):
-# the front 30 mm of both halves on one plate. That keeps the lip bore, the 0.8
-# shoulder step at 13.55, the full nipple groove (1.3 -> 22), the front screw
-# bosses and the start of the side slots. The cap only closes the wall
-# cross-section, so the bore stays open and the head passes through until its
-# ring seats on the step.
+# No fit coupon: darknetdoll decided (2026-10-13) to print the full halves
+# directly.
 #
 # Outputs stay in front-housing/ (gitignored): they are derived from the MakerWorld
 # model, which must not be redistributed.
@@ -30,8 +26,6 @@ import numpy as np
 import trimesh
 
 Z_CUT = 56.0            # assembly frame; muzzle face is z = -5
-Z_COUPON = 25.0         # front 30 mm behind the ring face
-COUPON_GAP = 10.0       # between the two halves on the plate
 OUT = 'front-housing'
 
 ROT = trimesh.transformations.rotation_matrix(-np.pi / 2, [0, 0, 1])  # +x -> -y
@@ -64,22 +58,6 @@ for src, name in SRC:
     cut.export(path)
     print(f'{path}: watertight={cut.is_watertight} '
           f'bounds={np.round(cut.bounds, 2).tolist()} vol={cut.volume / 1000:.1f} cm3')
-
-# --- coupon: both shortened halves on one plate --------------------------------------
-coupon_assembly = {}
-plate = []
-x_off = 0.0
-for src, name in SRC:
-    assembly, cut = cut_half(src, name, Z_COUPON)
-    coupon_assembly[name] = assembly
-    cut.apply_translation([x_off, 0, 0])
-    plate.append(cut)
-    x_off = cut.bounds[1][0] + COUPON_GAP
-coupon = trimesh.util.concatenate(plate)
-coupon.export(f'{OUT}/front-housing-coupon.stl')
-print(f'{OUT}/front-housing-coupon.stl: '
-      f'watertight={all(p.is_watertight for p in plate)} '
-      f'bounds={np.round(coupon.bounds, 2).tolist()} vol={coupon.volume / 1000:.1f} cm3')
 
 # --- check views (muzzle view clock: screws must sit at 3:00 and 9:00) ---------------
 try:
@@ -115,5 +93,3 @@ shot('view-back.png', halves, (0, 0, 300), zoom=1.6)                        # cu
 shot('view-top.png', halves, (0, -300, 25), up=(0, 0, -1), zoom=1.5)        # lid from above
 shot('view-three-quarter.png', halves, (-170, -170, -200), zoom=1.3, flat=False)
 shot('view-exploded.png', halves, (-170, -170, -200), zoom=1.1, flat=False, explode=14)
-shot('view-coupon.png', coupon_assembly, (-170, -170, -200), focal=(0, 0, 10),
-     zoom=1.3, flat=False, explode=14)
