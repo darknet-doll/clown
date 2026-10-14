@@ -198,7 +198,9 @@ derived from the no-redistribution model; regenerate with the script).
   Ø 3.5 head, H1.5 hex drive, carbon steel, for printed parts. 2 go in the front
   through-holes (3:00/9:00), 2 in the Ø 1.7–1.8 × 8–8.6 blind pilots (depth matches
   the 8 mm screw exactly). Button-head variant exists (BHCS, AA129) if the Ø 3.5
-  cap head reads too tall on the seam
+  cap head reads too tall on the seam. Amazon substitute (found 2026-10-14): uxcell
+  M2×8 hex-socket-cap self-tapping, black 304 SS — 50 pc B0D4F1JBHP $5.79 /
+  200 pc B0D4F1QZF5 $8.89
 
 | File | Orientation | Supports |
 |---|---|---|
