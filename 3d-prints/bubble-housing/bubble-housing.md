@@ -193,6 +193,12 @@ derived from the no-redistribution model; regenerate with the script).
     of the hand); the other direction would have put it at ~7:30, against the mount
   - side slots land at 12:00 & 6:00; air-slot rows land around 3:00
 - Halves kept separate, both watertight. Each ~60.5 × 61.0 × 22.4; 22.8 + 18.3 cm³
+- **Screws (4 × BT2×8):** Bambu Makers Supply "BT2x8 SHCS Self Tapping Screw", product
+  AA019, 20-pack $1.09 (US store, confirmed 2026-10-14). M2 × 0.8 pitch × 8 long,
+  Ø 3.5 head, H1.5 hex drive, carbon steel, for printed parts. 2 go in the front
+  through-holes (3:00/9:00), 2 in the Ø 1.7–1.8 × 8–8.6 blind pilots (depth matches
+  the 8 mm screw exactly). Button-head variant exists (BHCS, AA129) if the Ø 3.5
+  cap head reads too tall on the seam
 
 | File | Orientation | Supports |
 |---|---|---|
