@@ -66,13 +66,18 @@ From the listing (author's text, not measured):
 - Blower intake and shroud vent slots stay uncovered
 - Left hand. Glove must still go on/off over or under the splint
 
-Openwork pattern concepts (look only, not yet placed on the splint outline;
-awaiting darknetdoll's pick — see Open):
+Openwork pattern concepts:
 
 - `concepts/openwork-swatches-r1.png` — 8 patterns, clown + floral spread
-- `concepts/openwork-swatches-r2.png` — **circuit direction** (darknetdoll
+- `concepts/openwork-swatches-r2.png` — circuit direction (darknetdoll
   2026-10-14): CIRCUIT grammar as cutouts, resistors as punctuation,
   harlequin diamonds replacing the house heart signature. 4 layouts
+- **r3, the chosen direction: trace bus on the real splint outline** —
+  review artifact: claude.ai/artifact/UmpUhLbJdErYzgjE1Fy6Fb.
+  `concepts/splint_outline.py` extracts the true outline from the STL
+  (`splint-outline.json`); `concepts/trace_bus_r3.py` places the pattern
+  with clearance checks (`trace-bus-r3.json` / `.png`);
+  `concepts/make_r3_artifact.py` builds the artifact page
 
 ## Spec
 
@@ -87,6 +92,12 @@ awaiting darknetdoll's pick — see Open):
 - Wrist attachment: the splint's own side velcro channels, with the 11 mm strap
 - Housing attachment: velcro field on the splint's dorsal face, mating velcro
   under the housing   <- darknetdoll 2026-10-12
+- Openwork: **trace bus** (CIRCUIT grammar, harlequin accents, no hearts)
+  <- darknetdoll 2026-10-14, picked from r2 tile 1; r3 places it. Cutout
+  floors: slots 3.0 / webs 3.0 at 100% (2.3 each at print scale)
+- Housing velcro patch: solid, 53 × 44 at 100% on the dorsal band (x 25–78,
+  y 42–86 in the model frame), doubles as the trace bus's "chip"   <- position
+  assumed from thumb-opening adjacency, confirm at first wrap fit
 - Everything else: UNKNOWN (see Open)
 
 ## Print Settings
@@ -102,10 +113,13 @@ Hardness and wall/infill undecided — see Open.
 
 ## Open
 
-- Map the mesh in detail (footprint and thickness done 2026-10-12): outline of
-  the dorsal region and whether it reaches the housing's position on the back
-  of the hand, velcro channel positions/widths, honeycomb cell size (candidate
-  sew-through points for the velcro field), thumb-hole position/handedness
+- Mesh map (outline, channels, thumb opening: done 2026-10-14 via
+  `concepts/splint_outline.py`). Still open: confirm which side is dorsal
+  when wrapped on the LEFT hand, and whether the whole model needs a mirror
+  — decide before any export (a transform: flag it first)
+- **r3 → export**: turn the r3 placement into an actual remixed mesh (cut the
+  new pattern + patch into the STL or rebuild the plate), velcro sew-through
+  holes in the patch corners, then dorsal TPU coupon before the full print
 - Sanity-check the 139.7 circumference once before printing: tape snug (not
   tight) around the wrist crease. 5.5 in is petite; a re-measure costs nothing,
   a wrong scale costs a print
