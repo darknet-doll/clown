@@ -19,7 +19,7 @@ Spec and log: [bubble-housing/bubble-housing.md](bubble-housing/bubble-housing.m
 | Version | Date | Status | Files |
 |---|---|---|---|
 | v4 | — | Waiting on body measurements (M1–M6, R1–R4) | — |
-| gun front print | 2026-10-13 | Cut + re-clocked, not yet printed | `reference/bubble-gun-toy/front-housing/` (gitignored, regenerate with `cut_front_housing.py`) |
+| gun front print | 2026-10-13 | **Adopted as the new housing direction.** Fit coupon cut, not yet printed | `reference/bubble-gun-toy/front-housing/` (gitignored, regenerate with `cut_front_housing.py`) |
 | v3 | 2026-10-11 | **Printed 2026-10-12, does not fit.** Current until v4 | `versions/bubble-housing-v3-base.stl`, `versions/bubble-housing-v3-shroud.stl` |
 | v2 | 2026-10-08 | Base archived. Slot coupon current, result not logged yet | `versions/archive/bubble-housing-v2-base.stl`, `versions/bubble-housing-v2-slot-coupon.stl` |
 | v1 | 2026-10-07 | Archived. Clip coupons printed and done | `versions/archive/bubble-housing-v1-*.stl` |
@@ -35,6 +35,12 @@ Spec and log: [bubble-housing/bubble-housing.md](bubble-housing/bubble-housing.m
   the body measurements. Horizontal split lets the head drop into the cradle; screws
   at 3/9 keep the seats off the hand side
 - **Files:** stay local (derived from the no-redistribution model); script committed
+- **Adopted as the new housing direction** (darknetdoll, 2026-10-13). First print is a
+  fit coupon: the front 30 of both halves on one plate (`front-housing-coupon.stl`) —
+  lip bore, shoulder step, full nipple groove, both screw seats, bore open through
+  so the head seats on the step
+- **Why a coupon:** test the printed bore fit, step seating, nipple clearance and the
+  horizontal screw join before committing to the full 61-long halves
 
 ### v4 — planned
 

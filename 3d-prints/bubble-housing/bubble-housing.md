@@ -176,8 +176,9 @@ coupons stay v1.
 
 ### Gun front housing, direct print (cut 2026-10-13, not yet printed)
 
-The gun's own front housing (blower pocket section), cut out to print as-is while v4
-waits on measurements. Script: `reference/bubble-gun-toy/cut_front_housing.py`. Output
+The gun's own front housing (blower pocket section), cut out to print as-is.
+**Adopted as the new housing direction (darknetdoll, 2026-10-13)** — first test is the
+fit coupon below, not the full part. Script: `reference/bubble-gun-toy/cut_front_housing.py`. Output
 STLs and check views stay in `reference/bubble-gun-toy/front-housing/` (gitignored —
 derived from the no-redistribution model; regenerate with the script).
 
@@ -192,8 +193,17 @@ derived from the no-redistribution model; regenerate with the script).
   - side slots land at 12:00 & 6:00; air-slot rows land around 3:00
 - Halves kept separate, both watertight. Each ~60.5 × 61.0 × 22.4; 22.8 + 18.3 cm³
 
+**Fit coupon** (cut 2026-10-13): the front 30 (ring face → 25 behind it) of both
+halves on one plate, 131.0 × 30.0 × 22.4. Keeps the lip bore, the 0.8 shoulder step
+at 13.55, the full nipple groove (1.3 → 22), both front screw seats (now 3:00/9:00)
+and the start of the side slots. The cut cap closes only the wall cross-section, so
+the bore stays open and the head passes through until its ring seats on the step.
+Tests: printed lip/main bore fit, step seating, nipple clearance, BT2×8 screws
+joining the halves horizontally.
+
 | File | Orientation | Supports |
 |---|---|---|
+| `front-housing/front-housing-coupon.stl` | Both pieces split face on the bed (∩), as exported | Tree, in the bore tunnels |
 | `front-housing/front-housing-bottom-01.stl` | Split face on the bed (∩), as exported | Tree, in the bore tunnel |
 | `front-housing/front-housing-top-02.stl` | Split face on the bed (∩), as exported | Tree, in the bore tunnel |
 
