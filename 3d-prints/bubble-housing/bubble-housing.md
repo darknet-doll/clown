@@ -101,7 +101,8 @@ ray map of the pocket wall), `pocket_slices.py`, `split_face_holes.py`, `borrow_
 | 7 | Rear blocks: the gun fills one side behind 33.5, leaving the full half-circle from 12:00 clockwise to 6:00, a lobe at 9:00–11:00, and a channel at 7:30 into #6 | 33.5 → 51.6 | Motor end sits off-centre to the 3:00 side; the 7:30 channel is the likely wire path. Confirm with R1–R4 |
 | 8 | Air intake: two rows of 6 slots, 2 wide, 5 pitch, each row ~30° (~10 long) | 8 → 35, rows centred ~11:40 and ~9:20 | Copy the pattern over the same zone. REV1 added it "for better airflow" |
 | 9 | Clamshell split along the axis; head drops into one half, the other closes | — | Split the shroud the same way: answers "how does the head go in" |
-| 10 | Screws: BT2×8. Ø 2.5 through-holes above and below the pocket front (9.9 top, 13.5 bottom, 26–28 off axis); Ø 1.7–1.8 × 8–8.6 blind holes on top at 22.5 and 47.4 | as listed | Same hole sizes for joining our shroud halves: Ø 2.5 clearance, Ø 1.8 × 8.6 pilot |
+| 10 | Screws: BT2×8. Ø 2.5 through-holes above and below the pocket front (centers measured 2026-10-13 by ray grid: top at 9.9 behind ring face, 28.1 off axis; bottom at 13.5, 25.9 off axis); Ø 1.7–1.8 × 8–8.6 blind holes on top at 22.5 and 47.4 | as listed | Same hole sizes for joining our shroud halves: Ø 2.5 clearance, Ø 1.8 × 8.6 pilot |
+| 11 | Bottom opening (bottle-bay hatch, 03_Cover): front face at **61.0 behind the ring face** (z 56.0 in the assembly frame, wall face hit exactly); opening runs back to ~113. An oblong pass-through sits in that front wall (hose/cable route to the bay) | 61.0 → ~113 | Cut plane for the direct-print front housing (see Print Settings) |
 
 ### From the designer's assembly notes (text, not measured)
 
@@ -173,6 +174,31 @@ coupons stay v1.
 | `versions/bubble-housing-v3-base.stl` | Plate down, as exported | Tree, build plate only |
 | `versions/bubble-housing-v3-shroud.stl` | Back wall on the bed, open end up | None. The groove is the rim notch at the mouth; head goes in nipple-up, into the notch |
 
+### Gun front housing, direct print (cut 2026-10-13, not yet printed)
+
+The gun's own front housing (blower pocket section), cut out to print as-is while v4
+waits on measurements. Script: `reference/bubble-gun-toy/cut_front_housing.py`. Output
+STLs and check views stay in `reference/bubble-gun-toy/front-housing/` (gitignored —
+derived from the no-redistribution model; regenerate with the script).
+
+- Cut plane: the front face of the bottom (bottle-bay) opening, 61.0 behind the ring
+  face. Everything behind it dropped; the cap closes the cut, the old hatch front wall
+  becomes the back wall. Its oblong pass-through is kept open (candidate wire exit)
+- Re-clocked −90° about the barrel axis, muzzle view clockwise (darknetdoll's ask):
+  - front screw seats 12:00 & 6:00 → **3:00 & 9:00**; screws now drive vertically
+  - clamshell split x = 0 → horizontal: **02_Body is the top lid, 01_Body the cradle**
+  - rotation direction chosen so the feed-nipple groove lands ~1:30 (top half, clear
+    of the hand); the other direction would have put it at ~7:30, against the mount
+  - side slots land at 12:00 & 6:00; air-slot rows land around 3:00
+- Halves kept separate, both watertight. Each ~60.5 × 61.0 × 22.4; 22.8 + 18.3 cm³
+
+| File | Orientation | Supports |
+|---|---|---|
+| `front-housing/front-housing-bottom-01.stl` | Split face on the bed (∩), as exported | Tree, in the bore tunnel |
+| `front-housing/front-housing-top-02.stl` | Split face on the bed (∩), as exported | Tree, in the bore tunnel |
+
+Suggested: PLA, 0.4 nozzle, 0.2 layers, 3 walls, 15% infill (the v1 defaults).
+
 ## Log
 
 ### 2026-10-12 — v3 base + shroud printed (fail)
@@ -224,3 +250,7 @@ coupons stay v1.
   and belt loops may be superseded — decide at the first stack fit test whether
   v4 drops them. Until then the v3 exports stand
 - Material, wall, intake pattern for the floral shell: UNKNOWN
+- **Gun front housing direct print:** confirm the −90° re-clock reads right on the
+  markup artifact (nipple groove ~1:30, screws 3/9, split horizontal) before slicing;
+  decide whether the 6:00 side slot and the back-wall pass-through serve as wire exits
+  or get plugged

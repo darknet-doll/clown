@@ -19,10 +19,22 @@ Spec and log: [bubble-housing/bubble-housing.md](bubble-housing/bubble-housing.m
 | Version | Date | Status | Files |
 |---|---|---|---|
 | v4 | — | Waiting on body measurements (M1–M6, R1–R4) | — |
+| gun front print | 2026-10-13 | Cut + re-clocked, not yet printed | `reference/bubble-gun-toy/front-housing/` (gitignored, regenerate with `cut_front_housing.py`) |
 | v3 | 2026-10-11 | **Printed 2026-10-12, does not fit.** Current until v4 | `versions/bubble-housing-v3-base.stl`, `versions/bubble-housing-v3-shroud.stl` |
 | v2 | 2026-10-08 | Base archived. Slot coupon current, result not logged yet | `versions/archive/bubble-housing-v2-base.stl`, `versions/bubble-housing-v2-slot-coupon.stl` |
 | v1 | 2026-10-07 | Archived. Clip coupons printed and done | `versions/archive/bubble-housing-v1-*.stl` |
 | reference | 2026-10-05 | Measurements only, no print | `reference/` (gun model files are gitignored) |
+
+### Gun front print — 2026-10-13
+
+- **Change:** cut the gun's own front housing (both body halves) at the front face of
+  the bottle-bay bottom opening (61.0 behind the ring face) and re-clocked it −90°
+  about the barrel axis: front screw seats 12/6 → 3/9, clamshell split vertical →
+  horizontal (02 = top lid, 01 = cradle), feed-nipple groove kept in the top half
+- **Why:** print the proven pocket as-is for the wrist-splint mount while v4 waits on
+  the body measurements. Horizontal split lets the head drop into the cradle; screws
+  at 3/9 keep the seats off the hand side
+- **Files:** stay local (derived from the no-redistribution model); script committed
 
 ### v4 — planned
 
