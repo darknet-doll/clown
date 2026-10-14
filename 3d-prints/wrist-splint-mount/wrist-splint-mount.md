@@ -66,9 +66,13 @@ From the listing (author's text, not measured):
 - Blower intake and shroud vent slots stay uncovered
 - Left hand. Glove must still go on/off over or under the splint
 
-Openwork pattern concepts: `concepts/openwork-swatches-r1.png` (from
-`concepts/openwork_swatches.py`) — 8 swatches, look only, not yet placed on
-the splint outline. Awaiting darknetdoll's pick (see Open).
+Openwork pattern concepts (look only, not yet placed on the splint outline;
+awaiting darknetdoll's pick — see Open):
+
+- `concepts/openwork-swatches-r1.png` — 8 patterns, clown + floral spread
+- `concepts/openwork-swatches-r2.png` — **circuit direction** (darknetdoll
+  2026-10-14): CIRCUIT grammar as cutouts, resistors as punctuation,
+  harlequin diamonds replacing the house heart signature. 4 layouts
 
 ## Spec
 
