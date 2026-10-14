@@ -66,6 +66,10 @@ From the listing (author's text, not measured):
 - Blower intake and shroud vent slots stay uncovered
 - Left hand. Glove must still go on/off over or under the splint
 
+Openwork pattern concepts: `concepts/openwork-swatches-r1.png` (from
+`concepts/openwork_swatches.py`) — 8 swatches, look only, not yet placed on
+the splint outline. Awaiting darknetdoll's pick (see Open).
+
 ## Spec
 
 - Base: the JordanBurghoff splint geometry at **77.6% slicer scale**   <- wrist 139.7 / 180 reference (18 cm = 100%), measured 2026-10-12
@@ -117,6 +121,10 @@ Hardness and wall/infill undecided — see Open.
   knuckle clearance and ring sweep with fingers curled
 - Does the housing keep its tongue and belt loops (worn over the splint as
   backup) or lose them in a v4? Decide after the first stack fit test
+- **Pick an openwork pattern** from `concepts/openwork-swatches-r1.png`
+  (or a mix — e.g. one pattern on the forearm, another on the dorsal band).
+  Then r2 places the pick on the real splint outline, respecting the velcro
+  channels, the solid housing-mount zone, and web ≥ 1.7 after scale
 - Cuff-ruffle interaction: the splint now occupies the wrist the fabric cuff
   was covering; where does the printed ruffle tab mount if the tongue goes
   away? (see [cuff-ruffle.md](../cuff-ruffle/cuff-ruffle.md))
