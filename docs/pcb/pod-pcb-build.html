@@ -380,7 +380,8 @@ const S = [
   orient:'<b>Either order.</b> Pads A and B, bottom row. A switch has no polarity.',
   do:[
     'Read the rating on the switch body: <b>≥ 3 A DC</b>',
-    'Two 22 AWG wires, long enough to reach the pod wall. 8–10 cm if the pod isn’t printed yet',
+    'Two <b>stranded</b> 22 AWG silicone wires, long enough to reach the pod wall. 8–10 cm if the pod isn’t printed yet',
+    'Strip 2–3 mm, twist tight, tin the ends before soldering',
     'Solder to A and B, then to the switch’s two tabs. Heat-shrink over each tab',
     'Switch not here yet → bridge A–B with a short wire for now. The cell plug is then your only off switch',
   ],
@@ -397,8 +398,10 @@ const S = [
   orient:'<b>Board pads, left → right: OUT− · OUT+ · IN− · IN+</b> (IN+ is square). Match the module’s VIN+ / VIN− / VOUT+ / VOUT− labels.',
   do:[
     'Colours: IN+ red · OUT+ yellow · both minus black. <b>IN+ and OUT+ never the same colour</b>',
-    '22 AWG, 5–8 cm',
-    'Solder board end and module end: <b>now</b>',
+    '<b>Stranded</b> 22 AWG silicone wire, 5–8 cm. Solid wire snaps at the joint on a moving arm',
+    'Strip 2–3 mm, twist tight, <b>tin the end</b>. Stray strands bridge pads 3.5 mm apart',
+    'Solder board end and module end: <b>now</b>. Check the front for any strand that missed the hole',
+    'Leave a little slack. Anchor the wires (hot glue dot or zip tie) so a tug pulls the anchor, not the joint',
     'Don’t touch the trimpot yet',
   ] },
 { st:'wires', title:'Check the boost wiring', pw:'out',
