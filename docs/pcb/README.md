@@ -12,6 +12,7 @@ two-layer board. Same parts, same nets and same designators as
 | [clown-pod.kicad_pcb](clown-pod.kicad_pcb) | The board, opens in KiCad 9 |
 | [pod_pcb.py](pod_pcb.py) | The source: outline, placement, netlist, hand-routed power, silkscreen |
 | [build.sh](build.sh) | Rebuilds everything: place, autoroute, ground pour, DRC, export |
+| [pod-pcb-build.html](pod-pcb-build.html) | **Soldering walkthrough.** One part per step, in build order, with a meter check after each group. Published copy: [Pod PCB Build](https://claude.ai/artifact/EFubpZgKECGwYLr3vCSfxH). Edit both together |
 
 ## Parts the footprints were sized to
 

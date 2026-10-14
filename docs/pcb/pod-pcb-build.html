@@ -1,0 +1,866 @@
+<title>Pod PCB Build</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: sticky step bar; to-scale board drawing (left, sticky) beside one step card (right); stacks on phones */
+:root {
+  --bg: #eef1ee; --surface: #ffffff; --ink: #17201c; --muted: #5b6862; --line: #d2dad5;
+  --accent: #a65a00; --accent-fill: #ffb627; --accent-tint: #fff4dc;
+  --ok: #1d7f45; --ok-tint: #e3f4e8; --bad: #c22b2b; --bad-tint: #fbe6e4;
+  --probe-red: #e0283a; --probe-black: #111111;
+  /* the board is a physical object: same in both themes */
+  --mask: #1f5c3c; --mask-edge: #164a2f; --silk: #f1f1e8; --pad: #c7ccd1; --hole: #0d1a12;
+  --f-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --f-body: 'IBM Plex Sans', -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'IBM Plex Mono', 'SF Mono', Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111613; --surface: #1a211d; --ink: #e5ebe7; --muted: #93a39a; --line: #2d3832;
+  --accent: #ffbe55; --accent-fill: #ffb627; --accent-tint: #2f2614;
+  --ok: #52c47e; --ok-tint: #15291d; --bad: #ff7a6e; --bad-tint: #321a18;
+  --probe-red: #ff4455; --probe-black: #111111; color-scheme: dark;
+}}
+:root[data-theme="dark"] {
+  --bg: #111613; --surface: #1a211d; --ink: #e5ebe7; --muted: #93a39a; --line: #2d3832;
+  --accent: #ffbe55; --accent-fill: #ffb627; --accent-tint: #2f2614;
+  --ok: #52c47e; --ok-tint: #15291d; --bad: #ff7a6e; --bad-tint: #321a18;
+  --probe-red: #ff4455; --probe-black: #111111; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5;
+  padding-inline: 16px; max-width: 1180px; margin: 0 auto; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* top bar */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg);
+  padding-block: 12px 10px; border-bottom: 1px solid var(--line); display: grid; gap: 8px; }
+.bar-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.name { font-family: var(--f-display); font-weight: 700; font-size: 1.35rem; letter-spacing: .01em; margin: 0; margin-right: auto; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { border: 0; background: var(--surface); padding: 5px 12px; cursor: pointer; font-size: .85rem; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); font-weight: 600; }
+.count { font-family: var(--f-mono); font-size: .85rem; font-variant-numeric: tabular-nums; color: var(--muted); }
+.count b { color: var(--ink); }
+.awake { display: inline-flex; align-items: center; gap: 6px; font-size: .8rem; color: var(--muted); cursor: pointer; }
+.stages { display: flex; gap: 3px; }
+.stages button { flex: var(--n) 1 0; min-width: 0; height: 22px; border: 0; padding: 0; cursor: pointer; background: none;
+  display: flex; flex-direction: column; gap: 3px; text-align: left; }
+.stages i { display: block; height: 5px; width: 100%; border-radius: 2px; background: var(--line); overflow: hidden; }
+.stages i b { display: block; height: 100%; background: var(--ok); }
+.stages span { font-size: .62rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stages button.cur span { color: var(--ink); font-weight: 600; }
+.stages button.cur i { outline: 1.5px solid var(--accent-fill); outline-offset: 1px; }
+@media (max-width: 640px) { .stages span { display: none; } .stages button { height: 8px; } }
+
+/* power badge */
+.power { display: flex; align-items: center; gap: 10px; padding: 7px 12px; border-radius: 6px; font-size: .88rem; font-weight: 500; }
+.power .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.power.out { background: var(--ok-tint); color: var(--ok); } .power.out .dot { background: var(--ok); }
+.power.on { background: var(--bad-tint); color: var(--bad); } .power.on .dot { background: var(--bad); animation: blink 1.2s infinite; }
+.power.usb, .power.brief { background: var(--accent-tint); color: var(--accent); } .power.usb .dot, .power.brief .dot { background: var(--accent-fill); }
+@keyframes blink { 50% { opacity: .25; } }
+
+/* main grid */
+.grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 24px; padding-block: 18px 40px; align-items: start; }
+.boardpanel { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 128px); display: grid; gap: 10px; min-width: 0; }
+@media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } .boardpanel { position: static; } }
+.boardwrap { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+#board { display: block; width: 100%; height: auto; }
+.caption { font-size: .85rem; display: grid; gap: 4px; min-height: 2.6em; }
+.caption .pr { display: flex; gap: 8px; align-items: baseline; }
+.tag { font-family: var(--f-mono); font-size: .7rem; font-weight: 600; padding: 1px 6px; border-radius: 3px; flex: none; }
+.tag.red { background: var(--probe-red); color: #fff; }
+.tag.blk { background: var(--probe-black); color: #fff; box-shadow: inset 0 0 0 1px #888; }
+.tag.look { background: var(--accent-fill); color: #000; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .75rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend i { width: 14px; height: 9px; border-radius: 2px; display: inline-block; }
+
+/* step card */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px 20px; min-width: 0; display: grid; gap: 14px; }
+.eyebrow { font-size: .7rem; text-transform: uppercase; letter-spacing: .09em; font-weight: 600; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; }
+.eyebrow .done-flag { color: var(--ok); }
+h2 { font-family: var(--f-display); font-weight: 700; font-size: 2rem; line-height: 1.05; margin: 2px 0 0; text-wrap: balance; letter-spacing: .005em; }
+h2 .val { color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { font-size: .78rem; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--line); background: var(--bg); }
+.chip.now { border-color: var(--ok); color: var(--ok); font-weight: 600; }
+.bands { display: inline-flex; align-items: center; gap: 0; height: 16px; padding: 0 5px; border-radius: 8px; background: #8fb7df; }
+.bands i { width: 4px; height: 16px; margin: 0 2px; display: block; }
+.bands i:last-child { margin-left: 6px; }
+.orient { background: var(--accent-tint); border-left: 3px solid var(--accent-fill); padding: 9px 12px; border-radius: 0 6px 6px 0; font-size: .92rem; }
+.orient b { color: var(--accent); }
+ul.do { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+ul.do li::marker { color: var(--muted); }
+.warn { background: var(--bad-tint); color: var(--bad); padding: 8px 12px; border-radius: 6px; font-size: .88rem; font-weight: 500; }
+details.how { font-size: .88rem; border-top: 1px solid var(--line); padding-top: 10px; }
+details.how summary { cursor: pointer; color: var(--muted); font-weight: 500; }
+details.how ol { margin: 8px 0 0; padding-left: 1.3em; display: grid; gap: 3px; }
+table.parts { width: 100%; border-collapse: collapse; font-size: .84rem; }
+table.parts td { padding: 4px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.parts td:first-child { font-family: var(--f-mono); font-weight: 600; white-space: nowrap; }
+.tblwrap { overflow-x: auto; }
+
+/* meter checks */
+.checks { display: grid; gap: 8px; }
+.checks h3 { font-family: var(--f-display); font-size: 1.05rem; letter-spacing: .03em; text-transform: uppercase; margin: 0; display: flex; align-items: center; gap: 8px; }
+.checks h3 small { font-family: var(--f-body); text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--muted); font-size: .8rem; }
+.check { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; display: grid; gap: 6px; cursor: pointer; background: var(--surface); }
+.check.sel { border-color: var(--accent-fill); box-shadow: 0 0 0 1px var(--accent-fill); }
+.check.ok { background: var(--ok-tint); border-color: transparent; }
+.check.bad { background: var(--bad-tint); border-color: var(--bad); }
+.chk-top { display: flex; gap: 10px; align-items: flex-start; }
+.mode { font-family: var(--f-mono); font-size: .72rem; font-weight: 600; min-width: 46px; text-align: center; padding: 3px 4px; border-radius: 4px;
+  background: var(--ink); color: var(--bg); flex: none; }
+.probes { font-size: .86rem; display: grid; gap: 2px; min-width: 0; }
+.probes .pr { display: flex; gap: 6px; align-items: baseline; }
+.expect { font-size: .95rem; }
+.expect strong { font-family: var(--f-mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+.why { font-size: .82rem; color: var(--muted); }
+.fix { font-size: .85rem; color: var(--bad); font-weight: 500; }
+.cbtns { display: flex; gap: 6px; flex-wrap: wrap; }
+.cbtns button { border: 1px solid var(--line); background: var(--bg); border-radius: 5px; padding: 4px 10px; cursor: pointer; font-size: .82rem; }
+.cbtns button.y[aria-pressed="true"] { background: var(--ok); color: #fff; border-color: var(--ok); }
+.cbtns button.n[aria-pressed="true"] { background: var(--bad); color: #fff; border-color: var(--bad); }
+
+/* nav */
+.nav { display: flex; gap: 10px; align-items: center; border-top: 1px solid var(--line); padding-top: 14px; }
+.nav .back { border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 10px 14px; cursor: pointer; }
+.nav .next { flex: 1; border: 0; border-radius: 6px; padding: 11px 16px; cursor: pointer; font-weight: 600; font-size: 1rem;
+  background: var(--ink); color: var(--bg); }
+.nav .next:disabled { background: var(--line); color: var(--muted); cursor: not-allowed; }
+.nav .back:disabled { opacity: .4; cursor: default; }
+.gate { font-size: .8rem; color: var(--muted); text-align: right; }
+.upnext { font-size: .82rem; color: var(--muted); }
+.upnext b { color: var(--ink); font-weight: 500; }
+
+/* step list */
+details.list { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; }
+details.list summary { cursor: pointer; font-weight: 600; font-size: .9rem; }
+.slist { display: grid; gap: 12px; margin-top: 10px; }
+.slist h4 { margin: 0 0 4px; font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.slist ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+.slist button { width: 100%; text-align: left; border: 0; background: none; padding: 4px 6px; border-radius: 4px; cursor: pointer; font-size: .85rem;
+  display: flex; gap: 8px; align-items: baseline; }
+.slist button:hover { background: var(--bg); }
+.slist button.cur { background: var(--accent-tint); font-weight: 600; }
+.slist .n { font-family: var(--f-mono); font-size: .75rem; color: var(--muted); width: 2.2em; flex: none; font-variant-numeric: tabular-nums; }
+.slist .tick { width: 1em; flex: none; color: var(--ok); }
+.reset { margin-top: 12px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: .82rem; }
+.reset button { border: 1px solid var(--line); background: var(--bg); border-radius: 5px; padding: 4px 10px; cursor: pointer; }
+.reset button.danger { border-color: var(--bad); color: var(--bad); }
+
+/* svg */
+.halo { fill: none; stroke: var(--accent-fill); stroke-width: .7; animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 50% { stroke-opacity: .35; } }
+.probe-ring { animation: pulse 1.1s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .halo, .probe-ring, .power.on .dot { animation: none; } }
+</style>
+
+<header class="bar">
+  <div class="bar-row">
+    <h1 class="name">Pod PCB Build</h1>
+    <div class="seg" role="group" aria-label="Which board">
+      <button type="button" id="arm1" data-arm="1">Arm 1</button>
+      <button type="button" id="arm2" data-arm="2">Arm 2</button>
+    </div>
+    <span class="count" id="count"></span>
+    <label class="awake"><input type="checkbox" id="awake"> Keep screen on</label>
+  </div>
+  <div class="stages" id="stages"></div>
+  <div class="power" id="power"><span class="dot"></span><span id="powerText"></span></div>
+</header>
+
+<main class="grid">
+  <section class="boardpanel" aria-label="Board">
+    <div class="boardwrap"><svg id="board" viewBox="-1.5 -1.5 77 37" role="img" aria-label="Pod PCB, front, drawn to scale"></svg></div>
+    <div class="caption" id="caption"></div>
+    <div class="legend">
+      <span><i style="background:var(--accent-fill)"></i>This step</span>
+      <span><i style="background:#8fb7df"></i>Fitted</span>
+      <span><i style="background:transparent;border:1px solid var(--muted)"></i>Not yet</span>
+      <span><i style="background:var(--probe-red)"></i>Red probe</span>
+      <span><i style="background:var(--probe-black);border:1px solid #888"></i>Black probe</span>
+    </div>
+  </section>
+
+  <div style="display:grid;gap:16px;min-width:0">
+    <article class="card" id="card" aria-live="polite"></article>
+    <details class="list" id="listBox">
+      <summary>All steps</summary>
+      <div class="slist" id="slist"></div>
+      <div class="reset" id="resetBox"></div>
+    </details>
+  </div>
+</main>
+
+<script>
+/* ---------- board geometry (mm), from docs/pcb/pod_pcb.py ---------- */
+const BAND = { black:'#111', brown:'#7b4a1e', red:'#d42a2a', orange:'#f08a17', yellow:'#f1d11b', green:'#24974a',
+  blue:'#2c62d6', violet:'#8b3fc0', grey:'#8a8a8a', white:'#f4f4f4', gold:'#c8a23a' };
+const B100K = ['brown','black','black','orange','brown'], B10K = ['brown','black','black','red','brown'],
+      B100 = ['brown','black','black','black','brown'], B470 = ['yellow','violet','black','black','brown'];
+
+const u2pin = n => n <= 7 ? [27 + 2.54*(n-1), 19.81] : [27 + 2.54*(14-n), 12.19];
+const u3pin = n => n <= 7 ? [2.5 + 2.54*(n-1), 21.62] : [2.5 + 2.54*(14-n), 6.38];
+
+const PARTS = {
+  R1: { t:'res', a:[42.16,2.6], b:[32.0,2.6], bands:B100K },
+  R2: { t:'res', a:[29.66,2.6], b:[19.5,2.6], bands:B100K },
+  R6: { t:'res', a:[24.2,22.8], b:[31.82,22.8], bands:B100K },
+  R4: { t:'res', a:[34.6,22.8], b:[42.22,22.8], bands:B100 },
+  R5: { t:'res', a:[48.2,22.8], b:[55.82,22.8], bands:B10K },
+  R3: { t:'res', a:[56.1,3.6], b:[56.1,13.76], bands:B470 },
+  C2: { t:'disc', a:[27,8.4], b:[32,8.4] },
+  C3: { t:'disc', a:[23.4,18.6], b:[23.4,13.6] },
+  CR2:{ t:'diode', k:[6.5,2.6], a:[16.66,2.6] },
+  F1: { t:'fuse', a:[34.04,26.8], b:[28.96,26.8], box:[24,24.65,39,28.95] },
+  Q1: { t:'to220', box:[45.3,15.3,56.2,20.1] },
+  U2: { t:'dip', box:[25.6,13.4,43.6,18.6] },
+  C1: { t:'ecap', c:[49,9], r:5 },
+  U3: { t:'xiao', box:[-0.4,5.1,20.6,22.9] },
+  U1: { t:'wires', pads:[[17,26.8],[13.5,26.8],[10,26.8],[6.5,26.8]], dir:'down', colors:['#d42a2a','#222','#f1c21b','#222'] },
+  SW1:{ t:'wires', pads:[[49.5,26.8],[46,26.8]], dir:'down', colors:['#d42a2a','#d42a2a'] },
+  J1: { t:'wires', pads:[[58.5,26.8],[62,26.8]], dir:'down', colors:['#d42a2a','#222'] },
+  J2: { t:'wires', pads:[[66.5,6.4],[66.5,9.2],[66.5,12]], dir:'right', colors:['#9aa0a6','#9aa0a6','#9aa0a6'] },
+  J3: { t:'wires', pads:[[66.5,15],[66.5,17.8],[66.5,20.6],[66.5,23.4]], dir:'right', colors:['#2c62d6','#d42a2a','#24974a','#222'] },
+};
+
+/* named probe points */
+const PT = {
+  'J1+':[58.5,26.8,'J1 + pad'], 'J1-':[62,26.8,'J1 − pad'],
+  'F1sq':[34.04,26.8,'F1 right leg (square pad)'],
+  'J2-1':[66.5,6.4,'J2-1 pad (+5V, square)'], 'J2-2':[66.5,9.2,'J2-2 pad (GND)'], 'J2-3':[66.5,12,'J2-3 pad (DATA)'],
+  'J3-1':[66.5,15,'J3-1 pad (M+, square)'], 'J3-2':[66.5,17.8,'J3-2 pad (M−)'], 'J3-3':[66.5,20.6,'J3-3 pad (TRIG)'], 'J3-4':[66.5,23.4,'J3-4 pad (GND)'],
+  'U3.1':[...u3pin(1),'XIAO pin 1, GPIO2 (square pad, bottom-left)'], 'U3.3':[...u3pin(3),'XIAO pin 3, GPIO4 (bottom row, 3rd)'],
+  'U3.12':[...u3pin(12),'XIAO 3V3 pin (top row, 3rd)'], 'U3.14':[...u3pin(14),'XIAO 5V pin (top-left)'],
+  'Q1G':[48.2,18.6,'Q1 G (left leg)'],
+  'modOUT':[10,33.4,'MT3608 VOUT+ terminal (module end of the OUT+ wire)'],
+  'modIN':[17,33.4,'MT3608 VIN+ terminal (module end of the IN+ wire)'],
+  'J2p1':[73.6,6.4,'J2 plug, pin 1 contact'], 'J2p2':[73.6,9.2,'J2 plug, pin 2 contact'],
+  'J3p1':[73.6,15,'J3 plug, pin 1 contact'], 'J3p4':[73.6,23.4,'J3 plug, pin 4 contact'],
+};
+for (let n = 1; n <= 14; n++) PT['U2.'+n] = [...u2pin(n), 'U2 pin '+n];
+
+/* ---------- steps ---------- */
+const STAGES = [
+  ['prep','Prep'], ['res','Resistors'], ['small','Caps + diode'], ['pwr','Fuse + MOSFET'],
+  ['wires','Cell · switch · boost'], ['trim','First power + trim'], ['logic','Chip + big cap'],
+  ['xiao','XIAO'], ['leads','Arm leads'], ['finish','Finish'],
+];
+const HOW_RES = true;
+
+const S = [
+/* ---- prep ---- */
+{ st:'prep', title:'Lay out this board’s parts', pw:'out', extra:'parts',
+  do:[
+    '<b>Front</b> = white part outlines + names. <b>Back</b> = “CLOWN POD rev A”',
+    'Hold it front up: XIAO end left, J2/J3 pads right. Same as the drawing',
+    'Count this board’s parts into a tray (list below)',
+    'Cell: off the bench. Plugged into nothing until <b>First power</b>',
+  ] },
+{ st:'prep', title:'Zero your meter', pw:'out',
+  do:[
+    'Black lead → <b>COM</b> jack. Red lead → <b>VΩ</b> jack. Never the 10 A jack',
+    'Auto-ranging: units change by themselves. Read the <b>k</b> / <b>M</b> next to the number',
+    '<b>OL</b> = open, nothing connected',
+  ],
+  checks:[
+    { m:'ohm', r:'red tip', b:'black tip, touching', e:'0.1 – 0.5 Ω', w:'That’s the probe leads themselves.', x:'Over 1 Ω → push both plugs fully home; check the meter battery.' },
+    { m:'diode', r:'red tip', b:'black tip, apart', e:'OL', w:'Diode mode reads volts, not ohms. Open = OL.' },
+  ] },
+{ st:'prep', title:'Bare-board check', pw:'out',
+  do:[
+    'Nothing fitted yet. Touch the probe tips to the bare pads',
+    'Catches a fab fault before you spend parts on it',
+  ],
+  checks:[
+    { m:'ohm', r:'J2-2', b:'J3-4', e:'under 1 Ω', w:'Both are ground. The copper pour joins them.', x:'Open → board fault. Use one of the other four boards.' },
+    { m:'ohm', r:'J2-1', b:'J2-2', e:'OL', w:'+5 V and ground must not touch.', x:'Any number → short in the board. Set it aside.' },
+    { m:'ohm', r:'J3-1', b:'J3-4', e:'OL', w:'Battery rail and ground must not touch.', x:'Any number → short in the board. Set it aside.' },
+  ] },
+
+/* ---- resistors ---- */
+{ st:'res', title:'Sort the resistors by meter', pw:'out',
+  do:[
+    'Six resistors per board. <b>100 Ω, 10 kΩ and 100 kΩ all start brown-black-black</b>. Only the 4th band differs',
+    'Lay each one on the table, press a probe on each lead',
+    'Don’t pinch both leads in your fingers. At 100 kΩ your body reads in parallel',
+    'Sticky note per pile: <b>R1 R2 R6</b> 100 kΩ · <b>R4</b> 100 Ω · <b>R5</b> 10 kΩ · <b>R3</b> 470 Ω',
+  ],
+  checks:[
+    { m:'ohm', r:'one lead', b:'other lead', e:'99 – 101 kΩ  × 3', bands:B100K, w:'R1, R2, R6. Brown black black <b>orange</b> brown.' },
+    { m:'ohm', r:'one lead', b:'other lead', e:'99 – 102 Ω', bands:B100, w:'R4. Brown black black <b>black</b> brown.' },
+    { m:'ohm', r:'one lead', b:'other lead', e:'9.9 – 10.1 kΩ', bands:B10K, w:'R5. Brown black black <b>red</b> brown.' },
+    { m:'ohm', r:'one lead', b:'other lead', e:'465 – 475 Ω', bands:B470, w:'R3. Yellow violet black black brown. A 330 Ω (327 – 333 Ω) also works here.' },
+  ] },
+{ st:'res', title:'R1', val:'100 kΩ', fits:['R1'], pw:'out', bands:B100K, how:HOW_RES,
+  orient:'<b>Either way round.</b> Top edge, the right-hand resistor of the pair.',
+  do:['Holes 10 mm apart: bend the legs right at the body ends','Body flat on the board'] },
+{ st:'res', title:'R2', val:'100 kΩ', fits:['R2'], pw:'out', bands:B100K, how:HOW_RES,
+  orient:'<b>Either way round.</b> Top edge, between CR2’s outline and R1.',
+  do:['Same bend as R1','Body flat on the board'] },
+{ st:'res', title:'R6', val:'100 kΩ', fits:['R6'], pw:'out', bands:B100K, how:HOW_RES,
+  orient:'<b>Either way round.</b> Bottom row, left. Under U2’s outline.',
+  do:['Holes 7.6 mm apart: bend the legs tight against the body','Holds the chip’s gate input low while the XIAO boots'] },
+{ st:'res', title:'R4', val:'100 Ω', fits:['R4'], pw:'out', bands:B100, how:HOW_RES,
+  orient:'<b>Either way round.</b> Bottom row, middle.',
+  do:['Tight bend, like R6','From the <b>100 Ω</b> pile. Not 100 kΩ'] },
+{ st:'res', title:'R5', val:'10 kΩ', fits:['R5'], pw:'out', bands:B10K, how:HOW_RES,
+  orient:'<b>Either way round.</b> Bottom row, right. Under Q1’s outline.',
+  do:['Tight bend, like R6','The gate pulldown. Keeps the blower off at power-up'] },
+{ st:'res', title:'R3', val:'470 Ω', fits:['R3'], pw:'out', bands:B470, how:HOW_RES,
+  orient:'<b>Either way round.</b> Runs top-to-bottom, right of C1’s circle, by J2.',
+  do:['10 mm bend, like R1','The LED data resistor'] },
+{ st:'res', title:'Check the resistors in place', pw:'out',
+  do:['Probe the pads and solder joints. Holes for parts not fitted yet are fine to probe','One wrong reading = one specific resistor. The fix text names it'],
+  checks:[
+    { m:'ohm', r:'J3-1', b:'J3-4', e:'195 – 205 kΩ', w:'R1 + R2 in a row, battery rail to ground.', x:'OL → cold joint on R1 or R2. ~100 kΩ → one of them is bridged.' },
+    { m:'ohm', r:'U3.1', b:'J3-4', e:'99 – 101 kΩ', w:'R2 alone.', x:'Other value → R2 is from the wrong pile, or a cold joint.' },
+    { m:'ohm', r:'U3.3', b:'J3-4', e:'99 – 101 kΩ', w:'R6 alone.', x:'~100 Ω or ~10 kΩ → R6 swapped with R4 or R5.' },
+    { m:'ohm', r:'U2.6', b:'Q1G', e:'99 – 102 Ω', w:'R4 alone. Probe the empty holes.', x:'~10 kΩ or ~100 kΩ → R4 swapped with R5 or R6.' },
+    { m:'ohm', r:'Q1G', b:'J3-4', e:'9.9 – 10.1 kΩ', w:'R5 alone.', x:'~100 Ω → R4 and R5 swapped.' },
+    { m:'ohm', r:'U2.3', b:'J2-3', e:'465 – 475 Ω', w:'R3 alone.', x:'OL → R3 cold joint.' },
+    { m:'ohm', r:'J2-1', b:'J2-2', e:'OL', w:'Still no short on the 5 V rail.', x:'Any number → solder bridge. Look at the back.' },
+  ] },
+
+/* ---- small parts ---- */
+{ st:'small', title:'C2', val:'0.1 µF', fits:['C2'], pw:'out', how:true, sub:'Ceramic disc, printed “104”',
+  orient:'<b>Either way round.</b> Above U2’s outline.',
+  do:['Push it down until the coating nearly touches the board','Short legs are the point: it feeds the chip’s fast current spikes'] },
+{ st:'small', title:'C3', val:'0.1 µF', fits:['C3'], pw:'out', how:true, sub:'Ceramic disc, printed “104”',
+  orient:'<b>Either way round.</b> In the gap between the XIAO and U2 outlines. Its holes are one above the other.',
+  do:['Push it down close to the board','Smooths the battery-sense reading'] },
+{ st:'small', title:'CR2', val:'1N5819', fits:['CR2'], pw:'out', how:true, sub:'Schottky diode, black body',
+  orient:'<b>Band (stripe) to the LEFT</b>, over the square pad marked <b>K</b>. Band toward the XIAO.',
+  do:['Holes 10 mm apart: bend at the body ends','Backwards = the XIAO never gets power. The next check catches it'] },
+{ st:'small', title:'Check the caps and the diode', pw:'out',
+  do:['Rising numbers are normal here: the meter is charging the capacitors'],
+  checks:[
+    { m:'ohm', r:'J2-1', b:'J2-2', e:'counts up, ends at OL', w:'C2 charging from the meter.', x:'Stays under 10 Ω → C2 legs touching, or a bridge at C2.' },
+    { m:'ohm', r:'U3.1', b:'J3-4', e:'climbs to ~100 kΩ', w:'C3 charges, then R2 alone.', x:'Stays near 0 → C3 legs bridged.' },
+    { m:'diode', r:'J2-1', b:'U3.14', e:'0.15 – 0.35 V', w:'Forward through CR2.', x:'OL → CR2 backwards (band must be on the K side), or a cold joint.' },
+    { m:'diode', r:'U3.14', b:'J2-1', e:'OL', w:'Diodes block one way.', x:'A reading → CR2 is in backwards.' },
+  ] },
+
+/* ---- power parts ---- */
+{ st:'pwr', title:'F1', val:'GBX-185', fits:['F1'], pw:'out', how:true, sub:'Polyfuse: yellow disc on kinked legs. GBX-250 also OK',
+  orient:'<b>Either way round.</b> Bottom row. Disc stands upright, face parallel to the bottom edge.',
+  do:['Push in until the kinks stop it: disc sits ~3 mm up','Thick legs: hold the iron 3–4 s before feeding solder'] },
+{ st:'pwr', title:'Q1', val:'RFP30N06LE', fits:['Q1'], pw:'out', how:true, sub:'MOSFET, TO-220, stands upright',
+  orient:'<b>Metal tab toward C1</b> (top edge). Printed face toward the bottom edge. Legs land G · D · S, matching the silk.',
+  do:['Seat it upright, no taller than ~20 mm','Right leg (S) joins solid copper with no relief: slow to heat. Hold the iron longer, add a little extra solder','Touch something metal first. Handle by the body'] },
+{ st:'pwr', title:'Check the fuse and MOSFET', pw:'out',
+  checks:[
+    { m:'ohm', r:'F1sq', b:'J3-1', e:'under 1 Ω', w:'A cold polyfuse is basically a wire.', x:'OL → F1 cold joint.' },
+    { m:'diode', r:'J3-4', b:'J3-2', e:'0.4 – 0.7 V', w:'Q1’s built-in diode, source → drain.', x:'OL → cold joint on D or S, or Q1 turned round.' },
+    { m:'diode', r:'J3-2', b:'J3-4', e:'OL (may creep up)', w:'Same diode, blocking.', x:'Near 0 → bridge between Q1’s legs on the back.' },
+    { m:'ohm', r:'Q1G', b:'J3-4', e:'9.9 – 10.1 kΩ', w:'R5, still. The gate itself is insulated.', x:'Near 0 → gate leg bridged to source.' },
+  ] },
+
+/* ---- wires ---- */
+{ st:'wires', title:'J1', val:'cell lead', fits:['J1'], pw:'brief', sub:'Pod half of the PH2.0 pair, the half the cell plugs into',
+  orient:'<b>+ wire → square pad “+”.</b> Find which wire is + with the meter. Colours lie.',
+  do:[
+    'Plug the cell into the loose lead. Meter the two bare wire ends',
+    'Flag the + wire with tape',
+    '<b>Unplug the cell.</b> Strip 2–3 mm, tin both ends',
+    '+ → J1 “+” (square). − → J1 “−”',
+    'Solder: <b>now</b>, one wire per pad',
+  ],
+  checks:[
+    { m:'vdc', r:'wire you think is +', b:'other wire', e:'+3.0 to +4.2 V', w:'Cell plugged into the loose lead only.', x:'Shows a minus sign → it’s the other wire. PH2.0 colours aren’t a standard.' },
+    { m:'do', e:'Cell unplugged again', w:'Before the iron touches anything.' },
+  ] },
+{ st:'wires', title:'SW1', val:'KCD1 rocker', fits:['SW1'], pw:'out', sub:'Master switch, in the cell + line',
+  orient:'<b>Either order.</b> Pads A and B, bottom row. A switch has no polarity.',
+  do:[
+    'Read the rating on the switch body: <b>≥ 3 A DC</b>',
+    'Two 22 AWG wires, long enough to reach the pod wall. 8–10 cm if the pod isn’t printed yet',
+    'Solder to A and B, then to the switch’s two tabs. Heat-shrink over each tab',
+    'Switch not here yet → bridge A–B with a short wire for now. The cell plug is then your only off switch',
+  ],
+  checks:[
+    { m:'look', spots:['sw'], e:'No bridge on the back at SW1’s pads', w:'They sit next to the battery track. Magnifier.' },
+  ] },
+{ st:'wires', title:'Check the switch path', pw:'out',
+  checks:[
+    { m:'ohm', r:'J1+', b:'F1sq', e:'under 1 Ω, rocker one way', w:'That position is <b>ON</b>.' },
+    { m:'ohm', r:'J1+', b:'F1sq', e:'OL, rocker the other way', w:'That position is <b>OFF</b>. Mark it on the rocker now.', x:'Same reading both ways → wires on the wrong tabs, or A–B bridged.' },
+    { m:'ohm', r:'J1-', b:'J3-4', e:'under 1 Ω', w:'Cell − is ground.' },
+  ] },
+{ st:'wires', title:'U1', val:'MT3608 boost', fits:['U1'], pw:'out', sub:'Off-board module, four wires',
+  orient:'<b>Board pads, left → right: OUT− · OUT+ · IN− · IN+</b> (IN+ is square). Match the module’s VIN+ / VIN− / VOUT+ / VOUT− labels.',
+  do:[
+    'Colours: IN+ red · OUT+ yellow · both minus black. <b>IN+ and OUT+ never the same colour</b>',
+    '22 AWG, 5–8 cm',
+    'Solder board end and module end: <b>now</b>',
+    'Don’t touch the trimpot yet',
+  ] },
+{ st:'wires', title:'Check the boost wiring', pw:'out',
+  do:['Still no cell. These catch IN and OUT swapped, the classic MT3608 mistake'],
+  checks:[
+    { m:'ohm', r:'modOUT', b:'J2-1', e:'under 1 Ω', w:'The OUT+ wire landed on the 5 V side.', x:'OL → IN and OUT wires swapped. Fix before any power.' },
+    { m:'ohm', r:'modIN', b:'J3-1', e:'under 1 Ω', w:'The IN+ wire landed on the battery side.' },
+    { m:'ohm', r:'J3-1', b:'J3-4', e:'climbs; above 1 kΩ', w:'No short across the battery rail.', x:'Under 10 Ω → short. Find it before power.' },
+    { m:'ohm', r:'J2-1', b:'J2-2', e:'climbs; above 1 kΩ', w:'No short across the 5 V rail.' },
+  ] },
+
+/* ---- first power + trim ---- */
+{ st:'trim', title:'First power', pw:'on',
+  do:[
+    'Rocker <b>OFF</b> → plug the cell into J1’s lead → rocker <b>ON</b>',
+    'Meter on <b>DC volts</b> for this whole stage',
+    'Hand near U1, F1, Q1 for 10 s. Anything warming → rocker OFF, recheck the last step',
+  ],
+  checks:[
+    { m:'vdc', r:'J3-1', b:'J3-4', e:'3.0 – 4.2 V', w:'The cell. Note the number.' },
+    { m:'vdc', r:'U3.1', b:'J3-4', e:'half of that, ±0.05 V', w:'Battery-sense divider. E.g. 3.84 V → 1.92 V.', x:'0 V → R1 open. Same as the cell → R2 open.' },
+    { m:'vdc', r:'J2-1', b:'J2-2', e:'any value', w:'The module’s factory setting. Often 6–20 V. Why nothing fragile is fitted yet.' },
+  ] },
+{ st:'trim', title:'Trim the boost', val:'5.00 V', pw:'on',
+  orient:'<b>Come up to 5.00 V from below.</b> A slip then overshoots low, the safe way.',
+  do:[
+    'Probes on J2-1 / J2-2, DC volts. Leave them there while you turn',
+    'Small flat screwdriver in the blue trimpot',
+    'Turn <b>counter-clockwise</b> until it reads <b>below 5 V</b>',
+    'Then creep <b>clockwise</b> up to 5.00 V',
+    'Multi-turn pot: the first turns may do nothing. Don’t force past a stop',
+    'Trust the meter, not the arrow on the module',
+    'Bench supply? Drop the input to 3.0 V. Output should hold ~5 V. Sags to 4.5 V → bin the module',
+  ],
+  checks:[
+    { m:'vdc', r:'J2-1', b:'J2-2', e:'4.95 – 5.05 V', w:'The 5 V rail.' },
+    { m:'vdc', r:'U3.14', b:'J3-4', e:'0 – 0.3 V below J2-1', w:'Through CR2 to the XIAO’s 5V pin. Never higher than J2-1.' },
+  ] },
+{ st:'trim', title:'Power down', pw:'out',
+  do:['Rocker <b>OFF</b>','Unplug the cell at J1’s lead. It stays out until the next power check'],
+  checks:[
+    { m:'vdc', r:'J2-1', b:'J2-2', e:'under 0.5 V', w:'Rail drained. Can take a few seconds.' },
+    { m:'do', e:'Cell unplugged and off the bench' },
+  ] },
+
+/* ---- logic ---- */
+{ st:'logic', title:'U2', val:'74AHCT125', fits:['U2'], pw:'out', sub:'Level shifter, DIP-14', needs:'trimmed',
+  orient:'<b>Notch / dot to the LEFT</b>, toward the XIAO. Pin 1 = square pad, bottom-left, beside C3.',
+  do:[
+    'Legs splay out from the factory: roll each row against the table until it drops into the holes',
+    'Don’t fold legs on the back. Friction holds it',
+    'Solder two opposite corners first: pin 1 and pin 8',
+    'Sits flat? If not: reheat one corner and press. Then the other 12 pins',
+    'Touch metal first. Handle by the body',
+  ] },
+{ st:'logic', title:'Check the chip’s tie-offs', pw:'out',
+  do:['Probe each leg where it enters the board, on the front','Several red rings = same check, one pin at a time'],
+  checks:[
+    { m:'ohm', r:['U2.1','U2.4','U2.7','U2.9','U2.12'], b:'J3-4', e:'each under 1 Ω', w:'Pins 1, 4, 7, 9, 12 → ground.', x:'OL on one → cold joint on that pin.' },
+    { m:'ohm', r:['U2.10','U2.13','U2.14'], b:'J2-1', e:'each under 1 Ω', w:'Pins 10, 13, 14 → 5 V.', x:'OL on one → cold joint on that pin.' },
+    { m:'ohm', r:'J2-1', b:'J2-2', e:'climbs; above 1 kΩ', w:'No bridge from pins 9 / 12 onto the 5 V track.', x:'Under 10 Ω → bridge near pins 9 or 12 on the back.' },
+    { m:'ohm', r:'U3.3', b:'J3-4', e:'above 50 kΩ (≈100 kΩ)', w:'No bridge from pins 1–4 onto the GPIO4 track.', x:'Under 1 kΩ → bridge on the back near pins 1–4.' },
+    { m:'look', spots:['u2a','u2b'], e:'Back, magnifier: no bridges at pins 1–4, 9, 12', w:'The two tight spots on this board.' },
+  ] },
+{ st:'logic', title:'Power check: chip alive, gate held off', pw:'on',
+  do:['Rocker OFF → plug cell → rocker ON. DC volts'],
+  checks:[
+    { m:'vdc', r:'U2.14', b:'U2.7', e:'4.95 – 5.05 V', w:'The chip’s own supply.' },
+    { m:'vdc', r:'Q1G', b:'J3-4', e:'under 0.1 V', w:'R6 holds the chip’s input low, so the MOSFET stays off. This is what stops the blower twitching at boot.', x:'~5 V → R6 open or U2 backwards. Rocker OFF now.' },
+    { m:'touch', e:'U2 still cool after 30 s', x:'Warm → chip backwards. Rocker OFF, unplug.' },
+    { m:'do', e:'Rocker OFF, cell unplugged', w:'Before the next part.' },
+  ] },
+{ st:'logic', title:'C1', val:'1000 µF', fits:['C1'], pw:'out', how:true, sub:'Electrolytic, 16 V. Polarised',
+  orient:'<b>Long leg (+) → square pad, beside the “+”.</b> The stripe on the can (−) faces R3, to the right.',
+  do:['Backwards, it can vent on power-up. Check twice before soldering','Seat it flat. Stands 17–22 mm'],
+  checks:[
+    { m:'ohm', r:'J2-1', b:'J2-2', e:'climbs slowly, ends high', w:'Big cap charging from the meter. Takes a few seconds.', x:'Stuck under 10 Ω → short at C1’s legs.' },
+  ] },
+{ st:'logic', title:'Power check: rail holds', pw:'on',
+  do:['Rocker OFF → plug cell → rocker ON'],
+  checks:[
+    { m:'vdc', r:'J2-1', b:'J2-2', e:'4.95 – 5.05 V', x:'Out of range → retrim, as in “Trim the boost”.' },
+    { m:'vdc', r:'J2-1', b:'J2-2', e:'under 0.5 V after rocker OFF + cell out', w:'C1 holds charge. Can take a minute. Wait for it.' },
+  ] },
+
+/* ---- xiao ---- */
+{ st:'xiao', title:'U3', val:'XIAO ESP32-C3', fits:['U3'], pw:'out', sub:'On two 7-pin headers', needs:'trimmed',
+  orient:'<b>USB-C hangs off the LEFT edge.</b> Metal shield up. XIAO’s D0 pin on the square pad (bottom-left); 5V pin top-left.',
+  do:[
+    'Headers: long ends down through the board, black plastic between the boards',
+    'Push the headers into the board, set the XIAO on top',
+    'Solder one corner pin on the XIAO, then the opposite corner',
+    'Level and square? Fix it now. Impossible later',
+    'All 14 XIAO-side pins, flip, all 14 board-side pins',
+    'Snip the long ends flush under the board',
+  ] },
+{ st:'xiao', title:'Check the XIAO, unpowered', pw:'out',
+  checks:[
+    { m:'ohm', r:'U3.14', b:'J3-4', e:'climbs; above 1 kΩ', w:'5V pin not shorted.' },
+    { m:'ohm', r:'U3.12', b:'J3-4', e:'climbs; above 1 kΩ', w:'3V3 pin not shorted.' },
+    { m:'look', spots:['xiao'], e:'No bridges between neighbouring header pins', w:'Both rows, both sides.' },
+  ] },
+{ st:'xiao', title:'First power with the XIAO', pw:'on',
+  do:['Rocker OFF → plug cell → rocker ON. No USB'],
+  checks:[
+    { m:'vdc', r:'U3.12', b:'J3-4', e:'3.25 – 3.35 V', w:'The XIAO’s own regulator.' },
+    { m:'vdc', r:'J2-1', b:'J2-2', e:'4.95 – 5.05 V' },
+    { m:'vdc', r:'U3.14', b:'J3-4', e:'0.15 – 0.4 V below J2-1', w:'CR2’s drop under the XIAO’s load.', x:'Same as J2-1 → CR2 bridged; USB could backfeed.' },
+    { m:'touch', e:'Nothing hot after 1 min' },
+    { m:'do', e:'Rocker OFF, cell unplugged' },
+  ] },
+{ st:'xiao', title:'USB backfeed check', pw:'usb',
+  do:['Cell out, rocker OFF','Data USB-C cable: computer → XIAO'],
+  checks:[
+    { m:'vdc', r:'U3.14', b:'J3-4', e:'4.7 – 5.2 V', w:'USB powering the XIAO.' },
+    { m:'vdc', r:'J2-1', b:'J2-2', e:'under 0.5 V', w:'CR2 keeps USB off the strip rail, and the cell off your laptop.', x:'~4.5 V or more → CR2 bridged. Unplug USB.' },
+    { m:'do', e:'USB unplugged' },
+  ] },
+
+/* ---- leads ---- */
+{ st:'leads', title:'J2', val:'strip lead', fits:['J2'], pw:'out', sub:'SM-3 pigtail, the half that mates the upper-arm strip',
+  orient:'<b>Pin 1 → J2-1 (+5V, square) · pin 2 → J2-2 GND · pin 3 → J2-3 DATA.</b> Go by pin number, not colour.',
+  do:['Same pin order as every strip plug: 5V, GND, DI','22 AWG-ish pigtail wires: strip 2–3 mm, tin','Solder: <b>now</b>'],
+  checks:[
+    { m:'ohm', r:'each plug contact', b:'each bare wire', e:'under 1 Ω; write down pin 1/2/3 colours', w:'Before soldering. Pin 1 is marked on the housing.' },
+  ] },
+{ st:'leads', title:'J3', val:'elbow lead', fits:['J3'], pw:'out', sub:'SM-4 pigtail',
+  orient:'<b>Blue → J3-1 M+ (square) · Red → J3-2 M− · Green → J3-3 TRIG · Black → J3-4 GND.</b>',
+  do:['<b>Red is motor MINUS</b> on this pigtail','Pin number wins over colour. Meter it as for J2','Solder: <b>now</b>'],
+  checks:[
+    { m:'ohm', r:'each plug contact', b:'each bare wire', e:'under 1 Ω; matches the colours above', w:'Before soldering.' },
+  ] },
+{ st:'leads', title:'Check through the plugs', pw:'out',
+  do:['Red probe into the plug contact, black on the board pad'],
+  checks:[
+    { m:'ohm', r:'J2p1', b:'J2-1', e:'under 1 Ω (repeat for pins 2, 3)', w:'Every strip pin reaches its pad.', x:'OL → crimp not seated, or pin order wrong.' },
+    { m:'ohm', r:'J3p1', b:'J3-1', e:'under 1 Ω (repeat for pins 2, 3, 4)', w:'Every elbow pin reaches its pad.' },
+    { m:'ohm', r:'J2p1', b:'J2p2', e:'climbs; above 1 kΩ', w:'No short at the strip plug.' },
+    { m:'ohm', r:'J3p1', b:'J3p4', e:'climbs; above 1 kΩ', w:'No short at the elbow plug.' },
+  ] },
+
+/* ---- finish ---- */
+{ st:'finish', title:'Clean and inspect', pw:'out',
+  do:['Flux off: isopropyl + old toothbrush, both sides','Snip any leg longer than ~2 mm on the back'],
+  checks:[
+    { m:'look', spots:['u2a','u2b','sw'], e:'The three tight spots: U2 pins 1–4, U2 pins 9 & 12, SW1 pads', w:'Back of the board, magnifier.' },
+    { m:'look', e:'Every joint shiny and cone-shaped, pad fully wetted', w:'Dull, balled or grainy → reheat with a touch of fresh solder.' },
+  ] },
+{ st:'finish', title:'Board done', pw:'out',
+  do:[
+    'Next: <b>BUILD.md step 6</b>, bench test with strip and blower connected',
+    'There: retrim U1 to 5.00 V <b>with the strip lit</b>, then lock the trimpot with a dab of nail polish',
+    'Firmware: BUILD.md step 8',
+    'Second arm: switch to <b>Arm 2</b> at the top. Its MT3608 needs its own trim',
+  ] },
+];
+S.forEach((s, i) => { s.i = i; s.id = s.st + ':' + s.title; });
+const TRIM_STEP = S.findIndex(s => s.title === 'Trim the boost');
+
+const PARTS_LIST = [
+  ['R1 R2 R6','100 kΩ ×3','1 % metal film'], ['R4','100 Ω',''], ['R5','10 kΩ',''], ['R3','470 Ω','330 Ω also fine'],
+  ['C2 C3','0.1 µF ×2','ceramic, “104”'], ['C1','1000 µF 16 V','electrolytic'], ['CR2','1N5819','Schottky'],
+  ['F1','GBX-185','or GBX-250'], ['Q1','RFP30N06LE','TO-220'], ['U2','SN74AHCT125N','DIP-14'],
+  ['U3','XIAO ESP32-C3','+ two 7-pin headers'], ['U1','MT3608 module',''], ['SW1','KCD1 rocker',''],
+  ['J1','PH2.0 lead','pod half'], ['J2','SM-3 pigtail','pod half'], ['J3','SM-4 pigtail','pod half'],
+  ['wire','22 AWG','red, black, yellow'],
+];
+const SPOTS = { u2a:[[30.8,19.81,5.2,2.2]], u2b:[[39.7,12.19,1.6,1.6],[32.08,12.19,1.6,1.6]], sw:[[47.75,26.8,3.4,2.2]], xiao:[[10.1,6.38,9.4,1.8],[10.1,21.62,9.4,1.8]] };
+const MODE = { ohm:'Ω', diode:'DIODE', vdc:'V DC', look:'LOOK', touch:'TOUCH', do:'DO' };
+
+/* ---------- state ---------- */
+const KEY = 'pod-pcb-build-v1';
+let state = { arm:'1', arms:{ '1':{cur:0,done:{},checks:{}}, '2':{cur:0,done:{},checks:{}} } };
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.arms) state = s; } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+const A = () => state.arms[state.arm];
+let sel = 0;
+
+/* ---------- svg helpers ---------- */
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('board');
+function el(tag, at, parent) { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); (parent || svg).appendChild(e); return e; }
+function txt(s, x, y, at = {}, parent) { const t = el('text', Object.assign({ x, y, 'font-family':'IBM Plex Mono, monospace', 'font-size':1.25, fill:'var(--silk)', 'text-anchor':'middle', 'dominant-baseline':'central' }, at), parent); t.textContent = s; return t; }
+
+function bbox(ref) {
+  const p = PARTS[ref];
+  if (p.box) return p.box;
+  if (p.t === 'res' || p.t === 'disc') { const [a, b] = [p.a, p.b]; return [Math.min(a[0],b[0])-1.3, Math.min(a[1],b[1])-1.4, Math.max(a[0],b[0])+1.3, Math.max(a[1],b[1])+1.4]; }
+  if (p.t === 'diode') return [p.k[0]-1.3, 1.2, p.a[0]+1.3, 4];
+  if (p.t === 'ecap') return [p.c[0]-p.r, p.c[1]-p.r, p.c[0]+p.r, p.c[1]+p.r];
+  if (p.t === 'wires') { const xs = p.pads.map(q => q[0]), ys = p.pads.map(q => q[1]); return [Math.min(...xs)-1.4, Math.min(...ys)-1.4, Math.max(...xs)+1.4, Math.max(...ys)+1.4]; }
+}
+
+function axial(p, g, bodyLen, bodyW, fill, rx) {
+  const [ax, ay] = p.a || p.k, [bx, by] = p.b || p.a2 || p.a;
+  const cx = (ax + bx)/2, cy = (ay + by)/2, ang = Math.atan2(by - ay, bx - ax) * 180/Math.PI;
+  el('line', { x1:ax, y1:ay, x2:bx, y2:by, stroke:'#c9ced3', 'stroke-width':.6 }, g);
+  const gg = el('g', { transform:`translate(${cx} ${cy}) rotate(${ang})` }, g);
+  el('rect', { x:-bodyLen/2, y:-bodyW/2, width:bodyLen, height:bodyW, rx, fill, stroke:'#00000055', 'stroke-width':.1 }, gg);
+  return gg;
+}
+
+function drawPart(ref, mode) {
+  const p = PARTS[ref], g = el('g', { opacity: mode === 'todo' ? 1 : 1 });
+  const silk = { fill:'none', stroke:'var(--silk)', 'stroke-width':.15 };
+  if (mode === 'todo') {
+    if (p.t === 'res') { const gg = axial(p, g, 6.3, 2.5, 'none', .3); g.firstChild.remove(); gg.firstChild.setAttribute('stroke', 'var(--silk)'); gg.firstChild.setAttribute('stroke-width', .15); }
+    else if (p.t === 'disc') { const gg = axial(p, g, 6.8, 2.5, 'none', .3); g.firstChild.remove(); gg.firstChild.setAttribute('stroke','var(--silk)'); gg.firstChild.setAttribute('stroke-width', .15); }
+    else if (p.t === 'diode') { el('rect', Object.assign({ x:8.6, y:1.3, width:6, height:2.6 }, silk), g); el('line', { x1:9.4, y1:1.3, x2:9.4, y2:3.9, stroke:'var(--silk)', 'stroke-width':.35 }, g); }
+    else if (p.t === 'ecap') { el('circle', Object.assign({ cx:p.c[0], cy:p.c[1], r:p.r }, silk), g); el('path', { d:`M${p.c[0]+1.4} ${p.c[1]-4.8} A5 5 0 0 1 ${p.c[0]+1.4} ${p.c[1]+4.8} Z`, fill:'var(--silk)', opacity:.9 }, g); txt('+', 44.4, 6.4, { 'font-size':2 }, g); }
+    else if (p.t === 'dip') { const [x1,y1,x2,y2] = p.box; el('path', Object.assign({ d:`M${x1} ${y1} H${x2} V${y2} H${x1} V${(y1+y2)/2+1} A1 1 0 0 0 ${x1} ${(y1+y2)/2-1} Z` }, silk), g); }
+    else if (p.t === 'to220') { const [x1,y1,x2,y2] = p.box; el('rect', Object.assign({ x:x1, y:y1, width:x2-x1, height:y2-y1 }, silk), g); el('line', { x1, y1:y1+1.2, x2, y2:y1+1.2, stroke:'var(--silk)', 'stroke-width':.15 }, g); 'GDS'.split('').forEach((c,i) => txt(c, 48.2+i*2.54, 20.95, { 'font-size':.95 }, g)); }
+    else if (p.t === 'fuse') { const [x1,y1,x2,y2] = p.box; el('rect', Object.assign({ x:x1, y:y1, width:x2-x1, height:y2-y1 }, silk), g); }
+    else if (p.t === 'xiao') { el('path', Object.assign({ d:'M0.3 5.1 H20.6 V22.9 H0.3' }, silk), g); }
+    return g;
+  }
+  // fitted look
+  if (p.t === 'res') {
+    const gg = axial(p, g, 6.3, 2.4, '#8fb7df', 1);
+    p.bands.forEach((b, i) => el('rect', { x: -2.3 + i*1.05 + (i === 4 ? .5 : 0), y:-1.2, width:.55, height:2.4, fill:BAND[b] }, gg));
+  } else if (p.t === 'disc') { axial(p, g, 4.6, 2.2, '#d98b2b', 1.1); }
+  else if (p.t === 'diode') {
+    el('line', { x1:p.k[0], y1:2.6, x2:p.a[0], y2:2.6, stroke:'#c9ced3', 'stroke-width':.6 }, g);
+    el('rect', { x:8.9, y:1.25, width:5.4, height:2.7, rx:.4, fill:'#1b1b1b' }, g);
+    el('rect', { x:9.3, y:1.25, width:.8, height:2.7, fill:'#cfd3d6' }, g);
+  } else if (p.t === 'ecap') {
+    const cp = el('clipPath', { id:'c1clip' }, g); el('circle', { cx:p.c[0], cy:p.c[1], r:p.r }, cp);
+    el('circle', { cx:p.c[0], cy:p.c[1], r:p.r, fill:'#24305e' }, g);
+    el('rect', { x:p.c[0]+1.6, y:p.c[1]-p.r, width:2.6, height:2*p.r, fill:'#b9c0cc', 'clip-path':'url(#c1clip)' }, g);
+    txt('−', p.c[0]+2.9, p.c[1], { fill:'#24305e', 'font-size':2.4 }, g);
+    el('circle', { cx:p.c[0], cy:p.c[1], r:p.r*.72, fill:'none', stroke:'#ffffff30', 'stroke-width':.25 }, g);
+  } else if (p.t === 'dip') {
+    const [x1,y1,x2,y2] = p.box;
+    el('rect', { x:x1, y:y1, width:x2-x1, height:y2-y1, rx:.3, fill:'#1d1d1f' }, g);
+    el('circle', { cx:x1, cy:(y1+y2)/2, r:1, fill:'#3a3a3d' }, g);
+    txt('AHCT125', (x1+x2)/2, (y1+y2)/2, { fill:'#bbb', 'font-size':1.3 }, g);
+  } else if (p.t === 'to220') {
+    const [x1,y1,x2,y2] = p.box;
+    el('rect', { x:x1, y:y1, width:x2-x1, height:1.3, fill:'#c9ced3' }, g);
+    el('rect', { x:x1+.2, y:y1+1.3, width:x2-x1-.4, height:y2-y1-1.3, fill:'#1d1d1f' }, g);
+    txt('RFP30N06LE', (x1+x2)/2, y1+3.1, { fill:'#999', 'font-size':.95 }, g);
+  } else if (p.t === 'fuse') {
+    el('rect', { x:24.4, y:25.2, width:14.2, height:3.2, rx:1.6, fill:'#e7b81f' }, g);
+    txt('GBX185', 31.5, 26.8, { fill:'#5b4300', 'font-size':1.2 }, g);
+  } else if (p.t === 'xiao') {
+    el('rect', { x:-0.4, y:5.1, width:21, height:17.8, rx:1, fill:'#1f2a44' }, g);
+    el('rect', { x:6.5, y:8.6, width:11.5, height:10.8, rx:.4, fill:'#c4c9cf' }, g);
+    el('rect', { x:-1.9, y:10.3, width:7.4, height:7.4, rx:1.2, fill:'#b4b9bf', stroke:'#777', 'stroke-width':.15 }, g);
+    txt('USB-C', 1.8, 14, { fill:'#333', 'font-size':1.1 }, g);
+    for (let n = 1; n <= 14; n++) { const [x, y] = u3pin(n); el('circle', { cx:x, cy:y, r:.75, fill:'#d9b45a' }, g); }
+  } else if (p.t === 'wires') {
+    p.pads.forEach(([x, y], i) => {
+      const [x2, y2] = p.dir === 'down' ? [x, 34.5] : [75, y];
+      el('line', { x1:x, y1:y, x2, y2, stroke:p.colors[i], 'stroke-width':1.1, 'stroke-linecap':'round' }, g);
+      el('circle', { cx:x, cy:y, r:.9, fill:'#d8dcdf' }, g);
+    });
+  }
+  return g;
+}
+
+function drawBoard() {
+  svg.innerHTML = '';
+  const cur = A().cur, step = S[cur];
+  const fitted = new Set(), now = new Set(step.fits || []);
+  S.slice(0, cur).forEach(s => (s.fits || []).forEach(r => fitted.add(r)));
+  // board
+  el('rect', { x:0, y:0, width:70, height:30, rx:1, fill:'var(--mask)', stroke:'var(--mask-edge)', 'stroke-width':.3 });
+  [[2.5,2.5],[67.5,2.5],[2.5,27.5],[67.5,27.5]].forEach(([x,y]) => el('circle', { cx:x, cy:y, r:1.1, fill:'var(--bg)', stroke:'#0003', 'stroke-width':.2 }));
+  // silk for parts not yet fitted
+  for (const ref in PARTS) if (!fitted.has(ref) && !now.has(ref)) drawPart(ref, 'todo');
+  // pads
+  const pad = (x, y, sq, size = 1.8, drill = 1) => {
+    if (sq) el('rect', { x:x-size/2, y:y-size/2, width:size, height:size, fill:'var(--pad)' }); else el('circle', { cx:x, cy:y, r:size/2, fill:'var(--pad)' });
+    el('circle', { cx:x, cy:y, r:drill/2, fill:'var(--hole)' });
+  };
+  for (let n = 1; n <= 14; n++) { const [x, y] = u2pin(n); pad(x, y, n === 1, 1.6, .8); }
+  for (let n = 1; n <= 14; n++) { const [x, y] = u3pin(n); pad(x, y, n === 1, 1.7, 1); }
+  ['R1','R2','R3','R4','R5','R6','C2','C3'].forEach(r => { pad(...PARTS[r].a, false, 1.6, .8); pad(...PARTS[r].b, false, 1.6, .8); });
+  pad(6.5, 2.6, true, 2.2, 1.1); pad(16.66, 2.6, false, 2.2, 1.1);
+  pad(46.5, 9, true, 2, 1); pad(51.5, 9, false, 2, 1);
+  [48.2, 50.74, 53.28].forEach((x, i) => pad(x, 18.6, i === 0, 1.9, 1.1));
+  pad(34.04, 26.8, true, 2, 1); pad(28.96, 26.8, false, 2, 1);
+  ['U1','SW1','J1','J2','J3'].forEach(r => PARTS[r].pads.forEach((q, i) => pad(q[0], q[1], i === 0, 2.2, 1.1)));
+  // fitted + current parts
+  fitted.forEach(r => drawPart(r, 'done'));
+  now.forEach(r => drawPart(r, 'now'));
+  // silk labels that stay
+  const L = (s, x, y, at) => txt(s, x, y, Object.assign({ stroke:'var(--mask)', 'stroke-width':.3, 'paint-order':'stroke' }, at));
+  ['OUT−','OUT+','IN−','IN+'].forEach((s, i) => L(s, [6.5,10,13.5,17][i], 28.85, { 'font-size':1 }));
+  L('U1 MT3608', 11.75, 24.95, { 'font-size':1 }); L('SW1', 47.75, 24.95, { 'font-size':1 }); L('B', 46, 28.85, { 'font-size':1 }); L('A', 49.5, 28.85, { 'font-size':1 });
+  L('J1 CELL', 60.25, 24.95, { 'font-size':1 }); L('+', 58.5, 28.85, { 'font-size':1 }); L('−', 62, 28.85, { 'font-size':1 });
+  ['J2-1 +5V','J2-2 GND','J2-3 DATA','J3-1 M+','J3-2 M−','J3-3 TRIG','J3-4 GND'].forEach((s, i) => L(s, 64.6, [6.4,9.2,12,15,17.8,20.6,23.4][i], { 'font-size':1, 'text-anchor':'end' }));
+  L('K', 6.5, 4.45, { 'font-size':.9 });
+  if (!fitted.has('U3') && !now.has('U3')) {
+    ['GPIO2','GPIO3','GPIO4','GPIO5','GPIO6','GPIO7','GPIO21'].forEach((s, i) => L(s, 2.5+i*2.54, 20.1, { 'font-size':.75, transform:`rotate(-90 ${2.5+i*2.54} 20.1)`, 'text-anchor':'start' }));
+    ['5V','GND','3V3','GPIO10','GPIO9','GPIO8','GPIO20'].forEach((s, i) => L(s, 2.5+i*2.54, 7.9, { 'font-size':.75, transform:`rotate(-90 ${2.5+i*2.54} 7.9)`, 'text-anchor':'end' }));
+  }
+  // designators
+  const REF = { R1:[37.08,2.6], R2:[24.58,2.6], R6:[28,22.8], R4:[38.4,22.8], R5:[52,22.8], R3:[56.1,8.7,90], C2:[29.5,6.1], C3:[23.4,11.3],
+    CR2:[11.6,2.6], F1:[31.5,30.6], Q1:[50.74,16], U2:[34.6,16], C1:[49,2.6], U3:[19.4,14,90] };
+  for (const r in REF) {
+    const [x, y, rot] = REF[r], on = fitted.has(r) || now.has(r);
+    if (on && ['R1','R2','R3','R4','R5','R6','CR2','U2','Q1','F1'].includes(r)) continue;
+    txt(r, x, y, Object.assign({ 'font-size':1.2, 'font-weight':600 }, rot ? { transform:`rotate(-${rot} ${x} ${y})` } : {}));
+  }
+  // halo on current parts
+  now.forEach(r => { const [x1,y1,x2,y2] = bbox(r); el('rect', { x:x1-.9, y:y1-.9, width:x2-x1+1.8, height:y2-y1+1.8, rx:1, class:'halo' }); });
+  // probes for selected check
+  const c = (step.checks || [])[sel];
+  if (c) {
+    (c.spots || []).forEach(k => SPOTS[k].forEach(([x, y, w, h]) => el('rect', { x:x-w/2-.4, y:y-h/2-.4, width:w+.8, height:h+.8, rx:.8, fill:'none', stroke:'var(--accent-fill)', 'stroke-width':.45, 'stroke-dasharray':'.8 .5', class:'probe-ring' })));
+    probe(c.b, 'var(--probe-black)', '−');
+    probe(c.r, 'var(--probe-red)', '+');
+  }
+}
+function probe(who, col, sign) {
+  const list = (Array.isArray(who) ? who : [who]).filter(k => PT[k]);
+  list.forEach((k, i) => {
+    const [x, y] = PT[k];
+    el('circle', { cx:x, cy:y, r:1.55, fill:'none', stroke:'#fff', 'stroke-width':.75 });
+    el('circle', { cx:x, cy:y, r:1.55, fill:'none', stroke:col, 'stroke-width':.5, class:'probe-ring' });
+    if (i === 0) {
+      const ty = y < 4 ? y + 3.1 : y - 3.1;
+      el('circle', { cx:x, cy:ty, r:1.15, fill:col, stroke:'#fff', 'stroke-width':.2 });
+      txt(sign, x, ty, { fill:'#fff', 'font-size':1.7, 'font-weight':700 });
+    }
+  });
+}
+const ptName = k => PT[k] ? PT[k][2] : k;
+
+/* ---------- card ---------- */
+const card = document.getElementById('card');
+const esc = s => String(s);
+function bandsHTML(b) { return `<span class="bands" title="${b.join(' ')}">${b.map(c => `<i style="background:${BAND[c]}"></i>`).join('')}</span>`; }
+
+function renderCard() {
+  const a = A(), i = a.cur, s = S[i];
+  if (sel >= (s.checks || []).length) sel = 0;
+  const stageName = STAGES.find(x => x[0] === s.st)[1];
+  const allOk = (s.checks || []).every((c, k) => a.checks[s.id + '#' + k] === 'ok');
+  const isFit = !!s.fits;
+  let h = `<div class="eyebrow"><span>${stageName}</span><span>·</span><span>Step ${i+1} of ${S.length}</span>${a.done[s.id] ? '<span class="done-flag">✓ done</span>' : ''}</div>`;
+  h += `<h2>${s.title}${s.val ? ` <span class="val">${s.val}</span>` : ''}</h2>`;
+  const chips = [];
+  if (s.sub) chips.push(`<span class="chip">${s.sub}</span>`);
+  if (s.bands) chips.push(bandsHTML(s.bands));
+  if (isFit) chips.push(`<span class="chip now">Solder: now. One lead per hole</span>`);
+  if (chips.length) h += `<div class="chips">${chips.join('')}</div>`;
+  if (s.needs === 'trimmed' && !a.done[S[TRIM_STEP].id]) h += `<div class="warn">“Trim the boost” isn’t ticked for Arm ${state.arm}. Trim U1 to 5.00 V before this part goes on.</div>`;
+  if (s.orient) h += `<div class="orient">${s.orient}</div>`;
+  if (s.do) h += `<ul class="do">${s.do.map(d => `<li>${d}</li>`).join('')}</ul>`;
+  if (s.extra === 'parts') h += `<div class="tblwrap"><table class="parts">${PARTS_LIST.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td style="color:var(--muted)">${r[2]}</td></tr>`).join('')}</table></div>`;
+  if (s.checks) {
+    h += `<div class="checks"><h3>Checks <small>Tap one to see the probes on the board</small></h3>`;
+    s.checks.forEach((c, k) => {
+      const st = a.checks[s.id + '#' + k] || '';
+      const meter = !['look','touch','do'].includes(c.m);
+      let pr = '';
+      if (meter) pr = `<div class="pr"><span class="tag red">RED</span><span>${Array.isArray(c.r) ? c.r.map(ptName).join(', ') : ptName(c.r)}</span></div><div class="pr"><span class="tag blk">BLACK</span><span>${ptName(c.b)}</span></div>`;
+      h += `<div class="check ${st} ${k === sel ? 'sel' : ''}" data-k="${k}" tabindex="0">
+        <div class="chk-top"><span class="mode">${MODE[c.m]}</span><div class="probes">${pr}<div class="expect">${meter ? 'Expect ' : ''}<strong${meter ? '' : ' style="font-family:var(--f-body)"'}>${c.e}</strong>${c.bands ? ' ' + bandsHTML(c.bands) : ''}</div>${c.w ? `<div class="why">${c.w}</div>` : ''}</div></div>
+        ${st === 'bad' && c.x ? `<div class="fix">${c.x}</div>` : ''}
+        ${st === 'bad' && !c.x ? `<div class="fix">Stop here. Recheck the last part’s joints and orientation, then measure again.</div>` : ''}
+        <div class="cbtns"><button type="button" class="y" data-v="ok" aria-pressed="${st === 'ok'}">${meter ? 'Reads right' : 'Done'}</button><button type="button" class="n" data-v="bad" aria-pressed="${st === 'bad'}">${meter ? 'Doesn’t' : 'Problem'}</button></div>
+      </div>`;
+    });
+    h += `</div>`;
+  }
+  if (s.how) h += `<details class="how"><summary>How: a through-hole joint</summary><ol>
+    <li>Bend the legs to the hole spacing. Push through from the front</li>
+    <li>Splay the legs a little on the back so it stays put</li>
+    <li>Flip. Iron touches pad and leg together, ~1 s</li>
+    <li>Feed solder into the joint, not onto the iron. 2–3 s total</li>
+    <li>Shiny cone, pad fully covered. Snip the leg just above the joint</li></ol></details>`;
+  const left = (s.checks || []).filter((c, k) => a.checks[s.id + '#' + k] !== 'ok').length;
+  const label = i === S.length - 1 ? (a.done[s.id] ? 'Board finished' : 'Mark board finished') : (s.checks ? 'All checks pass, next' : isFit ? 'Soldered, next' : 'Done, next');
+  h += `<div class="nav"><button type="button" class="back" id="back" ${i === 0 ? 'disabled' : ''}>Back</button><button type="button" class="next" id="next" ${allOk ? '' : 'disabled'}>${label} →</button></div>`;
+  if (!allOk) h += `<div class="gate">${left} check${left > 1 ? 's' : ''} left to tick</div>`;
+  if (i < S.length - 1) { const n = S[i+1]; h += `<div class="upnext">Up next: <b>${n.title}${n.val ? ' · ' + n.val : ''}</b></div>`; }
+  card.innerHTML = h;
+
+  card.querySelectorAll('.check').forEach(box => {
+    const k = +box.dataset.k;
+    box.addEventListener('click', e => {
+      const b = e.target.closest('button[data-v]');
+      if (b) { const key = s.id + '#' + k; a.checks[key] = a.checks[key] === b.dataset.v ? undefined : b.dataset.v; if (!a.checks[key]) delete a.checks[key];
+        if (b.dataset.v === 'ok') { const nx = s.checks.findIndex((c, j) => j > k && a.checks[s.id + '#' + j] !== 'ok'); sel = nx >= 0 ? nx : k; } else sel = k;
+        save(); render(); return; }
+      sel = k; render();
+    });
+    box.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target === box) { sel = k; render(); } });
+  });
+  document.getElementById('back').onclick = () => go(i - 1);
+  document.getElementById('next').onclick = () => { a.done[s.id] = true; save(); if (i < S.length - 1) go(i + 1); else render(); };
+}
+
+function renderCaption() {
+  const s = S[A().cur], c = (s.checks || [])[sel], cap = document.getElementById('caption');
+  if (c && !['look','touch','do'].includes(c.m)) {
+    cap.innerHTML = `<div class="pr"><span class="tag red">RED +</span><span>${Array.isArray(c.r) ? c.r.map(ptName).join(', ') : ptName(c.r)}</span></div><div class="pr"><span class="tag blk">BLACK −</span><span>${ptName(c.b)}</span></div>`;
+  } else if (c && c.spots) cap.innerHTML = `<div class="pr"><span class="tag look">LOOK</span><span>Dashed boxes: check these spots on the back</span></div>`;
+  else if (s.fits) cap.innerHTML = `<div class="pr"><span class="tag look">FIT</span><span>${s.fits.join(', ')}: glowing outline</span></div>`;
+  else cap.innerHTML = '';
+}
+
+const POWER = {
+  out:['out','Cell unplugged · safe to solder'],
+  on:['on','Cell IN, rocker ON · don’t solder · meter only'],
+  usb:['usb','USB only · cell out, rocker OFF'],
+  brief:['brief','Cell on the loose lead only · unplug before soldering'],
+};
+function renderBar() {
+  const a = A(), i = a.cur;
+  document.getElementById('count').innerHTML = `Step <b>${i+1}</b>/${S.length} · ${Object.keys(a.done).length} done`;
+  ['1','2'].forEach(n => document.getElementById('arm' + n).setAttribute('aria-pressed', state.arm === n));
+  const pw = POWER[S[i].pw]; const pb = document.getElementById('power'); pb.className = 'power ' + pw[0]; document.getElementById('powerText').textContent = pw[1];
+  const box = document.getElementById('stages'); box.innerHTML = '';
+  STAGES.forEach(([id, name]) => {
+    const steps = S.filter(s => s.st === id), d = steps.filter(s => a.done[s.id]).length;
+    const b = document.createElement('button'); b.type = 'button'; b.style.setProperty('--n', steps.length);
+    if (S[i].st === id) b.className = 'cur';
+    b.title = `${name}: ${d}/${steps.length}`; b.setAttribute('aria-label', b.title);
+    b.innerHTML = `<i><b style="width:${100*d/steps.length}%"></b></i><span>${name}</span>`;
+    b.onclick = () => { const f = steps.find(s => !a.done[s.id]) || steps[0]; go(f.i); };
+    box.appendChild(b);
+  });
+}
+function renderList() {
+  const a = A(), box = document.getElementById('slist');
+  box.innerHTML = STAGES.map(([id, name]) => `<div><h4>${name}</h4><ol>${S.filter(s => s.st === id).map(s =>
+    `<li><button type="button" data-i="${s.i}" class="${s.i === a.cur ? 'cur' : ''}"><span class="n">${s.i+1}</span><span class="tick">${a.done[s.id] ? '✓' : ''}</span><span>${s.title}${s.val ? ' · ' + s.val : ''}</span></button></li>`).join('')}</ol></div>`).join('');
+  box.querySelectorAll('button').forEach(b => b.onclick = () => { go(+b.dataset.i); window.scrollTo({ top:0 }); });
+  const rb = document.getElementById('resetBox');
+  rb.innerHTML = `<button type="button" id="rs">Start Arm ${state.arm} over</button>`;
+  document.getElementById('rs').onclick = () => {
+    rb.innerHTML = `<span>Clear every tick for Arm ${state.arm}?</span><button type="button" class="danger" id="rsy">Yes, clear</button><button type="button" id="rsn">Keep</button>`;
+    document.getElementById('rsy').onclick = () => { state.arms[state.arm] = { cur:0, done:{}, checks:{} }; sel = 0; save(); render(); };
+    document.getElementById('rsn').onclick = renderList;
+  };
+}
+function go(i) {
+  if (i < 0 || i >= S.length) return;
+  A().cur = i; const s = S[i], a = A();
+  const firstOpen = (s.checks || []).findIndex((c, k) => a.checks[s.id + '#' + k] !== 'ok');
+  sel = firstOpen >= 0 ? firstOpen : 0;
+  save(); render();
+}
+function render() { renderBar(); renderCard(); drawBoard(); renderCaption(); renderList(); }
+
+document.querySelectorAll('[data-arm]').forEach(b => b.onclick = () => { state.arm = b.dataset.arm; sel = 0; save(); go(A().cur); });
+document.addEventListener('keydown', e => {
+  if (e.target.closest('input, textarea')) return;
+  if (e.key === 'ArrowLeft') go(A().cur - 1);
+  if (e.key === 'ArrowRight') go(A().cur + 1);
+});
+
+/* keep the screen awake at the bench */
+let lock = null;
+const awake = document.getElementById('awake');
+async function wantLock() { try { lock = await navigator.wakeLock.request('screen'); } catch (e) { awake.checked = false; } }
+awake.addEventListener('change', () => { if (awake.checked) wantLock(); else if (lock) { lock.release(); lock = null; } });
+document.addEventListener('visibilitychange', () => { if (awake.checked && document.visibilityState === 'visible') wantLock(); });
+
+go(A().cur);
+</script>
