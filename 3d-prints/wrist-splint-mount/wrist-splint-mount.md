@@ -181,8 +181,12 @@ v2 geometry decisions (also in `export_v2.py`):
 - Sanity-check the 139.7 circumference once before printing: tape snug (not
   tight) around the wrist crease. 5.5 in is petite; a re-measure costs nothing,
   a wrong scale costs a print
-- Handedness: does the thumb cutout make it side-specific? If so, mirror in
-  the slicer for the left hand (a transform — flag before doing it)
+- ~~Handedness~~ resolved 2026-10-15: worn thumb-first, field on the palm
+  side, edges wrap the back, entry gap along the back of the forearm. The
+  as-drawn layout fits the LEFT hand only with elements against the skin;
+  r4 wants tulle on skin, so **the r4 export mirrors in X** (flagged here,
+  baked into the export script when built). r3/v2 has identical faces —
+  flip it physically for either hand, no mirror needed
 - TPU flop test: at 77.6% uniform the wall is 2.72 — is the dorsal face
   stable enough under the housing in 95A, or hold Z at 100% (3.5), add a
   stiffer/thicker zone, or a rigid insert under the housing footprint?
