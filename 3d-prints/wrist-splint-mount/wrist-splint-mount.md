@@ -102,10 +102,19 @@ Openwork pattern concepts:
 
 ## Print Settings
 
-(none yet — no version exported)
+v1 (suggested, not yet printed): TPU 95A, **external spool** (AMS bypass),
+0.4 nozzle, 0.2 layers, 2 walls, 25% gyroid, slow (~40 mm/s outer). Files
+from `export_v1.py`, **pre-scaled to 77.6%** — print at 100%, no further
+scaling. Dorsal coupon pair answers the Z-scale question (see Open).
 
-Candidate: TPU 95A, external spool (AMS bypass on the X1C), 0.4 nozzle.
-Hardness and wall/infill undecided — see Open.
+| File | Orientation | Supports |
+|---|---|---|
+| `versions/wrist-splint-mount-v1-dorsal-coupon-27.stl` | Flat | None. 2.72 thick = uniform-scale candidate |
+| `versions/wrist-splint-mount-v1-dorsal-coupon-35.stl` | Flat | None. 3.50 thick = Z-held candidate |
+
+Coupon is 60.5 × 49.7: the velcro patch zone with its die diamond, the pin
+comb, and bundle A's trace ends, for wrap-stiffness + patch-stability feel
+and TPU cut fidelity. Preview: `versions/wrist-splint-mount-v1-coupon-preview.png`.
 
 ## Log
 
@@ -117,9 +126,13 @@ Hardness and wall/infill undecided — see Open.
   `concepts/splint_outline.py`). Still open: confirm which side is dorsal
   when wrapped on the LEFT hand, and whether the whole model needs a mirror
   — decide before any export (a transform: flag it first)
-- **r3 → export**: turn the r3 placement into an actual remixed mesh (cut the
-  new pattern + patch into the STL or rebuild the plate), velcro sew-through
-  holes in the patch corners, then dorsal TPU coupon before the full print
+- **r3 → full export** (coupons done 2026-10-15, `export_v1.py`): turn the
+  r3 placement into the full remixed splint mesh (shapely difference on the
+  extracted outline, or boolean the cuts into the original STL in Blender to
+  keep its chamfers/relief — decide which), plus velcro sew-through holes in
+  the patch corners. Blocked on the coupon feel test and the handedness check
+- Handedness may be a non-issue: a flat TPU sheet can simply be flipped over
+  when wrapping — confirm on the printed coupon before bothering with mirrors
 - Sanity-check the 139.7 circumference once before printing: tape snug (not
   tight) around the wrist crease. 5.5 in is petite; a re-measure costs nothing,
   a wrong scale costs a print
