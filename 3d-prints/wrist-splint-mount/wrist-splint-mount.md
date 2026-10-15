@@ -72,6 +72,14 @@ Openwork pattern concepts:
 - `concepts/openwork-swatches-r2.png` — circuit direction (darknetdoll
   2026-10-14): CIRCUIT grammar as cutouts, resistors as punctuation,
   harlequin diamonds replacing the house heart signature. 4 layouts
+- `concepts/tulle-sandwich-r4.png` (from `concepts/tulle_r4.py`) — **r4
+  concept, 2026-10-15**: the trace bus as POSITIVE printed elements on a
+  tulle substrate (print 2 base layers → pause → tulle on, magnets to the
+  steel plate → resume). All flex is fabric, so the stiff 68D "TPU for AMS"
+  (or PLA) becomes the right material, feeds through the AMS, and the piece
+  can be multicolour (CIRCUIT palette: tulle = ground, elements = traces).
+  Pads get true punched centres; velcro patch stays one rigid tile. Not
+  approved yet — alternative to reprinting r3/v2 in true 95A
 - **r3, the chosen direction: trace bus on the real splint outline** —
   review artifact: claude.ai/artifact/UmpUhLbJdErYzgjE1Fy6Fb.
   `concepts/splint_outline.py` extracts the true outline from the STL
@@ -149,6 +157,15 @@ v2 geometry decisions (also in `export_v2.py`):
   spool; 2 walls, 2+2 top/bottom shells, ~15% gyroid, slow
 
 ## Open
+
+- **Direction fork after the stiff v2** (darknetdoll to pick):
+  (a) reprint v2 unchanged in true TPU 95A, external spool — fewest unknowns;
+  (b) r4 tulle sandwich — uses the 68D spool already on hand, drapes like
+  lace, multicolour via AMS, but adds the mid-print pause workflow and new
+  unknowns (tulle bond strength, strap tabs on fabric, edge binding, tulle
+  trimming at the thumb opening and slots). If r4: export needs element
+  bodies ~1.8 thick, pause layer in the 3MF, magnet placement clear of the
+  print area, and polyester tulle (survives nozzle temps briefly)
 
 - Mesh map (outline, channels, thumb opening: done 2026-10-14 via
   `concepts/splint_outline.py`). Still open: confirm which side is dorsal
