@@ -168,6 +168,17 @@ ticks on the forearm rim. **Add Pause at layer 2**, tulle + magnets, resume.
 |---|---|---|
 | `versions/wrist-splint-mount-v5-tulle-full.stl` | Flat | None. Pause at layer 2 for the tulle |
 
+v6 (suggested, not yet printed) — **membrane full splint, the no-tulle
+variant** (`export_v6.py`, v5 + a 0.4 printed membrane in place of fabric;
+made while tulle is in delivery). One print, **no pause, no magnets**; 68D
+through the AMS. All functional holes pierce the membrane (channel slots,
+patch strap slots, eyelets, pad centres). Smooth membrane side to skin —
+mirror already baked in, same as v5.
+
+| File | Orientation | Supports |
+|---|---|---|
+| `versions/wrist-splint-mount-v6-membrane-full.stl` | Flat | None. No pause needed |
+
 v2 geometry decisions (also in `export_v2.py`):
 - Plate rebuilt as a flat extrusion of the z=1.75 section, not a boolean on
   the original mesh   <- keeps every outline/slot exactly; loses the
