@@ -166,6 +166,15 @@ v2 geometry decisions (also in `export_v2.py`):
   trimming at the thumb opening and slots). If r4: export needs element
   bodies ~1.8 thick, pause layer in the 3MF, magnet placement clear of the
   print area, and polyester tulle (survives nozzle temps briefly)
+- **r4 respacing (darknetdoll concern 2026-10-15, confirmed real):** r3's
+  bundle pitch leaves only ~1.4 printed tulle between adjacent traces;
+  first-layer squish can bridge that and weld a bundle into one stiff slab.
+  Export fix: widen pitch so inter-trace hinges are ≥ 2.5 printed, and
+  shorten the edge-binding dashes on the forearm-end rim (they run along
+  the curl direction). Wrap flex itself is fine by construction: traces run
+  along the arm, the wrap bends across them at the tulle lines (scale-mail
+  anisotropy); the patch tile stays rigid on the flat back of the hand on
+  purpose. Test square: one bundle at two pitches, curl over a marker
 
 - Mesh map (outline, channels, thumb opening: done 2026-10-14 via
   `concepts/splint_outline.py`). Still open: confirm which side is dorsal
