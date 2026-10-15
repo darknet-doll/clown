@@ -116,6 +116,23 @@ Coupon is 60.5 × 49.7: the velcro patch zone with its die diamond, the pin
 comb, and bundle A's trace ends, for wrap-stiffness + patch-stability feel
 and TPU cut fidelity. Preview: `versions/wrist-splint-mount-v1-coupon-preview.png`.
 
+v2 (suggested, not yet printed) — **the full splint test print** (darknetdoll
+approved the r3 design 2026-10-15). Same settings as v1. From `export_v2.py`,
+pre-scaled: **178.0 × 153.5 × 2.72**, print at 100%.
+
+| File | Orientation | Supports |
+|---|---|---|
+| `versions/wrist-splint-mount-v2-full.stl` | Flat | None |
+
+v2 geometry decisions (also in `export_v2.py`):
+- Plate rebuilt as a flat extrusion of the z=1.75 section, not a boolean on
+  the original mesh   <- keeps every outline/slot exactly; loses the
+  original's edge chamfers, and the channel bridges become full height
+  (slightly stronger, threading unchanged)
+- Thickness 2.72 = uniform 77.6%   <- keeps all proportions matched to the
+  wrist; if the patch is too soft under the housing, re-export at 3.5 (Z held)
+- Preview: `versions/wrist-splint-mount-v2-preview.png`
+
 ## Log
 
 (none)
@@ -126,11 +143,11 @@ and TPU cut fidelity. Preview: `versions/wrist-splint-mount-v1-coupon-preview.pn
   `concepts/splint_outline.py`). Still open: confirm which side is dorsal
   when wrapped on the LEFT hand, and whether the whole model needs a mirror
   — decide before any export (a transform: flag it first)
-- **r3 → full export** (coupons done 2026-10-15, `export_v1.py`): turn the
-  r3 placement into the full remixed splint mesh (shapely difference on the
-  extracted outline, or boolean the cuts into the original STL in Blender to
-  keep its chamfers/relief — decide which), plus velcro sew-through holes in
-  the patch corners. Blocked on the coupon feel test and the handedness check
+- ~~r3 → full export~~ done 2026-10-15 (`export_v2.py`, extrusion rebuild —
+  see Print Settings v2). Still open from it: velcro sew-through holes in the
+  patch corners (v2 relies on the pin-comb slots + die diamond as sew points —
+  confirm that's enough when attaching the hook field), and the 3.5 Z-held
+  re-export if the patch proves too soft
 - Handedness may be a non-issue: a flat TPU sheet can simply be flipped over
   when wrapping — confirm on the printed coupon before bothering with mirrors
 - Sanity-check the 139.7 circumference once before printing: tape snug (not
