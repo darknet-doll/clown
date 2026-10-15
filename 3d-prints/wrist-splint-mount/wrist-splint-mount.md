@@ -156,6 +156,18 @@ trusts it.
 |---|---|---|
 | `versions/wrist-splint-mount-v4-tulle-square.stl` | Flat | None. Pause at layer 2 for the tulle |
 
+v5 (suggested, not yet printed) — **the full r4 tulle splint** from the
+review artifact (`export_v5.py`): 61 element islands, 177.2 × 152.7 × 1.8,
+**mirrored for the left hand** (tulle to skin, elements out), bundles
+respaced to 2.7 printed hinges, annular pads, patch tile with strap slots +
+eyelets + die diamond and bundle A landed on it, edge binding with short
+ticks on the forearm rim. **Add Pause at layer 2**, tulle + magnets, resume.
+68D through the AMS is fine; multicolour optional (paint islands in Bambu).
+
+| File | Orientation | Supports |
+|---|---|---|
+| `versions/wrist-splint-mount-v5-tulle-full.stl` | Flat | None. Pause at layer 2 for the tulle |
+
 v2 geometry decisions (also in `export_v2.py`):
 - Plate rebuilt as a flat extrusion of the z=1.75 section, not a boolean on
   the original mesh   <- keeps every outline/slot exactly; loses the
