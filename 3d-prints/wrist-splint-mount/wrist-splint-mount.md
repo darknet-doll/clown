@@ -135,6 +135,27 @@ pre-scaled: **178.0 × 153.5 × 2.72**, print at 100%.
 |---|---|---|
 | `versions/wrist-splint-mount-v2-full.stl` | Flat | None |
 
+v3 (suggested, not yet printed) — membrane bend coupons, no tulle needed
+(`export_v3.py`): element islands on a printed 68D membrane. Curl across
+the traces. Both fine through the AMS, no pause.
+
+| File | Orientation | Supports |
+|---|---|---|
+| `versions/wrist-splint-mount-v3-membrane-coupon-04.stl` | Flat | None. 0.4 membrane |
+| `versions/wrist-splint-mount-v3-membrane-coupon-06.stl` | Flat | None. 0.6 membrane |
+
+v4 (suggested, not yet printed) — **tulle test square**, the real r4 workflow
+(`export_v4.py`): 9 disconnected islands, 1.8 tall. **Add Pause at layer 2**
+in Bambu Studio (right-click the layer slider), then tulle taut over the
+plate, magnets outside the print area, resume. Both bundles' pitches, a
+diamond, an annular pad, and a strap tab with the 13 × 2.5 slot — thread
+the 11 mm strap and yank to prove the fabric bond before the housing
+trusts it.
+
+| File | Orientation | Supports |
+|---|---|---|
+| `versions/wrist-splint-mount-v4-tulle-square.stl` | Flat | None. Pause at layer 2 for the tulle |
+
 v2 geometry decisions (also in `export_v2.py`):
 - Plate rebuilt as a flat extrusion of the z=1.75 section, not a boolean on
   the original mesh   <- keeps every outline/slot exactly; loses the
