@@ -88,7 +88,10 @@ Openwork pattern concepts:
 - Z scale: UNKNOWN — uniform 77.6% (2.72 thick) vs holding Z at 100% (3.5
   thick, stiffer in TPU, slightly distorts chamfers). Decide with the TPU
   flop test (see Open)
-- Material: TPU   <- darknetdoll 2026-10-12; flex replaces heat-molding, no wrap needed
+- Material: TPU 95A (or softer), **never "TPU for AMS"**   <- darknetdoll
+  2026-10-12 (flex replaces heat-molding); 2026-10-15: TPU for AMS is Shore
+  68D semi-rigid and printed rock-stiff — soft TPU feeds from the external
+  spool only
 - Wrist attachment: the splint's own side velcro channels, with the 11 mm strap
 - Housing attachment: velcro field on the splint's dorsal face, mating velcro
   under the housing   <- darknetdoll 2026-10-12
@@ -135,7 +138,15 @@ v2 geometry decisions (also in `export_v2.py`):
 
 ## Log
 
-(none)
+### 2026-10-15 | v2 | first full print | too stiff | printed in the wrong TPU
+
+- Printed in **Bambu "TPU for AMS" — Shore 68D semi-rigid**, not the spec'd
+  TPU 95A. 68D is deliberately stiff so the AMS can feed it; the stiffness is
+  the material, not the geometry or settings
+- Heat-forming is not a fix (TPU springs back; flat plate warps)
+- Keep the print as the rigidity reference for the patch zone
+- Reprint plan: true TPU 95A (or 85A for extra comfort) on the external
+  spool; 2 walls, 2+2 top/bottom shells, ~15% gyroid, slow
 
 ## Open
 
