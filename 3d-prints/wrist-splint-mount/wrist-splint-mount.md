@@ -167,6 +167,7 @@ ticks on the forearm rim. **Add Pause at layer 2**, tulle + magnets, resume.
 | File | Orientation | Supports |
 |---|---|---|
 | `versions/wrist-splint-mount-v5-tulle-full.stl` | Flat | None. Pause at layer 2 for the tulle |
+| `versions/wrist-splint-mount-v5-tulle-full.3mf` | — | **Project file with the layer-2 pause embedded** (M400 U1 at z 0.4, verified 2026-10-16). Print from this, not the STL, and the pause needs no re-adding |
 
 v6 (suggested, not yet printed) — **membrane full splint, the no-tulle
 variant** (`export_v6.py`, v5 + a 0.4 printed membrane in place of fabric;
