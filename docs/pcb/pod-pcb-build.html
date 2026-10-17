@@ -109,6 +109,12 @@ h2 .val { color: var(--accent); }
 .legs svg { width: 100%; height: auto; display: block; color: var(--muted); }
 .legs figcaption { font-size: .76rem; line-height: 1.3; }
 .legs figcaption b { color: var(--ok); margin-right: 2px; }
+.u1d { display: grid; gap: 10px; border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
+.u1d > svg { width: 100%; height: auto; display: block; color: var(--muted); }
+.u1key { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; font-size: .86rem; }
+.u1key li { display: flex; align-items: center; gap: 6px; }
+.u1key i { width: 18px; height: 5px; border-radius: 3px; outline: 1px solid #9aa1a7; flex: none; }
+.u1steps { margin: 0; padding-left: 1.3em; display: grid; gap: 3px; font-size: .88rem; }
 ul.do { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
 ul.do li::marker { color: var(--muted); }
 .warn { background: var(--bad-tint); color: var(--bad); padding: 8px 12px; border-radius: 6px; font-size: .88rem; font-weight: 500; }
@@ -411,7 +417,7 @@ const S = [
     { m:'ohm', r:'J1+', b:'F1sq', e:'OL, rocker the other way', w:'That position is <b>OFF</b>. Mark it on the rocker now.', x:'Same reading both ways → wires on the wrong tabs, or A–B bridged.' },
     { m:'ohm', r:'J1-', b:'J3-4', e:'under 1 Ω', w:'Cell − is ground.' },
   ] },
-{ st:'wires', title:'U1', val:'MT3608 boost', fits:['U1'], pw:'out', sub:'Off-board module, four wires',
+{ st:'wires', title:'U1', val:'MT3608 boost', fits:['U1'], pw:'out', sub:'Off-board module, four wires', diagram:'u1',
   orient:'<b>Board pads, left → right: OUT− · OUT+ · IN− · IN+</b> (IN+ is square). Match the module’s VIN+ / VIN− / VOUT+ / VOUT− labels.',
   do:[
     'Colours: IN+ red · OUT+ yellow · both minus black. <b>IN+ and OUT+ never the same colour</b>',
@@ -878,6 +884,47 @@ function legsHTML(s) {
   return `<div class="legs">${[0,1,2].map(i => `<figure>${legSVG(k, i)}<figcaption><b>${i+1}</b> ${LEG_CAPS[k][i]}</figcaption></figure>`).join('')}</div>`;
 }
 
+// U1: which board pad goes to which module hole, and how to prep each wire.
+// Module drawn parts-side up, as it sits on the bench: VOUT end left, VIN end right.
+const U1_WIRES = [
+  { c:'#1b1b1b', pad:'OUT−', mod:'VOUT−', d:'M70 40 C70 90 30 100 30 150 L30 202 Q30 210 38 210 L85 210' },
+  { c:'#e8b400', pad:'OUT+', mod:'VOUT+', d:'M120 40 C120 100 85 115 85 170' },
+  { c:'#1b1b1b', pad:'IN−',  mod:'VIN−',  d:'M170 40 C170 90 310 100 310 150 L310 202 Q310 210 302 210 L255 210' },
+  { c:'#d42a2a', pad:'IN+',  mod:'VIN+',  d:'M220 40 C220 100 255 115 255 170' },
+];
+function u1HTML() {
+  const pads = [[70,'OUT−'],[120,'OUT+'],[170,'IN−'],[220,'IN+']];
+  const svg = `<svg viewBox="0 0 340 262" role="img" aria-label="Wiring from the pod board's U1 pads to the MT3608 module">
+    <rect x="10" y="8" width="320" height="50" rx="4" fill="var(--mask)"/>
+    <text x="250" y="20" font-size="8" text-anchor="start" fill="var(--silk)" opacity=".75">POD BOARD · front</text>
+    ${pads.map(([x, l], i) => `<text x="${x}" y="20" font-size="9" font-weight="700" text-anchor="middle" fill="var(--silk)">${l}</text>` +
+      (i === 3 ? `<rect x="${x-7}" y="33" width="14" height="14" fill="var(--pad)"/>` : `<circle cx="${x}" cy="40" r="7" fill="var(--pad)"/>`)).join('')}
+    <rect x="60" y="148" width="220" height="84" rx="5" fill="#2156c9"/>
+    <rect x="134" y="182" width="40" height="40" rx="2" fill="#4a86e8"/><circle cx="140" cy="226" r="3" fill="#d9b45a"/>
+    <text x="154" y="199" font-size="7" text-anchor="middle" fill="#fff">trimpot</text><text x="154" y="209" font-size="7" text-anchor="middle" fill="#fff">don’t turn</text>
+    <rect x="178" y="158" width="26" height="22" rx="3" fill="#333"/><rect x="208" y="196" width="12" height="7" fill="#111"/>
+    ${[[85,170,'VOUT+','start'],[85,210,'VOUT−','start'],[255,170,'VIN+','end'],[255,210,'VIN−','end']].map(([x,y,l,a]) =>
+      `<circle cx="${x}" cy="${y}" r="7" fill="#d4af37"/><text x="${a === 'start' ? x+11 : x-11}" y="${y+3}" font-size="9" font-weight="700" text-anchor="${a}" fill="#fff">${l}</text>`).join('')}
+    <text x="170" y="250" font-size="9" text-anchor="middle" fill="currentColor">MT3608 module · parts side up · VOUT end left, VIN end right</text>
+    ${U1_WIRES.map(w => `<path d="${w.d}" fill="none" stroke="#9aa1a7" stroke-width="6.5" stroke-linecap="round"/><path d="${w.d}" fill="none" stroke="${w.c}" stroke-width="4.5" stroke-linecap="round"/>`).join('')}
+    ${[[70,40],[120,40],[170,40],[220,40],[85,170],[85,210],[255,170],[255,210]].map(([x,y]) => `<circle cx="${x}" cy="${y}" r="3.6" fill="#e3e6e9" stroke="#9aa1a7" stroke-width=".8"/>`).join('')}
+  </svg>`;
+  const rows = U1_WIRES.map(w => `<li><i style="background:${w.c}"></i><b>${w.pad}</b> → <b>${w.mod}</b></li>`).join('');
+  const prep = [
+    ['Strip 2–3 mm', '<rect x="2" y="11" width="38" height="8" rx="3" fill="#d42a2a"/><path d="M40 12.5 L53 11 M40 14 L53 13.5 M40 15.5 L53 16 M40 17 L53 18.5" stroke="#b8bec4" stroke-width="1"/><text x="47" y="7" font-size="5" text-anchor="middle" fill="currentColor">2–3 mm</text>'],
+    ['Twist tight. No strays', '<rect x="2" y="11" width="38" height="8" rx="3" fill="#d42a2a"/><path d="M40 13 L43 17 L46 13 L49 17 L52 13 M40 17 L43 13 L46 17 L49 13 L52 17" stroke="#b8bec4" stroke-width="1.1" fill="none"/>'],
+    ['Tin: solder soaks in', '<rect x="2" y="11" width="38" height="8" rx="3" fill="#d42a2a"/><rect x="40" y="12.5" width="12" height="5" rx="2.2" fill="#e3e6e9" stroke="#9aa1a7" stroke-width=".5"/>'],
+  ].map(([cap, body], i) => `<figure><svg viewBox="0 0 64 26" aria-hidden="true">${body}</svg><figcaption><b>${i+1}</b> ${cap}</figcaption></figure>`).join('');
+  return `<div class="u1d">${svg}<ul class="u1key">${rows}</ul>
+    <div class="legs">${prep}</div>
+    <ol class="u1steps">
+      <li>Four <b>stranded</b> 22 AWG wires, 5–8 cm. Prep both ends of each, as above</li>
+      <li><b>Board end:</b> in from the FRONT, solder on the BACK. Square pad = IN+ = red</li>
+      <li><b>Module end:</b> in from the parts side, solder underneath. Read the label by each hole</li>
+      <li>Red and yellow must not swap. The two blacks can go either way: both are ground</li>
+    </ol></div>`;
+}
+
 function renderCard() {
   const a = A(), i = a.cur, s = S[i];
   if (sel >= (s.checks || []).length) sel = 0;
@@ -894,6 +941,7 @@ function renderCard() {
   if (isFit) h += sideHTML(s.st) + legsHTML(s);
   if (s.needs === 'trimmed' && !a.done[S[TRIM_STEP].id]) h += `<div class="warn">“Trim the boost” isn’t ticked for Arm ${state.arm}. Trim U1 to 5.00 V before this part goes on.</div>`;
   if (s.orient) h += `<div class="orient">${s.orient}</div>`;
+  if (s.diagram === 'u1') h += u1HTML();
   if (s.do) h += `<ul class="do">${s.do.map(d => `<li>${d}</li>`).join('')}</ul>`;
   if (s.extra === 'parts') h += `<div class="tblwrap"><table class="parts">${PARTS_LIST.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td style="color:var(--muted)">${r[2]}</td></tr>`).join('')}</table></div>`;
   if (s.checks) {
