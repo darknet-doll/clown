@@ -104,6 +104,11 @@ h2 .val { color: var(--accent); }
 .side p + p { margin-top: 4px; }
 .side .lead { font-weight: 700; font-size: 1rem; }
 @media (max-width: 380px) { .side { grid-template-columns: 1fr; } }
+.legs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.legs figure { margin: 0; background: var(--bg); border-radius: 6px; padding: 6px; display: grid; gap: 4px; align-content: start; }
+.legs svg { width: 100%; height: auto; display: block; color: var(--muted); }
+.legs figcaption { font-size: .76rem; line-height: 1.3; }
+.legs figcaption b { color: var(--ok); margin-right: 2px; }
 ul.do { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
 ul.do li::marker { color: var(--muted); }
 .warn { background: var(--bad-tint); color: var(--bad); padding: 8px 12px; border-radius: 6px; font-size: .88rem; font-weight: 500; }
@@ -712,6 +717,12 @@ function drawBack() {
       el('circle', { cx:p.x, cy:p.y, r:p.drill/2, fill:'var(--hole)' }, g);
       el('circle', { cx:p.x, cy:p.y, r:p.drill/2 - .12, fill:'#b8bec4' }, g);
       el('circle', { cx:p.x, cy:p.y, r:p.size/2 + .45, class:'halo' }, g);
+      // splayed legs bend outward, away from the part's middle
+      if (legKind(step) === 'splay') {
+        const own = padList().filter(q => q.ref === p.ref), mx = own.reduce((a, q) => a + q.x, 0) / own.length, my = own.reduce((a, q) => a + q.y, 0) / own.length;
+        const dx = p.x - mx, dy = p.y - my, n = Math.hypot(dx, dy) || 1;
+        el('line', { x1:p.x, y1:p.y, x2:p.x + dx/n*2.2, y2:p.y + dy/n*2.2, stroke:'#b8bec4', 'stroke-width':.5, 'stroke-linecap':'round' }, g);
+      }
     } else el('circle', { cx:p.x, cy:p.y, r:p.drill/2, fill:'var(--hole)' }, g);
   });
   if (c && c.spots) c.spots.forEach(k => SPOTS[k].forEach(([x, y, w, h]) => el('rect', { x:x-w/2-.4, y:y-h/2-.4, width:w+.8, height:h+.8, rx:.8, fill:'none', stroke:'var(--accent-fill)', 'stroke-width':.45, 'stroke-dasharray':'.8 .5', class:'probe-ring' }, g)));
@@ -822,6 +833,51 @@ function sideHTML(st) {
   return `<div class="side">${sideSVG(kind)}<div><p class="lead">${lead}</p><p>${more}</p></div></div>`;
 }
 
+// What the legs do on the back, per kind of part: in, soldered, trimmed.
+function legKind(s) {
+  if (s.title === 'U2') return 'dip';
+  if (s.title === 'Q1') return 'upright';
+  if (s.st === 'xiao') return 'header';
+  if (s.st === 'wires' || s.st === 'leads') return 'wire';
+  return 'splay';
+}
+const LEG_CAPS = {
+  splay:   ['Push through. Bend each leg out ~30°. Not flat', 'Solder: shiny cone, leg still long', 'Snip just above the cone'],
+  upright: ['Straight through. Don’t bend. Tape it upright', 'Solder: shiny cone', 'Snip just above the cone'],
+  dip:     ['Straight through. Don’t bend', 'Solder: shiny cone', 'Leave it. Legs are already short'],
+  header:  ['Long ends down through the board', 'Solder top and back', 'Snip the long ends flush'],
+  wire:    ['Tinned end through, ~1 mm out the back', 'Solder: shiny cone', 'Nothing to snip. Check for stray strands'],
+};
+function legSVG(kind, stage) {
+  const xs = kind === 'wire' ? [32] : kind === 'header' ? [24, 40] : kind === 'upright' ? [24, 32, 40] : [22, 42];
+  const leg = 'fill="none" stroke="#9aa1a7" stroke-width="1.6" stroke-linecap="round"';
+  let body = '';
+  if (kind === 'wire') body = '<path d="M10 2 C22 2 32 6 32 16" fill="none" stroke="var(--accent-fill)" stroke-width="3.2" stroke-linecap="round"/>';
+  else if (kind === 'header') body = '<rect x="14" y="2" width="36" height="4" rx="1" fill="#1f2a44"/><rect x="18" y="8" width="28" height="8" fill="#222"/>';
+  else if (kind === 'dip') body = '<rect x="16" y="6" width="32" height="8" rx="1" fill="#1d1d1f"/>';
+  else if (kind === 'upright') body = '<rect x="20" y="0" width="24" height="10" fill="#1d1d1f"/><rect x="20" y="0" width="24" height="2" fill="#c9ced3"/>';
+  else body = '<rect x="18" y="6" width="28" height="8" rx="3.5" fill="#d9c08f"/>';
+  const top = kind === 'header' ? 4 : kind === 'wire' ? 16 : kind === 'upright' ? 10 : 14;
+  const legs = xs.map((x, i) => {
+    const d = xs.length === 1 ? 0 : (i === 0 ? -1 : i === xs.length - 1 ? 1 : 0);
+    if (kind === 'wire') return `<path d="M${x} ${top} V23" ${leg}/>`;
+    if (kind === 'header') return `<path d="M${x} ${top} V${stage === 2 ? 23.5 : 36}" ${leg}/>`;
+    if (kind === 'dip') return `<path d="M${x} ${top} V25" ${leg}/>`;
+    if (stage === 2) return `<path d="M${x} ${top} V25.5" ${leg}/>`;
+    if (kind === 'upright') return `<path d="M${x} ${top} V36" ${leg}/>`;
+    return `<path d="M${x} ${top} V23 L${x + d*8} 35" ${leg}/>`;
+  }).join('');
+  const cones = stage > 0 ? xs.map(x => `<path d="M${x-3.4} 21 L${x} 25 L${x+3.4} 21 Z" fill="#e3e6e9" stroke="#9aa1a7" stroke-width=".3"/>`).join('') : '';
+  const cutter = stage === 2 && ['splay','upright','header'].includes(kind)
+    ? `<path d="M4 33 L10 27 M4 27 L10 33" stroke="var(--bad)" stroke-width="1" stroke-linecap="round"/><line x1="6" y1="${kind === 'header' ? 23.5 : 25.5}" x2="58" y2="${kind === 'header' ? 23.5 : 25.5}" stroke="var(--bad)" stroke-width=".4" stroke-dasharray="1.2 .8"/>` : '';
+  return `<svg viewBox="0 0 64 40" aria-hidden="true">${body}<rect x="2" y="16" width="60" height="5" fill="var(--mask)"/>${legs}${cones}${cutter}
+    <text x="62" y="14" font-size="3.4" text-anchor="end" fill="currentColor">front</text><text x="62" y="28" font-size="3.4" text-anchor="end" fill="var(--ok)">back</text></svg>`;
+}
+function legsHTML(s) {
+  const k = legKind(s);
+  return `<div class="legs">${[0,1,2].map(i => `<figure>${legSVG(k, i)}<figcaption><b>${i+1}</b> ${LEG_CAPS[k][i]}</figcaption></figure>`).join('')}</div>`;
+}
+
 function renderCard() {
   const a = A(), i = a.cur, s = S[i];
   if (sel >= (s.checks || []).length) sel = 0;
@@ -835,7 +891,7 @@ function renderCard() {
   if (s.bands) chips.push(bandsHTML(s.bands));
   if (isFit) chips.push(`<span class="chip now">Solder: now. One lead per hole</span>`);
   if (chips.length) h += `<div class="chips">${chips.join('')}</div>`;
-  if (isFit) h += sideHTML(s.st);
+  if (isFit) h += sideHTML(s.st) + legsHTML(s);
   if (s.needs === 'trimmed' && !a.done[S[TRIM_STEP].id]) h += `<div class="warn">“Trim the boost” isn’t ticked for Arm ${state.arm}. Trim U1 to 5.00 V before this part goes on.</div>`;
   if (s.orient) h += `<div class="orient">${s.orient}</div>`;
   if (s.do) h += `<ul class="do">${s.do.map(d => `<li>${d}</li>`).join('')}</ul>`;
@@ -858,7 +914,7 @@ function renderCard() {
   }
   if (s.how) h += `<details class="how"><summary>How: a through-hole joint</summary><ol>
     <li>Bend the legs to the hole spacing. Push through from the <b>front</b> (white outlines)</li>
-    <li>Splay the legs a little on the <b>back</b> so it stays put</li>
+    <li>On the <b>back</b>, bend each leg outward ~30° so it stays put. Not flat against the board</li>
     <li>Flip so the <b>back</b> (“CLOWN POD rev A”) faces you. Iron touches pad and leg together, ~1 s</li>
     <li>Feed solder into the joint, not onto the iron. 2–3 s total</li>
     <li>Shiny cone, pad fully covered. Snip the leg just above the joint</li></ol></details>`;
