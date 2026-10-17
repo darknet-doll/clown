@@ -69,7 +69,11 @@ button { font: inherit; color: inherit; }
 .boardpanel { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 128px); display: grid; gap: 10px; min-width: 0; }
 @media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } .boardpanel { position: static; } }
 .boardwrap { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
-#board { display: block; width: 100%; height: auto; }
+#board, #boardBack { display: block; width: 100%; height: auto; }
+.vlabel { font-size: .8rem; color: var(--muted); margin: 0 0 6px; }
+.vlabel b { color: var(--ink); letter-spacing: .06em; }
+.vlabel.back b { color: var(--ok); }
+.vnote { font-size: .78rem; color: var(--muted); margin-top: 6px; }
 .caption { font-size: .85rem; display: grid; gap: 4px; min-height: 2.6em; }
 .caption .pr { display: flex; gap: 8px; align-items: baseline; }
 .tag { font-family: var(--f-mono); font-size: .7rem; font-weight: 600; padding: 1px 6px; border-radius: 3px; flex: none; }
@@ -183,7 +187,8 @@ details.list summary { cursor: pointer; font-weight: 600; font-size: .9rem; }
 
 <main class="grid">
   <section class="boardpanel" aria-label="Board">
-    <div class="boardwrap"><svg id="board" viewBox="-1.5 -1.5 77 37" role="img" aria-label="Pod PCB, front, drawn to scale"></svg></div>
+    <div class="boardwrap"><div class="vlabel"><b>FRONT</b> · white outlines · part goes in here</div><svg id="board" viewBox="-1.5 -1.5 77 37" role="img" aria-label="Pod PCB, front, drawn to scale"></svg></div>
+    <div class="boardwrap" id="backWrap" hidden><div class="vlabel back"><b>BACK</b> · “CLOWN POD rev A” · solder here</div><svg id="boardBack" viewBox="-1.5 -1.5 73 33" role="img" aria-label="Pod PCB, back, flipped left to right"></svg><div class="vnote">Turned over like a page: the XIAO end is now on the <b>right</b>. Pulsing rings = this step’s joints. Silver cones = joints already done.</div></div>
     <div class="caption" id="caption"></div>
     <div class="legend">
       <span><i style="background:var(--accent-fill)"></i>This step</span>
@@ -669,6 +674,52 @@ function drawPart(ref, mode) {
   return g;
 }
 
+// every through-hole pad, tagged with the part it belongs to
+function padList() {
+  const out = [], P = (ref, x, y, sq, size, drill) => out.push({ ref, x, y, sq, size, drill });
+  for (let n = 1; n <= 14; n++) { const [x, y] = u2pin(n); P('U2', x, y, n === 1, 1.6, .8); }
+  for (let n = 1; n <= 14; n++) { const [x, y] = u3pin(n); P('U3', x, y, n === 1, 1.7, 1); }
+  ['R1','R2','R3','R4','R5','R6','C2','C3'].forEach(r => { P(r, ...PARTS[r].a, false, 1.6, .8); P(r, ...PARTS[r].b, false, 1.6, .8); });
+  P('CR2', 6.5, 2.6, true, 2.2, 1.1); P('CR2', 16.66, 2.6, false, 2.2, 1.1);
+  P('C1', 46.5, 9, true, 2, 1); P('C1', 51.5, 9, false, 2, 1);
+  [48.2, 50.74, 53.28].forEach((x, i) => P('Q1', x, 18.6, i === 0, 1.9, 1.1));
+  P('F1', 34.04, 26.8, true, 2, 1); P('F1', 28.96, 26.8, false, 2, 1);
+  ['U1','SW1','J1','J2','J3'].forEach(r => PARTS[r].pads.forEach((q, i) => P(r, q[0], q[1], i === 0, 2.2, 1.1)));
+  return out;
+}
+
+/* back of the board, flipped like a page (left <-> right), as you see it after turning it over */
+function drawBack() {
+  const wrap = document.getElementById('backWrap'), bs = document.getElementById('boardBack');
+  const cur = A().cur, step = S[cur], c = (step.checks || [])[sel];
+  wrap.hidden = !(step.fits || (c && c.spots));
+  if (wrap.hidden) return;
+  bs.innerHTML = '';
+  const fitted = new Set(), now = new Set(step.fits || []);
+  S.slice(0, cur).forEach(s => (s.fits || []).forEach(r => fitted.add(r)));
+  const g = el('g', { transform:'translate(70 0) scale(-1 1)' }, bs);
+  el('rect', { x:0, y:0, width:70, height:30, rx:1, fill:'var(--mask)', stroke:'var(--mask-edge)', 'stroke-width':.3 }, g);
+  [[2.5,2.5],[67.5,2.5],[2.5,27.5],[67.5,27.5]].forEach(([x,y]) => el('circle', { cx:x, cy:y, r:1.1, fill:'var(--bg)', stroke:'#0003', 'stroke-width':.2 }, g));
+  padList().forEach(p => {
+    const shape = p.sq ? ['rect', { x:p.x-p.size/2, y:p.y-p.size/2, width:p.size, height:p.size }] : ['circle', { cx:p.x, cy:p.y, r:p.size/2 }];
+    el(shape[0], Object.assign({ fill:'var(--pad)' }, shape[1]), g);
+    if (fitted.has(p.ref)) {
+      // finished joint: a shiny cone with the snipped lead in the middle
+      el('circle', { cx:p.x, cy:p.y, r:p.size/2 - .1, fill:'#e9ecee', stroke:'#9aa1a7', 'stroke-width':.12 }, g);
+      el('circle', { cx:p.x, cy:p.y, r:.28, fill:'#8d949a' }, g);
+    } else if (now.has(p.ref)) {
+      // lead poking through, waiting for solder
+      el('circle', { cx:p.x, cy:p.y, r:p.drill/2, fill:'var(--hole)' }, g);
+      el('circle', { cx:p.x, cy:p.y, r:p.drill/2 - .12, fill:'#b8bec4' }, g);
+      el('circle', { cx:p.x, cy:p.y, r:p.size/2 + .45, class:'halo' }, g);
+    } else el('circle', { cx:p.x, cy:p.y, r:p.drill/2, fill:'var(--hole)' }, g);
+  });
+  if (c && c.spots) c.spots.forEach(k => SPOTS[k].forEach(([x, y, w, h]) => el('rect', { x:x-w/2-.4, y:y-h/2-.4, width:w+.8, height:h+.8, rx:.8, fill:'none', stroke:'var(--accent-fill)', 'stroke-width':.45, 'stroke-dasharray':'.8 .5', class:'probe-ring' }, g)));
+  // back silk reads normally once flipped; mirror its x by hand
+  txt('CLOWN POD rev A', 70 - 34.62, 13.9, { 'font-size':1.2, 'font-weight':700 }, bs);
+  txt('XIAO end →', 70 - 10, 14, { 'font-size':1, opacity:.55 }, bs);
+}
+
 function drawBoard() {
   svg.innerHTML = '';
   const cur = A().cur, step = S[cur];
@@ -684,14 +735,7 @@ function drawBoard() {
     if (sq) el('rect', { x:x-size/2, y:y-size/2, width:size, height:size, fill:'var(--pad)' }); else el('circle', { cx:x, cy:y, r:size/2, fill:'var(--pad)' });
     el('circle', { cx:x, cy:y, r:drill/2, fill:'var(--hole)' });
   };
-  for (let n = 1; n <= 14; n++) { const [x, y] = u2pin(n); pad(x, y, n === 1, 1.6, .8); }
-  for (let n = 1; n <= 14; n++) { const [x, y] = u3pin(n); pad(x, y, n === 1, 1.7, 1); }
-  ['R1','R2','R3','R4','R5','R6','C2','C3'].forEach(r => { pad(...PARTS[r].a, false, 1.6, .8); pad(...PARTS[r].b, false, 1.6, .8); });
-  pad(6.5, 2.6, true, 2.2, 1.1); pad(16.66, 2.6, false, 2.2, 1.1);
-  pad(46.5, 9, true, 2, 1); pad(51.5, 9, false, 2, 1);
-  [48.2, 50.74, 53.28].forEach((x, i) => pad(x, 18.6, i === 0, 1.9, 1.1));
-  pad(34.04, 26.8, true, 2, 1); pad(28.96, 26.8, false, 2, 1);
-  ['U1','SW1','J1','J2','J3'].forEach(r => PARTS[r].pads.forEach((q, i) => pad(q[0], q[1], i === 0, 2.2, 1.1)));
+  padList().forEach(p => pad(p.x, p.y, p.sq, p.size, p.drill));
   // fitted + current parts
   fitted.forEach(r => drawPart(r, 'done'));
   now.forEach(r => drawPart(r, 'now'));
@@ -891,7 +935,7 @@ function go(i) {
   sel = firstOpen >= 0 ? firstOpen : 0;
   save(); render();
 }
-function render() { renderBar(); renderCard(); drawBoard(); renderCaption(); renderList(); }
+function render() { renderBar(); renderCard(); drawBoard(); drawBack(); renderCaption(); renderList(); }
 
 document.querySelectorAll('[data-arm]').forEach(b => b.onclick = () => { state.arm = b.dataset.arm; sel = 0; save(); go(A().cur); });
 document.addEventListener('keydown', e => {
