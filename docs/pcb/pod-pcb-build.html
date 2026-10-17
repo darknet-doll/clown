@@ -94,6 +94,12 @@ h2 .val { color: var(--accent); }
 .bands i:last-child { margin-left: 6px; }
 .orient { background: var(--accent-tint); border-left: 3px solid var(--accent-fill); padding: 9px 12px; border-radius: 0 6px 6px 0; font-size: .92rem; }
 .orient b { color: var(--accent); }
+.side { display: grid; grid-template-columns: 136px 1fr; gap: 12px; align-items: center; border: 2px solid var(--ok); border-radius: 8px; padding: 10px 12px; }
+.side svg { width: 136px; height: auto; display: block; color: var(--muted); }
+.side p { margin: 0; font-size: .92rem; }
+.side p + p { margin-top: 4px; }
+.side .lead { font-weight: 700; font-size: 1rem; }
+@media (max-width: 380px) { .side { grid-template-columns: 1fr; } }
 ul.do { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
 ul.do li::marker { color: var(--muted); }
 .warn { background: var(--bad-tint); color: var(--bad); padding: 8px 12px; border-radius: 6px; font-size: .88rem; font-weight: 500; }
@@ -260,6 +266,7 @@ const S = [
   do:[
     '<b>Front</b> = white part outlines + names. <b>Back</b> = “CLOWN POD rev A”',
     'Hold it front up: XIAO end left, J2/J3 pads right. Same as the drawing',
+    '<b>The rule for the whole build: parts and wires go in from the FRONT. Solder on the BACK.</b> Only the XIAO also gets solder on top',
     'Count this board’s parts into a tray (list below)',
     'Cell: off the bench. Plugged into nothing until <b>First power</b>',
   ] },
@@ -400,7 +407,7 @@ const S = [
     'Colours: IN+ red · OUT+ yellow · both minus black. <b>IN+ and OUT+ never the same colour</b>',
     '<b>Stranded</b> 22 AWG silicone wire, 5–8 cm. Solid wire snaps at the joint on a moving arm',
     'Strip 2–3 mm, twist tight, <b>tin the end</b>. Stray strands bridge pads 3.5 mm apart',
-    'Solder board end and module end: <b>now</b>. Check the front for any strand that missed the hole',
+    'Solder board end (on the back) and module end: <b>now</b>. Check the front for any strand that missed the hole',
     'Leave a little slack. Anchor the wires (hot glue dot or zip tie) so a tug pulls the anchor, not the joint',
     'Don’t touch the trimpot yet',
   ] },
@@ -492,10 +499,10 @@ const S = [
   orient:'<b>USB-C hangs off the LEFT edge.</b> Metal shield up. XIAO’s D0 pin on the square pad (bottom-left); 5V pin top-left.',
   do:[
     'Headers: long ends down through the board, black plastic between the boards',
-    'Push the headers into the board, set the XIAO on top',
+    'Push the headers into the board from the <b>front</b>, set the XIAO on top of them',
     'Solder one corner pin on the XIAO, then the opposite corner',
     'Level and square? Fix it now. Impossible later',
-    'All 14 XIAO-side pins, flip, all 14 board-side pins',
+    'All 14 pins on top of the XIAO. Flip. All 14 pins on the <b>back</b> of the board',
     'Snip the long ends flush under the board',
   ] },
 { st:'xiao', title:'Check the XIAO, unpowered', pw:'out',
@@ -737,6 +744,40 @@ const card = document.getElementById('card');
 const esc = s => String(s);
 function bandsHTML(b) { return `<span class="bands" title="${b.join(' ')}">${b.map(c => `<i style="background:${BAND[c]}"></i>`).join('')}</span>`; }
 
+// Which side each kind of part goes on, and which side gets the iron.
+// Front = white outlines + names. Back = "CLOWN POD rev A".
+const SIDE = {
+  part: ['<b>Part on the FRONT.</b> Solder on the BACK.',
+    'Body sits on the white-outline side. Legs poke through to the “CLOWN POD rev A” side. Flip the board and solder there. Never solder on the front.'],
+  wire: ['<b>Wire in from the FRONT.</b> Solder on the BACK.',
+    'Push the tinned end through from the white-outline side until it pokes out the “CLOWN POD rev A” side. Flip and solder there.'],
+  xiao: ['<b>XIAO on the FRONT.</b> Solder both ends of the pins.',
+    'Headers and XIAO sit on the white-outline side. Solder the pins on top of the XIAO first. Then flip and solder the same pins on the BACK (“CLOWN POD rev A”).'],
+};
+function sideSVG(kind) {
+  const body = kind === 'wire'
+    ? '<path d="M14 4 C30 4 44 10 52 22" fill="none" stroke="var(--accent-fill)" stroke-width="3" stroke-linecap="round"/><line x1="52" y1="22" x2="52" y2="42" stroke="var(--pad)" stroke-width="1.6"/>'
+    : kind === 'xiao'
+    ? '<rect x="30" y="4" width="44" height="6" rx="1" fill="#3a3a3a"/><rect x="34" y="10" width="36" height="12" fill="#222"/><line x1="40" y1="2" x2="40" y2="42" stroke="var(--pad)" stroke-width="1.6"/><line x1="64" y1="2" x2="64" y2="42" stroke="var(--pad)" stroke-width="1.6"/><path d="M36 4 h8 l-4 -3 Z M60 4 h8 l-4 -3 Z" fill="var(--pad)"/>'
+    : '<rect x="38" y="8" width="28" height="9" rx="4" fill="#d9c08f"/><path d="M40 12 H30 V42 M64 12 H74 V42" fill="none" stroke="var(--pad)" stroke-width="1.6"/>';
+  const joints = kind === 'wire' ? [52] : kind === 'xiao' ? [40, 64] : [30, 74];
+  const cones = joints.map(x => `<path d="M${x-5} 32 L${x} 40 L${x+5} 32 Z" fill="var(--pad)"/>`).join('');
+  return `<svg viewBox="0 0 104 64" aria-hidden="true">
+    ${body}
+    <rect x="4" y="22" width="96" height="10" rx="1.5" fill="var(--mask)"/>
+    ${cones}
+    <path d="M86 60 L${joints[joints.length-1]+4} 38" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    <text x="2" y="19" font-size="7" font-weight="700" fill="currentColor">FRONT</text>
+    <text x="2" y="44" font-size="7" font-weight="700" fill="var(--ok)">BACK</text>
+    <text x="2" y="52" font-size="5.5" fill="currentColor">iron here</text>
+  </svg>`;
+}
+function sideHTML(st) {
+  const kind = st === 'xiao' ? 'xiao' : (st === 'wires' || st === 'leads') ? 'wire' : 'part';
+  const [lead, more] = SIDE[kind];
+  return `<div class="side">${sideSVG(kind)}<div><p class="lead">${lead}</p><p>${more}</p></div></div>`;
+}
+
 function renderCard() {
   const a = A(), i = a.cur, s = S[i];
   if (sel >= (s.checks || []).length) sel = 0;
@@ -750,6 +791,7 @@ function renderCard() {
   if (s.bands) chips.push(bandsHTML(s.bands));
   if (isFit) chips.push(`<span class="chip now">Solder: now. One lead per hole</span>`);
   if (chips.length) h += `<div class="chips">${chips.join('')}</div>`;
+  if (isFit) h += sideHTML(s.st);
   if (s.needs === 'trimmed' && !a.done[S[TRIM_STEP].id]) h += `<div class="warn">“Trim the boost” isn’t ticked for Arm ${state.arm}. Trim U1 to 5.00 V before this part goes on.</div>`;
   if (s.orient) h += `<div class="orient">${s.orient}</div>`;
   if (s.do) h += `<ul class="do">${s.do.map(d => `<li>${d}</li>`).join('')}</ul>`;
@@ -771,9 +813,9 @@ function renderCard() {
     h += `</div>`;
   }
   if (s.how) h += `<details class="how"><summary>How: a through-hole joint</summary><ol>
-    <li>Bend the legs to the hole spacing. Push through from the front</li>
-    <li>Splay the legs a little on the back so it stays put</li>
-    <li>Flip. Iron touches pad and leg together, ~1 s</li>
+    <li>Bend the legs to the hole spacing. Push through from the <b>front</b> (white outlines)</li>
+    <li>Splay the legs a little on the <b>back</b> so it stays put</li>
+    <li>Flip so the <b>back</b> (“CLOWN POD rev A”) faces you. Iron touches pad and leg together, ~1 s</li>
     <li>Feed solder into the joint, not onto the iron. 2–3 s total</li>
     <li>Shiny cone, pad fully covered. Snip the leg just above the joint</li></ol></details>`;
   const left = (s.checks || []).filter((c, k) => a.checks[s.id + '#' + k] !== 'ok').length;
