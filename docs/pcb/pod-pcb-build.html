@@ -115,6 +115,7 @@ h2 .val { color: var(--accent); }
 .u1key li { display: flex; align-items: center; gap: 6px; }
 .u1key i { width: 18px; height: 5px; border-radius: 3px; outline: 1px solid #9aa1a7; flex: none; }
 details.trace { border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: grid; gap: 10px; }
+figure.trj2 svg { max-width: 220px; }
 details.trace summary { cursor: pointer; font-weight: 600; }
 .trflow { margin: 8px 0 0; font-size: .86rem; color: var(--muted); }
 figure.tr { margin: 10px 0 0; display: grid; gap: 6px; padding-top: 10px; border-top: 1px solid var(--line); }
@@ -456,7 +457,7 @@ const S = [
     { m:'vdc', r:'U3.1', b:'J3-4', e:'half of that, ±0.05 V', w:'Battery-sense divider. E.g. 3.84 V → 1.92 V.', x:'0 V → R1 open. Same as the cell → R2 open.' },
     { m:'vdc', r:'J2-1', b:'J2-2', e:'any value', w:'The module’s factory setting. Often 6–20 V. Why nothing fragile is fitted yet.' },
   ] },
-{ st:'trim', title:'Trim the boost', val:'5.00 V', pw:'on',
+{ st:'trim', title:'Trim the boost', val:'5.00 V', pw:'on', diagram:'trim',
   orient:'<b>Come up to 5.00 V from below.</b> A slip then overshoots low, the safe way.',
   do:[
     'Probes on J2-1 / J2-2, DC volts. Leave them there while you turn',
@@ -935,15 +936,16 @@ function u1HTML() {
 
 // First power reads low at J3? Walk back along the cell path: cell → J1 → SW1 → F1 → J3-1.
 // Each panel is a to-scale crop of the board's bottom-right, front side.
-function traceCrop(red, black) {
-  const [x0, y0, w, h] = [24, 12.5, 48, 19.5];
+function traceCrop(red, black, vb = [24, 12.5, 48, 19.5]) {
+  const [x0, y0, w, h] = vb, bx = Math.max(x0, 0), by = Math.max(y0, 0);
   const inView = p => p.x > x0 && p.x < x0 + w && p.y > y0 && p.y < y0 + h;
   const pads = padList().filter(inView).map(p => (p.sq
     ? `<rect x="${p.x-p.size/2}" y="${p.y-p.size/2}" width="${p.size}" height="${p.size}" fill="var(--pad)"/>`
     : `<circle cx="${p.x}" cy="${p.y}" r="${p.size/2}" fill="var(--pad)"/>`) + `<circle cx="${p.x}" cy="${p.y}" r="${p.drill/2}" fill="var(--hole)"/>`).join('');
   const T = (s, x, y, a = 'middle', fs = 1) => `<text x="${x}" y="${y}" font-size="${fs}" text-anchor="${a}" dominant-baseline="central" fill="var(--silk)" font-family="IBM Plex Mono, monospace">${s}</text>`;
   const silk = T('J1 CELL', 60.25, 24.95) + T('+', 58.5, 28.85) + T('−', 62, 28.85) + T('SW1', 47.75, 24.95) + T('B', 46, 28.85) + T('A', 49.5, 28.85)
-    + T('F1', 31.5, 29.3, 'middle', 1.1) + ['J3-1 M+','J3-2 M−','J3-3 TRIG','J3-4 GND'].map((s, i) => T(s, 64.6, [15,17.8,20.6,23.4][i], 'end')).join('');
+    + T('F1', 31.5, 29.3, 'middle', 1.1) + ['J3-1 M+','J3-2 M−','J3-3 TRIG','J3-4 GND'].map((s, i) => T(s, 64.6, [15,17.8,20.6,23.4][i], 'end')).join('')
+    + ['J2-1 +5V','J2-2 GND','J2-3 DATA'].map((s, i) => T(s, 64.6, [6.4,9.2,12][i], 'end')).join('');
   const fuse = '<rect x="24.4" y="25.2" width="14.2" height="3.2" rx="1.6" fill="#e7b81f" opacity=".55"/>';
   const wires = [[58.5,'#d42a2a'],[62,'#222'],[46,'#d42a2a'],[49.5,'#d42a2a']].map(([x, c]) => `<line x1="${x}" y1="26.8" x2="${x}" y2="32" stroke="${c}" stroke-width=".9"/>`).join('');
   const probe = (k, col, sign) => {
@@ -952,7 +954,7 @@ function traceCrop(red, black) {
     return `<circle cx="${x}" cy="${y}" r="1.55" fill="none" stroke="#fff" stroke-width=".75"/><circle cx="${x}" cy="${y}" r="1.55" fill="none" stroke="${col}" stroke-width=".5" class="probe-ring"/>
       <circle cx="${tx}" cy="${ty}" r="1.2" fill="${col}" stroke="#fff" stroke-width=".2"/><text x="${tx}" y="${ty}" font-size="1.7" font-weight="700" text-anchor="middle" dominant-baseline="central" fill="#fff">${sign}</text>`;
   };
-  return `<svg viewBox="${x0} ${y0} ${w} ${h}" aria-hidden="true"><rect x="${x0}" y="${y0}" width="${70-x0}" height="${30-y0}" fill="var(--mask)"/>${fuse}${wires}${pads}${silk}${probe(black,'var(--probe-black)','−')}${probe(red,'var(--probe-red)','+')}</svg>`;
+  return `<svg viewBox="${x0} ${y0} ${w} ${h}" aria-hidden="true"><rect x="${bx}" y="${by}" width="${70-bx}" height="${30-by}" rx="1" fill="var(--mask)"/>${fuse}${wires}${pads}${silk}${probe(black,'var(--probe-black)','−')}${probe(red,'var(--probe-red)','+')}</svg>`;
 }
 function traceHTML() {
   const T = [
@@ -972,6 +974,50 @@ function traceHTML() {
     <p class="trflow">Power path: <b>cell</b> → <b>J1</b> → <b>SW1</b> rocker → <b>F1</b> → <b>J3-1</b>. Find where the voltage stops.</p>${rows}</details>`;
 }
 
+// Trim the boost: which screw, which way, and what the meter should show at each stage.
+function trimHTML() {
+  const mk = (id, c) => `<marker id="${id}" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="${c}"/></marker>`;
+  const arrow = mk('trArr', 'var(--muted)') + mk('trBad', 'var(--bad)') + mk('trOk', 'var(--ok)');
+  const lcd = (x, v, cap, col) => `<rect x="${x}" y="196" width="84" height="30" rx="4" fill="#c9d4b8" stroke="#555" stroke-width="1"/><text x="${x+42}" y="216" font-size="15" font-family="IBM Plex Mono, monospace" font-weight="600" text-anchor="middle" fill="#1d2a17">${v}</text><text x="${x+42}" y="240" font-size="9" text-anchor="middle" fill="${col}">${cap}</text>`;
+  const svg = `<svg viewBox="0 0 340 250" role="img" aria-label="Turn the MT3608 trimpot screw counter-clockwise to below 5 V, then clockwise up to 5.00 V">
+    <defs>${arrow}</defs>
+    <rect x="8" y="22" width="170" height="80" rx="5" fill="#2156c9"/>
+    <text x="16" y="16" font-size="9" fill="currentColor">U1 module, parts side up</text>
+    <text x="24" y="44" font-size="8" font-weight="700" fill="#fff">VOUT+</text><text x="24" y="92" font-size="8" font-weight="700" fill="#fff">VOUT−</text>
+    <text x="170" y="44" font-size="8" font-weight="700" text-anchor="end" fill="#fff">VIN+</text><text x="170" y="92" font-size="8" font-weight="700" text-anchor="end" fill="#fff">VIN−</text>
+    <rect x="62" y="44" width="44" height="44" rx="2" fill="#4a86e8"/>
+    <circle cx="68" cy="92" r="6" fill="#d9b45a" stroke="#8a6d1c" stroke-width="1"/><line x1="64" y1="96" x2="72" y2="88" stroke="#5c4510" stroke-width="1.6"/>
+    <circle cx="68" cy="92" r="11" fill="none" stroke="var(--accent-fill)" stroke-width="2"/>
+    <path d="M79 92 Q150 130 222 104" fill="none" stroke="var(--accent-fill)" stroke-width="1.5" stroke-dasharray="3 2"/>
+    <text x="96" y="124" font-size="8.5" fill="currentColor">this brass screw</text>
+    <circle cx="272" cy="78" r="34" fill="#d9b45a" stroke="#8a6d1c" stroke-width="2"/>
+    <rect x="240" y="73" width="64" height="10" rx="2" fill="#5c4510" transform="rotate(-45 272 78)"/>
+    <path d="M226 54 A52 52 0 0 0 226 102" fill="none" stroke="var(--bad)" stroke-width="3" marker-end="url(#trBad)"/>
+    <path d="M318 54 A52 52 0 0 1 318 102" fill="none" stroke="var(--ok)" stroke-width="3" marker-end="url(#trOk)"/>
+    <text x="214" y="132" font-size="9.5" font-weight="700" text-anchor="middle" fill="var(--bad)">1 · CCW ⟲</text>
+    <text x="214" y="144" font-size="8" text-anchor="middle" fill="currentColor">volts go DOWN</text>
+    <text x="214" y="155" font-size="8" text-anchor="middle" fill="currentColor">go below 5 V</text>
+    <text x="330" y="132" font-size="9.5" font-weight="700" text-anchor="end" fill="var(--ok)">2 · CW ⟳</text>
+    <text x="330" y="144" font-size="8" text-anchor="end" fill="currentColor">volts go UP</text>
+    <text x="330" y="155" font-size="8" text-anchor="end" fill="currentColor">creep to 5.00</text>
+    <text x="8" y="186" font-size="9" fill="currentColor">Meter on DC V, probes on J2-1 / J2-2 the whole time:</text>
+    ${lcd(8, '17.06', 'factory setting', 'currentColor')}
+    <path d="M96 211 H118" stroke="currentColor" stroke-width="1.5" marker-end="url(#trArr)"/>
+    ${lcd(124, '4.80', '1 · after CCW, below 5', 'var(--bad)')}
+    <path d="M212 211 H234" stroke="currentColor" stroke-width="1.5" marker-end="url(#trArr)"/>
+    ${lcd(240, '5.00', '2 · after CW. Stop', 'var(--ok)')}
+  </svg>`;
+  return `<div class="u1d">${svg}
+    <figure class="tr trj2" style="margin:0;padding:0;border:0">${traceCrop('J2-1', 'J2-2', [50, 2, 22, 13])}
+      <figcaption><span class="pr"><span class="tag red">RED +</span>${ptName('J2-1')}</span><span class="pr"><span class="tag blk">BLACK −</span>${ptName('J2-2')}</span><span class="fixline">Hold them here while you turn. Read the meter, not the screw.</span></figcaption></figure>
+    <ol class="u1steps">
+      <li>Up to 10–20 full turns before anything changes. Multi-turn pot: normal</li>
+      <li>Volts go <b>up</b> on CCW? Your module is the other way round: swap the two directions</li>
+      <li>Overshoot past 5.05 on the way up → go back below 5 and creep again</li>
+      <li>Clicking or a hard stop at one end → stop turning that way</li>
+    </ol></div>`;
+}
+
 function renderCard() {
   const a = A(), i = a.cur, s = S[i];
   if (sel >= (s.checks || []).length) sel = 0;
@@ -989,6 +1035,7 @@ function renderCard() {
   if (s.needs === 'trimmed' && !a.done[S[TRIM_STEP].id]) h += `<div class="warn">“Trim the boost” isn’t ticked for Arm ${state.arm}. Trim U1 to 5.00 V before this part goes on.</div>`;
   if (s.orient) h += `<div class="orient">${s.orient}</div>`;
   if (s.diagram === 'u1') h += u1HTML();
+  if (s.diagram === 'trim') h += trimHTML();
   if (s.do) h += `<ul class="do">${s.do.map(d => `<li>${d}</li>`).join('')}</ul>`;
   if (s.extra === 'parts') h += `<div class="tblwrap"><table class="parts">${PARTS_LIST.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td style="color:var(--muted)">${r[2]}</td></tr>`).join('')}</table></div>`;
   if (s.checks) {
