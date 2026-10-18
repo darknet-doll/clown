@@ -114,6 +114,14 @@ h2 .val { color: var(--accent); }
 .u1key { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; font-size: .86rem; }
 .u1key li { display: flex; align-items: center; gap: 6px; }
 .u1key i { width: 18px; height: 5px; border-radius: 3px; outline: 1px solid #9aa1a7; flex: none; }
+details.trace { border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: grid; gap: 10px; }
+details.trace summary { cursor: pointer; font-weight: 600; }
+.trflow { margin: 8px 0 0; font-size: .86rem; color: var(--muted); }
+figure.tr { margin: 10px 0 0; display: grid; gap: 6px; padding-top: 10px; border-top: 1px solid var(--line); }
+figure.tr svg { width: 100%; height: auto; display: block; border-radius: 4px; }
+figure.tr figcaption { display: grid; gap: 3px; font-size: .82rem; }
+figure.tr .pr { display: flex; gap: 6px; align-items: baseline; }
+figure.tr .fixline { color: var(--muted); }
 .u1steps { margin: 0; padding-left: 1.3em; display: grid; gap: 3px; font-size: .88rem; }
 ul.do { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
 ul.do li::marker { color: var(--muted); }
@@ -437,7 +445,7 @@ const S = [
   ] },
 
 /* ---- first power + trim ---- */
-{ st:'trim', title:'First power', pw:'on',
+{ st:'trim', title:'First power', pw:'on', diagram:'trace',
   do:[
     'Rocker <b>OFF</b> → plug the cell into J1’s lead → rocker <b>ON</b>',
     'Meter on <b>DC volts</b> for this whole stage',
@@ -925,6 +933,45 @@ function u1HTML() {
     </ol></div>`;
 }
 
+// First power reads low at J3? Walk back along the cell path: cell → J1 → SW1 → F1 → J3-1.
+// Each panel is a to-scale crop of the board's bottom-right, front side.
+function traceCrop(red, black) {
+  const [x0, y0, w, h] = [24, 12.5, 48, 19.5];
+  const inView = p => p.x > x0 && p.x < x0 + w && p.y > y0 && p.y < y0 + h;
+  const pads = padList().filter(inView).map(p => (p.sq
+    ? `<rect x="${p.x-p.size/2}" y="${p.y-p.size/2}" width="${p.size}" height="${p.size}" fill="var(--pad)"/>`
+    : `<circle cx="${p.x}" cy="${p.y}" r="${p.size/2}" fill="var(--pad)"/>`) + `<circle cx="${p.x}" cy="${p.y}" r="${p.drill/2}" fill="var(--hole)"/>`).join('');
+  const T = (s, x, y, a = 'middle', fs = 1) => `<text x="${x}" y="${y}" font-size="${fs}" text-anchor="${a}" dominant-baseline="central" fill="var(--silk)" font-family="IBM Plex Mono, monospace">${s}</text>`;
+  const silk = T('J1 CELL', 60.25, 24.95) + T('+', 58.5, 28.85) + T('−', 62, 28.85) + T('SW1', 47.75, 24.95) + T('B', 46, 28.85) + T('A', 49.5, 28.85)
+    + T('F1', 31.5, 29.3, 'middle', 1.1) + ['J3-1 M+','J3-2 M−','J3-3 TRIG','J3-4 GND'].map((s, i) => T(s, 64.6, [15,17.8,20.6,23.4][i], 'end')).join('');
+  const fuse = '<rect x="24.4" y="25.2" width="14.2" height="3.2" rx="1.6" fill="#e7b81f" opacity=".55"/>';
+  const wires = [[58.5,'#d42a2a'],[62,'#222'],[46,'#d42a2a'],[49.5,'#d42a2a']].map(([x, c]) => `<line x1="${x}" y1="26.8" x2="${x}" y2="32" stroke="${c}" stroke-width=".9"/>`).join('');
+  const probe = (k, col, sign) => {
+    const [x, y] = PT[k], right = x > 65;
+    const [tx, ty] = right ? [x + 3.3, y] : [x, y - 3.1];
+    return `<circle cx="${x}" cy="${y}" r="1.55" fill="none" stroke="#fff" stroke-width=".75"/><circle cx="${x}" cy="${y}" r="1.55" fill="none" stroke="${col}" stroke-width=".5" class="probe-ring"/>
+      <circle cx="${tx}" cy="${ty}" r="1.2" fill="${col}" stroke="#fff" stroke-width=".2"/><text x="${tx}" y="${ty}" font-size="1.7" font-weight="700" text-anchor="middle" dominant-baseline="central" fill="#fff">${sign}</text>`;
+  };
+  return `<svg viewBox="${x0} ${y0} ${w} ${h}" aria-hidden="true"><rect x="${x0}" y="${y0}" width="${70-x0}" height="${30-y0}" fill="var(--mask)"/>${fuse}${wires}${pads}${silk}${probe(black,'var(--probe-black)','−')}${probe(red,'var(--probe-red)','+')}</svg>`;
+}
+function traceHTML() {
+  const T = [
+    ['J3-1', 'J3-4', 'Where you are now', '3.0 – 4.2 V', 'Low (e.g. 209 mV) → work back through 1, 2, 3 below.'],
+    ['J1+', 'J1-', '1 · Is the cell reaching the board?', '3.0 – 4.2 V', 'Low here → unplug, meter the <b>cell’s own plug pins</b>. Near 0 there too → protection tripped: kit charger 5–10 min, measure again. Fine at the cell → reheat the J1 joints.'],
+    ['J1+', 'F1sq', '2 · Is the switch closing?', 'about 0 V, rocker ON', 'Shows the cell voltage → rocker is OFF, or SW1’s wires / joints are bad.'],
+    ['J3-1', 'J3-4', '3 · Back at J3, after 1 and 2 pass', '3.0 – 4.2 V', 'Still low → F1 joint. Reheat both F1 legs.'],
+  ];
+  const rows = T.map(([r, b, title, exp, fix]) => `<figure class="tr">
+      ${traceCrop(r, b)}
+      <figcaption><b>${title}</b>
+        <span class="pr"><span class="tag red">RED +</span>${ptName(r)}</span>
+        <span class="pr"><span class="tag blk">BLACK −</span>${ptName(b)}</span>
+        <span>DC V · expect <strong>${exp}</strong></span>
+        <span class="fixline">${fix}</span></figcaption></figure>`).join('');
+  return `<details class="trace" open><summary>J3 reads low? Trace it back to the cell</summary>
+    <p class="trflow">Power path: <b>cell</b> → <b>J1</b> → <b>SW1</b> rocker → <b>F1</b> → <b>J3-1</b>. Find where the voltage stops.</p>${rows}</details>`;
+}
+
 function renderCard() {
   const a = A(), i = a.cur, s = S[i];
   if (sel >= (s.checks || []).length) sel = 0;
@@ -960,6 +1007,7 @@ function renderCard() {
     });
     h += `</div>`;
   }
+  if (s.diagram === 'trace') h += traceHTML();
   if (s.how) h += `<details class="how"><summary>How: a through-hole joint</summary><ol>
     <li>Bend the legs to the hole spacing. Push through from the <b>front</b> (white outlines)</li>
     <li>On the <b>back</b>, bend each leg outward ~30° so it stays put. Not flat against the board</li>
