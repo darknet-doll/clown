@@ -123,6 +123,8 @@ figure.tr svg { width: 100%; height: auto; display: block; border-radius: 4px; }
 figure.tr figcaption { display: grid; gap: 3px; font-size: .82rem; }
 figure.tr .pr { display: flex; gap: 6px; align-items: baseline; }
 figure.tr .fixline { color: var(--muted); }
+.legs.howto { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.howh { margin: 12px 0 6px; font-size: .9rem; }
 .u1steps { margin: 0; padding-left: 1.3em; display: grid; gap: 3px; font-size: .88rem; }
 ul.do { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
 ul.do li::marker { color: var(--muted); }
@@ -1045,7 +1047,26 @@ function benchHTML() {
     ${tape(200, 170)}${tape(200, 210)}
     ${T(10, 256, 'Grey = tape. Wrap each join on its own; no two may touch.')}
   </svg>`;
+  // How to fit CR1 to the two motor joins, frame by frame.
+  const joinA = (shine) => `<path d="M4 18 H46" stroke="#2c62d6" stroke-width="3"/><path d="M116 18 H74" stroke="#d42a2a" stroke-width="3"/>
+    <path d="M46 18 L50 15 L54 21 L58 15 L62 21 L66 15 L70 21 L74 18" stroke="${shine ? '#e3e6e9' : '#b8bec4'}" stroke-width="${shine ? 3 : 1.4}" fill="none"/>`;
+  const joinB = (shine) => `<path d="M4 54 H46" stroke="#d42a2a" stroke-width="3"/><path d="M116 54 H74" stroke="#1b1b1b" stroke-width="3"/>
+    <path d="M46 54 L50 51 L54 57 L58 51 L62 57 L66 51 L70 57 L74 54" stroke="${shine ? '#e3e6e9' : '#b8bec4'}" stroke-width="${shine ? 3 : 1.4}" fill="none"/>`;
+  const lab = '<text x="4" y="11" font-size="6" fill="currentColor">blue + motor red</text><text x="4" y="66" font-size="6" fill="currentColor">red + motor black</text>';
+  const diode = (legs) => `<line x1="60" y1="${legs ? 18 : 22}" x2="60" y2="29" stroke="#9aa1a7" stroke-width="1.2"/><line x1="60" y1="43" x2="60" y2="${legs ? 54 : 50}" stroke="#9aa1a7" stroke-width="1.2"/>
+    <rect x="56" y="29" width="8" height="14" rx="1.5" fill="#1b1b1b"/><rect x="56" y="29" width="8" height="3.5" fill="#cfd3d6"/>`;
+  const wraps = '<path d="M57 15 Q60 22 63 15 M55 17 Q60 24 65 17" stroke="#9aa1a7" stroke-width="1" fill="none"/><path d="M57 57 Q60 50 63 57 M55 55 Q60 48 65 55" stroke="#9aa1a7" stroke-width="1" fill="none"/>';
+  const frames = [
+    ['<b>Cell unplugged.</b> Twist each pair tight, end to end', joinA(0) + joinB(0) + lab],
+    ['Hold the diode between them, <b>band at the top</b> (blue join)', joinA(0) + joinB(0) + lab + diode(0) + '<text x="70" y="33" font-size="6" fill="currentColor">band</text>'],
+    ['Wrap each leg <b>2–3 turns</b> round its twist', joinA(0) + joinB(0) + diode(1) + wraps],
+    ['Iron <b>under</b> the twist, solder <b>on top</b>. 2–3 s, it soaks in', joinA(1) + joinB(0) + diode(1) + wraps + '<path d="M40 40 L56 22" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M76 2 Q70 8 64 14" stroke="#c9ced3" stroke-width="1.6" fill="none"/><text x="20" y="46" font-size="6" fill="currentColor">iron</text><text x="80" y="8" font-size="6" fill="currentColor">solder</text>'],
+    ['Same for the bottom join. Snip leftover leg ends', joinA(1) + joinB(1) + diode(1)],
+    ['<b>Tape each join on its own.</b> Tape the diode body too', joinA(1) + joinB(1) + diode(1) + '<rect x="42" y="10" width="36" height="16" rx="4" fill="#b9bec4" opacity=".8"/><rect x="42" y="46" width="36" height="16" rx="4" fill="#b9bec4" opacity=".8"/><rect x="54" y="27" width="12" height="18" rx="3" fill="#b9bec4" opacity=".6"/>'],
+  ].map(([cap, body], i) => `<figure><svg viewBox="0 0 120 70" aria-hidden="true">${body}</svg><figcaption><b>${i+1}</b> ${cap}</figcaption></figure>`).join('');
   return `<details class="trace" open><summary>Bench test: wire the blower and trigger</summary>${svg}
+    <h4 class="howh">Fitting CR1, step by step</h4><div class="legs howto">${frames}</div>
+    <p class="trflow">No iron yet? For a first bench test, steps 1–3 then tape (step 6) is enough. The twist holds; solder it before it goes in the glove.</p>
     <ol class="u1steps">
       <li>Motor <b>red → blue</b>, motor <b>black → red</b>. The colours cross: red is motor minus on this lead</li>
       <li><b>CR1</b> across the two motor joins, <b>band on the motor-red / blue join</b>. Backwards = short across the cell</li>
