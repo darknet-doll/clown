@@ -582,7 +582,7 @@ const S = [
     { m:'look', spots:['u2a','u2b','sw'], e:'The three tight spots: U2 pins 1–4, U2 pins 9 & 12, SW1 pads', w:'Back of the board, magnifier.' },
     { m:'look', e:'Every joint shiny and cone-shaped, pad fully wetted', w:'Dull, balled or grainy → reheat with a touch of fresh solder.' },
   ] },
-{ st:'finish', title:'Board done', pw:'out',
+{ st:'finish', title:'Board done', pw:'out', diagram:'bench',
   do:[
     'Next: <b>BUILD.md step 6</b>, bench test with strip and blower connected',
     'There: retrim U1 to 5.00 V <b>with the strip lit</b>, then lock the trimpot with a dab of nail polish',
@@ -1018,6 +1018,42 @@ function trimHTML() {
     </ol></div>`;
 }
 
+// Bench test hookup: the prong half of the J3 lead to the kit blower, its diode, and the trigger.
+function benchHTML() {
+  const W = (d, c) => `<path d="${d}" fill="none" stroke="#9aa1a7" stroke-width="5" stroke-linecap="round"/><path d="${d}" fill="none" stroke="${c}" stroke-width="3.4" stroke-linecap="round"/>`;
+  const tape = (x, y) => `<rect x="${x-13}" y="${y-8}" width="26" height="16" rx="4" fill="#b9bec4" opacity=".75" stroke="#7d848a" stroke-width=".8"/>`;
+  const T = (x, y, s, a = 'start', o = '') => `<text x="${x}" y="${y}" font-size="8.5" text-anchor="${a}" fill="currentColor" ${o}>${s}</text>`;
+  const svg = `<svg viewBox="0 0 340 262" role="img" aria-label="Bench wiring: J3 lead to blower motor with diode CR1, and to the trigger switch">
+    <rect x="10" y="40" width="34" height="126" rx="3" fill="#1b1b1b"/>
+    ${T(10, 30, 'J3 lead, prong half', 'start', 'font-weight="700"')}
+    ${W('M44 60 H200', '#2c62d6')}
+    ${W('M44 84 H112 Q136 84 146 110 H200', '#d42a2a')}
+    ${W('M44 136 H112 Q136 136 146 170 H200', '#24974a')}
+    ${W('M44 152 H100 Q130 152 146 210 H200', '#1b1b1b')}
+    ${T(50, 55, 'blue · M+')}${T(50, 79, 'red · M−')}${T(50, 131, 'green · TRIG')}${T(50, 166, 'black · GND')}
+    <rect x="276" y="56" width="52" height="58" rx="10" fill="#f4f4f4" stroke="#b9bec4" stroke-width="1.5"/>
+    ${T(302, 46, 'blower motor', 'middle', 'font-weight="700"')}
+    ${W('M278 72 Q240 60 200 60', '#d42a2a')}${W('M278 98 Q240 110 200 110', '#1b1b1b')}
+    ${T(244, 52, 'motor red (+)', 'middle')}${T(244, 132, 'motor black (−)', 'middle')}
+    <line x1="200" y1="60" x2="200" y2="74" stroke="#9aa1a7" stroke-width="1.6"/><line x1="200" y1="96" x2="200" y2="110" stroke="#9aa1a7" stroke-width="1.6"/>
+    <rect x="194" y="74" width="12" height="22" rx="2" fill="#1b1b1b"/><rect x="194" y="74" width="12" height="5" fill="#cfd3d6"/>
+    ${T(212, 80, 'CR1 · 1N5819', 'start', 'font-weight="700"')}${T(212, 91, 'band → red side')}
+    ${tape(200, 60)}${tape(200, 110)}
+    <rect x="270" y="176" width="40" height="44" rx="3" fill="#1b1b1b"/><path d="M310 182 L326 214" stroke="#9aa1a7" stroke-width="2" fill="none"/>
+    ${T(290, 234, 'trigger switch', 'middle', 'font-weight="700"')}${T(290, 245, 'either way round', 'middle')}
+    ${W('M270 188 Q236 188 228 170 H200', '#d42a2a')}${W('M270 208 Q236 208 228 210 H200', '#d42a2a')}
+    ${tape(200, 170)}${tape(200, 210)}
+    ${T(10, 256, 'Grey = tape. Wrap each join on its own; no two may touch.')}
+  </svg>`;
+  return `<details class="trace" open><summary>Bench test: wire the blower and trigger</summary>${svg}
+    <ol class="u1steps">
+      <li>Motor <b>red → blue</b>, motor <b>black → red</b>. The colours cross: red is motor minus on this lead</li>
+      <li><b>CR1</b> across the two motor joins, <b>band on the motor-red / blue join</b>. Backwards = short across the cell</li>
+      <li>Switch wires → <b>green</b> and <b>black</b>, either way. Beep it first: silent at rest, beeps pressed</li>
+      <li>Tape every join separately. Plug into J3, strip into J2, cell in, rocker ON</li>
+    </ol></details>`;
+}
+
 function renderCard() {
   const a = A(), i = a.cur, s = S[i];
   if (sel >= (s.checks || []).length) sel = 0;
@@ -1035,6 +1071,7 @@ function renderCard() {
   if (s.needs === 'trimmed' && !a.done[S[TRIM_STEP].id]) h += `<div class="warn">“Trim the boost” isn’t ticked for Arm ${state.arm}. Trim U1 to 5.00 V before this part goes on.</div>`;
   if (s.orient) h += `<div class="orient">${s.orient}</div>`;
   if (s.diagram === 'u1') h += u1HTML();
+  if (s.diagram === 'bench') h += benchHTML();
   if (s.diagram === 'trim') h += trimHTML();
   if (s.do) h += `<ul class="do">${s.do.map(d => `<li>${d}</li>`).join('')}</ul>`;
   if (s.extra === 'parts') h += `<div class="tblwrap"><table class="parts">${PARTS_LIST.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td style="color:var(--muted)">${r[2]}</td></tr>`).join('')}</table></div>`;
