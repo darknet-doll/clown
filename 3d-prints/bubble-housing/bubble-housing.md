@@ -210,6 +210,20 @@ derived from the no-redistribution model; regenerate with the script).
 
 Suggested: PLA, 0.4 nozzle, 0.2 layers, 3 walls, 15% infill (the v1 defaults).
 
+#### Velcro strap slots (2026-10-21, not yet printed)
+
+Script: `reference/bubble-gun-toy/velcro_slots.py`. Same cut and clocking as above;
+outputs `front-housing/front-housing-velcro-{bottom-01,top-02}.stl` and the preview
+`front-housing/velcro-slots.png` (all gitignored).
+
+- The single 3.8 x 30.5 slot at 12:00 (lid) and 6:00 (cradle) is filled and replaced
+  by two strap slots with a bar between: strap goes down one, under the bar, up the
+  other   <- one slot gave the strap nothing to wrap round (darknetdoll, 2026-10-21)
+- Slot: 13 along the axis x 2.5 across   <- same as the strap opening spec: 11 strap + 2; 2.5 lets it double back
+- Bar: 4 wide, on the old slot's raised rim (2.7 thick)
+- Slots run 20 -> 33 behind the ring face   <- stops short of the cradle's internal ribs (start 34 behind)
+- Strap passes under the bar inside the bore, between the bar and the head
+
 ## Log
 
 ### 2026-10-12 — v3 base + shroud printed (fail)
@@ -261,6 +275,11 @@ Suggested: PLA, 0.4 nozzle, 0.2 layers, 3 walls, 15% infill (the v1 defaults).
   and belt loops may be superseded — decide at the first stack fit test whether
   v4 drops them. Until then the v3 exports stand
 - Material, wall, intake pattern for the floral shell: UNKNOWN
+- **Velcro slots:** the strap runs under the bar inside the bore (r 19.7), so it
+  needs ~1.1 of room between the bar and the head body. Body OD there is M2 (not
+  measured). If the head won't go in over the strap, move to an outside strap loop.
+  Also: these slots fill the old 3.8 slots, which may be for the head's side tabs
+  (see below)
 - **Gun front housing direct print:** confirm the −90° re-clock reads right on the
   markup artifact (nipple groove ~1:30, screws 3/9, split horizontal) before slicing;
   decide whether the 6:00 side slot and the back-wall pass-through serve as wire exits

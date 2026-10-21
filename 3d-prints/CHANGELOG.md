@@ -19,11 +19,20 @@ Spec and log: [bubble-housing/bubble-housing.md](bubble-housing/bubble-housing.m
 | Version | Date | Status | Files |
 |---|---|---|---|
 | v4 | — | Waiting on body measurements (M1–M6, R1–R4) | — |
+| gun front print + Velcro slots | 2026-10-21 | Not yet printed | `reference/bubble-gun-toy/front-housing/front-housing-velcro-*.stl` (gitignored, `velcro_slots.py`) |
 | gun front print | 2026-10-13 | **Adopted as the new housing direction.** Full halves to print, no coupon | `reference/bubble-gun-toy/front-housing/` (gitignored, regenerate with `cut_front_housing.py`) |
 | v3 | 2026-10-11 | **Printed 2026-10-12, does not fit.** Current until v4 | `versions/bubble-housing-v3-base.stl`, `versions/bubble-housing-v3-shroud.stl` |
 | v2 | 2026-10-08 | Base archived. Slot coupon current, result not logged yet | `versions/archive/bubble-housing-v2-base.stl`, `versions/bubble-housing-v2-slot-coupon.stl` |
 | v1 | 2026-10-07 | Archived. Clip coupons printed and done | `versions/archive/bubble-housing-v1-*.stl` |
 | reference | 2026-10-05 | Measurements only, no print | `reference/` (gun model files are gitignored) |
+
+### Gun front print, Velcro slots — 2026-10-21
+
+- **Change:** on both halves, the single slot at 12:00 / 6:00 is filled and replaced by
+  two 13 x 2.5 strap slots with a 4 mm bar between them (`velcro_slots.py`)
+- **Why:** the strap needs to go down, under a bar and back up to grip the housing;
+  one slot gives it nothing to wrap round
+- **Files:** `front-housing-velcro-*.stl`, local only (gitignored)
 
 ### Gun front print — 2026-10-13
 
