@@ -180,6 +180,23 @@ mirror already baked in, same as v5.
 |---|---|---|
 | `versions/wrist-splint-mount-v6-membrane-full.stl` | Flat | None. No pause needed |
 
+v7 (suggested, not yet printed) — **wrap band**, a full-round-the-wrist test,
+no tulle (`export_v7.py`; darknetdoll 2026-10-21: "form entirely around my wrist
+and velcro through"). v6 construction on a straight band: 68D elements 1.8 on a
+0.4 membrane, one print, no pause, AMS fine. Printed mm, print at 100%.
+
+- Band 120 × 40   <- wrist 139.7: ends sit ~20 apart round the wrist; two 11 mm straps close the gap and adjust
+- Ends: solid 18 tile, two slot pairs each (straps at y ±10). Slot 13 × 2.5,
+  bar 4: down one slot, under the bar, up the other   <- same as the housing's velcro slots
+- Flex zone: cross traces with pads, alternating with columns of three harlequin
+  diamonds (4.7 × 8.5); hinges ≥ 2.9   <- elements run across the band so it bends at the membrane
+- Long edges: dashed binding 2 wide, 4 on / 2 off
+- Preview: `versions/wrist-splint-mount-v7-preview.png`
+
+| File | Orientation | Supports |
+|---|---|---|
+| `versions/wrist-splint-mount-v7-wrap-band.stl` | Flat, membrane on the bed | None |
+
 v2 geometry decisions (also in `export_v2.py`):
 - Plate rebuilt as a flat extrusion of the z=1.75 section, not a boolean on
   the original mesh   <- keeps every outline/slot exactly; loses the
@@ -203,6 +220,10 @@ v2 geometry decisions (also in `export_v2.py`):
 
 ## Open
 
+- **v7 wrap band:** does the 0.4 membrane bend round 139.7 without cracking at
+  the tile edges? Do the end tiles sit flat or dig in? Is 20 of strap gap
+  comfortable, or lengthen the band? Can one of its straps also pass through the
+  housing's new velcro slots?
 - **Direction fork after the stiff v2** (darknetdoll to pick):
   (a) reprint v2 unchanged in true TPU 95A, external spool — fewest unknowns;
   (b) r4 tulle sandwich — uses the 68D spool already on hand, drapes like
