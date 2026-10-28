@@ -11,6 +11,24 @@ one line of why. Each part's full spec, settings and per-print log are in its ow
 
 ---
 
+## Finger trigger ring
+
+Lever microswitch on a ring at the base of the middle finger, lever toward the palm.
+Spec and log: [finger-trigger-ring/finger-trigger-ring.md](finger-trigger-ring/finger-trigger-ring.md)
+
+| Version | Date | Status | Files |
+|---|---|---|---|
+| v1 | 2026-10-27 | Not yet printed | `versions/finger-trigger-ring-v1-c50.stl`, `versions/finger-trigger-ring-v1-c65.stl` |
+
+### v1 — 2026-10-27
+
+- **Change:** first model. 7 mm band plus a flat saddle on the palm side. The switch
+  lies flat, held by two M2 screws into 1.7 pilots, with a lip behind it. Two bores: 50 and 65 mm circumference
+- **Why:** test fit and actuation. Curling the finger should fold the palm onto the lever
+- **Files:** `versions/finger-trigger-ring-v1-c50.stl`, `versions/finger-trigger-ring-v1-c65.stl` (`export_v1.py`)
+
+---
+
 ## Bubble housing
 
 Saddle mount for the Bubble Maker Kit 01 blower head, back of the left hand.
