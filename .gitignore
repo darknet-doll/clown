@@ -24,3 +24,6 @@ docs/tutorial/assemble
 docs/pcb/build/
 docs/pcb/*.kicad_prl
 docs/pcb/fp-info-cache
+
+# Python bytecode from running the export scripts
+__pycache__/
