@@ -18,14 +18,23 @@ Spec and log: [finger-trigger-ring/finger-trigger-ring.md](finger-trigger-ring/f
 
 | Version | Date | Status | Files |
 |---|---|---|---|
-| v1 | 2026-10-27 | Not yet printed | `versions/finger-trigger-ring-v1-c50.stl`, `versions/finger-trigger-ring-v1-c65.stl` |
+| v2 | 2026-10-27 | Not yet printed. Current | `versions/finger-trigger-ring-v2-c65.stl` |
+| v1 | 2026-10-27 | Archived, never printed | `versions/archive/finger-trigger-ring-v1-*.stl` |
+
+### v2 — 2026-10-27
+
+- **Change:** removed the lip behind the switch. Added a 1.0 split through the band
+  on the back of the finger. 65 mm bore only
+- **Why:** the switch may change, so nothing should be sized to its body. The split
+  lets one ring fit a range of hands. Only the 65 test finger is available for now
+- **Files:** `versions/finger-trigger-ring-v2-c65.stl` (`export_v2.py`)
 
 ### v1 — 2026-10-27
 
 - **Change:** first model. 7 mm band plus a flat saddle on the palm side. The switch
   lies flat, held by two M2 screws into 1.7 pilots, with a lip behind it. Two bores: 50 and 65 mm circumference
 - **Why:** test fit and actuation. Curling the finger should fold the palm onto the lever
-- **Files:** `versions/finger-trigger-ring-v1-c50.stl`, `versions/finger-trigger-ring-v1-c65.stl` (`export_v1.py`)
+- **Files:** `versions/archive/finger-trigger-ring-v1-c50.stl`, `versions/archive/finger-trigger-ring-v1-c65.stl` (`export_v1.py`)
 
 ---
 

@@ -1,7 +1,7 @@
 # v1 fit-test rings: lever microswitch on the palm side of the middle finger base.
 # Run from this folder:
 #   uv run --with trimesh --with manifold3d --with shapely python export_v1.py
-#   ->  versions/finger-trigger-ring-v1-c50.stl, versions/finger-trigger-ring-v1-c65.stl
+#   ->  versions/archive/finger-trigger-ring-v1-c50.stl, versions/archive/finger-trigger-ring-v1-c65.stl
 #
 # Switch (Amazon listing drawing, 71BXJrdZ7tL): body 20 x 15.6 x 6.4, lever on one
 # 20 mm edge, sweeps 8 above it. Holes 2.3, 9.5 apart. The drawing doesn't give the
@@ -67,10 +67,10 @@ def switch_dummy(top):
 
 if __name__ == '__main__':
     import os
-    os.makedirs('versions', exist_ok=True)
+    os.makedirs('versions/archive', exist_ok=True)
     for c in (50, 65):
         m, info = build(c)
-        m.export(f'versions/finger-trigger-ring-v1-c{c}.stl')
+        m.export(f'versions/archive/finger-trigger-ring-v1-c{c}.stl')
         e = np.round(m.extents, 1)
         print(f'c{c}: bore {2 * info["r_in"]:.2f}  plate top {info["top"]:.2f} off axis  '
               f'pilot depth {info["pilot"]:.1f}  watertight={m.is_watertight}  size {e[0]} x {e[1]} x {e[2]}')
