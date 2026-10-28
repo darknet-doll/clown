@@ -18,8 +18,16 @@ Spec and log: [finger-trigger-ring/finger-trigger-ring.md](finger-trigger-ring/f
 
 | Version | Date | Status | Files |
 |---|---|---|---|
-| v2 | 2026-10-27 | Not yet printed. Current | `versions/finger-trigger-ring-v2-c65.stl` |
+| v3 | 2026-10-27 | Not yet printed. Current | `versions/finger-trigger-ring-v3-c65.stl` |
+| v2 | 2026-10-27 | Archived, never printed | `versions/archive/finger-trigger-ring-v2-c65.stl` |
 | v1 | 2026-10-27 | Archived, never printed | `versions/archive/finger-trigger-ring-v1-*.stl` |
+
+### v3 — 2026-10-27
+
+- **Change:** rounded the split's edges R0.6 and flared the finger-side edges R1.0.
+  The screw holes now go right through
+- **Why:** sharp edges at the gap and bore pinch the finger. Through holes print without bridging
+- **Files:** `versions/finger-trigger-ring-v3-c65.stl` (`export_v3.py`)
 
 ### v2 — 2026-10-27
 
@@ -27,7 +35,7 @@ Spec and log: [finger-trigger-ring/finger-trigger-ring.md](finger-trigger-ring/f
   on the back of the finger. 65 mm bore only
 - **Why:** the switch may change, so nothing should be sized to its body. The split
   lets one ring fit a range of hands. Only the 65 test finger is available for now
-- **Files:** `versions/finger-trigger-ring-v2-c65.stl` (`export_v2.py`)
+- **Files:** `versions/archive/finger-trigger-ring-v2-c65.stl` (`export_v2.py`)
 
 ### v1 — 2026-10-27
 

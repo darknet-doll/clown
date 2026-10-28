@@ -13,7 +13,22 @@ Amazon listing drawing (`m.media-amazon.com/images/I/71BXJrdZ7tL._SL1500_.jpg`):
 - Hole height isn't on the drawing. Measured off the image (25.6 px/mm): centres
   **7.2 below the lever edge**, 8.4 above the bottom edge, about 5.1 in from each end
 
-## v2 (test fit) — current
+## v3 (test fit) — current
+
+Same as v2 except:
+
+- **Split edges:** the four long edges of the gap are rounded R0.6, so they don't pinch.
+  The same rounding takes the saddle's lower corners where they meet the finger's sides
+- **Finger-side edges:** flared R1.0 at both ends of the ring
+  - all round at the knuckle end
+  - on the back half at the end of the band
+  - under the saddle at its far end
+- **Screw holes:** Ø1.7, right through into the bore. Nothing to bridge when printing
+  - The plate is 4.6 thick at the holes. An M2×10 tip stops about 1.0 short of the
+    bore. **Nothing longer than M2×10**, or it reaches the finger
+- **Files:** `versions/finger-trigger-ring-v3-c65.stl` (`export_v3.py`)
+
+## v2 (test fit) — archived, not printed
 
 Same as v1 except:
 
@@ -23,7 +38,7 @@ Same as v1 except:
   squeeze to suit other hands
 - **One size: 65** mm circumference. The production hands aren't available to measure yet
 - **Pilot depth:** 3.8. Still M2×10
-- **Files:** `versions/finger-trigger-ring-v2-c65.stl` (`export_v2.py`)
+- **Files:** `versions/archive/finger-trigger-ring-v2-c65.stl` (`export_v2.py`)
 
 ## v1 (test fit) — archived, not printed
 

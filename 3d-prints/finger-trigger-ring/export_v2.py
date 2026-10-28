@@ -1,7 +1,7 @@
 # v2 fit-test ring: v1 without the lip, plus a split on the back of the finger.
 # Run from this folder:
 #   uv run --with trimesh --with manifold3d --with shapely python export_v2.py
-#   ->  versions/finger-trigger-ring-v2-c65.stl
+#   ->  versions/archive/finger-trigger-ring-v2-c65.stl
 #
 #   lip      removed: the final switch may not be this one, so nothing is sized
 #            to its body except the two pilots
@@ -52,7 +52,7 @@ def build(circ):
 if __name__ == '__main__':
     for c in (65,):
         m, info = build(c)
-        m.export(f'versions/finger-trigger-ring-v2-c{c}.stl')
+        m.export(f'versions/archive/finger-trigger-ring-v2-c{c}.stl')
         e = np.round(m.extents, 1)
         print(f'c{c}: bore {2 * info["r_in"]:.2f}  plate top {info["top"]:.2f} off axis  '
               f'pilot depth {info["pilot"]:.1f}  watertight={m.is_watertight}  bodies={len(m.split(only_watertight=False))}  '
