@@ -13,7 +13,31 @@ Amazon listing drawing (`m.media-amazon.com/images/I/71BXJrdZ7tL._SL1500_.jpg`):
 - Hole height isn't on the drawing. Measured off the image (25.6 px/mm): centres
   **7.2 below the lever edge**, 8.4 above the bottom edge, about 5.1 in from each end
 
-## v3 (test fit) — current
+## v4 (sizing set) — current
+
+v3 geometry in nine sizes, each in two plate lengths. Print the ones that bracket the
+hand, then pick a size and a plate.
+
+- **Sizes:** 45, 47.5, 50, 52.5, 55, 57.5, 60, 62.5, 65 mm finger circumference
+- **full:** plate as v3. It runs 8.7 past the screw-hole centres, to 15.9 from the knuckle end
+- **short:** plate runs half that past the holes, 4.35, to 11.55. The switch overhangs its
+  end by about 4. There is 3.5 of plate between each hole and the end
+- **Screws:** M2×10 at every size. The tip stops 1.0 (c65) to 1.7 (c45) short of the bore
+- **Files:** `versions/finger-trigger-ring-v4-c<size>-full.stl` and `-short.stl` (`export_v4.py`)
+
+| Size | Bore Ø | Plate at holes | M2×10 tip to bore |
+|---|---|---|---|
+| 45 | 14.52 | 5.27 | 1.67 |
+| 47.5 | 15.32 | 5.15 | 1.55 |
+| 50 | 16.12 | 5.05 | 1.45 |
+| 52.5 | 16.91 | 4.96 | 1.36 |
+| 55 | 17.71 | 4.88 | 1.28 |
+| 57.5 | 18.50 | 4.81 | 1.21 |
+| 60 | 19.30 | 4.75 | 1.15 |
+| 62.5 | 20.09 | 4.69 | 1.09 |
+| 65 | 20.89 | 4.64 | 1.04 |
+
+## v3 (test fit) — archived
 
 Same as v2 except:
 
@@ -26,7 +50,7 @@ Same as v2 except:
 - **Screw holes:** Ø1.7, right through into the bore. Nothing to bridge when printing
   - The plate is 4.6 thick at the holes. An M2×10 tip stops about 1.0 short of the
     bore. **Nothing longer than M2×10**, or it reaches the finger
-- **Files:** `versions/finger-trigger-ring-v3-c65.stl` (`export_v3.py`)
+- **Files:** `versions/archive/finger-trigger-ring-v3-c65.stl` (`export_v3.py`)
 
 ## v2 (test fit) — archived, not printed
 

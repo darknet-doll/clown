@@ -1,7 +1,7 @@
 # v3 fit-test ring: v2 with softened edges and through pilots.
 # Run from this folder:
 #   uv run --with trimesh --with manifold3d --with shapely python export_v3.py
-#   ->  versions/finger-trigger-ring-v3-c65.stl
+#   ->  versions/archive/finger-trigger-ring-v3-c65.stl
 #
 #   gap      the four long edges of the split are rounded R0.6, so the ends don't
 #            pinch. The same rounding takes every other convex corner of the
@@ -77,7 +77,7 @@ def build(circ):
 if __name__ == '__main__':
     for c in (65,):
         m, info = build(c)
-        m.export(f'versions/finger-trigger-ring-v3-c{c}.stl')
+        m.export(f'versions/archive/finger-trigger-ring-v3-c{c}.stl')
         e = np.round(m.extents, 1)
         print(f'c{c}: bore {2 * info["r_in"]:.2f}  plate top {info["top"]:.2f} off axis  '
               f'plate at holes {info["pilot"]:.2f}  M2x10 clearance {info["pilot"] - (10 - SW_T):.2f}  '

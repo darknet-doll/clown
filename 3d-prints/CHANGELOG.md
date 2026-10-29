@@ -18,16 +18,26 @@ Spec and log: [finger-trigger-ring/finger-trigger-ring.md](finger-trigger-ring/f
 
 | Version | Date | Status | Files |
 |---|---|---|---|
-| v3 | 2026-10-27 | Not yet printed. Current | `versions/finger-trigger-ring-v3-c65.stl` |
+| v4 | 2026-10-29 | Not yet printed. Current | `versions/finger-trigger-ring-v4-c*-full.stl`, `versions/finger-trigger-ring-v4-c*-short.stl` (18 files) |
+| v3 | 2026-10-27 | Archived. Same geometry as v4 c65 full | `versions/archive/finger-trigger-ring-v3-c65.stl` |
 | v2 | 2026-10-27 | Archived, never printed | `versions/archive/finger-trigger-ring-v2-c65.stl` |
 | v1 | 2026-10-27 | Archived, never printed | `versions/archive/finger-trigger-ring-v1-*.stl` |
+
+### v4 — 2026-10-29
+
+- **Change:** v3 in nine sizes, 45 to 65 mm circumference in 2.5 steps. Each comes
+  with the full plate and a short one that reaches half as far past the screw holes
+  (4.35 instead of 8.7)
+- **Why:** bracket the production hands without measuring them, and test whether less
+  plate along the finger still holds the switch
+- **Files:** `versions/finger-trigger-ring-v4-c<size>-full.stl`, `-short.stl` (`export_v4.py`)
 
 ### v3 — 2026-10-27
 
 - **Change:** rounded the split's edges R0.6 and flared the finger-side edges R1.0.
   The screw holes now go right through
 - **Why:** sharp edges at the gap and bore pinch the finger. Through holes print without bridging
-- **Files:** `versions/finger-trigger-ring-v3-c65.stl` (`export_v3.py`)
+- **Files:** `versions/archive/finger-trigger-ring-v3-c65.stl` (`export_v3.py`)
 
 ### v2 — 2026-10-27
 
