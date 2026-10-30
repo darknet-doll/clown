@@ -13,15 +13,48 @@ one line of why. Each part's full spec, settings and per-print log are in its ow
 
 ## Pod housing
 
-Sealed TPU box for the controller pod: board, cell, MT3608, rocker and both arm plugs.
+Sealed PETG box with TPU seals for the controller pod: board, cell, MT3608, rocker and
+the leads to both arm plugs.
 Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
 
 | Version | Date | Status | Files |
 |---|---|---|---|
-| v4 | 2026-10-29 | Not yet printed. Current. Print the snap and wall coupons first | `versions/pod-housing-v4-{bottom,lid,deck,wall-coupon,snap-coupon}.stl` |
+| v5 | 2026-10-30 | Not yet printed. Current. Print the seal tray (with the lid, gasket and seals) and the wall coupon first | `versions/pod-housing-v5-{bottom,lid,deck,gasket,seals,wall-coupon,seal-tray}.stl` |
+| v4 | 2026-10-29 | Archived. Wall and snap coupons printed 2026-10-30 | `versions/archive/pod-housing-v4-*.stl` |
 | v3 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v3-*.stl` |
 | v2 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v2-*.stl` |
 | v1 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v1-*.stl` |
+
+### v5 — 2026-10-30
+
+- **Change:**
+  - **Material:** the bottom and lid are PETG. TPU is used only for the seals and the
+    module deck
+  - **Lid:** screwed down with 4 × M3×8 button heads into heat-set inserts. The inserts
+    sit in bosses that hang from the long walls on 45° corbels. The heads sit flush in
+    counterbores over TPU washers
+  - **Lid seal:** a TPU lip gasket in a groove in the wall top, squashed 0.6 by a
+    pocket in the lid. Ribs under the lid run between the bosses. The lid seats PETG
+    to PETG on hard stops
+  - **J2, J3:** leave on their leads through split TPU grommets in the front wall. J2
+    is 10 × 15 with a 2.5 bore, J3 8 × 20 with a 3.0 bore. The JST panel cutouts are
+    gone
+  - **Rocker:** a Ø20.6 hole, thinned to 1.2 behind the clips, with a TPU washer
+    under the bezel (0.6 or 1.0)
+  - **Deck:** moves about 9 forward to clear a screw boss
+  - **Coupons:** a seal tray, the real wall top on a 15 deep tray, replaces the snap
+    coupon. The wall coupon is PETG
+  - 82.8 × 57.6 × 41.6
+- **Why:** darknetdoll, after the v4 coupons:
+  - An all-TPU box makes the circuit boards structural
+  - The rocker stretched the 19.8 TPU hole and stayed that way, so rigid PETG needs a
+    bigger hole
+  - The pod's J2 is the male SM-3 half. Its latch release is at the wire end, so it
+    can't panel-mount, and JST makes no panel version. Grommets at darknetdoll's
+    sizes let both plugs pass through without re-soldering
+  - A lip, not a squeezed cord, because 95A is too stiff for four screws to squeeze
+    evenly
+- **Files:** `versions/pod-housing-v5-*.stl` (`export_v5.py`)
 
 ### v4 — 2026-10-29
 
@@ -35,7 +68,7 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
 - **Why:** v3 used listing sizes and guesses. The real module is longer and much
   lower (7.9), its trimpot screw sticks out past the edge, and the rocker's clips are
   wider than allowed for
-- **Files:** `versions/pod-housing-v4-*.stl` (`export_v4.py`)
+- **Files:** `versions/archive/pod-housing-v4-*.stl` (`export_v4.py`)
 
 ### v3 — 2026-10-29
 
