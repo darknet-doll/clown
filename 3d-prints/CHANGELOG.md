@@ -19,13 +19,26 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
 
 | Version | Date | Status | Files |
 |---|---|---|---|
-| v7 | 2026-10-30 | Current. Only the grommets changed: print their four halves from the seals file and retry them in v6's wall coupon | `versions/pod-housing-v7-{bottom,lid,deck,gasket,seals,wall-coupon,seal-tray}.stl` |
+| v8 | 2026-10-30 | Current. Print the bottom and the deck; the other parts are already printed as v6 and v7 | `versions/pod-housing-v8-{bottom,lid,deck,gasket,seals,wall-coupon,seal-tray}.stl` |
+| v7 | 2026-10-30 | Archived. Grommets printed 2026-10-30 | `versions/archive/pod-housing-v7-*.stl` |
 | v6 | 2026-10-30 | Archived. Seal tray, wall coupon, lid, gasket and seals printed 2026-10-30 | `versions/archive/pod-housing-v6-*.stl` |
 | v5 | 2026-10-30 | Archived, never printed | `versions/archive/pod-housing-v5-*.stl` |
 | v4 | 2026-10-29 | Archived. Wall and snap coupons printed 2026-10-30 | `versions/archive/pod-housing-v4-*.stl` |
 | v3 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v3-*.stl` |
 | v2 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v2-*.stl` |
 | v1 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v1-*.stl` |
+
+### v8 — 2026-10-30
+
+- **Change:**
+  - **Deck:** no pads. The plate is 2.5 thick (was 2.0), thickened downward, and its
+    flat underside presses the cell 0.2 along its top. Its top, and so the module,
+    stays where it was
+  - Nothing else changes. Every other file is identical to v7's
+- **Why:** v7's deck stood on its two pads, so the plate printed 5.5 off the bed
+  with nothing under it. The wall and the divider already hold the deck sideways,
+  and the lid's ribs still press it at the same height
+- **Files:** `versions/pod-housing-v8-*.stl` (`export_v8.py`)
 
 ### v7 — 2026-10-30
 
@@ -37,7 +50,7 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
   - Nothing else changes. The PETG parts, gasket and washers are identical to v6's
 - **Why:** darknetdoll, after the v6 coupons: everything fitted, but the grommets
   were too tight in the PETG, and the hole for the wires was too small
-- **Files:** `versions/pod-housing-v7-*.stl` (`export_v7.py`)
+- **Files:** `versions/archive/pod-housing-v7-*.stl` (`export_v7.py`)
 
 ### v6 — 2026-10-30
 

@@ -6,13 +6,13 @@ J2 (SM-3) and J3 (SM-4). The box is PETG, so it carries the load and the boards 
 The seals are printed TPU parts. The case is there to protect the board, so the
 XIAO's USB-C has no opening. Flash it with the lid off.
 
-## v7 — current
+## v8 — current
 
-![preview](versions/pod-housing-v7-preview.png)
+![preview](versions/pod-housing-v8-preview.png)
 
 v4's layout in PETG, with TPU seals and a lid held by self-tapping screws. J2 and J3
-leave on their leads through split grommets. v7 changes only the grommets: they're
-looser in the wall, and the hole for the wires is a slot.
+leave on their leads through split grommets. v8 changes only the deck, so that it
+prints flat.
 
 **Outside:** 82.8 × 57.6 × 42.2, with 1.2 chamfers on the bottom and lid edges. The
 outside is smooth apart from these:
@@ -54,7 +54,8 @@ outside is smooth apart from these:
   - **Rail gaps:** the trimpot's brass screw stands 1.1 past the module's long edge.
     The rails have a 6 gap where it sits, on both rails at both ends, so the module
     goes in either way round. The trimpot can't be reached from outside
-  - Two pads under the deck press the cell 0.2, right over two saddles
+  - The deck's flat underside presses the cell 0.2 along its top. The wall and the
+    divider hold it sideways, 0.15 clear of each
   - Two ribs on the lid press the deck down 0.2
   - U1's wires cross the divider through a notch near the U1 pads
 - **J2, J3:** the plugs stay on their leads outside the box. Each lead goes through a
@@ -120,11 +121,12 @@ height and keeps the length to 82.8.
   - The halves split across the long side
   - The wire slot is twice its width long, across the grommet. In J3 that leaves 0.9
     of TPU each side of the slot through the wall
+  - darknetdoll meant the slot to run along the long side. Across fits, so it stays
 
 ### Measured
 
 darknetdoll, calipers, 2026-10-29. Every value is a constant at the top of
-`export_v7.py`.
+`export_v8.py`.
 
 | What | Measured | Drives |
 |---|---|---|
@@ -152,7 +154,7 @@ Still not measured:
 - **Screw heads:** pan heads up to 6.0 × 2.4 are assumed
 
 The export's clash check puts stand-ins for all of these in the box and finds no
-overlap. The exceptions are deliberate: the deck pads' and lid ribs' 0.2 squeezes,
+overlap. The exceptions are deliberate: the deck's and the lid ribs' 0.2 squeezes,
 and the gasket's fit and lip squeeze.
 
 ### Sources
@@ -177,6 +179,8 @@ and the gasket's fit and lip squeeze.
 - **From darknetdoll, 2026-10-30, after the v6 coupons:**
   - The grommets were too tight: 0.5 smaller where they meet the PETG
   - The wire hole was too small: twice as long across
+- **From darknetdoll, 2026-10-30, after the v7 grommets:** they fit. The slot runs
+  across the short side, not the long side as meant, but it stays
 
 ### Print
 
@@ -194,18 +198,16 @@ and the gasket's fit and lip squeeze.
 
 | File | Material | Orientation | Supports |
 |---|---|---|---|
-| `versions/pod-housing-v7-seal-tray.stl` | PETG | Floor down | None. Same as v6's |
-| `versions/pod-housing-v7-wall-coupon.stl` | PETG | On its foot | None. Same as v6's |
-| `versions/pod-housing-v7-lid.stl` | PETG | Top face down (as exported) | None |
-| `versions/pod-housing-v7-gasket.stl` | TPU | Base down (as exported) | None |
-| `versions/pod-housing-v7-seals.stl` | TPU | Flat (as exported) | None. **Print next:** the grommet halves only |
-| `versions/pod-housing-v7-bottom.stl` | PETG | Floor down | None |
-| `versions/pod-housing-v7-deck.stl` | TPU | Flat (as exported) | None |
+| `versions/pod-housing-v8-bottom.stl` | PETG | Floor down | None. **Print next** |
+| `versions/pod-housing-v8-deck.stl` | TPU | Underside down (as exported) | None. **Print next** |
+| `versions/pod-housing-v8-lid.stl` | PETG | Top face down (as exported) | None. Same as v6's |
+| `versions/pod-housing-v8-gasket.stl` | TPU | Base down (as exported) | None. Same as v6's |
+| `versions/pod-housing-v8-seals.stl` | TPU | Flat (as exported) | None. Same as v7's |
+| `versions/pod-housing-v8-seal-tray.stl` | PETG | Floor down | None. Same as v6's |
+| `versions/pod-housing-v8-wall-coupon.stl` | PETG | On its foot | None. Same as v6's |
 
-Only the grommets changed from v6. The v6 seal tray, lid, gasket, wall coupon and
-washers are the same parts, so reprint just the four grommet halves: split the seals
-file into objects in the slicer and delete the rest. Then retry them in v6's wall
-coupon.
+Only the bottom and the deck are left to print. The lid, gasket and washers printed
+as v6 and the grommets printed as v7 are the same parts in v8.
 
 The seals file holds:
 
@@ -342,6 +344,14 @@ Record in the print log:
   the shells (BUILD) still applies
 - **Arm fit:** the bottom is flat and 57.6 wide, so it will rock on a round upper arm
 
+## v7 — archived, grommets printed
+
+v8, but the deck stood on two pads that pressed the cell 0.2 over two saddles. Its
+2.0 plate printed 5.5 off the bed with nothing under it, so it needed supports.
+
+- **Grommets, 2026-10-30:** printed, and they fit. See the print log
+- **Files:** `versions/archive/pod-housing-v7-*.stl` (`export_v7.py`)
+
 ## v6 — archived, coupons printed
 
 v7, but with tighter grommets and round bores:
@@ -418,3 +428,4 @@ Same board, cell compartment and plug cutouts as v4. Differences from v4:
 | 2026-10-30 | v4 wall coupon, TPU 95A | **Rocker:** went through the Ø19.8 hole, but the TPU stayed stretched round it, so a rigid wall needs a bigger hole. **SM-3 cutout:** fits the female half, but the pod's J2 is the male half |
 | 2026-10-30 | v4 snap coupon, TPU 95A | The lid fits well |
 | 2026-10-30 | v6 seal tray and wall coupon (PETG), with the lid (PETG), gasket and seals (TPU 95A) | Everything generally fits. **Grommets:** too tight where they meet the PETG, and the wire hole too small |
+| 2026-10-30 | v7 grommets, TPU 95A | Fit. The wire slot runs across the short side, where the long side was meant |
