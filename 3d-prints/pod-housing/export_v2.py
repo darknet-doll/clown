@@ -4,7 +4,7 @@
 # shorter than v1.
 # Run from this folder:
 #   uv run --with trimesh --with manifold3d --with shapely --with scipy --with pyvista python export_v2.py
-#   ->  versions/pod-housing-v2-{bottom,lid,deck,usb-plug,wall-coupon,snap-coupon}.stl + -preview.png
+#   ->  versions/archive/pod-housing-v2-{bottom,lid,deck,usb-plug,wall-coupon,snap-coupon}.stl + -preview.png
 #
 # Frame as v1: the PCB's own coordinates with y flipped, so the board is X 0..70,
 # Y -30..0. Z up, floor top at Z = 0.
@@ -585,9 +585,9 @@ if __name__ == '__main__':
         if name == 'lid':                         # print orientation: top face down
             m.apply_transform(trimesh.transformations.rotation_matrix(np.pi, [1, 0, 0]))
         m.apply_translation([0, 0, -m.bounds[0][2]])
-        m.export(f'versions/pod-housing-v2-{name}.stl')
+        m.export(f'versions/archive/pod-housing-v2-{name}.stl')
         e = np.round(m.extents, 1)
         print(f'{name:12s} {e[0]} x {e[1]} x {e[2]}  volume {m.volume / 1000:.1f} cm^3  '
               f'watertight={m.is_watertight}  bodies={len(m.split(only_watertight=False))}')
     print(f'outer box {X_OUT1 - X_OUT0:.1f} x {Y_OUT1 - Y_OUT0:.1f} x {H_IN + FLOOR + LID:.1f}')
-    preview(bottom, lid, deck, plug, wall_c, snap_c, parts, 'versions/pod-housing-v2-preview.png')
+    preview(bottom, lid, deck, plug, wall_c, snap_c, parts, 'versions/archive/pod-housing-v2-preview.png')

@@ -18,8 +18,27 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
 
 | Version | Date | Status | Files |
 |---|---|---|---|
-| v2 | 2026-10-29 | Not yet printed. Current. Print the snap and wall coupons first | `versions/pod-housing-v2-{bottom,lid,deck,usb-plug,wall-coupon,snap-coupon}.stl` |
+| v3 | 2026-10-29 | Not yet printed. Current. Print the snap and wall coupons first | `versions/pod-housing-v3-{bottom,lid,deck,wall-coupon,snap-coupon}.stl` |
+| v2 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v2-*.stl` |
 | v1 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v1-*.stl` |
+
+### v3 — 2026-10-29
+
+- **Change:**
+  - The rocker points out of the back end, behind the XIAO, with its body lying over
+    the XIAO
+  - J2 and J3 sit side by side in a 1.8 front wall
+  - The straps go over the top, in two channels across the lid. The base loops are gone
+  - No USB-C opening and no plug
+  - The MT3608 deck now lies on the cell, held down by the lid
+  - Bottom and lid edges get a 1.2 chamfer
+  - 82.7 × 57.6 × 42.3
+- **Why:** darknetdoll: v2 misread the brief. The straps go over the top. The rocker
+  points out of the back, so its wires have room, and it can sit over the board. The
+  plugs belong together on one side. The case is there to protect the board, so USB-C
+  needs no opening. Clearing the XIAO sets the height; putting the module on the cell
+  keeps the length short
+- **Files:** `versions/pod-housing-v3-*.stl` (`export_v3.py`)
 
 ### v2 — 2026-10-29
 
@@ -35,7 +54,7 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
   smooth, and the pod needs strap loops to hold it to the arm. The rocker should sit on
   top so the parts pack tighter. The ~30 deep rocker sets the height, and that height
   leaves room for the module above the XIAO
-- **Files:** `versions/pod-housing-v2-*.stl` (`export_v2.py`)
+- **Files:** `versions/archive/pod-housing-v2-*.stl` (`export_v2.py`)
 
 ### v1 — 2026-10-29
 
