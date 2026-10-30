@@ -19,7 +19,8 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
 
 | Version | Date | Status | Files |
 |---|---|---|---|
-| v8 | 2026-10-30 | Current. Print the bottom and the deck; the other parts are already printed as v6 and v7 | `versions/pod-housing-v8-{bottom,lid,deck,gasket,seals,wall-coupon,seal-tray}.stl` |
+| v9 | 2026-10-30 | Current. Print the bottom, the deck and the grommet halves; the lid, gasket and washers are already printed as v6 | `versions/pod-housing-v9-{bottom,lid,deck,gasket,seals,wall-coupon,seal-tray}.stl` |
+| v8 | 2026-10-30 | Archived. Its bottom and deck are the same as v9's | `versions/archive/pod-housing-v8-*.stl` |
 | v7 | 2026-10-30 | Archived. Grommets printed 2026-10-30 | `versions/archive/pod-housing-v7-*.stl` |
 | v6 | 2026-10-30 | Archived. Seal tray, wall coupon, lid, gasket and seals printed 2026-10-30 | `versions/archive/pod-housing-v6-*.stl` |
 | v5 | 2026-10-30 | Archived, never printed | `versions/archive/pod-housing-v5-*.stl` |
@@ -27,6 +28,14 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
 | v3 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v3-*.stl` |
 | v2 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v2-*.stl` |
 | v1 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v1-*.stl` |
+
+### v9 — 2026-10-30
+
+- **Change:** the grommets' wire slots run up each opening's long side, across the
+  split: J2 2.5 wide and 5.0 up, J3 3.0 wide and 6.0 up. v7 and v8 ran them across
+  the short side. Every other file is identical to v8's
+- **Why:** darknetdoll, after the v7 grommets: they fit, but the long side was meant
+- **Files:** `versions/pod-housing-v9-*.stl` (`export_v9.py`)
 
 ### v8 — 2026-10-30
 
@@ -38,7 +47,7 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
 - **Why:** v7's deck stood on its two pads, so the plate printed 5.5 off the bed
   with nothing under it. The wall and the divider already hold the deck sideways,
   and the lid's ribs still press it at the same height
-- **Files:** `versions/pod-housing-v8-*.stl` (`export_v8.py`)
+- **Files:** `versions/archive/pod-housing-v8-*.stl` (`export_v8.py`)
 
 ### v7 — 2026-10-30
 

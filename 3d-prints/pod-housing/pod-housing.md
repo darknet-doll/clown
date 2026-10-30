@@ -6,13 +6,13 @@ J2 (SM-3) and J3 (SM-4). The box is PETG, so it carries the load and the boards 
 The seals are printed TPU parts. The case is there to protect the board, so the
 XIAO's USB-C has no opening. Flash it with the lid off.
 
-## v8 — current
+## v9 — current
 
-![preview](versions/pod-housing-v8-preview.png)
+![preview](versions/pod-housing-v9-preview.png)
 
 v4's layout in PETG, with TPU seals and a lid held by self-tapping screws. J2 and J3
-leave on their leads through split grommets. v8 changes only the deck, so that it
-prints flat.
+leave on their leads through split grommets. v9 turns the grommets' wire slots to
+run up the long side.
 
 **Outside:** 82.8 × 57.6 × 42.2, with 1.2 chamfers on the bottom and lid edges. The
 outside is smooth apart from these:
@@ -60,12 +60,13 @@ outside is smooth apart from these:
   - U1's wires cross the divider through a notch near the U1 pads
 - **J2, J3:** the plugs stay on their leads outside the box. Each lead goes through a
   split TPU grommet in the front wall (darknetdoll's sizes)
-  - **J2 (SM-3):** a 10 × 15 opening, long side up, and a 5.0 × 2.5 slot for the wires
-  - **J3 (SM-4):** an 8 × 20 opening, long side up, and a 6.0 × 3.0 slot
+  - **J2 (SM-3):** a 10 × 15 opening, long side up, and a slot for the wires 2.5 wide
+    and 5.0 up
+  - **J3 (SM-4):** an 8 × 20 opening, long side up, and a slot 3.0 wide and 6.0 up
   - Each plug goes out through its opening first. The grommet's two halves then
     close round the lead, so nothing is re-soldered
-  - The slots run across, along the split between the halves, so the wires lie side
-    by side between them
+  - The slots run up the long side, across the split between the halves. The wires
+    sit in a row up the slot, with half the row in each half
   - A panel mount wasn't possible for J2. The pod's SM-3 is the male half, whose
     latch release is at its wire end. In the wall, that release would be inside the
     box, and JST only makes the barbed female half for panels
@@ -119,14 +120,13 @@ height and keeps the length to 82.8.
   - A flange sits on the outside face, 1.4 past the opening all round
   - A chamfered ridge, 0.5 past the opening, snaps past the inside face
   - The halves split across the long side
-  - The wire slot is twice its width long, across the grommet. In J3 that leaves 0.9
-    of TPU each side of the slot through the wall
-  - darknetdoll meant the slot to run along the long side. Across fits, so it stays
+  - The wire slot is twice its width long, up the grommet's long side. Each half has
+    a channel half the slot deep: 2.5 in J2, 3.0 in J3
 
 ### Measured
 
 darknetdoll, calipers, 2026-10-29. Every value is a constant at the top of
-`export_v8.py`.
+`export_v9.py`.
 
 | What | Measured | Drives |
 |---|---|---|
@@ -143,7 +143,7 @@ darknetdoll, calipers, 2026-10-29. Every value is a constant at the top of
 | Rocker depth with the spade lugs on | 30 (20 if soldered direct) | rocker stand-in |
 | Spade lug boots: both side by side, one boot | 10, 6.7 | rocker stand-in |
 | Cell | Ø18.5 × 69, lead on the end | cell bay |
-| Grommets, 2026-10-30: opening and wire slot | J2 10 × 15, 5.0 × 2.5. J3 8 × 20, 6.0 × 3.0 | front wall openings, grommets |
+| Grommets, 2026-10-30: opening and wire slot | J2 10 × 15, 2.5 × 5.0 up. J3 8 × 20, 3.0 × 6.0 up | front wall openings, grommets |
 
 Still not measured:
 
@@ -179,8 +179,8 @@ and the gasket's fit and lip squeeze.
 - **From darknetdoll, 2026-10-30, after the v6 coupons:**
   - The grommets were too tight: 0.5 smaller where they meet the PETG
   - The wire hole was too small: twice as long across
-- **From darknetdoll, 2026-10-30, after the v7 grommets:** they fit. The slot runs
-  across the short side, not the long side as meant, but it stays
+- **From darknetdoll, 2026-10-30, after the v7 grommets:** they fit, but the slot
+  runs across the short side, where the long side was meant. Turned in v9
 
 ### Print
 
@@ -198,16 +198,17 @@ and the gasket's fit and lip squeeze.
 
 | File | Material | Orientation | Supports |
 |---|---|---|---|
-| `versions/pod-housing-v8-bottom.stl` | PETG | Floor down | None. **Print next** |
-| `versions/pod-housing-v8-deck.stl` | TPU | Underside down (as exported) | None. **Print next** |
-| `versions/pod-housing-v8-lid.stl` | PETG | Top face down (as exported) | None. Same as v6's |
-| `versions/pod-housing-v8-gasket.stl` | TPU | Base down (as exported) | None. Same as v6's |
-| `versions/pod-housing-v8-seals.stl` | TPU | Flat (as exported) | None. Same as v7's |
-| `versions/pod-housing-v8-seal-tray.stl` | PETG | Floor down | None. Same as v6's |
-| `versions/pod-housing-v8-wall-coupon.stl` | PETG | On its foot | None. Same as v6's |
+| `versions/pod-housing-v9-bottom.stl` | PETG | Floor down | None. **Print next** |
+| `versions/pod-housing-v9-deck.stl` | TPU | Underside down (as exported) | None. **Print next** |
+| `versions/pod-housing-v9-lid.stl` | PETG | Top face down (as exported) | None. Same as v6's |
+| `versions/pod-housing-v9-gasket.stl` | TPU | Base down (as exported) | None. Same as v6's |
+| `versions/pod-housing-v9-seals.stl` | TPU | Flat (as exported) | None. **Print next:** the grommet halves only |
+| `versions/pod-housing-v9-seal-tray.stl` | PETG | Floor down | None. Same as v6's |
+| `versions/pod-housing-v9-wall-coupon.stl` | PETG | On its foot | None. Same as v6's |
 
-Only the bottom and the deck are left to print. The lid, gasket and washers printed
-as v6 and the grommets printed as v7 are the same parts in v8.
+Left to print: the bottom, the deck and the four grommet halves. For the grommets,
+split the seals file into objects in the slicer and delete the rest. The lid, gasket
+and washers printed as v6 are the same parts in v9.
 
 The seals file holds:
 
@@ -297,8 +298,8 @@ Record in the print log:
    wall, clips at the sides. Its body lies over the XIAO. Run the lug wires to SW1
 5. Push each plug out through its opening: J2 through the 10 × 15, J3 through the
    8 × 20
-   - Lay the wires side by side in one grommet half's slot, outside the box, and close
-     the other half over them, flange outward
+   - Lay the wires in a row up the slot, outside the box, and close the two grommet
+     halves round them, flange outward
    - Push the grommet in until the ridge snaps past the inside face
    - Put a cable tie on the lead inside, against the grommet, so a tug on the plug
      doesn't reach the solder joints
@@ -343,6 +344,13 @@ Record in the print log:
 - **Plugs outside:** unmated, an SM plug is open to the weather. Dielectric grease in
   the shells (BUILD) still applies
 - **Arm fit:** the bottom is flat and 57.6 wide, so it will rock on a round upper arm
+
+## v8 — archived
+
+v9, but with v7's grommets: the wire slots ran across the short side. Its bottom and
+deck are the same as v9's.
+
+- **Files:** `versions/archive/pod-housing-v8-*.stl` (`export_v8.py`)
 
 ## v7 — archived, grommets printed
 
