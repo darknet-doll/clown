@@ -151,12 +151,17 @@ What each coupon tests:
 6. Press the lid on, starting at one end, until the snap clicks all round
 7. Straps over the top, in the channels
 
+### Decided
+
+- **Seal, no drain** (darknetdoll, 2026-10-29). This overrides BUILD step 11's "drain
+  it, don't seal it": no drain hole and no breather
+  - Opening the pod to dry it after every event (BUILD step 11) matters more now
+- **MT3608 in the cell compartment is fine** (darknetdoll, 2026-10-29). This overrides
+  BUILD step 11's rule of nothing soldered in with the cell. The TPU deck keeps the
+  module off the cell
+
 ### Open
 
-- **Drain:** BUILD step 11 says drain, don't seal: a 2 mm drain at the low corner and
-  a breather. v3 has neither, because this housing aims to seal. Decide which rule wins
-- **Cell compartment:** BUILD step 11 wants nothing soldered in with the cell. The
-  MT3608 now shares its compartment, separated by the TPU deck
 - **Snap hold:** a 45° TPU snap with no screws, also held by the straps over the top.
   If the snap coupon lets go too easily, the snap can be made deeper
 - **Arm fit:** the bottom is flat and 57.6 wide, so it will rock on a round upper arm
