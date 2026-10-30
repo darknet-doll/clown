@@ -11,6 +11,28 @@ one line of why. Each part's full spec, settings and per-print log are in its ow
 
 ---
 
+## Pod housing
+
+Sealed TPU box for the controller pod: board, cell, MT3608, rocker and both arm plugs.
+Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
+
+| Version | Date | Status | Files |
+|---|---|---|---|
+| v1 | 2026-10-29 | Not yet printed. Current. Print the wall coupon first | `versions/pod-housing-v1-{bottom,lid,usb-plug,wall-coupon}.stl` |
+
+### v1 — 2026-10-29
+
+- **Change:** first model. The board is on four M2 standoffs and the cell sits beside it
+  in its own compartment. The MT3608 pocket and the rocker are past the plug end, with
+  J2/J3 snapping into the end wall. The lid seals with a TPU skirt and wall-top bead,
+  screwed at four corner ears. Also a wall coupon with every opening, and a USB-C plug
+- **Why:** the pod needs one sealed box with the cell inside. Printing it in TPU makes
+  the gaskets part of the print. The plug cutouts are JST's own SMP panel spec, so the
+  connectors snap in after the board is screwed down
+- **Files:** `versions/pod-housing-v1-*.stl` (`export_v1.py`)
+
+---
+
 ## Finger trigger ring
 
 Lever microswitch on a ring at the base of the middle finger, lever toward the palm.
