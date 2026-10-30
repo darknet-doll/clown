@@ -4,7 +4,9 @@ Sealed box for the controller pod. It holds the pod PCB, the 18650 on its PH2.0
 pigtail, the MT3608 module (U1), the KCD1 rocker (SW1), and the leads to both arm plugs,
 J2 (SM-3) and J3 (SM-4). The box is PETG, so it carries the load and the boards don't.
 The seals are printed TPU parts. The case is there to protect the board, so the
-XIAO's USB-C has no opening. Flash it with the lid off.
+XIAO's USB-C has no opening. The socket faces the back wall from 0.5 away, under the
+rocker, so no plug fits with the board in. To flash it, take the rocker out (squeeze
+its clips from inside) and lift the board out.
 
 ## v9 — current
 
@@ -293,7 +295,8 @@ Record in the print log:
 
 1. Run an M3×8 into each boss once, before anything else goes in, to cut the thread
 2. Press the gasket's base into the groove all round, lip leaning inward
-3. Fit the board onto the standoffs, 4 × M2×6 self-tapping
+3. Fit the board onto the standoffs, 4 × M2×6 self-tapping. The XIAO end goes to the
+   back wall, the one with the rocker hole, with its USB-C socket facing the wall
 4. Slip a rocker washer over the rocker's body, then push it in from outside the back
    wall, clips at the sides. Its body lies over the XIAO. Run the lug wires to SW1
 5. Push each plug out through its opening: J2 through the 10 × 15, J3 through the
