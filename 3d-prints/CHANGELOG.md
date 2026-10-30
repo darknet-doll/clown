@@ -19,12 +19,25 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
 
 | Version | Date | Status | Files |
 |---|---|---|---|
-| v6 | 2026-10-30 | Not yet printed. Current. Print the seal tray (with the lid, gasket and seals) and the wall coupon first | `versions/pod-housing-v6-{bottom,lid,deck,gasket,seals,wall-coupon,seal-tray}.stl` |
+| v7 | 2026-10-30 | Current. Only the grommets changed: print their four halves from the seals file and retry them in v6's wall coupon | `versions/pod-housing-v7-{bottom,lid,deck,gasket,seals,wall-coupon,seal-tray}.stl` |
+| v6 | 2026-10-30 | Archived. Seal tray, wall coupon, lid, gasket and seals printed 2026-10-30 | `versions/archive/pod-housing-v6-*.stl` |
 | v5 | 2026-10-30 | Archived, never printed | `versions/archive/pod-housing-v5-*.stl` |
 | v4 | 2026-10-29 | Archived. Wall and snap coupons printed 2026-10-30 | `versions/archive/pod-housing-v4-*.stl` |
 | v3 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v3-*.stl` |
 | v2 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v2-*.stl` |
 | v1 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v1-*.stl` |
+
+### v7 — 2026-10-30
+
+- **Change:**
+  - **Grommets:** 0.5 smaller where they meet the PETG. Each neck is now 0.1 a side
+    inside its opening, where v6's was 0.15 a side over
+  - **Wire hole:** a slot twice as long across, along the split: J2 5.0 × 2.5, J3
+    6.0 × 3.0. v6 had round Ø2.5 and Ø3.0 bores
+  - Nothing else changes. The PETG parts, gasket and washers are identical to v6's
+- **Why:** darknetdoll, after the v6 coupons: everything fitted, but the grommets
+  were too tight in the PETG, and the hole for the wires was too small
+- **Files:** `versions/pod-housing-v7-*.stl` (`export_v7.py`)
 
 ### v6 — 2026-10-30
 
@@ -37,7 +50,7 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
 - **Why:** darknetdoll: no heat-set inserts, self-tapping M3s instead (6, 8, 10 and 12
   on hand). The 9.0 pilot leaves room for an M3×10 to cut fresh thread if a boss
   wears
-- **Files:** `versions/pod-housing-v6-*.stl` (`export_v6.py`)
+- **Files:** `versions/archive/pod-housing-v6-*.stl` (`export_v6.py`)
 
 ### v5 — 2026-10-30
 

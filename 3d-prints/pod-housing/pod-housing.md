@@ -6,12 +6,13 @@ J2 (SM-3) and J3 (SM-4). The box is PETG, so it carries the load and the boards 
 The seals are printed TPU parts. The case is there to protect the board, so the
 XIAO's USB-C has no opening. Flash it with the lid off.
 
-## v6 — current
+## v7 — current
 
-![preview](versions/pod-housing-v6-preview.png)
+![preview](versions/pod-housing-v7-preview.png)
 
 v4's layout in PETG, with TPU seals and a lid held by self-tapping screws. J2 and J3
-leave on their leads through split grommets.
+leave on their leads through split grommets. v7 changes only the grommets: they're
+looser in the wall, and the hole for the wires is a slot.
 
 **Outside:** 82.8 × 57.6 × 42.2, with 1.2 chamfers on the bottom and lid edges. The
 outside is smooth apart from these:
@@ -58,10 +59,12 @@ outside is smooth apart from these:
   - U1's wires cross the divider through a notch near the U1 pads
 - **J2, J3:** the plugs stay on their leads outside the box. Each lead goes through a
   split TPU grommet in the front wall (darknetdoll's sizes)
-  - **J2 (SM-3):** a 10 × 15 opening, long side up, and a 2.5 bore
-  - **J3 (SM-4):** an 8 × 20 opening, long side up, and a 3.0 bore
+  - **J2 (SM-3):** a 10 × 15 opening, long side up, and a 5.0 × 2.5 slot for the wires
+  - **J3 (SM-4):** an 8 × 20 opening, long side up, and a 6.0 × 3.0 slot
   - Each plug goes out through its opening first. The grommet's two halves then
     close round the lead, so nothing is re-soldered
+  - The slots run across, along the split between the halves, so the wires lie side
+    by side between them
   - A panel mount wasn't possible for J2. The pod's SM-3 is the male half, whose
     latch release is at its wire end. In the wall, that release would be inside the
     box, and JST only makes the barbed female half for panels
@@ -110,16 +113,18 @@ height and keeps the length to 82.8.
   - A TPU washer (Ø23.4 × Ø20.6) goes under the bezel. It seals the gap, and its
     thickness makes up the panel for the clips. There are two, 0.6 and 1.0; use
     whichever lets the clips catch firmly
-- **Grommets:** each neck is 0.15 a side bigger than its opening. That squeezes the
-  two halves together and onto the lead
-  - A 1.5 flange sits on the outside face
-  - A 0.6 chamfered ridge snaps past the inside face
+- **Grommets:** each neck is 0.1 a side smaller than its opening. v6's necks were
+  0.15 a side bigger and too tight to push in
+  - A flange sits on the outside face, 1.4 past the opening all round
+  - A chamfered ridge, 0.5 past the opening, snaps past the inside face
   - The halves split across the long side
+  - The wire slot is twice its width long, across the grommet. In J3 that leaves 0.9
+    of TPU each side of the slot through the wall
 
 ### Measured
 
 darknetdoll, calipers, 2026-10-29. Every value is a constant at the top of
-`export_v6.py`.
+`export_v7.py`.
 
 | What | Measured | Drives |
 |---|---|---|
@@ -136,7 +141,7 @@ darknetdoll, calipers, 2026-10-29. Every value is a constant at the top of
 | Rocker depth with the spade lugs on | 30 (20 if soldered direct) | rocker stand-in |
 | Spade lug boots: both side by side, one boot | 10, 6.7 | rocker stand-in |
 | Cell | Ø18.5 × 69, lead on the end | cell bay |
-| Grommets, 2026-10-30: opening and bore | J2 10 × 15, 2.5. J3 8 × 20, 3.0 | front wall openings, grommets |
+| Grommets, 2026-10-30: opening and wire slot | J2 10 × 15, 5.0 × 2.5. J3 8 × 20, 6.0 × 3.0 | front wall openings, grommets |
 
 Still not measured:
 
@@ -148,7 +153,7 @@ Still not measured:
 
 The export's clash check puts stand-ins for all of these in the box and finds no
 overlap. The exceptions are deliberate: the deck pads' and lid ribs' 0.2 squeezes,
-the gasket's fit and lip squeeze, and the grommets' fit.
+and the gasket's fit and lip squeeze.
 
 ### Sources
 
@@ -169,6 +174,9 @@ the gasket's fit and lip squeeze, and the grommets' fit.
   - Self-tapping M3 screws, no heat-set inserts
   - The pod's J2 is the male SM-3 half
   - J2 and J3 leave through split grommets, at the sizes above
+- **From darknetdoll, 2026-10-30, after the v6 coupons:**
+  - The grommets were too tight: 0.5 smaller where they meet the PETG
+  - The wire hole was too small: twice as long across
 
 ### Print
 
@@ -186,13 +194,18 @@ the gasket's fit and lip squeeze, and the grommets' fit.
 
 | File | Material | Orientation | Supports |
 |---|---|---|---|
-| `versions/pod-housing-v6-seal-tray.stl` | PETG | Floor down | None. **Print first**, with the lid, gasket and seals |
-| `versions/pod-housing-v6-wall-coupon.stl` | PETG | On its foot | None. **Print first** |
-| `versions/pod-housing-v6-lid.stl` | PETG | Top face down (as exported) | None |
-| `versions/pod-housing-v6-gasket.stl` | TPU | Base down (as exported) | None |
-| `versions/pod-housing-v6-seals.stl` | TPU | Flat (as exported) | None |
-| `versions/pod-housing-v6-bottom.stl` | PETG | Floor down | None |
-| `versions/pod-housing-v6-deck.stl` | TPU | Flat (as exported) | None |
+| `versions/pod-housing-v7-seal-tray.stl` | PETG | Floor down | None. Same as v6's |
+| `versions/pod-housing-v7-wall-coupon.stl` | PETG | On its foot | None. Same as v6's |
+| `versions/pod-housing-v7-lid.stl` | PETG | Top face down (as exported) | None |
+| `versions/pod-housing-v7-gasket.stl` | TPU | Base down (as exported) | None |
+| `versions/pod-housing-v7-seals.stl` | TPU | Flat (as exported) | None. **Print next:** the grommet halves only |
+| `versions/pod-housing-v7-bottom.stl` | PETG | Floor down | None |
+| `versions/pod-housing-v7-deck.stl` | TPU | Flat (as exported) | None |
+
+Only the grommets changed from v6. The v6 seal tray, lid, gasket, wall coupon and
+washers are the same parts, so reprint just the four grommet halves: split the seals
+file into objects in the slicer and delete the rest. Then retry them in v6's wall
+coupon.
 
 The seals file holds:
 
@@ -282,7 +295,8 @@ Record in the print log:
    wall, clips at the sides. Its body lies over the XIAO. Run the lug wires to SW1
 5. Push each plug out through its opening: J2 through the 10 × 15, J3 through the
    8 × 20
-   - Close the two grommet halves round the lead outside the box, flange outward
+   - Lay the wires side by side in one grommet half's slot, outside the box, and close
+     the other half over them, flange outward
    - Push the grommet in until the ridge snaps past the inside face
    - Put a cable tie on the lead inside, against the grommet, so a tug on the plug
      doesn't reach the solder joints
@@ -321,11 +335,22 @@ Record in the print log:
   can be made shallower, for more squeeze
 - **Rocker:** the 20.6 hole, the 1.2 panel and the 23.4 washer rest on unmeasured
   sizes (see Measured). The wall coupon tests them
-- **Grommet bores:** 2.5 and 3.0 are darknetdoll's sizes, for round leads. A flat
-  ribbon lead would need a slot instead
+- **Grommet seal:** the necks are now loose in their openings, so the wall no longer
+  squeezes the halves together or onto the wires. The flange on the outside face
+  does the sealing. The wall coupon's spray test shows whether that's enough
 - **Plugs outside:** unmated, an SM plug is open to the weather. Dielectric grease in
   the shells (BUILD) still applies
 - **Arm fit:** the bottom is flat and 57.6 wide, so it will rock on a round upper arm
+
+## v6 — archived, coupons printed
+
+v7, but with tighter grommets and round bores:
+
+- **Grommets:** each neck 0.15 a side bigger than its opening, so the wall squeezed
+  the halves together. Flange 1.65 and ridge 0.75 past the opening
+- **Bores:** round, Ø2.5 for J2 and Ø3.0 for J3
+- **Coupons, 2026-10-30:** see the print log. Everything fitted except the grommets
+- **Files:** `versions/archive/pod-housing-v6-*.stl` (`export_v6.py`)
 
 ## v5 — archived, never printed
 
@@ -392,3 +417,4 @@ Same board, cell compartment and plug cutouts as v4. Differences from v4:
 |---|---|---|
 | 2026-10-30 | v4 wall coupon, TPU 95A | **Rocker:** went through the Ø19.8 hole, but the TPU stayed stretched round it, so a rigid wall needs a bigger hole. **SM-3 cutout:** fits the female half, but the pod's J2 is the male half |
 | 2026-10-30 | v4 snap coupon, TPU 95A | The lid fits well |
+| 2026-10-30 | v6 seal tray and wall coupon (PETG), with the lid (PETG), gasket and seals (TPU 95A) | Everything generally fits. **Grommets:** too tight where they meet the PETG, and the wire hole too small |
