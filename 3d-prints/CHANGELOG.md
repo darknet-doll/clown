@@ -18,7 +18,24 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
 
 | Version | Date | Status | Files |
 |---|---|---|---|
-| v1 | 2026-10-29 | Not yet printed. Current. Print the wall coupon first | `versions/pod-housing-v1-{bottom,lid,usb-plug,wall-coupon}.stl` |
+| v2 | 2026-10-29 | Not yet printed. Current. Print the snap and wall coupons first | `versions/pod-housing-v2-{bottom,lid,deck,usb-plug,wall-coupon,snap-coupon}.stl` |
+| v1 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v1-*.stl` |
+
+### v2 — 2026-10-29
+
+- **Change:**
+  - The lid snaps on with no screws and the corner ears are gone
+  - The rocker moves into the lid, which makes the box 3.6 taller (36.4)
+  - The MT3608 moves onto a TPU deck over the XIAO, so the box is 12 shorter (104.0)
+  - The USB end wall is 5.4 thick and flush, in place of v1's collar
+  - Four loops at the base take 12 mm Velcro straps
+  - The cell bay is sized to the measured cell, Ø18.5 × 69
+  - New snap coupon: a small box and lid with the real snap and the rocker hole
+- **Why:** darknetdoll: the external screw mounts were ugly, the outside should be
+  smooth, and the pod needs strap loops to hold it to the arm. The rocker should sit on
+  top so the parts pack tighter. The ~30 deep rocker sets the height, and that height
+  leaves room for the module above the XIAO
+- **Files:** `versions/pod-housing-v2-*.stl` (`export_v2.py`)
 
 ### v1 — 2026-10-29
 
@@ -29,7 +46,7 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
 - **Why:** the pod needs one sealed box with the cell inside. Printing it in TPU makes
   the gaskets part of the print. The plug cutouts are JST's own SMP panel spec, so the
   connectors snap in after the board is screwed down
-- **Files:** `versions/pod-housing-v1-*.stl` (`export_v1.py`)
+- **Files:** `versions/archive/pod-housing-v1-*.stl` (`export_v1.py`)
 
 ---
 

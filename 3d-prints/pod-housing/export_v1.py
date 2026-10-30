@@ -2,7 +2,7 @@
 # arm plugs all go inside one box with a screwed lid.
 # Run from this folder:
 #   uv run --with trimesh --with manifold3d --with shapely --with scipy --with pyvista python export_v1.py
-#   ->  versions/pod-housing-v1-{bottom,lid,usb-plug,wall-coupon}.stl + -preview.png
+#   ->  versions/archive/pod-housing-v1-{bottom,lid,usb-plug,wall-coupon}.stl + -preview.png
 #
 # Frame: the PCB's own coordinates from docs/pcb/pod_pcb.py with y flipped, so the
 # board is X 0..70, Y -30..0 (model Y = -pcb y). Z up, floor top at Z = 0.
@@ -417,8 +417,8 @@ if __name__ == '__main__':
             m = m.copy()
             m.apply_transform(trimesh.transformations.rotation_matrix(np.pi, [1, 0, 0]))
         m = m.copy(); m.apply_translation([0, 0, -m.bounds[0][2]])
-        m.export(f'versions/pod-housing-v1-{name}.stl')
+        m.export(f'versions/archive/pod-housing-v1-{name}.stl')
         e = np.round(m.extents, 1)
         print(f'{name:12s} {e[0]} x {e[1]} x {e[2]}  volume {m.volume / 1000:.1f} cm^3  '
               f'watertight={m.is_watertight}  bodies={len(m.split(only_watertight=False))}')
-    preview(bottom, lid, plug, coupon, parts, 'versions/pod-housing-v1-preview.png')
+    preview(bottom, lid, plug, coupon, parts, 'versions/archive/pod-housing-v1-preview.png')
