@@ -19,11 +19,25 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
 
 | Version | Date | Status | Files |
 |---|---|---|---|
-| v5 | 2026-10-30 | Not yet printed. Current. Print the seal tray (with the lid, gasket and seals) and the wall coupon first | `versions/pod-housing-v5-{bottom,lid,deck,gasket,seals,wall-coupon,seal-tray}.stl` |
+| v6 | 2026-10-30 | Not yet printed. Current. Print the seal tray (with the lid, gasket and seals) and the wall coupon first | `versions/pod-housing-v6-{bottom,lid,deck,gasket,seals,wall-coupon,seal-tray}.stl` |
+| v5 | 2026-10-30 | Archived, never printed | `versions/archive/pod-housing-v5-*.stl` |
 | v4 | 2026-10-29 | Archived. Wall and snap coupons printed 2026-10-30 | `versions/archive/pod-housing-v4-*.stl` |
 | v3 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v3-*.stl` |
 | v2 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v2-*.stl` |
 | v1 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v1-*.stl` |
+
+### v6 — 2026-10-30
+
+- **Change:**
+  - **Lid screws:** M3×8 self-tapping pan heads straight into the PETG bosses, in
+    Ø2.6 × 9.0 pilots. No heat-set inserts
+  - **Lid:** 4.0 thick, with Ø6.6 × 2.9 counterbores, so the taller pan heads sit flush.
+    The TPU screw washers are 6.4
+  - 82.8 × 57.6 × 42.2
+- **Why:** darknetdoll: no heat-set inserts, self-tapping M3s instead (6, 8, 10 and 12
+  on hand). The 9.0 pilot leaves room for an M3×10 to cut fresh thread if a boss
+  wears
+- **Files:** `versions/pod-housing-v6-*.stl` (`export_v6.py`)
 
 ### v5 — 2026-10-30
 
@@ -54,7 +68,7 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
     sizes let both plugs pass through without re-soldering
   - A lip, not a squeezed cord, because 95A is too stiff for four screws to squeeze
     evenly
-- **Files:** `versions/pod-housing-v5-*.stl` (`export_v5.py`)
+- **Files:** `versions/archive/pod-housing-v5-*.stl` (`export_v5.py`)
 
 ### v4 — 2026-10-29
 

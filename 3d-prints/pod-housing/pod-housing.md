@@ -6,14 +6,14 @@ J2 (SM-3) and J3 (SM-4). The box is PETG, so it carries the load and the boards 
 The seals are printed TPU parts. The case is there to protect the board, so the
 XIAO's USB-C has no opening. Flash it with the lid off.
 
-## v5 — current
+## v6 — current
 
-![preview](versions/pod-housing-v5-preview.png)
+![preview](versions/pod-housing-v6-preview.png)
 
-v4's layout in PETG, with TPU seals and a screwed lid. J2 and J3 leave on their leads
-through split grommets.
+v4's layout in PETG, with TPU seals and a lid held by self-tapping screws. J2 and J3
+leave on their leads through split grommets.
 
-**Outside:** 82.8 × 57.6 × 41.6, with 1.2 chamfers on the bottom and lid edges. The
+**Outside:** 82.8 × 57.6 × 42.2, with 1.2 chamfers on the bottom and lid edges. The
 outside is smooth apart from these:
 
 - the rocker's bezel on the back end
@@ -28,7 +28,7 @@ outside is smooth apart from these:
 - **Front end (+X):** past the board's J2/J3 pads. J2 and J3 leave side by side here,
   each on its lead through a grommet
 - **Straps:** two 12 mm Velcro straps go over the top, in 13.5 × 1.0 channels across
-  the lid. They sit between the screw heads, 28.8 apart
+  the lid. They sit between the screw heads, 29.4 apart
 
 ### Layout
 
@@ -66,28 +66,29 @@ outside is smooth apart from these:
     latch release is at its wire end. In the wall, that release would be inside the
     box, and JST only makes the barbed female half for panels
 
-### Why it's 41.6 tall
+### Why it's 42.2 tall
 
 The rocker's body is 20 across and has to clear the XIAO's socket, which tops out
 12.1 above the floor. That puts the top of its Ø20.6 hole 33.4 above the floor. The
 gasket groove and the ledge under it need 2.4 above that, so the wall top is at 35.8.
-Add the 2.4 floor and the 3.4 lid. Lifting the module onto the cell makes use of the
+Add the 2.4 floor and the 4.0 lid. Lifting the module onto the cell makes use of the
 height and keeps the length to 82.8.
 
 ### Seals and fixings
 
-- **Lid screws:** four M3×8 stainless button heads into M3 × 4.6 × 5.0 brass heat-set
-  inserts, the hardware already in PARTS.md
+- **Lid screws:** four M3×8 self-tapping pan heads, straight into the PETG. No inserts
+  (darknetdoll: M3 × 6, 8, 10 and 12 on hand)
   - **Bosses:** Ø8.5, centred 5.0 in from the long walls, two on each. They hang from
     the wall top on 45° corbels, so they print without support and leave the floor
     clear
     - Board side: at X 15, past the rocker's body, and X 66, short of the plug leads
     - Cell side: near both corners
-  - **Insert holes:** 4.0 × 7.0 deep. This is deeper than PARTS.md's 6.0 because the
-    counterbore and washer put 6.3 of the screw below the lid
-  - **Lid:** 3.4 thick. Each head sits flush in a Ø7.2 × 2.2 counterbore on a TPU washer
-    (7.0 × 2.8 × 0.8). The screws are inside the gasket line, so the washers seal
-    the screw holes
+  - **Pilot holes:** Ø2.6 × 9.0 deep, with 2.95 of PETG round each
+    - An M3×8 bites 6.4, over twice its diameter, with 2.6 spare below its tip
+    - If a thread wears out, an M3×10 cuts 2 of fresh thread below it
+  - **Lid:** 4.0 thick. Each head sits flush in a Ø6.6 × 2.9 counterbore on a TPU washer
+    (6.4 × 2.8 × 0.8). That fits a pan head up to 6.0 × 2.4. The screws are inside
+    the gasket line, so the washers seal the screw holes
   - **Hard stops:** the lid seats PETG to PETG on the outer 1.05 of the wall top and
     on the boss tops. Tighten until it seats and no further. The stops take the load
     and the lip does the sealing
@@ -118,7 +119,7 @@ height and keeps the length to 82.8.
 ### Measured
 
 darknetdoll, calipers, 2026-10-29. Every value is a constant at the top of
-`export_v5.py`.
+`export_v6.py`.
 
 | What | Measured | Drives |
 |---|---|---|
@@ -143,6 +144,7 @@ Still not measured:
 - **Rocker body Ø under the bezel, and the clips' panel range:** these set the
   Ø20.6 hole and the 1.2 panel. The wall coupon tests both
 - **C1:** the board needs 28 inside if C1 is 22 tall, and the box has 35.8
+- **Screw heads:** pan heads up to 6.0 × 2.4 are assumed
 
 The export's clash check puts stand-ins for all of these in the box and finds no
 overlap. The exceptions are deliberate: the deck pads' and lid ribs' 0.2 squeezes,
@@ -153,7 +155,6 @@ the gasket's fit and lip squeeze, and the grommets' fit.
 - **Board:** outline, holes and part positions from [pod_pcb.py](../../docs/pcb/pod_pcb.py).
   Part heights from the [PCB README](../../docs/pcb/README.md): C1 17–22, Q1 ~20,
   F1 ~18
-- **Inserts and screws:** [PARTS.md](../../PARTS.md), M3 heat-set inserts and screws
 - **JST SM:** catalogue (`jst-mfg.com/product/pdf/eng/eSM.pdf`). Only the SMP plug
   housing (female contacts) has panel barbs. The SMR receptacle (male pins) carries
   the latch arm, with its release at the wire end
@@ -165,6 +166,7 @@ the gasket's fit and lip squeeze, and the grommets' fit.
   - Trimpot: must not be reachable from outside
 - **From darknetdoll, 2026-10-30:**
   - PETG housing, TPU only for gaskets, and a screwed lid
+  - Self-tapping M3 screws, no heat-set inserts
   - The pod's J2 is the male SM-3 half
   - J2 and J3 leave through split grommets, at the sizes above
 
@@ -184,13 +186,13 @@ the gasket's fit and lip squeeze, and the grommets' fit.
 
 | File | Material | Orientation | Supports |
 |---|---|---|---|
-| `versions/pod-housing-v5-seal-tray.stl` | PETG | Floor down | None. **Print first**, with the lid, gasket and seals |
-| `versions/pod-housing-v5-wall-coupon.stl` | PETG | On its foot | None. **Print first** |
-| `versions/pod-housing-v5-lid.stl` | PETG | Top face down (as exported) | None |
-| `versions/pod-housing-v5-gasket.stl` | TPU | Base down (as exported) | None |
-| `versions/pod-housing-v5-seals.stl` | TPU | Flat (as exported) | None |
-| `versions/pod-housing-v5-bottom.stl` | PETG | Floor down | None |
-| `versions/pod-housing-v5-deck.stl` | TPU | Flat (as exported) | None |
+| `versions/pod-housing-v6-seal-tray.stl` | PETG | Floor down | None. **Print first**, with the lid, gasket and seals |
+| `versions/pod-housing-v6-wall-coupon.stl` | PETG | On its foot | None. **Print first** |
+| `versions/pod-housing-v6-lid.stl` | PETG | Top face down (as exported) | None |
+| `versions/pod-housing-v6-gasket.stl` | TPU | Base down (as exported) | None |
+| `versions/pod-housing-v6-seals.stl` | TPU | Flat (as exported) | None |
+| `versions/pod-housing-v6-bottom.stl` | PETG | Floor down | None |
+| `versions/pod-housing-v6-deck.stl` | TPU | Flat (as exported) | None |
 
 The seals file holds:
 
@@ -201,7 +203,7 @@ The seals file holds:
 What each coupon tests:
 
 - **Seal tray:** the real wall top, groove and bosses on a tray 15 deep. Use it with
-  the real lid, gasket, washers, inserts and screws. The lid is the real part, so
+  the real lid, gasket, washers and screws. The lid is the real part, so
   keep it if it passes. Check:
   - that the lid seats on its stops without forcing it
   - that it seals: fill the tray 10 deep, screw the lid down, turn it over and leave
@@ -215,8 +217,7 @@ What each coupon tests:
 
 ### Assembly
 
-1. Set the four inserts in the bosses with a soldering iron at 240 °C, flush to
-   0.2 below the top
+1. Run an M3×8 into each boss once, before anything else goes in, to cut the thread
 2. Press the gasket's base into the groove all round, lip leaning inward
 3. Fit the board onto the standoffs, 4 × M2×6 self-tapping
 4. Slip a rocker washer over the rocker's body, then push it in from outside the back
@@ -235,6 +236,8 @@ What each coupon tests:
    click over its board. The trimpot screw goes in a rail gap
 8. Lid on, with a TPU washer under each screw head. Tighten the four screws in turn
    until the lid seats
+   - Each time, turn each screw backwards until it drops into its thread, then
+     tighten. A self-tapper started crooked cuts a new thread and wears the boss out
 9. Straps over the top, in the channels
 
 ### Decided
@@ -249,9 +252,13 @@ What each coupon tests:
   leaves the circuit boards to carry the load
 - **J2 and J3 on leads through split grommets** (darknetdoll, 2026-10-30), at their
   sizes. No re-soldering
+- **Self-tapping M3 screws, no heat-set inserts** (darknetdoll, 2026-10-30)
 
 ### Open
 
+- **Thread wear:** the pod is opened after every event to dry it, and self-tapped
+  PETG threads wear. Start each screw in its own thread (Assembly 8), and keep
+  M3×10s as the fix for a worn boss
 - **Lip squeeze:** untested. The seal tray tests it. If it weeps mid-side, the pocket
   can be made shallower, for more squeeze
 - **Rocker:** the 20.6 hole, the 1.2 panel and the 23.4 washer rest on unmeasured
@@ -262,9 +269,19 @@ What each coupon tests:
   the shells (BUILD) still applies
 - **Arm fit:** the bottom is flat and 57.6 wide, so it will rock on a round upper arm
 
+## v5 — archived, never printed
+
+v6, but with heat-set inserts:
+
+- **Lid screws:** four M3×8 button heads into M3 × 4.6 × 5.0 heat-set inserts, in
+  4.0 × 7.0 holes
+- **Lid:** 3.4 thick, with Ø7.2 × 2.2 counterbores and 7.0 washers
+- 82.8 × 57.6 × 41.6
+- **Files:** `versions/archive/pod-housing-v5-*.stl` (`export_v5.py`)
+
 ## v4 — archived, coupons printed
 
-v5's layout, all in TPU 95A, with a snap lid and J2/J3 panel-mounted in a 1.8 front
+v6's layout, all in TPU 95A, with a snap lid and J2/J3 panel-mounted in a 1.8 front
 wall:
 
 - **Lid:** snapped on with no screws. It had a skirt 0.25 oversize inside the walls, a
