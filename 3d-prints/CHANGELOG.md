@@ -18,9 +18,24 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
 
 | Version | Date | Status | Files |
 |---|---|---|---|
-| v3 | 2026-10-29 | Not yet printed. Current. Print the snap and wall coupons first | `versions/pod-housing-v3-{bottom,lid,deck,wall-coupon,snap-coupon}.stl` |
+| v4 | 2026-10-29 | Not yet printed. Current. Print the snap and wall coupons first | `versions/pod-housing-v4-{bottom,lid,deck,wall-coupon,snap-coupon}.stl` |
+| v3 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v3-*.stl` |
 | v2 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v2-*.stl` |
 | v1 | 2026-10-29 | Archived, never printed | `versions/archive/pod-housing-v1-*.stl` |
+
+### v4 — 2026-10-29
+
+- **Change:** v3 resized to the parts as measured with calipers:
+  - **MT3608:** pocket 37.4 long for the 36.8 module, and lips set for its 0.95 board.
+    The rails have 6 gaps where the trimpot screw stands 1.1 past the edge, on both
+    rails at both ends
+  - **Rocker:** the wall is thinned out to 26 at the sides for the 23 snap clips
+  - **XIAO:** its socket stands 1.6 proud, so the back wall moves back 0.1
+  - 82.8 × 57.6 × 42.4
+- **Why:** v3 used listing sizes and guesses. The real module is longer and much
+  lower (7.9), its trimpot screw sticks out past the edge, and the rocker's clips are
+  wider than allowed for
+- **Files:** `versions/pod-housing-v4-*.stl` (`export_v4.py`)
 
 ### v3 — 2026-10-29
 
@@ -38,7 +53,7 @@ Spec and log: [pod-housing/pod-housing.md](pod-housing/pod-housing.md)
   plugs belong together on one side. The case is there to protect the board, so USB-C
   needs no opening. Clearing the XIAO sets the height; putting the module on the cell
   keeps the length short
-- **Files:** `versions/pod-housing-v3-*.stl` (`export_v3.py`)
+- **Files:** `versions/archive/pod-housing-v3-*.stl` (`export_v3.py`)
 
 ### v2 — 2026-10-29
 

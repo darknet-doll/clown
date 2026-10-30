@@ -6,11 +6,13 @@ and J3 (SM-4). There are two halves, a deep bottom and a snap-on lid. The gasket
 TPU, printed as part of the halves. The case is there to protect the board, so the
 XIAO's USB-C has no opening. Flash it with the lid off.
 
-## v3 — current
+## v4 — current
 
-![preview](versions/pod-housing-v3-preview.png)
+![preview](versions/pod-housing-v4-preview.png)
 
-**Outside:** 82.7 × 57.6 × 42.3, with 1.2 chamfers on the bottom and lid edges. The
+v3's layout, resized to the parts as measured (see Measured below).
+
+**Outside:** 82.8 × 57.6 × 42.4, with 1.2 chamfers on the bottom and lid edges. The
 outside is smooth apart from these:
 
 - the rocker's bezel on the back end
@@ -29,20 +31,29 @@ outside is smooth apart from these:
 ### Layout
 
 - **Board:** on four standoffs, 3.5 above the floor, with an M2×6 self-tapping screw in
-  each corner hole. Its back edge is 2.0 off the back wall, so the XIAO's USB-C socket
+  each corner hole. Its back edge is 2.1 off the back wall, so the XIAO's USB-C socket
   clears the wall by 0.5
-- **Rocker:** comes through the back wall at the XIAO's centre line. Its 20 body lies
-  over the XIAO, 1.0 clear of the socket
-  - Its 30 depth (body, terminals and spade lugs) ends at X 25.6, short of C2 at 27
-  - The lug wires come off over U2, with room to turn, and run to SW1
+- **Rocker:** comes through the back wall at the XIAO's centre line
+  - **Fit it with the snap clips at the sides.** Across the clips it's 23. With the
+    clips top and bottom, the lower clip hits the XIAO's socket
+  - Its 20 body lies over the XIAO, 1.0 clear of the socket
+  - Its 30 depth (body 14.5, then terminals and spade lugs) ends at X 25.5, short of
+    C2 at 27. The lugs clear C3 by about 8
+  - The lug wires come off over U2, with room to turn, and run to SW1. Keep the
+    spade lugs: soldering direct would make the switch shorter, but no smaller box
   - It sits in the bottom, so the lid comes off untethered
 - **Cell:** beside the board in its own compartment
   - It rides on three saddles, 1.0 off the floor
   - The lead comes out of the front end, where there's 9 to turn it back over the
     cell. The mated PH2.0 pair lies on the cell past the deck
   - The J1 lead crosses the divider through a notch near the J1 pads
-- **MT3608:** on a TPU deck that lies on top of the cell, components up, held by four
-  snap lips
+- **MT3608:** on a TPU deck on top of the cell, components and leads up
+  - Its underside is flat, so it lies flat on the deck. Its top is 7.9 under the lid
+  - A lip on the middle of each rail snaps over its 0.95 board
+  - **Rail gaps:** the trimpot's brass screw stands 1.1 past the module's long edge.
+    The rails have a 6 gap where it sits, on both rails at both ends, so the module
+    goes in either way round. The gaps are inside the box. The trimpot can't be
+    reached from outside
   - Two pads under the deck press the cell 0.2, right over two saddles
   - Two ribs on the lid press the deck down 0.2
   - Nothing narrows the cell bay, so the cell lifts straight out once the deck is off
@@ -51,12 +62,12 @@ outside is smooth apart from these:
   column. The front wall is 1.8, so no spot faces are needed. You push each housing
   out from inside until the barbs click, and its flange pulls tight on the inside face
 
-### Why it's 42.3 tall
+### Why it's 42.4 tall
 
-The rocker's body is 20 across and has to clear the XIAO's socket (12.0 above the
-floor). The lid's skirt also has to stay above it. So the box is 37.5 inside: 9.5
-taller than the board alone needs (28.0). Lifting the module onto the cell makes use of the
-height and keeps the length to 82.7.
+The rocker's body is 20 across and has to clear the XIAO's socket, which tops out
+12.1 above the floor. The lid's skirt also has to stay above the rocker. So the box
+is 37.6 inside, about 9.5 more than the board alone needs. Lifting the module onto
+the cell makes use of the height and keeps the length to 82.8.
 
 ### Seals and fixings
 
@@ -70,9 +81,39 @@ height and keeps the length to 82.7.
     stays squashed by 0.2
 - **Rocker:** a Ø19.8 hole, 0.2 under the 20 mm cutout
   - The TPU grips the body all round
-  - The bezel sits on the flat back wall
-  - The wall is thinned to 2.0 round the hole, for the snap clips
+  - The bezel sits on the flat back wall, with no boot
+  - The wall is thinned to 2.0 round the hole for the snap clips: Ø23, widened to
+    26 across at the sides where the clips go
 - **J2, J3:** the housing flange on the inside face, pulled tight by the barbs
+
+### Measured
+
+darknetdoll, calipers, 2026-10-29. Every value is a constant at the top of
+`export_v4.py`.
+
+| What | Measured | Drives |
+|---|---|---|
+| Pod board thickness | 1.65 | board stack |
+| Pod board underside to the top of the XIAO's USB-C socket | 8.6 (socket top 6.95 above the board) | rocker height, so the box height |
+| USB-C socket face to the board's far edge | 71.6 (socket stands 1.6 past the edge) | back wall position |
+| C3, the 0.1 µF disc, above the board | 5.0 (C2 taken as the same) | clearance under the rocker's lugs |
+| MT3608 board, L × W × thickness | 36.8 × 17.2 × 0.95 | deck pocket and lips |
+| MT3608 overall height, flat underside to the trimpot screw | 7.9 | room under the lid |
+| MT3608 width over the trimpot screw | 18.3 (screw stands 1.1 past the edge) | rail gaps |
+| Trimpot screw, centre from the VOUT end, and Ø | 8.9, 2.3 | rail gap position |
+| Rocker across the snap clips | 23 | thinned wall at the clips, clips at the sides |
+| Rocker body, bezel seat to the terminals | 14.5 | rocker stand-in |
+| Rocker depth with the spade lugs on | 30 (20 if soldered direct) | rocker stand-in |
+| Spade lug boots: both side by side, one boot | 10, 6.7 | rocker stand-in |
+| Cell | Ø18.5 × 69, lead on the end | cell bay |
+
+Still not measured, and not critical:
+
+- **C1:** the board needs 28 inside if C1 is 22 tall, and the box has 37.6
+- **The rocker's snap-clip panel range:** 2.0 is used. The wall coupon tests it
+
+The export's clash check puts stand-ins for all of these in the box and finds no
+overlap, apart from the deck pads' and lid ribs' 0.2 squeezes, which are deliberate.
 
 ### Sources
 
@@ -86,28 +127,11 @@ height and keeps the length to 82.7.
 - **Pod leads:** both end in SMP plug housings, the half with the springy side barbs,
   read from the bench photo of 2026-10-29
 - **From darknetdoll, 2026-10-29:**
-  - Cell: Ø18.5 × 69, lead on the end
-  - Rocker: about 30 deep, out of the back over the board, behind the XIAO
+  - Rocker: out of the back over the board, behind the XIAO, no boot
   - Velcro: 12 wide, over the top
   - J2/J3: side by side on the front end
   - USB-C: no opening
-
-### Not measured — check before printing the bottom
-
-Every value is a constant at the top of `export_v3.py`. Change it there and re-run.
-
-| What | Used | Drives |
-|---|---|---|
-| XIAO's USB-C socket top above the PCB | 6.9 (12.0 above the floor) | rocker height, and so the box height |
-| MT3608 module L × W × H | 36 × 17 × 14 (listing size) | deck pocket. Top at 35.8, 1.7 under the lid |
-| MT3608 trimpot position | not at a long edge | the lid's skirt comes 1.2 in from the walls above 33.8 |
-| 0.1 µF disc C3 height above the PCB | 9 | sits under the rocker's lugs, 4.4 clear |
-| KCD1 body Ø and depth before the terminals | 20, 18 | rocker stand-in |
-| KCD1 panel range for the snap clips | 2.0 used | back wall at the rocker |
-| Tallest part above the PCB (C1 as fitted) | 22 | the board alone needs 28 inside; the box has 37.5 |
-
-The export's clash check puts stand-ins for all of these in the box and finds no
-overlap, apart from the deck pads' and lid ribs' 0.2 squeezes, which are deliberate.
+  - Trimpot: must not be reachable from outside
 
 ### Print
 
@@ -121,11 +145,11 @@ overlap, apart from the deck pads' and lid ribs' 0.2 squeezes, which are deliber
 
 | File | Orientation | Supports |
 |---|---|---|
-| `versions/pod-housing-v3-snap-coupon.stl` | As exported: small box upright, its lid top down | None. **Print first** |
-| `versions/pod-housing-v3-wall-coupon.stl` | On its foot | None. **Print first** |
-| `versions/pod-housing-v3-bottom.stl` | Floor on the bed | None |
-| `versions/pod-housing-v3-lid.stl` | Top face down (as exported) | None |
-| `versions/pod-housing-v3-deck.stl` | Flat, as exported | None |
+| `versions/pod-housing-v4-snap-coupon.stl` | As exported: small box upright, its lid top down | None. **Print first** |
+| `versions/pod-housing-v4-wall-coupon.stl` | On its foot | None. **Print first** |
+| `versions/pod-housing-v4-bottom.stl` | Floor on the bed | None |
+| `versions/pod-housing-v4-lid.stl` | Top face down (as exported) | None |
+| `versions/pod-housing-v4-deck.stl` | Flat, as exported | None |
 
 What each coupon tests:
 
@@ -134,20 +158,21 @@ What each coupon tests:
   - how hard the lid is to snap on and to peel off
   - whether it seals: fill the box with water and turn it over
 - **Wall coupon:** the back wall round the rocker hole, and a 1.8 stretch with both
-  SMP cutouts, at their real heights and printed the same way as the bottom
+  SMP cutouts, at their real heights and printed the same way as the bottom. Snap
+  the rocker in with its clips at the sides
 
 ### Assembly
 
 1. Fit the board onto the standoffs, 4 × M2×6 self-tapping
-2. Snap the rocker in from outside the back wall. Its body lies over the XIAO. Run
-   the lug wires to SW1
+2. Snap the rocker in from outside the back wall, clips at the sides. Its body lies
+   over the XIAO. Run the lug wires to SW1
 3. Push J2 and J3 out through the front wall from inside, key up, until they click.
-   J2 is the SM-3, on the board's outer edge. Its lead is long: coil the spare, or
-   shorten it
+   J2 is the SM-3, on the board's outer edge
 4. Lay the cell on the saddles, lead toward the front. Mate PH2.0 and lay the pair
    on the cell's front half
 5. Set the deck on the cell's back half, rails up. Feed U1's wires over the divider
-   notch, then press the MT3608 into its pocket, components up
+   notch, then press the MT3608 into its pocket, leads up, until the lips click over
+   its board. The trimpot screw goes in a rail gap
 6. Press the lid on, starting at one end, until the snap clicks all round
 7. Straps over the top, in the channels
 
@@ -166,9 +191,20 @@ What each coupon tests:
   If the snap coupon lets go too easily, the snap can be made deeper
 - **Arm fit:** the bottom is flat and 57.6 wide, so it will rock on a round upper arm
 
+## v3 — archived, never printed
+
+v4's layout, with estimated part sizes in place of measured ones:
+
+- The MT3608 was assumed to be 36 × 17 × 14 tall, against the measured 36.8 × 17.2 ×
+  7.9, so its deck pocket was too short. Its rails had no gaps for the trimpot screw
+- The rocker's clips were assumed to stay inside Ø21, against the measured 23
+- The XIAO's socket was assumed to stand 1.5 proud, against the measured 1.6
+- 82.7 × 57.6 × 42.3
+- **Files:** `versions/archive/pod-housing-v3-*.stl` (`export_v3.py`)
+
 ## v2 — archived, never printed
 
-Snap lid and module deck as v3. Differences from v3:
+Snap lid and module deck as v4. Differences from v4:
 
 - The rocker hung from the lid
 - The MT3608 deck sat over the XIAO
@@ -180,7 +216,7 @@ Snap lid and module deck as v3. Differences from v3:
 
 ## v1 — archived, never printed
 
-Same board, cell compartment and plug cutouts. Differences from v3:
+Same board, cell compartment and plug cutouts. Differences from v4:
 
 - The rocker went through the cell-side wall
 - The MT3608 had its own bay past the board
