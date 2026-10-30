@@ -200,20 +200,78 @@ The seals file holds:
 - the two rocker washers, 0.6 and 1.0
 - both grommets, as four halves lying on their split faces
 
-What each coupon tests:
+### Coupon tests
 
-- **Seal tray:** the real wall top, groove and bosses on a tray 15 deep. Use it with
-  the real lid, gasket, washers and screws. The lid is the real part, so
-  keep it if it passes. Check:
-  - that the lid seats on its stops without forcing it
-  - that it seals: fill the tray 10 deep, screw the lid down, turn it over and leave
-    it
-  - that it seals in the middle of the long sides, where the lid would bow
-- **Wall coupon:** the back wall round the rocker hole, and the front wall round both
-  grommet openings, at their real heights and printed the same way as the bottom.
-  Check:
-  - the rocker with each washer, clips at the sides
-  - each plug through its opening, then the grommet halves round its lead
+Test the seal tray first, then the wall coupon.
+
+**Seal tray:** the real wall top, groove and bosses on a tray 15 deep. Test it with
+the lid, gasket, screw washers and four M3×8s. The lid and gasket are the real parts,
+so keep them if they pass.
+
+1. **The tray alone:** fill it open, 10 deep (about 40 mL), and stand it on a dry
+   paper towel for 30 minutes. A wet towel means water is getting through the layer
+   lines. That's a print setting (more wall loops, hotter), not the seal. Dry the
+   tray before going on
+2. **Threads:** with no lid, run an M3×8 straight down into each boss by hand, as far
+   as it goes, then back it out
+   - Good: it cuts in firmly by hand
+   - Pilot too tight: it needs forcing, or the boss cracks
+   - Pilot too loose: it spins without biting, or strips
+3. **Gasket:** press the base into the groove all round, lip leaning inward. Start at
+   the corners and don't stretch it. It should stay in on its own
+4. **Lid:** a washer in each counterbore, then the screws. Tighten them diagonally, a
+   little at a time, until the lid lands on its stops: the screw suddenly gets much
+   harder to turn. Stop there. Check:
+   - no gap between the lid and the wall top anywhere, the middle of the long sides
+     included. A slip of paper shouldn't go in
+   - the heads sit flush with the lid's top, or just below
+5. **Lip:** take the lid off and look at the gasket. The lip should be bent evenly all
+   round, with the base still down in the groove and the tip not folded outward or
+   caught under the lid's edge. Put the lid back, turning each screw backwards until
+   it drops into its thread before tightening it
+6. **Leak, upside down:** fill 10 deep (a drop of food colouring shows leaks better),
+   screw the lid down and turn the tray over onto a dry paper towel. Leave it an
+   hour, or overnight. If the towel is wet, note where: which side, the middle or a
+   corner, or under a screw head
+7. **Leak, on its side:** stand it on each long side for 30 minutes. That puts the
+   water on the middle of the side, where the lid would bow between the screws
+8. **Reopening (optional):** open and close it 5 to 10 times, backing each screw into
+   its thread, then repeat step 6. This shows how fast the bosses wear
+
+**Wall coupon:** the back wall round the rocker hole, and the front wall round both
+grommet openings, at their real heights and printed the same way as the bottom. Test
+it with the rocker, both rocker washers, J2 and J3 on their leads, and the four
+grommet halves.
+
+1. **Rocker hole:** measure it with calipers. It's drawn at Ø20.6. FDM holes usually
+   print a little small, so this separates a printer error from a design one
+2. **Rocker:** push it in from the outside face, clips at the sides. Try it with no
+   washer, then on the 0.6 washer, then on the 1.0. For each, note:
+   - whether the body goes in without forcing
+   - whether the clips catch firmly, or it wobbles
+   - whether the bezel squashes the washer flat all round
+   - whether the rocker still clicks freely
+3. **Plugs:** push J2's plug through the 10 × 15 opening and J3's through the 8 × 20.
+   They should pass without forcing
+4. **Grommets:** close the two halves round the lead outside the wall, flange
+   outward, and push the grommet in until the ridge snaps past the inside face.
+   Check:
+   - the flange lies flat on the outside face all round
+   - no light shows through the split or round the lead
+   - a firm tug on the lead doesn't pull the grommet out
+5. **Spray:** spray the outside face for a minute, then wipe the inside face round the
+   rocker and each grommet with a dry paper towel. Keep the pod board away from the
+   water: an offcut of the same wire through the grommet tests it just as well
+
+Record in the print log:
+
+- **Tray alone:** dry or wet
+- **Threads:** how each cut in, and any cracks
+- **Lid:** seated with no gap or not, heads flush or proud
+- **Lip:** how it looked after the squeeze
+- **Leaks:** dry or wet, and where
+- **Rocker:** the hole as printed, and which washer, if any, holds it firmly
+- **Plugs and grommets:** whether each plug passes, any gaps, and the spray result
 
 ### Assembly
 
