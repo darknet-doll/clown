@@ -1,4 +1,4 @@
-// motor_test — bench test: squeeze the trigger, the blower runs and a comet
+// motor_test — bench test: squeeze the trigger, the blower pulses and a comet
 // runs down the strip.
 //
 // Adds the motor path to strip_test: D2 -> 74AHCT125 gate 2 -> 100R -> MOSFET
@@ -31,6 +31,8 @@ constexpr uint8_t  THEME_HUE       = 192;
 constexpr uint8_t  MOTOR_RUN_DUTY  = 230;   // same as clown_arm.ino
 constexpr uint8_t  MOTOR_KICK_DUTY = 255;
 constexpr uint16_t MOTOR_KICK_MS   = 80;
+constexpr uint16_t MOTOR_PULSE_PERIOD_MS = 200;   // 5 Hz, same as clown_arm.ino
+constexpr uint16_t MOTOR_PULSE_ON_MS     = 100;   // 50% on, 50% off
 constexpr uint32_t MOTOR_PWM_HZ    = 20000;
 constexpr uint8_t  MOTOR_PWM_BITS  = 8;
 
@@ -46,6 +48,13 @@ uint32_t cometStart   = 0;
 
 static void setMotor(uint8_t duty) {
   ledcWrite(PIN_MOTOR, duty);
+}
+
+// Kick, run, or off, depending on where we are in the pulse cycle.
+static uint8_t pulsedMotorDuty(uint32_t heldMs) {
+  uint32_t phase = heldMs % MOTOR_PULSE_PERIOD_MS;
+  if (phase >= MOTOR_PULSE_ON_MS) return 0;
+  return (phase < MOTOR_KICK_MS) ? MOTOR_KICK_DUTY : MOTOR_RUN_DUTY;
 }
 
 static void readTrigger() {
@@ -64,7 +73,7 @@ static void readTrigger() {
       setMotor(0);
     }
     Serial.printf("[%lu ms] %s\n", (unsigned long)now,
-                  trigStable ? "trigger: PRESSED, motor on" : "trigger: released, motor off");
+                  trigStable ? "trigger: PRESSED, motor pulsing" : "trigger: released, motor off");
   }
 }
 
@@ -102,8 +111,8 @@ void loop() {
   uint32_t now = millis();
 
   if (trigStable) {
-    // Drop out of the kickstart pulse once the motor is turning.
-    if (now - fireStart >= MOTOR_KICK_MS) setMotor(MOTOR_RUN_DUTY);
+    // Pulse the blower for as long as the trigger is held.
+    setMotor(pulsedMotorDuty(now - fireStart));
 
     fadeToBlackBy(leds, NUM_LEDS, 64);
     if (now - cometStart >= COMET_REPEAT_MS) cometStart = now;

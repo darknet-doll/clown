@@ -24,6 +24,8 @@ Where each arm stands, newest first. Steps refer to [BUILD.md](BUILD.md) and the
   runs the bench test as-is
   - **2026-10-21:** found running a sketch that isn't in the repo (serial printed
     `up … frames … reset_reason`), strip dark. Reflashed `motor_test`, upload verified
+  - **2026-10-31:** reflashed `motor_test` with the blower **pulsed at 5 Hz, 50%**
+    while the trigger is held (was steady). Same change in `clown_arm`. To test
   - Board MAC `ac:27:6e:7c:d7:2c` (ESP32-C3 rev v0.4) — check it with esptool before
     flashing, to be sure which XIAO is on the cable
 - **Kit blower separated from its switch** for the bench test

@@ -70,6 +70,12 @@ constexpr uint8_t IDLE_BRIGHTNESS = 20;
 constexpr uint8_t  MOTOR_RUN_DUTY  = 230;
 constexpr uint8_t  MOTOR_KICK_DUTY = 255;   // breaks static friction
 constexpr uint16_t MOTOR_KICK_MS   = 80;
+// Pulsed, not sustained, while the trigger is held: the bubbles form better on
+// repeated bursts of speed than on a steady stream. 5 Hz at 50% = 100 ms on,
+// 100 ms off. Each on-phase starts with the kick, since the blower coasts down
+// during the off-phase. Set ON = PERIOD to go back to a steady run.
+constexpr uint16_t MOTOR_PULSE_PERIOD_MS = 200;
+constexpr uint16_t MOTOR_PULSE_ON_MS     = 100;
 constexpr uint32_t MOTOR_PWM_HZ    = 20000; // above audible, no whine
 constexpr uint8_t  MOTOR_PWM_BITS  = 8;
 
@@ -246,6 +252,14 @@ static void setMotor(uint8_t duty) {
   ledcWrite(PIN_MOTOR, duty);
 }
 
+// Motor drive for the current moment of a held trigger: kick, run, or off,
+// depending on where we are in the pulse cycle.
+static uint8_t pulsedMotorDuty(uint32_t heldMs) {
+  uint32_t phase = heldMs % MOTOR_PULSE_PERIOD_MS;
+  if (phase >= MOTOR_PULSE_ON_MS) return 0;
+  return (phase < MOTOR_KICK_MS) ? MOTOR_KICK_DUTY : MOTOR_RUN_DUTY;
+}
+
 static void renderIdle() {
   uint8_t breath = scale8(cubicwave8((millis() / 12) & 0xFF), IDLE_BRIGHTNESS);
   fill_solid(leds, NUM_LEDS, CHSV(THEME_HUE, 200, breath));
@@ -356,8 +370,8 @@ void loop() {
       break;
 
     case FIRING:
-      // Drop out of the kickstart pulse once the motor is turning.
-      if (now - fireStart >= MOTOR_KICK_MS) setMotor(MOTOR_RUN_DUTY);
+      // Pulse the blower for as long as the trigger is held.
+      setMotor(pulsedMotorDuty(now - fireStart));
       if (!trigStable) {
         state        = RELEASING;
         releaseStart = now;

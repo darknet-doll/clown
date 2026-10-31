@@ -39,7 +39,9 @@ places where it changes the build.
 4. **~250 ms later** the comet lands at the fingertips and the blower has reached
    full speed — bubbles start. The light travel *is* the spin-up delay, so it
    reads as causal instead of as lag.
-5. **Hold** to keep streaming; comets keep launching on a loop.
+5. **Hold** to keep streaming; comets keep launching on a loop. The blower
+   pulses at 5 Hz (100 ms on, 100 ms off, each burst kickstarted) rather than
+   running steady — the bursts of speed form the bubbles better.
 6. **Release.** Motor cuts, fingertips flare white and fade out.
 
 ---
@@ -330,6 +332,7 @@ Tunables live in one block at the top:
 | `IDLE_BRIGHTNESS` | 20 | Resting glow; 0 for fully dark |
 | `MOTOR_RUN_DUTY` | 230 | Bubble rate |
 | `MOTOR_KICK_DUTY` / `MOTOR_KICK_MS` | 255 / 80 | Kickstart pulse |
+| `MOTOR_PULSE_PERIOD_MS` / `MOTOR_PULSE_ON_MS` | 200 / 100 | 5 Hz, 50% bursts while held; ON = PERIOD for steady |
 | `THEME_HUE` | 192 | Comet color |
 | `VBAT_WARN_MV` / `VBAT_WARN_CLEAR_MV` | 3400 / 3550 | Low-cell warning, with hysteresis |
 | `VBAT_CUTOFF_MV` | 3000 | Sustained → shut the arm down |
