@@ -80,7 +80,11 @@ constexpr uint32_t MOTOR_PWM_HZ    = 20000; // above audible, no whine
 constexpr uint8_t  MOTOR_PWM_BITS  = 8;
 
 // Look.
-constexpr uint8_t THEME_HUE   = 192;  // comet body
+constexpr uint8_t THEME_HUE   = 192;  // idle glow and release flare
+// The comet is a rainbow: its hue sweeps the whole wheel from pod to
+// fingertips, and the wheel itself drifts one step every RAINBOW_DRIFT_MS, so
+// successive comets don't all look the same. Lower = faster colour cycling.
+constexpr uint8_t RAINBOW_DRIFT_MS = 8;
 constexpr uint8_t COMET_FADE  = 64;   // higher = shorter tail
 constexpr uint8_t FRAME_MS    = 16;   // ~60 fps
 
@@ -276,14 +280,15 @@ static void renderFiring() {
   if (age <= COMET_TRAVEL_MS) {
     float t   = (float)age / COMET_TRAVEL_MS;
     float pos = t * (VIRTUAL_LEN - 1);
-    // White-hot at launch, settling into the theme color as it travels.
-    CRGB head = CHSV(THEME_HUE, (uint8_t)(120 + 135 * t), 255);
+    // White-hot at launch, saturating into the rainbow as it travels.
+    uint8_t hue = (uint8_t)(255 * t + now / RAINBOW_DRIFT_MS);
+    CRGB head = CHSV(hue, (uint8_t)(120 + 120 * t), 255);
     drawComet(pos, head);
   }
 
   // Fingertips stay lit once the first comet has landed and bubbles are flowing.
   if (now - fireStart >= COMET_TRAVEL_MS) {
-    leds[NUM_LEDS - 1] |= CHSV(THEME_HUE, 160, 200);
+    leds[NUM_LEDS - 1] |= CHSV((uint8_t)(now / RAINBOW_DRIFT_MS), 200, 200);
   }
 }
 

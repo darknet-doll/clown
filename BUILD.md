@@ -1284,7 +1284,8 @@ of `clown_arm.ino`. Edit, reflash over USB-C, done:
 
 | Constant | Changes |
 |---|---|
-| `THEME_HUE` | The comet's color (0–255 around the color wheel) |
+| `THEME_HUE` | Idle glow and release flare color (0–255 around the color wheel) |
+| `RAINBOW_DRIFT_MS` | How fast the rainbow comet's colors cycle (lower = faster) |
 | `COMET_TRAVEL_MS` | Comet speed / sync with the bubbles |
 | `COMET_REPEAT_MS` | How rapid-fire the stream is |
 | `COMET_FADE` | Tail length — higher is shorter |

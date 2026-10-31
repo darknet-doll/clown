@@ -61,7 +61,7 @@ Battery + gets its **own rows** — never the red rail.
 
 ## What you should see
 
-- **Squeeze:** blower pulses 5× a second (100 ms on / 100 ms off), comets run
+- **Squeeze:** blower pulses 5× a second (100 ms on / 100 ms off), rainbow comets run
 - **Release:** blower stops, strip back to dim purple
 - **Serial Monitor:** `trigger: PRESSED, motor pulsing` / `trigger: released, motor off`
 

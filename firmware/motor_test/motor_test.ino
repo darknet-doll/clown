@@ -26,7 +26,8 @@ constexpr uint16_t USB_LIMIT_MA = 300;
 
 constexpr uint16_t COMET_TRAVEL_MS = 250;   // same as clown_arm.ino
 constexpr uint16_t COMET_REPEAT_MS = 320;
-constexpr uint8_t  THEME_HUE       = 192;
+constexpr uint8_t  THEME_HUE       = 192;   // idle glow
+constexpr uint8_t  RAINBOW_DRIFT_MS = 8;    // same as clown_arm.ino
 
 constexpr uint8_t  MOTOR_RUN_DUTY  = 230;   // same as clown_arm.ino
 constexpr uint8_t  MOTOR_KICK_DUTY = 255;
@@ -123,7 +124,11 @@ void loop() {
       static int lastPos = 0;
       int pos = (int)(age * (NUM_LEDS - 1) / COMET_TRAVEL_MS);
       if (pos < lastPos) lastPos = 0;   // a new comet just launched
-      for (int i = lastPos; i <= pos; i++) leds[i] = CHSV(THEME_HUE, 160, 255);
+      for (int i = lastPos; i <= pos; i++) {
+        // Rainbow along the strip, drifting over time, same as clown_arm.ino.
+        uint8_t hue = (uint8_t)(i * 256 / NUM_LEDS + now / RAINBOW_DRIFT_MS);
+        leds[i] = CHSV(hue, 240, 255);
+      }
       lastPos = pos;
     }
   } else {

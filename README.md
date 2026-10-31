@@ -333,7 +333,8 @@ Tunables live in one block at the top:
 | `MOTOR_RUN_DUTY` | 230 | Bubble rate |
 | `MOTOR_KICK_DUTY` / `MOTOR_KICK_MS` | 255 / 80 | Kickstart pulse |
 | `MOTOR_PULSE_PERIOD_MS` / `MOTOR_PULSE_ON_MS` | 200 / 100 | 5 Hz, 50% bursts while held; ON = PERIOD for steady |
-| `THEME_HUE` | 192 | Comet color |
+| `THEME_HUE` | 192 | Idle glow and release flare color |
+| `RAINBOW_DRIFT_MS` | 8 | Comet is a rainbow; ms per hue step of drift (lower = faster) |
 | `VBAT_WARN_MV` / `VBAT_WARN_CLEAR_MV` | 3400 / 3550 | Low-cell warning, with hysteresis |
 | `VBAT_CUTOFF_MV` | 3000 | Sustained → shut the arm down |
 
