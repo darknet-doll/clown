@@ -26,6 +26,9 @@ Where each arm stands, newest first. Steps refer to [BUILD.md](BUILD.md) and the
     `up … frames … reset_reason`), strip dark. Reflashed `motor_test`, upload verified
   - **2026-10-31:** reflashed `motor_test` with the blower **pulsed at 5 Hz, 50%**
     while the trigger is held (was steady). Same change in `clown_arm`. Not yet tested on the bench
+  - **2026-10-31:** battery stopped powering the XIAO after U1 was moved (red LED
+    flickered, then dark). Flashed `firmware/vsense_probe` to read the cell from VSENSE:
+    **0.00 V** at the board. **XIAO now runs `vsense_probe` — reflash `motor_test` after**
   - Board MAC `ac:27:6e:7c:d7:2c` (ESP32-C3 rev v0.4) — check it with esptool before
     flashing, to be sure which XIAO is on the cable
 - **Kit blower separated from its switch** for the bench test
