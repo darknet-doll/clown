@@ -31,7 +31,7 @@ Where each arm stands, newest first. Steps refer to [BUILD.md](BUILD.md) and the
     **0.00 V** at the board. Cause: **J1 intermittent** — cell fine, U1 fine fed direct,
     SW1 bridge changed nothing; reseating the cell plug brought it back (**3.65 V**).
     Still to do: wiggle-test J1, reflow J1 + U1 joints, strain-relieve U1.
-    **XIAO now runs `vsense_probe` — reflash `motor_test` after**
+    Wiggle test after reseating: steady 3.64–3.65 V. **Reflashed `motor_test`**, upload verified
   - Board MAC `ac:27:6e:7c:d7:2c` (ESP32-C3 rev v0.4) — check it with esptool before
     flashing, to be sure which XIAO is on the cable
 - **Kit blower separated from its switch** for the bench test
