@@ -32,6 +32,8 @@ Where each arm stands, newest first. Steps refer to [BUILD.md](BUILD.md) and the
     SW1 bridge changed nothing; reseating the cell plug brought it back (**3.65 V**).
     Still to do: wiggle-test J1, reflow J1 + U1 joints, strain-relieve U1.
     Wiggle test after reseating: steady 3.64–3.65 V. **Reflashed `motor_test`**, upload verified
+  - **2026-10-31 bench run on battery:** trigger logged 11 clean press/release pairs
+    (0.1–5 s holds, no bounce); blower pulsing and strip reported working
   - Board MAC `ac:27:6e:7c:d7:2c` (ESP32-C3 rev v0.4) — check it with esptool before
     flashing, to be sure which XIAO is on the cable
 - **Kit blower separated from its switch** for the bench test
